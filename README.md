@@ -1,0 +1,61 @@
+# Course 4186 GitHub Bundle
+
+This folder is a self-contained bundle of the new Course 4186 student system that was built alongside the legacy project.
+
+## Included
+
+- `course4186_portal/`: Flask portal for chat, quiz, and learning report
+- `course4186_rag/`: RAG pipeline plus the bundled `Week 1` to `Week 6` artifacts
+- `web/c++.jpg`: image asset used by the classic view
+- `db.py` and `user.py`: Firebase-backed login integration
+- `kimi_utils.py`: environment-based Kimi configuration only
+
+## Secrets
+
+No Firebase service-account JSON or hardcoded API key is included in this bundle.
+
+Before running, configure:
+
+- `FIREBASE_CREDENTIALS` or `GOOGLE_APPLICATION_CREDENTIALS`
+- `COURSE_LLM_API_KEY`
+- `COURSE_LLM_BASE_URL`
+- `COURSE_LLM_MODEL`
+
+Optional compatibility variables:
+
+- `KIMI_API_KEY`
+- `KIMI_API_BASE`
+- `KIMI_MODEL`
+- `COURSE4186_ARTIFACT_DIR`
+- `COURSE4186_COURSE_ROOT`
+- `CLOUDFLARED_PATH`
+
+## Install
+
+```powershell
+pip install -r .\requirements.txt
+```
+
+## Run locally
+
+```powershell
+python .\course4186_portal\run_4186_portal.py
+```
+
+Open:
+
+`http://127.0.0.1:50186/chatapi_4186.html`
+
+## Run with public access
+
+Install Cloudflare Tunnel first, then run:
+
+```powershell
+python .\course4186_portal\run_public_4186_portal.py
+```
+
+## Notes
+
+- The bundled RAG data is scoped to `Week 1` to `Week 6`.
+- The portal stores local study progress in `course4186_portal/data/progress.json`.
+- Runtime logs are written to `course4186_portal/logs/`.

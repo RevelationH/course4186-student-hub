@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Course 4186 Student Hub</title>
+    <style>
+        :root{
+            --app-bg:#f7f7f8;
+            --surface:#ffffff;
+            --surface-2:#f3f4f6;
+            --surface-3:#fafafa;
+            --ink:#111827;
+            --muted:#6b7280;
+            --line:#e5e7eb;
+            --line-strong:#d1d5db;
+            --brand:#10a37f;
+            --brand-strong:#0b8a6a;
+            --danger:#b91c1c;
+            --danger-bg:#fef2f2;
+            --warning:#92400e;
+            --warning-bg:#fffbeb;
+            --shadow:0 1px 2px rgba(15, 23, 42, .06), 0 20px 48px rgba(15, 23, 42, .08);
+        }
+        *{box-sizing:border-box}
+        html,body{margin:0;padding:0}
+        body{
+            min-height:100vh;
+            display:grid;
+            place-items:center;
+            padding:24px;
+            background:
+                radial-gradient(circle at top left, rgba(16,163,127,.10), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(17,24,39,.06), transparent 28%),
+                var(--app-bg);
+            color:var(--ink);
+            font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Noto Sans SC",sans-serif;
+        }
+        .login-shell{
+            width:min(1120px, 100%);
+            display:grid;
+            grid-template-columns:minmax(320px, 1.05fr) minmax(320px, .95fr);
+            gap:20px;
+        }
+        .brand-panel,
+        .form-card{
+            background:var(--surface);
+            border:1px solid var(--line);
+            border-radius:28px;
+            box-shadow:var(--shadow);
+        }
+        .brand-panel{
+            padding:28px;
+            display:flex;
+            flex-direction:column;
+            gap:20px;
+            min-height:640px;
+        }
+        .brand-head{
+            display:flex;
+            align-items:center;
+            gap:14px;
+        }
+        .brand-badge{
+            width:52px;
+            height:52px;
+            border-radius:18px;
+            display:grid;
+            place-items:center;
+            font-size:16px;
+            font-weight:800;
+            color:#fff;
+            background:linear-gradient(135deg, var(--brand), var(--brand-strong));
+        }
+        .brand-head h1{
+            margin:0;
+            font-size:24px;
+            line-height:1.15;
+            letter-spacing:-.02em;
+        }
+        .brand-head p{
+            margin:6px 0 0 0;
+            color:var(--muted);
+            font-size:14px;
+            line-height:1.7;
+        }
+        .hero-card{
+            padding:22px;
+            border-radius:24px;
+            background:linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
+            border:1px solid var(--line);
+        }
+        .hero-card h2{
+            margin:0;
+            font-size:34px;
+            line-height:1.1;
+            letter-spacing:-.03em;
+        }
+        .hero-card p{
+            margin:12px 0 0 0;
+            color:var(--muted);
+            font-size:15px;
+            line-height:1.8;
+        }
+        .preview-list{
+            display:grid;
+            gap:12px;
+        }
+        .preview-item{
+            padding:16px 18px;
+            border-radius:20px;
+            border:1px solid var(--line);
+            background:var(--surface-3);
+        }
+        .preview-item strong{
+            display:block;
+            font-size:14px;
+        }
+        .preview-item span{
+            display:block;
+            margin-top:6px;
+            color:var(--muted);
+            font-size:13px;
+            line-height:1.6;
+        }
+        .foot-note{
+            margin-top:auto;
+            padding:16px 18px;
+            border-radius:20px;
+            background:#f0fdf9;
+            border:1px solid #ccefe5;
+            color:#0f5132;
+            font-size:13px;
+            line-height:1.7;
+        }
+        .form-wrap{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .form-card{
+            width:100%;
+            max-width:460px;
+            padding:30px 28px;
+        }
+        .eyebrow{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            padding:7px 11px;
+            border-radius:999px;
+            border:1px solid var(--line);
+            background:var(--surface-2);
+            color:#374151;
+            font-size:12px;
+            font-weight:700;
+        }
+        .form-card h2{
+            margin:16px 0 0 0;
+            font-size:30px;
+            line-height:1.15;
+            letter-spacing:-.02em;
+        }
+        .form-card p{
+            margin:12px 0 0 0;
+            color:var(--muted);
+            line-height:1.75;
+            font-size:14px;
+        }
+        .alert{
+            margin-top:18px;
+            padding:13px 15px;
+            border-radius:16px;
+            font-size:14px;
+            line-height:1.6;
+            border:1px solid transparent;
+        }
+        .alert.error{
+            color:var(--danger);
+            background:var(--danger-bg);
+            border-color:#fecaca;
+        }
+        .alert.warning{
+            color:var(--warning);
+            background:var(--warning-bg);
+            border-color:#fde68a;
+        }
+        form{
+            margin-top:24px;
+            display:grid;
+            gap:16px;
+        }
+        .field{
+            display:grid;
+            gap:8px;
+        }
+        .field label{
+            font-size:13px;
+            font-weight:700;
+            color:#374151;
+        }
+        .field input{
+            width:100%;
+            padding:14px 15px;
+            border-radius:16px;
+            border:1px solid var(--line-strong);
+            background:var(--surface);
+            color:var(--ink);
+            outline:none;
+            transition:border-color .18s ease, box-shadow .18s ease;
+        }
+        .field input:focus{
+            border-color:var(--brand);
+            box-shadow:0 0 0 4px rgba(16,163,127,.12);
+        }
+        .submit-btn{
+            appearance:none;
+            border:0;
+            border-radius:16px;
+            padding:14px 18px;
+            background:var(--ink);
+            color:#fff;
+            font-size:15px;
+            font-weight:700;
+            cursor:pointer;
+            transition:transform .18s ease, opacity .18s ease, background-color .18s ease;
+        }
+        .submit-btn:hover{
+            transform:translateY(-1px);
+            opacity:.96;
+        }
+        .submit-btn:disabled{
+            background:#9ca3af;
+            cursor:not-allowed;
+            transform:none;
+            opacity:1;
+        }
+        .helper{
+            margin-top:14px;
+            color:var(--muted);
+            font-size:12px;
+            line-height:1.7;
+        }
+        @media(max-width:960px){
+            .login-shell{
+                grid-template-columns:1fr;
+            }
+            .brand-panel{
+                min-height:auto;
+            }
+            .form-wrap{
+                align-items:stretch;
+            }
+            .form-card{
+                max-width:none;
+            }
+        }
+        @media(max-width:640px){
+            body{padding:14px}
+            .brand-panel,
+            .form-card{padding:22px}
+            .hero-card h2{font-size:28px}
+            .form-card h2{font-size:26px}
+        }
+    </style>
+</head>
+<body>
+    <div class="login-shell">
+        <section class="brand-panel">
+            <div class="brand-head">
+                <div class="brand-badge">4186</div>
+                <div>
+                    <h1>Course 4186 Student Hub</h1>
+                    <p>Welcome students to the 4186 learning system for Q&amp;A, quiz practice, and study reports.</p>
+                </div>
+            </div>
+
+            <div class="hero-card">
+                <h2>Welcome to the course learning system</h2>
+                <p>Sign in to continue course Q&amp;A, knowledge-point practice, and your personal learning report.</p>
+            </div>
+
+            <div class="preview-list">
+                <div class="preview-item">
+                    <strong>ChatAPI</strong>
+                    <span>Ask questions about the 4186 lecture materials, concepts, formulas, and methods.</span>
+                </div>
+                <div class="preview-item">
+                    <strong>Quiz</strong>
+                    <span>Practice multiple-choice questions by knowledge point and reinforce key topics.</span>
+                </div>
+                <div class="preview-item">
+                    <strong>Learning Report</strong>
+                    <span>Review your performance, weak areas, and suggested next steps for study.</span>
+                </div>
+            </div>
+
+            <div class="foot-note">
+                This is the standalone student entry for Course 4186 and does not modify your original system pages or routes.
+            </div>
+        </section>
+
+        <section class="form-wrap">
+            <div class="form-card">
+                <div class="eyebrow">Student Login</div>
+                <h2>Welcome back</h2>
+                <p>Enter your course account and password to continue learning.</p>
+
+                {% if error_message %}
+                <div class="alert error">{{ error_message }}</div>
+                {% endif %}
+
+                {% if not auth_backend_ready %}
+                <div class="alert warning">The login service is temporarily unavailable. Please try again later or contact an instructor or administrator.</div>
+                {% endif %}
+
+                <form method="post" action="{{ url_for('login_4186') }}">
+                    <input type="hidden" name="next" value="{{ next_path }}">
+
+                    <div class="field">
+                        <label for="username">Student Account</label>
+                        <input id="username" name="username" type="text" autocomplete="username" value="{{ username_value }}" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required>
+                    </div>
+
+                    <button class="submit-btn" type="submit" {% if not auth_backend_ready %}disabled{% endif %}>Sign In</button>
+                </form>
+
+                <div class="helper">
+                    After login, the system stores your progress, attempts, and learning report under your own username.
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

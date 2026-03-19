@@ -1,0 +1,489 @@
+{% extends "base.html" %}
+{% block title %}ChatAPI 4186{% endblock %}
+{% block extra_css %}
+.chat-panel{
+    display:flex;
+    flex-direction:column;
+    min-height:72vh;
+    border-radius:24px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+}
+.chat-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    padding:18px 20px;
+    border-bottom:1px solid var(--line);
+    background:var(--surface);
+}
+.chat-head h3{
+    margin:0;
+    font-size:18px;
+    letter-spacing:-.01em;
+}
+.chat-head p{
+    margin:6px 0 0 0;
+    color:var(--muted);
+    line-height:1.6;
+    font-size:14px;
+}
+.chat-log{
+    flex:1;
+    overflow:auto;
+    padding:24px 22px;
+    background:linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+}
+.msg{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:20px;
+}
+.msg.me{justify-content:flex-end}
+.avatar{
+    width:34px;
+    height:34px;
+    border-radius:12px;
+    display:grid;
+    place-items:center;
+    flex:0 0 auto;
+    font-size:12px;
+    font-weight:800;
+    border:1px solid var(--line);
+}
+.msg.bot .avatar{
+    background:#eef2ff;
+    color:#1f2937;
+}
+.msg.me .avatar{
+    background:var(--brand);
+    color:#fff;
+    border-color:var(--brand);
+}
+.bubble{
+    max-width:min(760px, 84%);
+    padding:14px 16px;
+    border-radius:20px;
+    border:1px solid var(--line);
+    line-height:1.72;
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+.msg.bot .bubble{
+    background:#f9fafb;
+}
+.msg.me .bubble{
+    background:#111827;
+    color:#fff;
+    border-color:#111827;
+}
+.bubble-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+    max-width:min(760px, 84%);
+}
+.msg.me .bubble-wrap{
+    align-items:flex-end;
+}
+.msg.me .bubble{
+    max-width:100%;
+}
+.msg.bot .bubble{
+    max-width:100%;
+}
+.bubble.thinking-bubble{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:fit-content;
+    max-width:none;
+    min-width:0;
+    height:calc(1em * 1.72 + 28px);
+    min-height:calc(1em * 1.72 + 28px);
+    padding:0 10px;
+    border-radius:12px;
+    line-height:1;
+    white-space:normal;
+    word-break:normal;
+}
+.bubble.typing{
+    position:relative;
+}
+.bubble.typing::after{
+    content:"";
+    display:inline-block;
+    width:2px;
+    height:1.15em;
+    margin-left:3px;
+    border-radius:999px;
+    background:currentColor;
+    vertical-align:-0.15em;
+    animation:caretBlink .9s steps(1) infinite;
+}
+.thinking-shell{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    height:100%;
+    min-width:0;
+    color:var(--muted);
+}
+.thinking-dots{
+    display:inline-flex;
+    gap:5px;
+    align-items:center;
+}
+.thinking-dots span{
+    width:6px;
+    height:6px;
+    border-radius:999px;
+    background:#9ca3af;
+    animation:thinkingPulse 1s ease-in-out infinite;
+}
+.thinking-dots span:nth-child(2){animation-delay:.16s}
+.thinking-dots span:nth-child(3){animation-delay:.32s}
+.msg-sources{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+}
+.source-pill{
+    display:inline-flex;
+    align-items:center;
+    padding:4px 10px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:#f3f4f6;
+    color:#4b5563;
+    font-size:12px;
+    line-height:1.3;
+}
+.input-wrap{
+    padding:18px 20px 20px;
+    border-top:1px solid var(--line);
+    background:var(--surface);
+}
+.composer{
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) auto;
+    gap:12px;
+    align-items:end;
+}
+.composer textarea{
+    width:100%;
+    min-height:68px;
+    max-height:220px;
+    padding:14px 16px;
+    resize:vertical;
+    border-radius:18px;
+    border:1px solid var(--line-strong);
+    background:var(--surface-2);
+    color:var(--ink);
+    line-height:1.6;
+    outline:none;
+}
+.composer textarea:focus{
+    border-color:rgba(16,163,127,.55);
+    box-shadow:0 0 0 4px rgba(16,163,127,.08);
+}
+.evidence-card{
+    padding:18px 20px;
+    border-radius:24px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    box-shadow:var(--shadow);
+}
+.evidence-list{
+    display:grid;
+    gap:12px;
+}
+.ref{
+    padding:14px;
+    border-radius:18px;
+    border:1px solid var(--line);
+    background:var(--surface-2);
+}
+.ref b{
+    display:block;
+    margin-bottom:8px;
+    font-size:14px;
+}
+.status{
+    font-size:12px;
+    color:var(--muted);
+}
+@media(max-width:760px){
+    .chat-head{flex-direction:column}
+    .composer{grid-template-columns:1fr}
+    .bubble{max-width:100%}
+}
+@keyframes thinkingPulse{
+    0%, 80%, 100%{transform:translateY(0); opacity:.28}
+    40%{transform:translateY(-3px); opacity:1}
+}
+@keyframes caretBlink{
+    0%, 49%{opacity:1}
+    50%, 100%{opacity:0}
+}
+{% endblock %}
+{% block sidebar_extra %}
+<section class="sidebar-card">
+    <h3 class="sidebar-title">Quick Start</h3>
+    <div class="sidebar-actions">
+        <button class="sidebar-button primary quick-prompt" data-prompt="Explain edge detection in this course.">Edge Detection</button>
+        <button class="sidebar-button quick-prompt" data-prompt="What is SIFT used for in this course?">SIFT</button>
+        <button class="sidebar-button quick-prompt" data-prompt="Explain stereo vision and epipolar geometry.">Stereo + Epipolar</button>
+    </div>
+</section>
+
+<section class="sidebar-card">
+    <h3 class="sidebar-title">Tools</h3>
+    <div class="sidebar-actions">
+        <a class="sidebar-text-link" href="{{ url_for('quiz_dashboard_4186') }}">Open Quiz</a>
+        <a class="sidebar-text-link" href="{{ url_for('quiz_analysis_4186') }}">Open Learning Report</a>
+        <a class="sidebar-text-link" href="{{ url_for('chatapi_4186_classic') }}">Open Classic View</a>
+    </div>
+</section>
+
+<section class="sidebar-card">
+    <h3 class="sidebar-title">Student</h3>
+    <div class="sidebar-note">
+        <strong style="display:block;color:var(--ink);margin-bottom:8px;">{{ course4186_profile.account_name or display_name }}</strong>
+        Your signed-in account is used to store your personal study record.
+    </div>
+    <div class="status">Dense retrieval: {{ 'enabled' if dense_enabled else 'disabled' }}</div>
+</section>
+
+<section class="sidebar-card">
+    <h3 class="sidebar-title">Answer Flow</h3>
+    <div class="sidebar-note">
+        1. Match the most relevant knowledge points.<br>
+        2. Retrieve related lecture evidence.<br>
+        3. Return an answer with traceable support.
+    </div>
+</section>
+{% endblock %}
+{% block content %}
+<section class="hero">
+    <h2>Course 4186 Q&amp;A</h2>
+    <p>Welcome students to the 4186 Q&amp;A area. Answers are grounded in lecture notes, knowledge points, and the course question bank.</p>
+</section>
+
+<section class="chat-panel">
+    <div class="chat-head">
+        <div>
+            <h3>Course Conversation</h3>
+            <p>Ask about concepts, formulas, relationships between methods, or a specific slide topic from the lecture materials.</p>
+        </div>
+        <span class="pill">{{ 'Dense retrieval enabled' if dense_enabled else 'Dense retrieval disabled' }}</span>
+    </div>
+
+    <div id="chat-log" class="chat-log">
+        <div class="msg bot">
+            <div class="avatar">AI</div>
+            <div class="bubble">Welcome students to the 4186 learning system.
+
+You can ask questions such as:
+- What is epipolar geometry used for?
+- Explain the role of SIFT.
+- Compare image filtering and edge detection.
+
+The left sidebar gives you direct access to Quiz, Learning Report, and quick prompts.</div>
+        </div>
+    </div>
+
+    <div class="input-wrap">
+        <div class="composer">
+            <textarea id="chat-input" placeholder="Ask a question about a knowledge point, formula, algorithm relationship, or lecture concept from Course 4186."></textarea>
+            <button id="send-btn" class="btn">Send</button>
+        </div>
+    </div>
+</section>
+
+<section class="evidence-card">
+    <div style="margin-bottom:12px;">
+        <h3 class="section-title" style="margin-bottom:4px;">Supporting Evidence</h3>
+        <div class="muted">Relevant knowledge points and lecture evidence will appear here after each answer.</div>
+    </div>
+    <div id="evidence-list" class="evidence-list">
+        <div class="muted">Send a question to see retrieved evidence.</div>
+    </div>
+</section>
+{% endblock %}
+{% block extra_js %}
+<script>
+const historyState = [];
+
+function createMessageRow(role) {
+    const log = document.getElementById('chat-log');
+    const row = document.createElement('div');
+    row.className = `msg ${role === 'user' ? 'me' : 'bot'}`;
+    row.innerHTML = `
+        ${role === 'user' ? '' : '<div class="avatar">AI</div>'}
+        <div class="bubble-wrap">
+            <div class="bubble"></div>
+            <div class="msg-sources"></div>
+        </div>
+        ${role === 'user' ? '<div class="avatar">ME</div>' : ''}
+    `;
+    log.appendChild(row);
+    log.scrollTop = log.scrollHeight;
+    return row;
+}
+
+function appendMessage(role, text) {
+    const row = createMessageRow(role);
+    row.querySelector('.bubble').textContent = text;
+    return row;
+}
+
+function appendThinkingMessage() {
+    const row = createMessageRow('assistant');
+    const bubble = row.querySelector('.bubble');
+    bubble.classList.add('thinking-bubble');
+    row.querySelector('.msg-sources').remove();
+    bubble.innerHTML = `
+        <div class="thinking-shell" aria-live="polite" aria-label="Assistant is thinking">
+            <span class="thinking-dots" aria-hidden="true">
+                <span></span><span></span><span></span>
+            </span>
+        </div>
+    `;
+    return row;
+}
+
+function scrollChatToBottom() {
+    const log = document.getElementById('chat-log');
+    log.scrollTop = log.scrollHeight;
+}
+
+function typeWriter(element, text) {
+    return new Promise(resolve => {
+        const content = String(text || '');
+        const step = content.length > 900 ? 5 : content.length > 480 ? 4 : content.length > 220 ? 3 : 2;
+        let index = 0;
+        element.textContent = '';
+        element.classList.add('typing');
+
+        function pump() {
+            index = Math.min(content.length, index + step);
+            element.textContent = content.slice(0, index);
+            scrollChatToBottom();
+            if (index < content.length) {
+                setTimeout(pump, 14);
+                return;
+            }
+            element.classList.remove('typing');
+            resolve();
+        }
+
+        pump();
+    });
+}
+
+function setComposerBusy(isBusy) {
+    const button = document.getElementById('send-btn');
+    button.disabled = isBusy;
+    button.textContent = 'Send';
+    document.querySelectorAll('.quick-prompt[data-prompt]').forEach(node => {
+        node.disabled = isBusy;
+    });
+}
+
+function renderInlineSources(row, citations) {
+    const box = row.querySelector('.msg-sources');
+    if (!box) return;
+    box.innerHTML = '';
+    (citations || []).slice(0, 3).forEach(item => {
+        const chip = document.createElement('div');
+        const location = item.location || `chunk ${item.chunk_index}`;
+        chip.className = 'source-pill';
+        chip.textContent = `${item.source} | ${location}`;
+        box.appendChild(chip);
+    });
+}
+
+function renderEvidence(payload) {
+    const box = document.getElementById('evidence-list');
+    box.innerHTML = '';
+
+    if (payload.related_kps && payload.related_kps.length) {
+        const kpCard = document.createElement('div');
+        kpCard.className = 'ref';
+        kpCard.innerHTML = `<b>Matched Knowledge Points</b>` + payload.related_kps.map(
+            item => `<div style="margin-top:8px;"><span class="pill">${item.name}</span><div class="muted" style="margin-top:6px;">${item.description}</div></div>`
+        ).join('');
+        box.appendChild(kpCard);
+    }
+
+    if (payload.citations && payload.citations.length) {
+        payload.citations.forEach(item => {
+            const node = document.createElement('div');
+            const location = item.location || `chunk ${item.chunk_index}`;
+            node.className = 'ref';
+            node.innerHTML = `<b>${item.source} | ${location}</b><div class="muted">${item.snippet}</div>`;
+            box.appendChild(node);
+        });
+    }
+
+    if (!box.children.length) {
+        box.innerHTML = '<div class="muted">No supporting evidence is available for display yet.</div>';
+    }
+}
+
+async function sendMessage(prefill) {
+    const input = document.getElementById('chat-input');
+    const message = (prefill || input.value || '').trim();
+    if (!message) return;
+
+    appendMessage('user', message);
+    historyState.push({ role: 'user', content: message });
+    input.value = '';
+    const thinkingRow = appendThinkingMessage();
+    setComposerBusy(true);
+
+    try {
+        const response = await fetch('{{ url_for("api_chat_4186") }}', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message, history: historyState.slice(-8) })
+        });
+        const payload = await response.json();
+        if (!payload.ok) throw new Error(payload.error || 'Chat request failed.');
+        thinkingRow.remove();
+        const assistantRow = appendMessage('assistant', '');
+        const assistantBubble = assistantRow.querySelector('.bubble');
+        await typeWriter(assistantBubble, payload.answer);
+        renderInlineSources(assistantRow, payload.citations || []);
+        historyState.push({ role: 'assistant', content: payload.answer });
+        renderEvidence(payload);
+    } catch (error) {
+        thinkingRow.remove();
+        const assistantRow = appendMessage('assistant', '');
+        const assistantBubble = assistantRow.querySelector('.bubble');
+        await typeWriter(assistantBubble, `Request failed: ${error.message}`);
+    } finally {
+        setComposerBusy(false);
+        input.focus();
+    }
+}
+
+document.getElementById('send-btn').addEventListener('click', () => sendMessage());
+document.getElementById('chat-input').addEventListener('keydown', event => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+});
+
+document.querySelectorAll('.quick-prompt[data-prompt]').forEach(button => {
+    button.addEventListener('click', () => sendMessage(button.dataset.prompt));
+});
+</script>
+{% endblock %}

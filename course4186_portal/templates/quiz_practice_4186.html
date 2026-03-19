@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% block title %}Practice {{ kp.name }}{% endblock %}
+{% block extra_css %}
+.info-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.summary-card{padding:16px;border-radius:20px;background:var(--surface);border:1px solid var(--line)}
+.q-list{display:grid;gap:18px}
+.q-card{padding:18px;border-radius:22px;background:var(--surface);border:1px solid var(--line)}
+.q-card,.choice,.result{
+    font-family:"Segoe UI","Segoe UI Symbol","Cambria Math","STIX Two Text","Noto Sans","Noto Sans Math","Arial Unicode MS",sans-serif;
+}
+.q-card h3{margin:0 0 12px 0;font-size:18px;line-height:1.65;letter-spacing:.01em;word-break:break-word}
+.choice-list{display:grid;gap:10px}
+.choice{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    padding:12px 14px;
+    border-radius:16px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    line-height:1.65;
+}
+.choice input{margin-top:4px}
+.choice:hover{border-color:rgba(16,163,127,.45)}
+.question-media{margin:0 0 14px 0;padding:14px;border-radius:20px;background:var(--surface-2);border:1px solid var(--line)}
+.question-media img{display:block;max-width:100%;max-height:420px;margin:0 auto;border-radius:14px;object-fit:contain;background:#f3f4f6}
+.question-media figcaption{margin-top:10px;font-size:13px;color:var(--muted);text-align:center}
+.result{margin-top:14px;padding:14px 16px;border-radius:18px;background:var(--surface-2);border:1px solid var(--line);display:grid;gap:8px}
+.ok{color:#0f766e;font-weight:800}
+.bad{color:#b91c1c;font-weight:800}
+.actions{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:960px){.summary-grid{grid-template-columns:1fr 1fr}}
+{% endblock %}
+{% block sidebar_extra %}
+<section class="sidebar-card">
+    <h3 class="sidebar-title">Current Topic</h3>
+    <div class="sidebar-note">
+        <strong style="display:block;color:var(--ink);margin-bottom:8px;">{{ kp.name }}</strong>
+        {{ kp.description }}
+    </div>
+</section>
+
+<section class="sidebar-card">
+    <h3 class="sidebar-title">Actions</h3>
+    <div class="sidebar-actions">
+        <a class="sidebar-text-link" href="{{ url_for('quiz_dashboard_4186') }}">Back to Dashboard</a>
+        <a class="sidebar-text-link" href="{{ url_for('quiz_analysis_4186') }}">Open Learning Report</a>
+        <button class="sidebar-button primary" type="submit" form="practice-form">Submit Answers</button>
+    </div>
+</section>
+
+{% if summary %}
+<section class="sidebar-card">
+    <h3 class="sidebar-title">Latest Result</h3>
+    <div class="sidebar-metric">
+        <span class="muted">Answered</span>
+        <b>{{ summary.answered }}</b>
+    </div>
+    <div class="sidebar-metric">
+        <span class="muted">Correct</span>
+        <b>{{ summary.correct }}</b>
+    </div>
+    <div class="sidebar-metric">
+        <span class="muted">Accuracy</span>
+        <b>{{ summary.accuracy }}%</b>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
+{% block content %}
+<section class="hero">
+    <h2>{{ kp.name }}</h2>
+    <p>{{ kp.description }}</p>
+    <div class="info-row">
+        {% for week in kp.weeks %}
+        <span class="pill">{{ week }}</span>
+        {% endfor %}
+        <span class="pill">{{ questions|length }} questions</span>
+    </div>
+</section>
+
+{% if summary %}
+<section class="card">
+    <div class="summary-grid">
+        <div class="summary-card"><span class="muted">Answered</span><div style="font-size:28px;font-weight:800;">{{ summary.answered }}</div></div>
+        <div class="summary-card"><span class="muted">Correct</span><div style="font-size:28px;font-weight:800;">{{ summary.correct }}</div></div>
+        <div class="summary-card"><span class="muted">Wrong</span><div style="font-size:28px;font-weight:800;">{{ summary.wrong }}</div></div>
+        <div class="summary-card"><span class="muted">Accuracy</span><div style="font-size:28px;font-weight:800;">{{ summary.accuracy }}%</div></div>
+    </div>
+</section>
+{% endif %}
+
+<section class="card">
+    <div style="margin-bottom:14px;">
+        <h3 class="section-title" style="margin-bottom:4px;">Practice Set</h3>
+        <div class="muted">{{ grading_note }}</div>
+    </div>
+    <form id="practice-form" method="POST">
+        <div class="q-list">
+            {% for question in questions %}
+            {% set result = results_map.get(question.question_id) if results_map else None %}
+            <article class="q-card">
+                <h3>Q{{ loop.index }}. {{ question.question }}</h3>
+
+                {% if question.image_path %}
+                <figure class="question-media">
+                    <img src="{{ url_for('course4186_artifact_asset', filename=question.image_path) }}" alt="{{ question.image_caption or question.question }}">
+                    {% if question.image_caption %}
+                    <figcaption>{{ question.image_caption }}</figcaption>
+                    {% endif %}
+                </figure>
+                {% endif %}
+
+                <div class="choice-list">
+                    {% for option in question.parsed_options %}
+                    <label class="choice">
+                        <input type="radio" name="answer_{{ question.question_id }}" value="{{ option.label }}"
+                        {% if result and result.submitted_answer and result.submitted_answer|upper == option.label %}checked{% endif %}>
+                        <div><b>{{ option.label }}.</b> {{ option.text }}</div>
+                    </label>
+                    {% endfor %}
+                </div>
+
+                {% if result %}
+                <div class="result">
+                    <div class="{{ 'ok' if result.is_correct else 'bad' }}">
+                        {{ 'Correct' if result.is_correct else 'Needs Review' }}
+                    </div>
+                    <div><b>Reference answer:</b> {{ result.reference_answer }}</div>
+                    {% if result.explanation %}<div><b>Explanation:</b> {{ result.explanation }}</div>{% endif %}
+                    <div class="muted"><b>Grading:</b> {{ result.grading_note }}</div>
+                    {% if result.matched_keywords %}
+                    <div class="muted"><b>Matched keywords:</b> {{ result.matched_keywords|join(', ') }}</div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </article>
+            {% endfor %}
+        </div>
+        <div class="actions" style="margin-top:18px;">
+            <a class="btn alt" href="{{ url_for('quiz_dashboard_4186') }}">Back to Dashboard</a>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <a class="btn alt" href="{{ url_for('quiz_analysis_4186') }}">Open Learning Report</a>
+                <button class="btn" type="submit">Submit Answers</button>
+            </div>
+        </div>
+    </form>
+</section>
+{% endblock %}

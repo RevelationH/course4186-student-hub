@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+*.log
+.env
+
+course4186_portal/data/progress.json
+course4186_portal/logs/
+course4186_portal/status.json
+
+firebase-service-account.json
+*.firebase-adminsdk-*.json

@@ -1,0 +1,424 @@
+[
+  {
+    "kp_id": "kp-computer-vision-foundations",
+    "name": "Computer vision foundations",
+    "description": "Understanding what computer vision studies: how images are represented, interpreted, and used for recognition, measurement, and scene understanding.",
+    "keywords": [
+      "computer vision",
+      "image understanding",
+      "image representation",
+      "recognition",
+      "scene understanding",
+      "vision tasks"
+    ],
+    "weeks": [
+      "Week1"
+    ],
+    "source_files": [
+      "Week1\\Lecture1-1 (7).pptx"
+    ],
+    "support_chunk_ids": [
+      "chunk-5749a66dfc82",
+      "chunk-b20dccb0397a",
+      "chunk-abd75ebf4271",
+      "chunk-811353f1e8dc",
+      "chunk-ceec7672a33a",
+      "chunk-113dab0800a6",
+      "chunk-6f316b1630b6",
+      "chunk-aad2fe3c1b5c"
+    ],
+    "support_preview": [
+      "The goal of computer vision Computers can gain some high-level understanding from digital images/videos - wikipedia",
+      "The goal of computer vision Compute and understand the physical world",
+      "The goal of computer vision Recognize objects and people Terminator 2 , 1991"
+    ]
+  },
+  {
+    "kp_id": "kp-image-filtering-and-convolution",
+    "name": "Image filtering and convolution",
+    "description": "Representing images as grids and applying linear filters, convolution, correlation, smoothing, and sharpening.",
+    "keywords": [
+      "image filtering",
+      "linear filter",
+      "convolution",
+      "cross-correlation",
+      "gaussian filter",
+      "mean filter",
+      "image sharpening"
+    ],
+    "weeks": [
+      "Week1",
+      "Week2"
+    ],
+    "source_files": [
+      "Week1\\Lecture1-2 (10).pptx",
+      "Week1\\Lecture1-2.pdf",
+      "Week2\\all.pptx",
+      "Week2\\revision (1) (1).pptx",
+      "Week2\\revision_w1.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-3dd745e980a4",
+      "chunk-3d54c09b038b",
+      "chunk-97910ba4ced2",
+      "chunk-8af1d1050c19",
+      "chunk-b22aeed7c8dd",
+      "chunk-244ba7460911",
+      "chunk-a56963587747",
+      "chunk-409fe1a7441c"
+    ],
+    "support_preview": [
+      "Linear filtering-Convolution • Same as cross-correlation, except that the kernel is “flipped” (horizontally and vertically) • Convolution is commutative and associative - F*G = G*F (commutative) - ...",
+      "Linear filters: examples Original 1 1 1 1 1 1 1 1 1 Blur (with a mean filter) Source: D. Lowe * =",
+      "Mean vs. Gaussian filtering Mean filter may garble high-frequency signal"
+    ]
+  },
+  {
+    "kp_id": "kp-edge-detection",
+    "name": "Edge detection",
+    "description": "Detecting visual discontinuities to capture salient boundaries and structure in images.",
+    "keywords": [
+      "edge detection",
+      "edges",
+      "discontinuities",
+      "visual changes"
+    ],
+    "weeks": [
+      "Week2"
+    ],
+    "source_files": [
+      "Week2\\Edge.pptx",
+      "Week2\\Lecture2-1.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-d92e7f2faf93",
+      "chunk-70a0696356ac",
+      "chunk-85ffb19f28f5",
+      "chunk-a3d471905093",
+      "chunk-b389106a3054",
+      "chunk-a339ea67538f",
+      "chunk-e35e04b1e7b3",
+      "chunk-3350d9c23cb5"
+    ],
+    "support_preview": [
+      "Edge detection • Goal: Identify visual changes (discontinuities) in an image. • Intuitively, semantic information is encoded in edges. • What are some ‘causes’ of visual edges? Source: D. Lowe",
+      "Edge detection Goal: Identify visual changes (discontinuities) in an image. Intuitively, semantic information is encoded in edges. What are some ‘causes’ of visual edges? Source: D. Lowe",
+      "Edge detection Convert a 2D image into a set of curves Extracts salient features of the scene More compact than pixels"
+    ]
+  },
+  {
+    "kp_id": "kp-image-resampling",
+    "name": "Image resampling",
+    "description": "Changing image resolution or coordinate sampling while preserving useful information.",
+    "keywords": [
+      "image resampling",
+      "resampling",
+      "sampling",
+      "resolution"
+    ],
+    "weeks": [
+      "Week2"
+    ],
+    "source_files": [
+      "Week2\\Lecture2-2.pdf",
+      "Week2\\sampling.pptx"
+    ],
+    "support_chunk_ids": [
+      "chunk-e2d9fe54b950",
+      "chunk-bd7f80cf87d4",
+      "chunk-5b645983b7ee",
+      "chunk-cf8c9ab7f3d5",
+      "chunk-41356a9265fb",
+      "chunk-75d860d76684",
+      "chunk-fe89394b1e69",
+      "chunk-46975f9d78d0"
+    ],
+    "support_preview": [
+      "Image Resampling",
+      "Image Resampling",
+      "Image sub-sampling Throw away every other row and column to create a smaller size image - called image sub-sampling 1/4 1/8 Source: S. Seitz"
+    ]
+  },
+  {
+    "kp_id": "kp-texture-analysis",
+    "name": "Texture analysis",
+    "description": "Describing repeated local appearance patterns and using them for recognition or classification.",
+    "keywords": [
+      "texture",
+      "natural textures",
+      "color texture"
+    ],
+    "weeks": [
+      "Week2",
+      "Week3"
+    ],
+    "source_files": [
+      "Week2\\ColorTexture.pptx",
+      "Week3\\Lecture3-1 (1).pptx",
+      "Week3\\Lecture3-1.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-70a07948f1f9",
+      "chunk-cea10b0f15e6",
+      "chunk-7cbc2829bfe1",
+      "chunk-38c0dea6a1c4",
+      "chunk-d14d03227587",
+      "chunk-a498334b0e82",
+      "chunk-3204548da2e7",
+      "chunk-1e5f89b5bde3"
+    ],
+    "support_preview": [
+      "Natural Textures grass leaves What/ w here are the textures? How to describe the textures? 1",
+      "Natural Textures grass leavesWhat/where are the textures?Howtodescribethetextures? 1",
+      "Color and Texture"
+    ]
+  },
+  {
+    "kp_id": "kp-convolutional-neural-networks",
+    "name": "Convolutional neural networks",
+    "description": "Learning feature hierarchies for image classification and recognition using CNN architectures.",
+    "keywords": [
+      "convolutional neural network",
+      "cnn",
+      "classification",
+      "decision boundary"
+    ],
+    "weeks": [
+      "Week3",
+      "Week4"
+    ],
+    "source_files": [
+      "Week3\\Lecture3-2.pdf",
+      "Week3\\Lecture3_2 (1).pptx",
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4_2.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-7e8a00fd8fb5",
+      "chunk-0f572bda5322",
+      "chunk-187760cc9a0a",
+      "chunk-3b68283213d2",
+      "chunk-1e1e5b8f0a2b",
+      "chunk-9ee5fa0181b8",
+      "chunk-76fc92f790dc",
+      "chunk-cdb24eb06246"
+    ],
+    "support_preview": [
+      "Object Detection as Classification: SlidingWindow Fei-Fei Li & Justin Johnson & SerenaYeung Lecture 11- 26 Dog? NO Cat? NOBackground? YES ApplyaCNNtomanydifferentcropsoftheimage,CNNclassifieseachcr...",
+      "Object Detection as Classification: SlidingWindow Fei-Fei Li & Justin Johnson & SerenaYeung Lecture 11- 26 Dog? NO Cat? NOBackground? YES ApplyaCNNtomanydifferentcropsoftheimage,CNNclassifieseachcr...",
+      "Convolutional Neural Network Which is the dog?"
+    ]
+  },
+  {
+    "kp_id": "kp-image-segmentation",
+    "name": "Image segmentation",
+    "description": "Partitioning an image into meaningful regions or objects based on appearance and context.",
+    "keywords": [
+      "image segmentation",
+      "segmentation",
+      "regions",
+      "zebras"
+    ],
+    "weeks": [
+      "Week3",
+      "Week4"
+    ],
+    "source_files": [
+      "Week3\\Lecture3-2.pdf",
+      "Week3\\Lecture3_2 (1).pptx",
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_1.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-90dff34f7783",
+      "chunk-ba2d2e3679e8",
+      "chunk-f3c2d1e2cffe",
+      "chunk-9efc86c908ae",
+      "chunk-da8e6c11541d",
+      "chunk-0282f8c5c931",
+      "chunk-afc7c6412a32",
+      "chunk-023c4d883038"
+    ],
+    "support_preview": [
+      "Image Segmentation From Sandlot Science How many zebras?",
+      "ImageSegmentation From Sandlot Science How many zebras?",
+      "ImageSegmentation From Sandlot Science How many zebras?"
+    ]
+  },
+  {
+    "kp_id": "kp-harris-corners-and-local-features",
+    "name": "Harris corners and local features",
+    "description": "Detecting repeatable corner-like structures and describing local image evidence around them.",
+    "keywords": [
+      "harris corner",
+      "corner detection",
+      "feature extraction",
+      "local features"
+    ],
+    "weeks": [
+      "Week5"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-e49346fe1c98",
+      "chunk-24245265ea4c",
+      "chunk-c1bc5145d6eb",
+      "chunk-153ae1508801",
+      "chunk-aa322bf7478c",
+      "chunk-070e045b40c5",
+      "chunk-d6bc111f29cd",
+      "chunk-0ec7d64ad791"
+    ],
+    "support_preview": [
+      "Harris corner detection",
+      "Harris corner detection",
+      "Feature extraction: Corners and blobs"
+    ]
+  },
+  {
+    "kp_id": "kp-sift-and-scale-invariant-features",
+    "name": "SIFT and scale-invariant features",
+    "description": "Building descriptors that remain stable across scale and orientation changes.",
+    "keywords": [
+      "scale invariant feature transform",
+      "sift",
+      "difference of gaussian",
+      "descriptor"
+    ],
+    "weeks": [
+      "Week5",
+      "Week6"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture6-1.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-987c014644dc",
+      "chunk-8dbe9e48de6d",
+      "chunk-9e704538558f",
+      "chunk-2de77b4882c9",
+      "chunk-0e663d56f081",
+      "chunk-4b81c31dd837",
+      "chunk-dedd74614c6f",
+      "chunk-523922f47edf"
+    ],
+    "support_preview": [
+      "Scale Invariant Feature Transform • Scale space peak selection – Potential locations for finding features • Key point localization – Accurately locating the feature key points • Orientation assignm...",
+      "SIFT descriptor Full version • Divide the 16x16 window into a 4x4 grid of cells (2x2 case shown below) • Compute an orientation histogram (8 bin) for each cell (relative orientation and magnitude) ...",
+      "Feature descriptorsWe know how to detect good pointsNext question: How to match them? Lots of possibilities (this wasa popular research area)–Simple option: match square windows around the point–Po..."
+    ]
+  },
+  {
+    "kp_id": "kp-bag-of-words-image-retrieval",
+    "name": "Bag-of-words image retrieval",
+    "description": "Representing images as visual word histograms to support matching and large-scale retrieval.",
+    "keywords": [
+      "bag of words",
+      "bag-of-words",
+      "image matching",
+      "visual words"
+    ],
+    "weeks": [
+      "Week5",
+      "Week6"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week6\\lecture6-2.pdf",
+      "Week6\\lecture6-2.ppt"
+    ],
+    "support_chunk_ids": [
+      "chunk-70fe148113f3",
+      "chunk-343d0d575e52",
+      "chunk-724382c02e8d",
+      "chunk-d8675396be35",
+      "chunk-2e93daba7f59",
+      "chunk-b40ccf3d79ec",
+      "chunk-d844665788c6",
+      "chunk-65f20f8c00dd"
+    ],
+    "support_preview": [
+      "Image matching • For city-sized datasets, fewer than 0.1% of image pairs actually match • Key idea: only consider likely matches • How do we know if a match is likely? • Solution: use fast global s...",
+      "Large-scale image matching • Bag-of-words models have been useful in matching an image to a large database of object instances 11,400 images of game covers (Caltech games dataset) how do I find thi...",
+      "Image matching For city-sized datasets, fewer than 0.1% of image pairs actually match Key idea: only consider likely matches How do we know if a match is likely? Solution: use fast global similarit..."
+    ]
+  },
+  {
+    "kp_id": "kp-geometric-transformations",
+    "name": "Geometric transformations",
+    "description": "Modeling translation, rotation, scaling, and other geometric relationships between images.",
+    "keywords": [
+      "transformations",
+      "similarity transformation",
+      "translation",
+      "rotation",
+      "uniform scale"
+    ],
+    "weeks": [
+      "Week1",
+      "Week5",
+      "Week6"
+    ],
+    "source_files": [
+      "Week1\\Lecture1-2.pdf",
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture5_revision.pptx"
+    ],
+    "support_chunk_ids": [
+      "chunk-e0ea4ba6fcc6",
+      "chunk-4c356a570c0c",
+      "chunk-639f12ff670a",
+      "chunk-4b81c31dd837",
+      "chunk-6a0bb72c9feb",
+      "chunk-8f4eb28cf94f",
+      "chunk-6323c7607ff6",
+      "chunk-3a581046a8ab"
+    ],
+    "support_preview": [
+      "Image transformations Geometric Rotation Scale Photometric Intensity change",
+      "Image transformations•GeometricRotation Scale •PhotometricIntensity change",
+      "Invariant local features Find features that are invariant to transformations geometric invariance: translation, rotation, scale photometric invariance: brightness, exposure, … Feature Descriptors"
+    ]
+  },
+  {
+    "kp_id": "kp-image-alignment",
+    "name": "Image alignment",
+    "description": "Computing transformations that align multiple images using feature matches and consistency criteria.",
+    "keywords": [
+      "image alignment",
+      "align",
+      "compute the transform",
+      "matches between images"
+    ],
+    "weeks": [
+      "Week5"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-382ce6802a08",
+      "chunk-1d141ffaa6dd",
+      "chunk-4b045e129f29",
+      "chunk-0fb3f7f32da7"
+    ],
+    "support_preview": [
+      "More motivation… Feature points are used for: Image alignment 3D reconstruction Motion tracking Object recognition Indexing and database retrieval Robot navigation … other",
+      "More motivation… Feature points are used for:–Image alignment–3D reconstruction–Motion tracking–Object recognition–Indexing and database retrieval–Robot navigation–… other",
+      "Why extract features? Motivation: panorama stitching We have two images – how do we combine them? Step 1: extract features Step 2: match features Step 3: align images Step 0: interest point detection"
+    ]
+  }
+]

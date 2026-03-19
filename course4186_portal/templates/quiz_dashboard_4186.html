@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block title %}Quiz 4186{% endblock %}
+{% block extra_css %}
+.toolbar{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}
+.toolbar input{
+    min-width:280px;
+    padding:12px 14px;
+    border-radius:16px;
+    border:1px solid var(--line-strong);
+    background:var(--surface-2);
+    font:inherit;
+    color:var(--ink);
+}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.stat{padding:16px 18px;border-radius:20px;background:var(--surface);border:1px solid var(--line)}
+.stat b{font-size:28px;display:block;margin-top:8px;letter-spacing:-.02em}
+.kp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.kp-card{padding:18px;border-radius:22px;background:var(--surface);border:1px solid var(--line);display:grid;gap:12px}
+.kp-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+.kp-top h3{margin:0;font-size:20px;line-height:1.35}
+.kp-desc{
+    color:#374151;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:12px 14px;
+    line-height:1.7;
+    font-weight:500;
+}
+.weekline{display:flex;gap:8px;flex-wrap:wrap}
+.progressbar{height:10px;border-radius:999px;background:#e5e7eb;overflow:hidden}
+.progressbar span{display:block;height:100%;background:linear-gradient(90deg,var(--brand),#34d399)}
+.meta-row{display:flex;gap:10px;flex-wrap:wrap}
+@media(max-width:960px){.stats{grid-template-columns:1fr 1fr}.kp-grid{grid-template-columns:1fr}}
+{% endblock %}
+{% block sidebar_extra %}
+<section class="sidebar-card">
+    <h3 class="sidebar-title">Quick Access</h3>
+    <div class="sidebar-actions">
+        <a class="sidebar-text-link" href="{{ url_for('chatapi_4186') }}">Back to ChatAPI</a>
+        <a class="sidebar-text-link" href="{{ url_for('quiz_analysis_4186') }}">Open Learning Report</a>
+    </div>
+</section>
+
+<section class="sidebar-card">
+    <h3 class="sidebar-title">Progress</h3>
+    <div class="sidebar-metric">
+        <span class="muted">Knowledge Points</span>
+        <b>{{ kps|length }}</b>
+    </div>
+    <div class="sidebar-metric">
+        <span class="muted">Answered</span>
+        <b>{{ course4186_summary.answered }}</b>
+    </div>
+    <div class="sidebar-metric">
+        <span class="muted">Accuracy</span>
+        <b>{{ course4186_summary.accuracy }}%</b>
+    </div>
+</section>
+
+<section class="sidebar-card">
+    <h3 class="sidebar-title">Usage</h3>
+    <div class="sidebar-note">
+        Students can practice by knowledge point here. Every question is multiple choice, each knowledge point has at least five questions, and lecture images are used whenever possible.
+    </div>
+</section>
+{% endblock %}
+{% block content %}
+<section class="hero">
+    <h2>Quiz Dashboard</h2>
+    <p>Welcome students to targeted practice by knowledge point. Each card shows your current progress, accuracy, and related teaching week.</p>
+</section>
+
+<section class="card">
+    <div class="stats">
+        <div class="stat"><span class="muted">Student Account</span><b>{{ profile.account_name or profile.display_name }}</b></div>
+        <div class="stat"><span class="muted">Knowledge Points</span><b>{{ kps|length }}</b></div>
+        <div class="stat"><span class="muted">Answered</span><b>{{ course4186_summary.answered }}</b></div>
+        <div class="stat"><span class="muted">Accuracy</span><b>{{ course4186_summary.accuracy }}%</b></div>
+    </div>
+</section>
+
+<section class="card">
+    <div class="toolbar" style="margin-bottom:16px;">
+        <div>
+            <h3 class="section-title" style="margin-bottom:4px;">Knowledge Point Library</h3>
+            <div class="muted">Search by topic, teaching week, or description and then enter practice.</div>
+        </div>
+        <input id="kp-search" placeholder="Search by topic, week, or description">
+    </div>
+    <div id="kp-grid" class="kp-grid">
+        {% for kp in kps %}
+        <article class="kp-card" data-search="{{ (kp.name ~ ' ' ~ kp.description ~ ' ' ~ (kp.weeks|join(' ')))|lower }}">
+            <div class="kp-top">
+                <div>
+                    <h3>{{ kp.name }}</h3>
+                    <div class="weekline" style="margin-top:8px;">
+                        {% for week in kp.weeks %}
+                        <span class="pill">{{ week }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <span class="pill">{{ kp.question_count }} questions</span>
+            </div>
+            <div class="kp-desc">{{ kp.description }}</div>
+            <div class="meta-row">
+                <span class="pill">Answered {{ kp.answered }}</span>
+                <span class="pill">Wrong {{ kp.wrong }}</span>
+                <span class="pill">Accuracy {{ kp.accuracy }}%</span>
+            </div>
+            <div class="progressbar"><span style="width: {{ kp.accuracy if kp.answered else 0 }}%;"></span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+                <div class="muted">ID: <code>{{ kp.kp_id }}</code></div>
+                <a class="btn" href="{{ url_for('quiz_practice_4186', kp_id=kp.kp_id) }}">Start Practice</a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+{% block extra_js %}
+<script>
+document.getElementById('kp-search').addEventListener('input', event => {
+    const query = event.target.value.trim().toLowerCase();
+    document.querySelectorAll('#kp-grid .kp-card').forEach(card => {
+        const haystack = card.dataset.search || '';
+        card.style.display = !query || haystack.includes(query) ? '' : 'none';
+    });
+});
+</script>
+{% endblock %}
