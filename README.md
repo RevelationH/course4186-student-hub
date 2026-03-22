@@ -30,6 +30,30 @@ Optional compatibility variables:
 - `COURSE4186_COURSE_ROOT`
 - `CLOUDFLARED_PATH`
 
+## Firebase Setup
+
+The portal uses Firebase for student login and chat-session storage.
+
+On Linux, export one of the following before starting the portal:
+
+```bash
+export FIREBASE_CREDENTIALS=/home/ubuntu/firebase-service-account.json
+```
+
+or
+
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS=/home/ubuntu/firebase-service-account.json
+```
+
+The code will look for credentials in this order:
+
+1. `FIREBASE_CREDENTIALS`
+2. `GOOGLE_APPLICATION_CREDENTIALS`
+3. `firebase-service-account.json` in the repository root
+
+If none of these exist, startup will stop with a clear Firebase configuration error.
+
 ## Install
 
 ```powershell
