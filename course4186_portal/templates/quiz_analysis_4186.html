@@ -1,135 +1,530 @@
 {% extends "base.html" %}
 {% block title %}Learning Report 4186{% endblock %}
 {% block extra_css %}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.stat{padding:18px;border-radius:20px;background:var(--surface);border:1px solid var(--line)}
-.columns{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
-.panel{padding:18px;border-radius:22px;background:var(--surface);border:1px solid var(--line)}
-.list{display:grid;gap:12px}
-.row{padding:14px 16px;border-radius:18px;background:var(--surface-2);border:1px solid var(--line)}
-.row strong{display:block;margin-bottom:6px}
-.table{display:grid;gap:10px}
-.table-item{display:grid;grid-template-columns:2fr repeat(3,1fr) 1fr;gap:10px;padding:12px 14px;border-radius:16px;background:var(--surface-2);border:1px solid var(--line);align-items:center}
-.table-head{font-weight:800;background:#f3f4f6}
-.small{font-size:13px;color:var(--muted)}
-@media(max-width:960px){.stats{grid-template-columns:1fr 1fr}.columns{grid-template-columns:1fr}.table-item{grid-template-columns:1.8fr 1fr 1fr 1fr 1fr;font-size:13px}}
-{% endblock %}
-{% block sidebar_extra %}
-<section class="sidebar-card">
-    <h3 class="sidebar-title">Quick Access</h3>
-    <div class="sidebar-actions">
-        <a class="sidebar-text-link" href="{{ url_for('chatapi_4186') }}">Back to ChatAPI</a>
-        <a class="sidebar-text-link" href="{{ url_for('quiz_dashboard_4186') }}">Continue Practice</a>
-    </div>
-</section>
-
-<section class="sidebar-card">
-    <h3 class="sidebar-title">Summary</h3>
-    <div class="sidebar-metric">
-        <span class="muted">Answered</span>
-        <b>{{ summary.answered }}</b>
-    </div>
-    <div class="sidebar-metric">
-        <span class="muted">Correct</span>
-        <b>{{ summary.correct }}</b>
-    </div>
-    <div class="sidebar-metric">
-        <span class="muted">Accuracy</span>
-        <b>{{ summary.accuracy }}%</b>
-    </div>
-</section>
-
-<section class="sidebar-card">
-    <h3 class="sidebar-title">Report Note</h3>
-    <div class="sidebar-note">
-        This report is built from your practice history in the Course 4186 student hub.
-    </div>
-</section>
+.report-note{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 12px;
+    border-radius:999px;
+    background:var(--brand-soft);
+    border:1px solid rgba(16,163,127,.18);
+    color:var(--brand-strong);
+    font-size:12px;
+    font-weight:700;
+}
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:14px;
+    align-items:stretch;
+}
+.stat{
+    padding:18px;
+    border-radius:22px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    display:grid;
+    align-content:space-between;
+    gap:14px;
+    min-height:152px;
+}
+.stat b{
+    display:block;
+    margin-top:10px;
+    font-size:28px;
+    line-height:1;
+    letter-spacing:-.03em;
+}
+.stat small{
+    display:block;
+    margin-top:8px;
+    color:var(--muted);
+    line-height:1.5;
+}
+.report-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    align-items:stretch;
+}
+.panel{
+    padding:20px 22px;
+    border-radius:24px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    box-shadow:var(--shadow);
+    height:100%;
+}
+.stack{
+    display:grid;
+    gap:14px;
+    align-content:start;
+}
+.topic-card{
+    padding:16px 17px;
+    border-radius:18px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    display:grid;
+    gap:8px;
+}
+.topic-card h4,
+.review-card h4,
+.follow-card h4{
+    margin:0;
+    font-size:17px;
+    line-height:1.45;
+}
+.meta-row{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+.pill-soft{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 10px;
+    border-radius:999px;
+    background:#f3f4f6;
+    border:1px solid var(--line);
+    font-size:12px;
+    font-weight:700;
+    color:#374151;
+}
+.topic-card p,
+.review-card p,
+.follow-card p{
+    margin:0;
+    color:#374151;
+    line-height:1.65;
+}
+.recommend-list{
+    display:grid;
+    gap:12px;
+}
+.recommend-item{
+    padding:15px 16px;
+    border-radius:18px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    line-height:1.7;
+    color:#374151;
+}
+.breakdown{
+    display:grid;
+    gap:12px;
+}
+.break-row{
+    padding:16px 17px;
+    border-radius:20px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    display:grid;
+    gap:10px;
+}
+.break-head{
+    display:flex;
+    justify-content:space-between;
+    gap:14px;
+    align-items:flex-start;
+}
+.break-head h4{
+    margin:0;
+    font-size:18px;
+    line-height:1.35;
+}
+.progress-track{
+    height:10px;
+    border-radius:999px;
+    background:#e5e7eb;
+    overflow:hidden;
+}
+.progress-track span{
+    display:block;
+    height:100%;
+    background:linear-gradient(90deg,var(--brand),#34d399);
+}
+.progress-track.warn span{
+    background:linear-gradient(90deg,#f59e0b,#fb7185);
+}
+.review-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+    align-items:stretch;
+}
+.review-card,
+.activity-card,
+.follow-card{
+    padding:18px;
+    border-radius:22px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    display:grid;
+    gap:10px;
+    align-content:start;
+}
+.list{
+    display:grid;
+    gap:12px;
+}
+.small{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.6;
+}
+.ref-list{
+    display:grid;
+    gap:8px;
+}
+.ref-link{
+    display:block;
+    padding:10px 12px;
+    border-radius:14px;
+    border:1px solid var(--line);
+    background:#fff;
+    color:var(--ink);
+    text-decoration:none;
+    line-height:1.55;
+}
+.ref-link:hover{
+    border-color:rgba(16,163,127,.45);
+}
+.follow-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+    align-items:stretch;
+}
+.options{
+    display:grid;
+    gap:9px;
+}
+.option{
+    padding:11px 12px;
+    border-radius:15px;
+    background:#fff;
+    border:1px solid var(--line);
+    line-height:1.6;
+}
+.follow-card figure{
+    margin:0;
+    padding:14px;
+    border-radius:18px;
+    background:#fff;
+    border:1px solid var(--line);
+}
+.follow-card img{
+    display:block;
+    width:100%;
+    max-height:250px;
+    object-fit:contain;
+    border-radius:12px;
+    background:#f3f4f6;
+}
+.follow-card figcaption{
+    margin-top:10px;
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
+    text-align:center;
+}
+.answer-toggle{
+    border-radius:16px;
+    border:1px solid var(--line);
+    background:#fff;
+    overflow:hidden;
+}
+.answer-toggle summary{
+    list-style:none;
+    cursor:pointer;
+    padding:12px 14px;
+    font-weight:700;
+}
+.answer-toggle summary::-webkit-details-marker{display:none}
+.answer-body{
+    padding:0 14px 14px;
+    display:grid;
+    gap:10px;
+}
+.empty{
+    padding:18px;
+    border-radius:18px;
+    background:var(--surface-2);
+    border:1px dashed var(--line-strong);
+    color:#374151;
+    line-height:1.7;
+}
+@media(max-width:1180px){
+    .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .follow-grid{grid-template-columns:1fr}
+}
+@media(max-width:960px){
+    .report-grid,.review-grid{grid-template-columns:1fr}
+    .stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:720px){
+    .stats{grid-template-columns:1fr}
+}
 {% endblock %}
 {% block content %}
 <section class="hero">
-    <h2>Learning Report</h2>
-    <p>Review your answers, identify weaker areas, and plan your next study steps from one place.</p>
+    <div class="report-note">Week 1-6 practice data only</div>
+    <h2 style="margin-top:14px;">Learning Report</h2>
+    <p>This report reviews your current quiz history, highlights stronger and weaker knowledge points, and recommends the next questions to study. All statistics below use the current week 1-6 question bank, so older test data is excluded.</p>
 </section>
 
 <section class="card">
     <div class="stats">
-        <div class="stat"><span class="muted">Student Account</span><div style="font-size:28px;font-weight:800;">{{ profile.account_name or profile.display_name }}</div></div>
-        <div class="stat"><span class="muted">Answered</span><div style="font-size:28px;font-weight:800;">{{ summary.answered }}</div></div>
-        <div class="stat"><span class="muted">Correct</span><div style="font-size:28px;font-weight:800;">{{ summary.correct }}</div></div>
-        <div class="stat"><span class="muted">Accuracy</span><div style="font-size:28px;font-weight:800;">{{ summary.accuracy }}%</div></div>
+        <div class="stat">
+            <span class="muted">Student Account</span>
+            <b>{{ profile.account_name or profile.display_name }}</b>
+            <small>Signed in student</small>
+        </div>
+        <div class="stat">
+            <span class="muted">Answered</span>
+            <b>{{ summary.answered }}</b>
+            <small>Latest recorded answers across the current question bank</small>
+        </div>
+        <div class="stat">
+            <span class="muted">Accuracy</span>
+            <b>{{ summary.accuracy }}%</b>
+            <small>Correct {{ summary.correct }} | Wrong {{ summary.wrong }}</small>
+        </div>
+        <div class="stat">
+            <span class="muted">Mastered Topics</span>
+            <b>{{ summary.mastered_points }}</b>
+            <small>Knowledge points with stable performance</small>
+        </div>
+        <div class="stat">
+            <span class="muted">Current Trend</span>
+            <b style="font-size:24px;">{{ summary.trend_label }}</b>
+            <small>{{ summary.trend_note }}</small>
+        </div>
     </div>
 </section>
 
-<div class="columns">
+<div class="report-grid">
     <section class="panel">
-        <h3 class="section-title">Weak Areas</h3>
-        <div class="list">
-            {% if weak_points %}
-                {% for row in weak_points %}
-                <div class="row">
-                    <strong>{{ row.kp_name }}</strong>
-                    <div class="small">Answered {{ row.answered }} | Wrong {{ row.wrong }} | Accuracy {{ row.accuracy }}%</div>
-                </div>
+        <h3 class="section-title">Strength Snapshot</h3>
+        <div class="stack">
+            {% if strength_points %}
+                {% for row in strength_points %}
+                <article class="topic-card">
+                    <h4>{{ row.kp_name }}</h4>
+                    <div class="meta-row">
+                        <span class="pill-soft">Accuracy {{ row.accuracy }}%</span>
+                        <span class="pill-soft">Correct {{ row.correct }}/{{ row.answered }}</span>
+                        {% for week in row.weeks %}
+                        <span class="pill-soft">{{ week }}</span>
+                        {% endfor %}
+                    </div>
+                    <p>{{ row.description }}</p>
+                </article>
                 {% endfor %}
             {% else %}
-                <div class="row">No clear weak area yet. Keep practicing more knowledge points to build a stronger study profile.</div>
+                <div class="empty">No strong area is visible yet. Once you complete more quiz sets, this section will show the knowledge points that are becoming stable.</div>
             {% endif %}
         </div>
     </section>
 
     <section class="panel">
-        <h3 class="section-title">Recommendations</h3>
-        <div class="list">
-            {% for item in recommendations %}
-            <div class="row">{{ item }}</div>
-            {% endfor %}
-        </div>
-        <div style="margin-top:14px;">
-            <a class="btn" href="{{ url_for('quiz_dashboard_4186') }}">Continue Practice</a>
+        <h3 class="section-title">Priority Review</h3>
+        <div class="stack">
+            {% if weak_points %}
+                {% for row in weak_points %}
+                <article class="topic-card">
+                    <h4>{{ row.kp_name }}</h4>
+                    <div class="meta-row">
+                        <span class="pill-soft">Accuracy {{ row.accuracy }}%</span>
+                        <span class="pill-soft">Wrong {{ row.wrong }}</span>
+                        <span class="pill-soft">Answered {{ row.answered }}</span>
+                    </div>
+                    {% if row.latest_mistake_question %}
+                    <p><strong>Latest issue:</strong> {{ row.latest_mistake_question }}</p>
+                    {% endif %}
+                    {% if row.latest_mistake_explanation %}
+                    <p>{{ row.latest_mistake_explanation }}</p>
+                    {% endif %}
+                    {% if row.review_refs %}
+                    <div class="ref-list">
+                        {% for ref in row.review_refs[:2] %}
+                        <a class="ref-link" href="{{ ref.material_url }}" target="_blank" rel="noreferrer">
+                            {{ ref.display_source }} | {{ ref.location }} | {{ ref.section }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            {% else %}
+                <div class="empty">No unresolved weak area is currently visible in the active week 1-6 quiz bank. Continue practicing to keep your stronger topics stable.</div>
+            {% endif %}
         </div>
     </section>
 </div>
 
 <section class="card">
-    <h3 class="section-title">Knowledge Point Breakdown</h3>
-    <div class="table">
-        <div class="table-item table-head">
-            <div>Knowledge Point</div>
-            <div>Answered</div>
-            <div>Correct</div>
-            <div>Wrong</div>
-            <div>Accuracy</div>
-        </div>
-        {% for row in kp_stats %}
-        <div class="table-item">
-            <div>{{ row.kp_name }}</div>
-            <div>{{ row.answered }}</div>
-            <div>{{ row.correct }}</div>
-            <div>{{ row.wrong }}</div>
-            <div>{{ row.accuracy }}%</div>
-        </div>
+    <h3 class="section-title">Study Advice</h3>
+    <div class="recommend-list">
+        {% for item in recommendations %}
+        <div class="recommend-item">{{ item }}</div>
         {% endfor %}
-        {% if not kp_stats %}
-        <div class="row">No attempts have been recorded yet.</div>
-        {% endif %}
     </div>
 </section>
 
 <section class="card">
-    <h3 class="section-title">Recent Attempts</h3>
-    <div class="list">
-        {% if recent_attempts %}
-            {% for item in recent_attempts %}
-            <div class="row">
-                <strong>{{ item.kp_name }} · {{ 'Correct' if item.is_correct else 'Wrong' }}</strong>
-                <div>{{ item.question }}</div>
-                <div class="small">{{ item.timestamp }}</div>
-            </div>
-            {% endfor %}
-        {% else %}
-            <div class="row">No recent attempts yet.</div>
-        {% endif %}
+    <div style="display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:14px;">
+        <div>
+            <h3 class="section-title" style="margin-bottom:4px;">Knowledge Point Breakdown</h3>
+            <div class="muted">Use this table to decide where a full review is needed and where a short warm-up is enough.</div>
+        </div>
+        <div class="meta-row">
+            <span class="pill-soft">Explored {{ summary.explored_points }} topics</span>
+            <span class="pill-soft">Recent accuracy {{ summary.recent_accuracy }}%</span>
+        </div>
     </div>
+    <div class="breakdown">
+        {% for row in kp_stats %}
+        <article class="break-row">
+            <div class="break-head">
+                <div>
+                    <h4>{{ row.kp_name }}</h4>
+                    <div class="small">{{ row.description }}</div>
+                </div>
+                <div class="meta-row">
+                    {% for week in row.weeks %}
+                    <span class="pill-soft">{{ week }}</span>
+                    {% endfor %}
+                    <span class="pill-soft">Answered {{ row.answered }}</span>
+                </div>
+            </div>
+            <div class="progress-track {% if row.wrong > 0 %}warn{% endif %}">
+                <span style="width: {{ row.accuracy if row.answered else 0 }}%;"></span>
+            </div>
+            <div class="meta-row">
+                <span class="pill-soft">Correct {{ row.correct }}</span>
+                <span class="pill-soft">Wrong {{ row.wrong }}</span>
+                <span class="pill-soft">Accuracy {{ row.accuracy }}%</span>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<div class="review-grid">
+    <section class="panel">
+        <h3 class="section-title">Questions To Fix First</h3>
+        <div class="list">
+            {% if review_queue %}
+                {% for item in review_queue %}
+                <article class="review-card">
+                    <h4>{{ item.kp_name }}</h4>
+                    <p>{{ item.question }}</p>
+                    {% if item.explanation %}
+                    <p>{{ item.explanation }}</p>
+                    {% endif %}
+                    <div class="small">Last seen: {{ item.timestamp_display }}</div>
+                    {% if item.review_refs %}
+                    <div class="ref-list">
+                        {% for ref in item.review_refs[:2] %}
+                        <a class="ref-link" href="{{ ref.material_url }}" target="_blank" rel="noreferrer">
+                            {{ ref.display_source }} | {{ ref.location }} | {{ ref.section }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            {% else %}
+                <div class="empty">There are no unresolved questions in your current week 1-6 record.</div>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="panel">
+        <h3 class="section-title">Recent Activity</h3>
+        <div class="list">
+            {% if recent_attempts %}
+                {% for item in recent_attempts %}
+                <article class="activity-card">
+                    <h4>{{ item.kp_name }}</h4>
+                    <p>{{ item.question }}</p>
+                    <div class="meta-row">
+                        <span class="pill-soft">{{ 'Correct' if item.is_correct else 'Review Needed' }}</span>
+                        <span class="pill-soft">{{ item.timestamp_display }}</span>
+                    </div>
+                </article>
+                {% endfor %}
+            {% else %}
+                <div class="empty">No quiz activity has been recorded yet.</div>
+            {% endif %}
+        </div>
+    </section>
+</div>
+
+<section class="card">
+    <div style="display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:14px;">
+        <div>
+            <h3 class="section-title" style="margin-bottom:4px;">Recommended Next Questions</h3>
+            <div class="muted">These are fresh follow-up questions chosen from the current bank based on the topics that still need reinforcement.</div>
+        </div>
+        <a class="btn alt" href="{{ url_for('quiz_dashboard_4186') }}">Open Quiz Library</a>
+    </div>
+
+    {% if follow_up_questions %}
+    <div class="follow-grid">
+        {% for item in follow_up_questions %}
+        <article class="follow-card">
+            <div class="meta-row">
+                <span class="pill-soft">{{ item.kp_name }}</span>
+                <span class="pill-soft">Focus: {{ item.focus_topic }}</span>
+            </div>
+            <p>{{ item.reason }}</p>
+            <h4>{{ item.question }}</h4>
+
+            {% if item.image_path %}
+            <figure>
+                <img src="{{ url_for('course4186_artifact_asset', filename=item.image_path) }}" alt="{{ item.image_caption or item.question }}">
+                {% if item.image_caption %}
+                <figcaption>{{ item.image_caption }}</figcaption>
+                {% endif %}
+            </figure>
+            {% endif %}
+
+            <div class="options">
+                {% for option in item.parsed_options %}
+                <div class="option"><strong>{{ option.label }}.</strong> {{ option.text }}</div>
+                {% endfor %}
+            </div>
+
+            <details class="answer-toggle">
+                <summary>Check explanation and review source</summary>
+                <div class="answer-body">
+                    <div><strong>Suggested answer:</strong> {{ item.reference_answer }}</div>
+                    {% if item.explanation %}
+                    <div>{{ item.explanation }}</div>
+                    {% endif %}
+                    {% if item.review_refs %}
+                    <div class="ref-list">
+                        {% for ref in item.review_refs[:2] %}
+                        <a class="ref-link" href="{{ ref.material_url }}" target="_blank" rel="noreferrer">
+                            {{ ref.display_source }} | {{ ref.location }} | {{ ref.section }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </details>
+
+            <a class="btn" href="{{ url_for('quiz_practice_4186', kp_id=item.kp_id) }}">Open Full Practice</a>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty">No additional follow-up questions are available yet. Once more quiz data is recorded, this section will suggest new practice automatically.</div>
+    {% endif %}
 </section>
 {% endblock %}

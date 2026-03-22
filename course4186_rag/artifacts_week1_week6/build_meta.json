@@ -3,11 +3,9 @@
   "artifact_dir": "D:\\digital_human\\course4186_rag\\artifacts_week1_week6",
   "max_week": 6,
   "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
-  "llm_requested": true,
+  "llm_requested": false,
   "llm": {
-    "enabled": true,
-    "model": "deepseek-chat",
-    "error": null
+    "enabled": false
   },
   "chunk_index": {
     "status": "built",

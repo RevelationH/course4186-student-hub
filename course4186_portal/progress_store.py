@@ -75,6 +75,10 @@ class ProgressStore:
     def get_user(self, user_id: str) -> Dict[str, Any]:
         return self.ensure_user(user_id)
 
+    def all_attempts(self, user_id: str) -> List[Dict[str, Any]]:
+        user = self.get_user(user_id)
+        return [dict(item) for item in user.get("attempts", [])]
+
     def record_attempts(
         self,
         user_id: str,
@@ -114,7 +118,7 @@ class ProgressStore:
 
     def summary(self, user_id: str) -> Dict[str, Any]:
         user = self.get_user(user_id)
-        attempts = user.get("attempts", [])
+        attempts = self._latest_attempts(user)
         answered = len(attempts)
         correct = sum(1 for item in attempts if item.get("is_correct"))
         wrong = answered - correct
@@ -128,6 +132,7 @@ class ProgressStore:
 
     def kp_stats(self, user_id: str) -> List[Dict[str, Any]]:
         user = self.get_user(user_id)
+        attempts = self._latest_attempts(user)
         grouped: Dict[str, Dict[str, Any]] = defaultdict(
             lambda: {
                 "kp_id": "",
@@ -138,7 +143,7 @@ class ProgressStore:
                 "last_at": "",
             }
         )
-        for item in user.get("attempts", []):
+        for item in attempts:
             bucket = grouped[item["kp_id"]]
             bucket["kp_id"] = item["kp_id"]
             bucket["kp_name"] = item["kp_name"]
@@ -168,6 +173,15 @@ class ProgressStore:
         attempts = list(user.get("attempts", []))
         attempts.sort(key=lambda row: row.get("timestamp") or "", reverse=True)
         return attempts[:limit]
+
+    def _latest_attempts(self, user: Dict[str, Any]) -> List[Dict[str, Any]]:
+        latest: Dict[tuple[str, str], Dict[str, Any]] = {}
+        for item in user.get("attempts", []):
+            key = (str(item.get("kp_id") or ""), str(item.get("question_id") or ""))
+            previous = latest.get(key)
+            if previous is None or (item.get("timestamp") or "") >= (previous.get("timestamp") or ""):
+                latest[key] = item
+        return list(latest.values())
 
     def _now_iso(self) -> str:
         return datetime.now(timezone.utc).isoformat()

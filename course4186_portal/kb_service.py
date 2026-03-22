@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import math
 import os
 import re
 import textwrap
@@ -40,7 +41,10 @@ STOPWORDS = {
     "will", "then", "than", "your", "their", "they", "them", "what", "when", "where",
     "which", "while", "using", "used", "mainly", "because", "there", "these", "those",
     "through", "between", "being", "also", "does", "such", "give", "briefly", "state",
-    "course", "would", "could", "should", "into", "only", "over",
+    "course", "would", "could", "should", "into", "only", "over", "is", "are", "was",
+    "were", "to", "of", "in", "on", "at", "by", "as", "be", "a", "an", "it", "or",
+    "do", "did", "done", "can", "just", "please", "tell", "show", "me", "explain",
+    "describe", "define", "summarize", "summary",
 }
 QUERY_NOISE_TOKENS = STOPWORDS | {
     "who", "are", "you", "hello", "hi", "hey", "thanks", "thank", "please", "me",
@@ -57,6 +61,7 @@ HELP_RE = re.compile(r"\b(what can you do|how can you help|help me use this syst
 THANKS_RE = re.compile(r"\b(thanks|thank you|appreciate it)\b", re.IGNORECASE)
 REPORT_RE = re.compile(r"\b(show|open|view|check).*(learning report|study summary)\b", re.IGNORECASE)
 QUIZ_RE = re.compile(r"\b(open|show|start|go to).*(quiz|practice)\b", re.IGNORECASE)
+DEFINITION_RE = re.compile(r"\b(what is|what are|define|definition|overview|introduce)\b", re.IGNORECASE)
 DISPLAY_REPLACEMENTS = {
     "\u2022": "-",
     "\u2013": "-",
@@ -167,7 +172,7 @@ def lexical_rank(
             freq = term_freq.get(term, 0)
             if freq == 0:
                 continue
-            idf = __import__("math").log(1 + (doc_count - doc_freq[term] + 0.5) / (doc_freq[term] + 0.5))
+            idf = math.log(1 + (doc_count - doc_freq[term] + 0.5) / (doc_freq[term] + 0.5))
             denom = freq + 1.5 * (1 - 0.75 + 0.75 * doc_len / avg_len)
             score += idf * (freq * 2.5 / denom)
         if score > 0:
@@ -191,12 +196,33 @@ class Course4186KnowledgeBase:
 
         self.kp_by_id = {item["kp_id"]: item for item in self.kps}
         self.chunk_by_id = {item["chunk_id"]: item for item in self.chunks}
+        self.chunk_search_blobs: Dict[str, str] = {}
+        self.chunk_term_sets: Dict[str, set[str]] = {}
+        self.chunk_title_term_sets: Dict[str, set[str]] = {}
+        for chunk in self.chunks:
+            blob = clean_display_text(
+                "\n".join([chunk.get("title", ""), chunk.get("relative_path", ""), chunk.get("text", "")])
+            ).lower()
+            self.chunk_search_blobs[chunk["chunk_id"]] = blob
+            self.chunk_term_sets[chunk["chunk_id"]] = set(tokenize(blob))
+            self.chunk_title_term_sets[chunk["chunk_id"]] = set(
+                tokenize(clean_display_text("\n".join([chunk.get("title", ""), chunk.get("relative_path", "")])).lower())
+            )
         self.questions_by_kp: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
         for question in self.questions:
             enriched = dict(question)
             enriched["parsed_options"] = parse_options(question.get("options", []))
             self.questions_by_kp[question["kp_id"]].append(enriched)
         self.course_terms = self._build_course_terms()
+        self.kp_term_sets: Dict[str, set[str]] = {}
+        for kp in self.kps:
+            self.kp_term_sets[kp["kp_id"]] = {
+                token
+                for token in tokenize(
+                    "\n".join([kp.get("name", ""), kp.get("description", ""), " ".join(kp.get("keywords", []))])
+                )
+                if len(token) > 1 and token not in QUERY_NOISE_TOKENS
+            }
 
         self._dense_enabled = False
         self._vector_store = None
@@ -241,6 +267,95 @@ class Course4186KnowledgeBase:
             if len(token) > 1 and token not in QUERY_NOISE_TOKENS
         ]
 
+    def _ranking_query(self, query: str) -> str:
+        tokens = self._content_tokens(query)
+        if tokens:
+            return " ".join(tokens)
+        return clean_display_text(query)
+
+    def _course_term_matches(self, tokens: Sequence[str]) -> set[str]:
+        return {token for token in tokens if token in self.course_terms}
+
+    def _definition_request(self, query: str) -> bool:
+        return bool(DEFINITION_RE.search(clean_display_text(query).lower()))
+
+    def _rerank_kp_hits(self, query: str, hits: Sequence[Dict[str, Any]], top_k: int) -> List[Dict[str, Any]]:
+        query_terms = set(self._content_tokens(query))
+        ranking_query = self._ranking_query(query).lower()
+        reranked: List[Dict[str, Any]] = []
+        for hit in hits:
+            item = hit["item"]
+            kp_terms = self.kp_term_sets.get(item["kp_id"], set())
+            overlap = len(query_terms & kp_terms)
+            phrase_bonus = 3.0 if ranking_query and ranking_query in " ".join(sorted(kp_terms)) else 0.0
+            score = float(hit["score"]) + overlap * 4.0 + phrase_bonus
+            if overlap or phrase_bonus or self._course_term_matches(query_terms):
+                reranked.append({"score": round(score, 3), "item": item})
+        reranked.sort(key=lambda row: row["score"], reverse=True)
+        return reranked[:top_k]
+
+    def _rerank_chunk_hits(
+        self,
+        query: str,
+        hits: Sequence[Dict[str, Any]],
+        kp_context: Optional[Sequence[Dict[str, Any]]],
+        top_k: int,
+    ) -> List[Dict[str, Any]]:
+        query_terms = set(self._content_tokens(query))
+        ranking_query = self._ranking_query(query).lower()
+        definition_request = self._definition_request(query)
+        kp_terms: set[str] = set()
+        kp_weeks: set[str] = set()
+        for hit in (kp_context or [])[:2]:
+            kp_terms.update(self.kp_term_sets.get(hit["item"]["kp_id"], set()))
+            kp_weeks.update(str(week) for week in hit["item"].get("weeks", []) if str(week).strip())
+
+        reranked: List[Dict[str, Any]] = []
+        seen_chunk_ids: set[str] = set()
+        for hit in hits:
+            item = hit["item"]
+            chunk_id = item.get("chunk_id")
+            if not chunk_id or chunk_id in seen_chunk_ids:
+                continue
+            seen_chunk_ids.add(chunk_id)
+            blob = self.chunk_search_blobs.get(chunk_id, "")
+            chunk_terms = self.chunk_term_sets.get(chunk_id, set())
+            title_terms = self.chunk_title_term_sets.get(chunk_id, set())
+            overlap = len(query_terms & chunk_terms)
+            title_overlap = len(query_terms & title_terms)
+            kp_overlap = len(kp_terms & chunk_terms) if kp_terms else 0
+            phrase_bonus = 4.0 if ranking_query and ranking_query in blob else 0.0
+            definition_bonus = 0.0
+            title_text = clean_display_text(item.get("title", "")).lower()
+            relative_path = clean_display_text(item.get("relative_path", "")).lower()
+            source_bonus = 0.0
+            if kp_weeks:
+                source_bonus += 1.2 if str(item.get("week") or "") in kp_weeks else -0.8
+            if "tutorial" in relative_path:
+                source_bonus -= 0.8
+            if "transpose" in title_text and "transpose" not in ranking_query:
+                source_bonus -= 1.5
+            if definition_request:
+                if any(term in title_text for term in ["goal", "overview", "introduction", "what is", "why study"]):
+                    definition_bonus += 2.5
+                if any(term in title_text for term in ["difficult", "challenge"]) and "difficult" not in ranking_query:
+                    definition_bonus -= 2.0
+            score = (
+                float(hit["score"])
+                + overlap * 4.5
+                + title_overlap * 3.0
+                + kp_overlap * 0.8
+                + phrase_bonus
+                + definition_bonus
+                + source_bonus
+            )
+            if overlap == 0 and title_overlap == 0 and phrase_bonus == 0.0 and kp_overlap == 0:
+                continue
+            reranked.append({"score": round(score, 3), "item": item})
+
+        reranked.sort(key=lambda row: row["score"], reverse=True)
+        return reranked[:top_k]
+
     def _assistant_intent(self, query: str) -> Optional[str]:
         cleaned = clean_display_text(query)
         lowered = cleaned.lower()
@@ -273,22 +388,22 @@ class Course4186KnowledgeBase:
         if intent == "greeting":
             return (
                 "Hello. I am the Course 4186 student learning assistant. "
-                "You can ask me about lecture topics, formulas, quiz practice, or your learning report."
+                "You can ask me about lecture topics, formulas, or quiz practice."
             )
         if intent == "identity":
             return (
                 "I am the Course 4186 student learning assistant. "
-                "I help students answer lecture-based questions, review knowledge points, and move into quiz practice or learning reports."
+                "I help students answer lecture-based questions, review knowledge points, and move into quiz practice."
             )
         if intent == "help":
             return (
-                "I can help with Course 4186 lecture content, explain knowledge points, and guide you to quiz practice or your learning report. "
+                "I can help with Course 4186 lecture content, explain knowledge points, and guide you to Chat or Quiz practice. "
                 "Try asking about computer vision, edge detection, SIFT, camera geometry, or image alignment."
             )
         if intent == "report":
             return (
-                "You can open your Learning Report from the left sidebar. "
-                "It summarizes your recent answers, weak areas, and recommended next steps."
+                "This student version focuses on Chat and Quiz only. "
+                "If you want to review progress, use Quiz practice and the dashboard summary."
             )
         if intent == "quiz":
             return (
@@ -308,9 +423,10 @@ class Course4186KnowledgeBase:
             return True
         if re.search(r"\b(week|lecture|tutorial|revision|slide|quiz|report|practice)\s*\d*\b", lowered):
             return True
-        if any(token in self.course_terms for token in tokens):
+        if self._course_term_matches(tokens):
             return True
-        return bool(self.search_knowledge_points(query, top_k=1))
+        kp_hits = self.search_knowledge_points(query, top_k=1)
+        return bool(kp_hits and float(kp_hits[0]["score"]) >= 6.0)
 
     def _out_of_scope_response(self, query: str) -> str:
         if self._llm_client is not None and self._llm_model:
@@ -393,29 +509,41 @@ class Course4186KnowledgeBase:
         return list(self.questions_by_kp.get(kp_id, []))
 
     def search_knowledge_points(self, query: str, top_k: int = 3) -> List[Dict[str, Any]]:
+        ranking_query = self._ranking_query(query)
+        if not ranking_query:
+            return []
         hits = lexical_rank(
-            query,
+            ranking_query,
             self.kps,
             text_getter=lambda kp: "\n".join([kp["name"], kp["description"], " ".join(kp.get("keywords", []))]),
-            top_k=top_k,
+            top_k=max(top_k * 3, top_k),
         )
-        return [{"score": round(score, 3), "item": item} for score, item in hits]
+        rows = [{"score": round(score, 3), "item": item} for score, item in hits]
+        return self._rerank_kp_hits(query, rows, top_k=top_k)
 
-    def search_chunks(self, query: str, top_k: int = 5) -> List[Dict[str, Any]]:
+    def search_chunks(
+        self,
+        query: str,
+        top_k: int = 5,
+        kp_context: Optional[Sequence[Dict[str, Any]]] = None,
+    ) -> List[Dict[str, Any]]:
+        ranking_query = self._ranking_query(query)
+        if not ranking_query:
+            return []
         lexical_hits = lexical_rank(
-            query,
+            ranking_query,
             self.chunks,
             text_getter=lambda chunk: "\n".join([chunk["title"], chunk["relative_path"], chunk["text"]]),
-            top_k=top_k,
+            top_k=max(top_k * 4, top_k),
         )
         lexical_rows = [{"score": round(score, 3), "item": item} for score, item in lexical_hits]
 
         if len(self._content_tokens(query)) <= 3 and lexical_rows:
-            return lexical_rows
+            return self._rerank_chunk_hits(query, lexical_rows, kp_context, top_k=top_k)
 
         if self._dense_enabled and self._vector_store is not None:
             try:
-                dense_hits = self._vector_store.similarity_search_with_score(query, k=top_k)
+                dense_hits = self._vector_store.similarity_search_with_score(ranking_query, k=max(top_k * 4, top_k))
                 rows: List[Dict[str, Any]] = []
                 for document, score in dense_hits:
                     chunk_id = document.metadata.get("chunk_id")
@@ -434,11 +562,13 @@ class Course4186KnowledgeBase:
                         merged.append(hit)
                         if len(merged) >= top_k:
                             break
-                    return merged
+                    reranked = self._rerank_chunk_hits(query, merged, kp_context, top_k=top_k)
+                    if reranked:
+                        return reranked
             except Exception:
                 pass
 
-        return lexical_rows
+        return self._rerank_chunk_hits(query, lexical_rows, kp_context, top_k=top_k)
 
     def answer(self, query: str, history: Optional[List[Dict[str, str]]] = None, top_k: int = 5) -> Dict[str, Any]:
         special_response = self._assistant_response_for_query(query)
@@ -459,7 +589,7 @@ class Course4186KnowledgeBase:
             }
 
         kp_hits = self.search_knowledge_points(query, top_k=3)
-        chunk_hits = self.search_chunks(query, top_k=top_k)
+        chunk_hits = self.search_chunks(query, top_k=top_k, kp_context=kp_hits)
         citations = [
             {
                 "source": hit["item"]["relative_path"],
@@ -484,6 +614,17 @@ class Course4186KnowledgeBase:
             for hit in kp_hits[:3]
         ]
 
+        if not citations:
+            return {
+                "answer": (
+                    "I could not find a clear answer for that in the current Course 4186 materials. "
+                    "Try naming the lecture topic, method, or formula more specifically."
+                ),
+                "citations": [],
+                "related_kps": related,
+                "mode": "assistant",
+            }
+
         if self._llm_client is not None and self._llm_model and citations:
             try:
                 answer = self._llm_answer(query, history or [], related, citations)
@@ -502,6 +643,77 @@ class Course4186KnowledgeBase:
             "related_kps": related,
             "mode": "extractive",
         }
+
+    def suggest_session_title(self, user_message: str, assistant_message: str) -> str:
+        user_text = clean_display_text(user_message)
+        assistant_text = clean_display_text(assistant_message)
+        intent = self._assistant_intent(user_text)
+        if intent == "identity":
+            return "Learning Assistant"
+        if intent == "greeting":
+            return "Course 4186 Chat"
+        if intent == "help":
+            return "Using the Assistant"
+        if intent == "quiz":
+            return "Quiz Practice"
+        if intent == "report":
+            return "Learning Report"
+        if intent == "thanks":
+            return "Course 4186 Chat"
+        if self._llm_client is not None and self._llm_model:
+            try:
+                prompt = textwrap.dedent(
+                    f"""
+                    Create a very short conversation title for a course chat session.
+                    Use the same language as the conversation.
+                    Requirements:
+                    - 2 to 6 words
+                    - plain student-facing wording
+                    - summarize the actual topic, not the wording of the question
+                    - no quotation marks
+                    - no trailing punctuation
+
+                    Student:
+                    {user_text}
+
+                    Assistant:
+                    {assistant_text[:500]}
+                    """
+                ).strip()
+                response = self._llm_client.chat.completions.create(
+                    model=self._llm_model,
+                    messages=[
+                        {"role": "system", "content": "You write concise chat titles."},
+                        {"role": "user", "content": prompt},
+                    ],
+                    temperature=0.2,
+                    max_tokens=24,
+                )
+                title = clean_display_text(response.choices[0].message.content or "")
+                title = re.sub(r"^[\"'“”‘’]+|[\"'“”‘’]+$", "", title).strip()
+                title = re.sub(r"[.!?。！？]+$", "", title).strip()
+                if title:
+                    return title[:56]
+            except Exception:
+                pass
+
+        tokens = [
+            token for token in tokenize(user_text)
+            if len(token) > 2 and token not in STOPWORDS and token not in {"what", "explain", "about", "course", "please", "help", "introduce", "sth", "something"}
+        ]
+        if "computer" in tokens and "vision" in tokens:
+            return "Computer Vision"
+        if "epipolar" in tokens:
+            return "Epipolar Geometry"
+        if "sift" in tokens:
+            return "SIFT Features"
+        if "convolution" in tokens:
+            return "Convolution Basics"
+        if "edge" in tokens and "detection" in tokens:
+            return "Edge Detection"
+        if tokens:
+            return " ".join(token.capitalize() for token in tokens[:4])
+        return "Course 4186 Chat"
 
     def _llm_answer(
         self,
@@ -525,9 +737,11 @@ class Course4186KnowledgeBase:
             You are the Course 4186 student learning assistant for a computer vision course.
             Answer naturally, in the same language as the student's question.
             Stay strictly within the provided knowledge points and evidence.
+            Do not answer from general world knowledge when the evidence is weak or unrelated.
             Do not paste raw chunk labels or say generic phrases like "I found grounded material".
             If the evidence is partial, give the supported answer first and then note the limit briefly.
             When the question is broad, begin with a plain-language definition and then connect it to this course.
+            When you rely on a specific lecture source, mention the file and page or slide briefly in parentheses.
             Keep the answer concise but conversational.
 
             Conversation:
@@ -562,7 +776,7 @@ class Course4186KnowledgeBase:
             "greeting": "Greet the student naturally and invite a course-related question.",
             "identity": "Explain who you are in one or two plain, professional sentences.",
             "help": "Explain briefly what kinds of Course 4186 help you can provide.",
-            "report": "Tell the student how to use the learning report in a natural way.",
+            "report": "Explain that this student version focuses on Chat and Quiz rather than a separate learning-report page.",
             "quiz": "Tell the student how to use quiz practice in a natural way.",
             "thanks": "Reply politely and invite the next course-related question.",
             "out_of_scope": "Politely say you focus on Course 4186, do not answer the unrelated question itself, and redirect to nearby course topics in a natural way.",
@@ -605,7 +819,7 @@ class Course4186KnowledgeBase:
     ) -> str:
         if not citations:
             return (
-                "I could not find grounded material for that question in the Course 4186 knowledge base. "
+                "I could not find a clear answer for that question in the current Course 4186 materials. "
                 "Try using a more specific topic such as edge detection, SIFT, stereo vision, epipolar geometry, or optical flow."
             )
 
@@ -617,7 +831,7 @@ class Course4186KnowledgeBase:
             else:
                 lines.append(f"In Course 4186, {top_kp['name']} refers to {top_kp['description'].rstrip('.').lower()}.")
         else:
-            lines.append("Here are the most relevant notes I found in the course materials.")
+            lines.append("The course materials most relevant to this question point to the following idea.")
 
         lines.append("Evidence from the course materials:")
         for item in citations[:3]:

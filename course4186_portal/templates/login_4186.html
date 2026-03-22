@@ -39,8 +39,9 @@
         .login-shell{
             width:min(1120px, 100%);
             display:grid;
-            grid-template-columns:minmax(320px, 1.05fr) minmax(320px, .95fr);
+            grid-template-columns:minmax(0, 1fr) 460px;
             gap:20px;
+            align-items:start;
         }
         .brand-panel,
         .form-card{
@@ -50,11 +51,11 @@
             box-shadow:var(--shadow);
         }
         .brand-panel{
-            padding:28px;
+            padding:24px;
             display:flex;
             flex-direction:column;
-            gap:20px;
-            min-height:640px;
+            gap:16px;
+            height:612px;
         }
         .brand-head{
             display:flex;
@@ -81,34 +82,35 @@
         .brand-head p{
             margin:6px 0 0 0;
             color:var(--muted);
-            font-size:14px;
-            line-height:1.7;
+            font-size:13px;
+            line-height:1.55;
         }
         .hero-card{
-            padding:22px;
+            padding:20px;
             border-radius:24px;
-            background:linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
-            border:1px solid var(--line);
+            background:linear-gradient(180deg, #dff7ef 0%, #eefcf6 100%);
+            border:1px solid #b7eadb;
         }
         .hero-card h2{
             margin:0;
             font-size:34px;
             line-height:1.1;
             letter-spacing:-.03em;
+            color:#0f5132;
         }
         .hero-card p{
             margin:12px 0 0 0;
-            color:var(--muted);
-            font-size:15px;
-            line-height:1.8;
+            color:#166534;
+            font-size:14px;
+            line-height:1.65;
         }
         .preview-list{
             display:grid;
-            gap:12px;
+            gap:10px;
         }
         .preview-item{
-            padding:16px 18px;
-            border-radius:20px;
+            padding:14px 16px;
+            border-radius:18px;
             border:1px solid var(--line);
             background:var(--surface-3);
         }
@@ -120,27 +122,17 @@
             display:block;
             margin-top:6px;
             color:var(--muted);
-            font-size:13px;
-            line-height:1.6;
-        }
-        .foot-note{
-            margin-top:auto;
-            padding:16px 18px;
-            border-radius:20px;
-            background:#f0fdf9;
-            border:1px solid #ccefe5;
-            color:#0f5132;
-            font-size:13px;
-            line-height:1.7;
+            font-size:12.5px;
+            line-height:1.5;
         }
         .form-wrap{
             display:flex;
-            align-items:center;
+            align-items:flex-start;
             justify-content:center;
         }
         .form-card{
             width:100%;
-            max-width:460px;
+            min-height:612px;
             padding:30px 28px;
         }
         .eyebrow{
@@ -184,6 +176,39 @@
             color:var(--warning);
             background:var(--warning-bg);
             border-color:#fde68a;
+        }
+        .alert.success{
+            color:#166534;
+            background:#f0fdf4;
+            border-color:#bbf7d0;
+        }
+        .mode-switch{
+            margin-top:18px;
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:8px;
+            padding:6px;
+            border-radius:18px;
+            border:1px solid var(--line);
+            background:var(--surface-2);
+        }
+        .mode-link{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            min-height:42px;
+            padding:10px 12px;
+            border-radius:14px;
+            color:#374151;
+            text-decoration:none;
+            font-size:14px;
+            font-weight:700;
+            transition:background-color .18s ease, color .18s ease, box-shadow .18s ease;
+        }
+        .mode-link.active{
+            background:var(--surface);
+            color:var(--ink);
+            box-shadow:0 1px 2px rgba(15, 23, 42, .06);
         }
         form{
             margin-top:24px;
@@ -246,13 +271,13 @@
                 grid-template-columns:1fr;
             }
             .brand-panel{
-                min-height:auto;
+                height:auto;
             }
             .form-wrap{
                 align-items:stretch;
             }
             .form-card{
-                max-width:none;
+                min-height:auto;
             }
         }
         @media(max-width:640px){
@@ -271,18 +296,18 @@
                 <div class="brand-badge">4186</div>
                 <div>
                     <h1>Course 4186 Student Hub</h1>
-                    <p>Welcome students to the 4186 learning system for Q&amp;A, quiz practice, and study reports.</p>
+                    <p>Welcome students to the 4186 learning system for course Q&amp;A, quiz practice, and learning report review.</p>
                 </div>
             </div>
 
             <div class="hero-card">
-                <h2>Welcome to the course learning system</h2>
-                <p>Sign in to continue course Q&amp;A, knowledge-point practice, and your personal learning report.</p>
+                <h2>Study, Practice, Improve</h2>
+                <p>Ask questions, complete quizzes, and track your learning progress in one place.</p>
             </div>
 
             <div class="preview-list">
                 <div class="preview-item">
-                    <strong>ChatAPI</strong>
+                    <strong>Chat</strong>
                     <span>Ask questions about the 4186 lecture materials, concepts, formulas, and methods.</span>
                 </div>
                 <div class="preview-item">
@@ -291,30 +316,35 @@
                 </div>
                 <div class="preview-item">
                     <strong>Learning Report</strong>
-                    <span>Review your performance, weak areas, and suggested next steps for study.</span>
+                    <span>Review strengths, weak areas, and recommended next questions based on your progress.</span>
                 </div>
-            </div>
-
-            <div class="foot-note">
-                This is the standalone student entry for Course 4186 and does not modify your original system pages or routes.
             </div>
         </section>
 
         <section class="form-wrap">
             <div class="form-card">
-                <div class="eyebrow">Student Login</div>
-                <h2>Welcome back</h2>
-                <p>Enter your course account and password to continue learning.</p>
+                <div class="eyebrow">{% if form_mode == 'register' %}Student Registration{% else %}Student Login{% endif %}</div>
+                <h2>{% if form_mode == 'register' %}Create your account{% else %}Welcome back{% endif %}</h2>
+                <p>{% if form_mode == 'register' %}Create a student account to enter the course learning system and save your progress.{% else %}Enter your course account and password to continue learning.{% endif %}</p>
+
+                <div class="mode-switch">
+                    <a class="mode-link {% if form_mode == 'login' %}active{% endif %}" href="{{ login_url }}?next={{ next_path|urlencode }}">Sign In</a>
+                    <a class="mode-link {% if form_mode == 'register' %}active{% endif %}" href="{{ register_url }}?next={{ next_path|urlencode }}">Register</a>
+                </div>
 
                 {% if error_message %}
                 <div class="alert error">{{ error_message }}</div>
                 {% endif %}
 
-                {% if not auth_backend_ready %}
-                <div class="alert warning">The login service is temporarily unavailable. Please try again later or contact an instructor or administrator.</div>
+                {% if success_message %}
+                <div class="alert success">{{ success_message }}</div>
                 {% endif %}
 
-                <form method="post" action="{{ url_for('login_4186') }}">
+                {% if not auth_backend_ready %}
+                <div class="alert warning">The account service is temporarily unavailable. Please try again later or contact an instructor or administrator.</div>
+                {% endif %}
+
+                <form method="post" action="{% if form_mode == 'register' %}{{ register_url }}{% else %}{{ login_url }}{% endif %}">
                     <input type="hidden" name="next" value="{{ next_path }}">
 
                     <div class="field">
@@ -324,14 +354,25 @@
 
                     <div class="field">
                         <label for="password">Password</label>
-                        <input id="password" name="password" type="password" autocomplete="current-password" required>
+                        <input id="password" name="password" type="password" autocomplete="{% if form_mode == 'register' %}new-password{% else %}current-password{% endif %}" required>
                     </div>
 
-                    <button class="submit-btn" type="submit" {% if not auth_backend_ready %}disabled{% endif %}>Sign In</button>
+                    {% if form_mode == 'register' %}
+                    <div class="field">
+                        <label for="confirm_password">Confirm Password</label>
+                        <input id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" required>
+                    </div>
+                    {% endif %}
+
+                    <button class="submit-btn" type="submit" {% if not auth_backend_ready %}disabled{% endif %}>{% if form_mode == 'register' %}Create Account{% else %}Sign In{% endif %}</button>
                 </form>
 
                 <div class="helper">
-                    After login, the system stores your progress, attempts, and learning report under your own username.
+                    {% if form_mode == 'register' %}
+                    Your account name will also be used to store your chat history, quiz attempts, and learning progress.
+                    {% else %}
+                    After login, the system stores your quiz progress and attempts under your own username.
+                    {% endif %}
                 </div>
             </div>
         </section>

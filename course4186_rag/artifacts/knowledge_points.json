@@ -1,0 +1,628 @@
+[
+  {
+    "kp_id": "kp-image-filtering-and-convolution",
+    "name": "Image filtering and convolution",
+    "description": "Representing images as grids and applying linear filters, convolution, correlation, smoothing, and sharpening.",
+    "keywords": [
+      "image filtering",
+      "linear filter",
+      "convolution",
+      "cross-correlation",
+      "gaussian filter",
+      "mean filter",
+      "image sharpening"
+    ],
+    "weeks": [
+      "Week1",
+      "Week12",
+      "Week2"
+    ],
+    "source_files": [
+      "Week12\\Revision.pdf",
+      "Week1\\Lecture1-2 (10).pptx",
+      "Week1\\Lecture1-2.pdf",
+      "Week2\\all.pptx",
+      "Week2\\revision_w1.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-022a046464ab",
+      "chunk-3dd745e980a4",
+      "chunk-1b493a3330d0",
+      "chunk-8579d51ac47b",
+      "chunk-3d54c09b038b",
+      "chunk-97910ba4ced2",
+      "chunk-8af1d1050c19",
+      "chunk-b22aeed7c8dd"
+    ],
+    "support_preview": [
+      "Topics • Image Filtering –Image –Linear filter –Cross-correlation –Convolution –Mean filter –Gaussian Filter –Image Sharpening",
+      "Linear filtering-Convolution • Same as cross-correlation, except that the kernel is “flipped” (horizontally and vertically) • Convolution is commutative and associative - F*G = G*F (commutative) - ...",
+      "Linear filtering • One simple version of filtering: linear filtering (cross-correlation, convolution) – Replace each pixel by a linear combination (a weighted sum) of its neighbors • The prescripti..."
+    ]
+  },
+  {
+    "kp_id": "kp-edge-detection",
+    "name": "Edge detection",
+    "description": "Detecting visual discontinuities to capture salient boundaries and structure in images.",
+    "keywords": [
+      "edge detection",
+      "edges",
+      "discontinuities",
+      "visual changes"
+    ],
+    "weeks": [
+      "Week12",
+      "Week2"
+    ],
+    "source_files": [
+      "Week12\\Revision.pdf",
+      "Week2\\Edge.pptx",
+      "Week2\\Lecture2-1.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-d92e7f2faf93",
+      "chunk-70a0696356ac",
+      "chunk-64c7ae8d6d70",
+      "chunk-85ffb19f28f5",
+      "chunk-a3d471905093",
+      "chunk-b389106a3054",
+      "chunk-a339ea67538f",
+      "chunk-e35e04b1e7b3"
+    ],
+    "support_preview": [
+      "Edge detection • Goal: Identify visual changes (discontinuities) in an image. • Intuitively, semantic information is encoded in edges. • What are some ‘causes’ of visual edges? Source: D. Lowe",
+      "Edge detection Goal: Identify visual changes (discontinuities) in an image. Intuitively, semantic information is encoded in edges. What are some ‘causes’ of visual edges? Source: D. Lowe",
+      "Edge detection: smooth first f h f * h Source: S. Seitz To find edges, look for peaks in"
+    ]
+  },
+  {
+    "kp_id": "kp-image-resampling",
+    "name": "Image resampling",
+    "description": "Changing image resolution or coordinate sampling while preserving useful information.",
+    "keywords": [
+      "image resampling",
+      "resampling",
+      "sampling",
+      "resolution"
+    ],
+    "weeks": [
+      "Tutorial/Week7",
+      "Week11",
+      "Week12",
+      "Week2"
+    ],
+    "source_files": [
+      "Tutorial\\Week7\\Questions.docx",
+      "Week11\\Lecture-opticalflow1.pptx",
+      "Week11\\Lecture11.pdf",
+      "Week12\\Revision.pdf",
+      "Week2\\Lecture2-2.pdf",
+      "Week2\\sampling.pptx"
+    ],
+    "support_chunk_ids": [
+      "chunk-e2d9fe54b950",
+      "chunk-bd7f80cf87d4",
+      "chunk-9850a1fa40f9",
+      "chunk-773ddaddbd06",
+      "chunk-3ea90b366e90",
+      "chunk-0ed2eab170de",
+      "chunk-d51997e53e7e",
+      "chunk-5b645983b7ee"
+    ],
+    "support_preview": [
+      "Image Resampling",
+      "Image Resampling",
+      "Given the image and a filter, calculate the convoluting result. Herein, for the boundary pixels, you do not need to perform any padding operation. i) Given an image of resolution and a filter of si..."
+    ]
+  },
+  {
+    "kp_id": "kp-texture-analysis",
+    "name": "Texture analysis",
+    "description": "Describing repeated local appearance patterns and using them for recognition or classification.",
+    "keywords": [
+      "texture",
+      "natural textures",
+      "color texture"
+    ],
+    "weeks": [
+      "Week12",
+      "Week2",
+      "Week3"
+    ],
+    "source_files": [
+      "Week12\\Revision.pdf",
+      "Week2\\ColorTexture.pptx",
+      "Week3\\Lecture3-1 (1).pptx",
+      "Week3\\Lecture3-1.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-70a07948f1f9",
+      "chunk-cea10b0f15e6",
+      "chunk-05f5ebabe6e8",
+      "chunk-7cbc2829bfe1",
+      "chunk-38c0dea6a1c4",
+      "chunk-d14d03227587",
+      "chunk-a498334b0e82",
+      "chunk-3204548da2e7"
+    ],
+    "support_preview": [
+      "Natural Textures grass leaves What/ w here are the textures? How to describe the textures? 1",
+      "Natural Textures grass leavesWhat/where are the textures?Howtodescribethetextures? 1",
+      "Two Edge-based Texture Measures 1. edgeness per unit area 2. edge magnitude and direction histograms Fedgeness = |{ p | gradient_magnitude(p) threshold}| / N where N is the size of the unit area F..."
+    ]
+  },
+  {
+    "kp_id": "kp-convolutional-neural-networks",
+    "name": "Convolutional neural networks",
+    "description": "Learning feature hierarchies for image classification and recognition using CNN architectures.",
+    "keywords": [
+      "convolutional neural network",
+      "cnn",
+      "classification",
+      "decision boundary"
+    ],
+    "weeks": [
+      "Week3",
+      "Week4"
+    ],
+    "source_files": [
+      "Week3\\Lecture3-2.pdf",
+      "Week3\\Lecture3_2 (1).pptx",
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4_2.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-7e8a00fd8fb5",
+      "chunk-0f572bda5322",
+      "chunk-187760cc9a0a",
+      "chunk-3b68283213d2",
+      "chunk-1e1e5b8f0a2b",
+      "chunk-9ee5fa0181b8",
+      "chunk-76fc92f790dc",
+      "chunk-cdb24eb06246"
+    ],
+    "support_preview": [
+      "Object Detection as Classification: SlidingWindow Fei-Fei Li & Justin Johnson & SerenaYeung Lecture 11- 26 Dog? NO Cat? NOBackground? YES ApplyaCNNtomanydifferentcropsoftheimage,CNNclassifieseachcr...",
+      "Object Detection as Classification: SlidingWindow Fei-Fei Li & Justin Johnson & SerenaYeung Lecture 11- 26 Dog? NO Cat? NOBackground? YES ApplyaCNNtomanydifferentcropsoftheimage,CNNclassifieseachcr...",
+      "Convolutional Neural Network Which is the dog?"
+    ]
+  },
+  {
+    "kp_id": "kp-image-segmentation",
+    "name": "Image segmentation",
+    "description": "Partitioning an image into meaningful regions or objects based on appearance and context.",
+    "keywords": [
+      "image segmentation",
+      "segmentation",
+      "regions",
+      "zebras"
+    ],
+    "weeks": [
+      "Week11",
+      "Week4",
+      "Week7"
+    ],
+    "source_files": [
+      "Week11\\Lecture-opticalflow1.pptx",
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_1.pdf",
+      "Week7\\LLM_Deepseek.pptx"
+    ],
+    "support_chunk_ids": [
+      "chunk-90dff34f7783",
+      "chunk-ba2d2e3679e8",
+      "chunk-f3c2d1e2cffe",
+      "chunk-34f3d6ad82a6",
+      "chunk-9efc86c908ae",
+      "chunk-da8e6c11541d",
+      "chunk-0282f8c5c931",
+      "chunk-60331c4b7bc0"
+    ],
+    "support_preview": [
+      "Image Segmentation From Sandlot Science How many zebras?",
+      "ImageSegmentation From Sandlot Science How many zebras?",
+      "ImageSegmentation From Sandlot Science How many zebras?"
+    ]
+  },
+  {
+    "kp_id": "kp-harris-corners-and-local-features",
+    "name": "Harris corners and local features",
+    "description": "Detecting repeatable corner-like structures and describing local image evidence around them.",
+    "keywords": [
+      "harris corner",
+      "corner detection",
+      "feature extraction",
+      "local features"
+    ],
+    "weeks": [
+      "Week11",
+      "Week12",
+      "Week5"
+    ],
+    "source_files": [
+      "Week11\\Revision_week11.pptx",
+      "Week12\\Revision.pdf",
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-e49346fe1c98",
+      "chunk-24245265ea4c",
+      "chunk-108a554c75ca",
+      "chunk-06d31293c655",
+      "chunk-207a9c69a010",
+      "chunk-4474e9e21762",
+      "chunk-688a4f8bcc0a",
+      "chunk-f084e5bc541f"
+    ],
+    "support_preview": [
+      "Harris corner detection",
+      "Harris corner detection",
+      "Consider shifting the window W by ( u,v ) how do the pixels in W change? compare each pixel before and after by summing up the squared differences (SSD) this defines an SSD “error” E ( u,v ): We ar..."
+    ]
+  },
+  {
+    "kp_id": "kp-sift-and-scale-invariant-features",
+    "name": "SIFT and scale-invariant features",
+    "description": "Building descriptors that remain stable across scale and orientation changes.",
+    "keywords": [
+      "scale invariant feature transform",
+      "sift",
+      "difference of gaussian",
+      "descriptor"
+    ],
+    "weeks": [
+      "Tutorial/Week7",
+      "Week10",
+      "Week12",
+      "Week5",
+      "Week6"
+    ],
+    "source_files": [
+      "Tutorial\\Week7\\Answer.pptx",
+      "Week10\\lecture10-2 (3).pptx",
+      "Week12\\Revision.pdf",
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture6-1.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-36743dad3bc9",
+      "chunk-7e6f94d18d8d",
+      "chunk-987c014644dc",
+      "chunk-8dbe9e48de6d",
+      "chunk-51094d368aa5",
+      "chunk-9e704538558f",
+      "chunk-900fe6b68ec6",
+      "chunk-d607ff860075"
+    ],
+    "support_preview": [
+      "Scale Invariant Feature Transform • Scale space peak selection –Potential locations for finding features • Key point localization –Accurately locating the feature key points • Orientation assignmen...",
+      "SIFT descriptor Full version • Divide the 16x16 window into a 4x4 grid of cells (2x2 case shown below) • Compute an orientation histogram (8 bin) for each cell (relative orientation and magnitude) ...",
+      "Scale Invariant Feature Transform • Scale space peak selection – Potential locations for finding features • Key point localization – Accurately locating the feature key points • Orientation assignm..."
+    ]
+  },
+  {
+    "kp_id": "kp-bag-of-words-image-retrieval",
+    "name": "Bag-of-words image retrieval",
+    "description": "Representing images as visual word histograms to support matching and large-scale retrieval.",
+    "keywords": [
+      "bag of words",
+      "bag-of-words",
+      "image matching",
+      "visual words"
+    ],
+    "weeks": [
+      "Week12",
+      "Week5",
+      "Week6",
+      "Week7"
+    ],
+    "source_files": [
+      "Week12\\Revision.pdf",
+      "Week5\\lecture5-1 (5).pptx",
+      "Week6\\lecture6-2.pdf",
+      "Week6\\lecture6-2.ppt",
+      "Week7\\revision.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-70fe148113f3",
+      "chunk-343d0d575e52",
+      "chunk-724382c02e8d",
+      "chunk-d8675396be35",
+      "chunk-b08101b805ea",
+      "chunk-8f3836c565c1",
+      "chunk-87aa4bb601f4",
+      "chunk-2e93daba7f59"
+    ],
+    "support_preview": [
+      "Image matching • For city-sized datasets, fewer than 0.1% of image pairs actually match • Key idea: only consider likely matches • How do we know if a match is likely? • Solution: use fast global s...",
+      "Large-scale image matching • Bag-of-words models have been useful in matching an image to a large database of object instances 11,400 images of game covers (Caltech games dataset) how do I find thi...",
+      "Image matching For city-sized datasets, fewer than 0.1% of image pairs actually match Key idea: only consider likely matches How do we know if a match is likely? Solution: use fast global similarit..."
+    ]
+  },
+  {
+    "kp_id": "kp-geometric-transformations",
+    "name": "Geometric transformations",
+    "description": "Modeling translation, rotation, scaling, and other geometric relationships between images.",
+    "keywords": [
+      "transformations",
+      "similarity transformation",
+      "translation",
+      "rotation",
+      "uniform scale"
+    ],
+    "weeks": [
+      "Week12",
+      "Week5",
+      "Week7"
+    ],
+    "source_files": [
+      "Week12\\Revision.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week7\\Lecture7-1.pdf",
+      "Week7\\Lecture7-1.pptx"
+    ],
+    "support_chunk_ids": [
+      "chunk-048eb69c1b1d",
+      "chunk-e0ea4ba6fcc6",
+      "chunk-4c356a570c0c",
+      "chunk-94213b5dcead",
+      "chunk-72762b7a4705",
+      "chunk-83303cea07c5",
+      "chunk-443d555e133e",
+      "chunk-c2a09fac6202"
+    ],
+    "support_preview": [
+      "Affine Transformations • Affine transformations are combinations of … –Linear transformations, and –Translations                 =         w y x fed cba w y x 100 ' '    ...",
+      "Image transformations Geometric Rotation Scale Photometric Intensity change",
+      "Image transformations•GeometricRotation Scale •PhotometricIntensity change"
+    ]
+  },
+  {
+    "kp_id": "kp-image-alignment",
+    "name": "Image alignment",
+    "description": "Computing transformations that align multiple images using feature matches and consistency criteria.",
+    "keywords": [
+      "image alignment",
+      "align",
+      "compute the transform",
+      "matches between images"
+    ],
+    "weeks": [
+      "Week5",
+      "Week8"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week8\\Lecture7-2 (2).pptx",
+      "Week8\\Lecture8-1.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-3e20fa2cfc45",
+      "chunk-ae006354717d",
+      "chunk-382ce6802a08",
+      "chunk-1d141ffaa6dd",
+      "chunk-f5428633b49c",
+      "chunk-d8abfdb33155",
+      "chunk-b46ed0313093",
+      "chunk-7cdf884aa451"
+    ],
+    "support_preview": [
+      "http://www.wired.com/gadgetlab/2010/07/camera-software-lets-you-see-into-the-past/ Image alignment",
+      "Image Alignment Algorithm Given images A and B 1. Compute image features for A and B 2. Match features between A and B 3. Compute homography between A and B using least squares on set of matches Wh...",
+      "More motivation… Feature points are used for: Image alignment 3D reconstruction Motion tracking Object recognition Indexing and database retrieval Robot navigation … other"
+    ]
+  },
+  {
+    "kp_id": "kp-camera-model-and-projection",
+    "name": "Camera model and projection",
+    "description": "Understanding pinhole projection, focal length, field of view, and how 3D scenes map to images.",
+    "keywords": [
+      "camera model",
+      "pinhole camera",
+      "focal length",
+      "field of view",
+      "vanishing point",
+      "cameras"
+    ],
+    "weeks": [
+      "Week10",
+      "Week12",
+      "Week8"
+    ],
+    "source_files": [
+      "Week10\\Answer.pptx",
+      "Week10\\Question.docx",
+      "Week12\\Revision.pdf",
+      "Week8\\Lecture8-2.pdf",
+      "Week8\\cameras.pptx"
+    ],
+    "support_chunk_ids": [
+      "chunk-7bc833a421f8",
+      "chunk-ff2d0ff9d33a",
+      "chunk-ac365367ad16",
+      "chunk-c2e26e9db0cd",
+      "chunk-b17bf3ee7d5b",
+      "chunk-04e13ad962cb",
+      "chunk-8ae86bfa954d",
+      "chunk-bad68f594e5d"
+    ],
+    "support_preview": [
+      "Pinhole camera model Figure from Forsyth f f = Focal length c = Optical center of the camera c Real object",
+      "Pinhole camera model 3D point projects to 2D image point By symmetric and i.e., Simplest form of perspective projection",
+      "Q1. Please use the camera model to explain the following observations: The focal length in a pinhole camera model determines the field of view of the camera. A shorter focal length results in a wid..."
+    ]
+  },
+  {
+    "kp_id": "kp-stereo-vision-and-depth",
+    "name": "Stereo vision and depth",
+    "description": "Recovering depth or 3D structure from multiple views by finding correspondences across images.",
+    "keywords": [
+      "stereo vision",
+      "depth map",
+      "stereo reconstruction",
+      "correspondence"
+    ],
+    "weeks": [
+      "Week10",
+      "Week9"
+    ],
+    "source_files": [
+      "Week10\\Revision10-1.pptx",
+      "Week10\\lecture10-2 (3).pptx",
+      "Week10\\lecture10-2.pdf",
+      "Week9\\lecture10 (1) (7).pptx"
+    ],
+    "support_chunk_ids": [
+      "chunk-5eb15c939509",
+      "chunk-8e3a3ecdc810",
+      "chunk-e92d0a0f4627",
+      "chunk-81aabf998a22",
+      "chunk-e907a97dc47f",
+      "chunk-a57939f08d4a",
+      "chunk-c5a43487a470",
+      "chunk-d45d9c2e7e4a"
+    ],
+    "support_preview": [
+      "Left Right scanline Correspondence search SSD 15",
+      "Left Right scanline Correspondence search NCC 16",
+      "First step: how to get correspondence? Feature detection and matching"
+    ]
+  },
+  {
+    "kp_id": "kp-epipolar-geometry",
+    "name": "Epipolar geometry",
+    "description": "Constraining stereo correspondences with epipolar lines and geometric relations.",
+    "keywords": [
+      "epipolar",
+      "epipolar constraint",
+      "cross product",
+      "essential matrix",
+      "fundamental matrix"
+    ],
+    "weeks": [
+      "Week10",
+      "Week9"
+    ],
+    "source_files": [
+      "Week10\\lecture10-1 (4).pptx",
+      "Week10\\lecture10-1.pdf",
+      "Week9\\lecture9 (1) (5).pptx"
+    ],
+    "support_chunk_ids": [
+      "chunk-78baa3b29ad9",
+      "chunk-df78969275fc",
+      "chunk-b86d54f37226",
+      "chunk-9da02991c407",
+      "chunk-3b46e15f197e",
+      "chunk-bd834c9d61c8",
+      "chunk-a71ec0cfa6aa",
+      "chunk-fd2ce2a5984e"
+    ],
+    "support_preview": [
+      "Epipolar constraint example 1",
+      "X x x’ Epipolar constraint: Calibrated case R t The vectors R , t , and are coplanar 7",
+      "Epipolar constraint example 1"
+    ]
+  },
+  {
+    "kp_id": "kp-structure-from-motion",
+    "name": "Structure from motion",
+    "description": "Estimating scene structure and camera motion from image sequences or multiple views.",
+    "keywords": [
+      "structure from motion",
+      "point cloud",
+      "camera motion"
+    ],
+    "weeks": [
+      "Week10"
+    ],
+    "source_files": [
+      "Week10\\lecture10-2 (3).pptx",
+      "Week10\\lecture10-2.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-0c662378356a",
+      "chunk-2eccc825e7e3",
+      "chunk-58e1f23fcd02",
+      "chunk-a740e4a8db39",
+      "chunk-ccf0659a9efd",
+      "chunk-afc6d20fc77f",
+      "chunk-b1a1aeb3039f",
+      "chunk-72fce3690733"
+    ],
+    "support_preview": [
+      "Structure from motion",
+      "Point Cloud Capture Passive: Camera array stereo depth sensor Active: LiDAR, mmWave , TOF sensors Credit: Zhu Li",
+      "Structure from motion SfM solves both of these problems at once A kind of chicken-and-egg problem (but solvable)"
+    ]
+  },
+  {
+    "kp_id": "kp-motion-and-optical-flow",
+    "name": "Motion and optical flow",
+    "description": "Estimating pixel or feature motion across frames to understand dynamic scenes.",
+    "keywords": [
+      "motion",
+      "optical flow",
+      "moving world"
+    ],
+    "weeks": [
+      "Week11"
+    ],
+    "source_files": [
+      "Week11\\Lecture-opticalflow1.pptx",
+      "Week11\\Lecture11.pdf"
+    ],
+    "support_chunk_ids": [
+      "chunk-e95ff2f7c0de",
+      "chunk-e566ae86277c",
+      "chunk-af4d3b373f64",
+      "chunk-56d7cf3e06fc",
+      "chunk-5a6027db83e0",
+      "chunk-02d12c55c9d1",
+      "chunk-f7905c86df2f",
+      "chunk-d794fc211e2d"
+    ],
+    "support_preview": [
+      "Motion and Optical Flow",
+      "We live in a moving world Perceiving, understanding and predicting motion is an important part of our daily lives",
+      "13 Ambiguity of optical flow Frame 1 flow (1): true motion flow (2)"
+    ]
+  },
+  {
+    "kp_id": "kp-llm-prompting-and-deepseek-overview",
+    "name": "LLM prompting and DeepSeek overview",
+    "description": "A special-topic lecture on large language models, prompting methods, and DeepSeek evolution.",
+    "keywords": [
+      "deepseek",
+      "llm",
+      "large language model",
+      "chain of thought",
+      "prompting"
+    ],
+    "weeks": [
+      "Week7"
+    ],
+    "source_files": [
+      "Week7\\LLM_Deepseek.pptx"
+    ],
+    "support_chunk_ids": [
+      "chunk-a333e00152a0",
+      "chunk-f1205a2b1aaf",
+      "chunk-23afe4a3d5b2",
+      "chunk-31c8bfd7720e",
+      "chunk-efece1ed2a46",
+      "chunk-b812f792f544",
+      "chunk-c6a9db547076",
+      "chunk-5d2c0f0dbbcf"
+    ],
+    "support_preview": [
+      "LLM prompting: Chain-of-thoughts (CoT) [Zhang22] Z. Zhang, “Automatic Chain of Thought Prompting in Large Language Models”, Arxiv, 2022. Chain-of-Thought (CoT) prompting encourages LLMs to break do...",
+      "From Text-Only Large Language Models To Multimodal LLMs",
+      "What are large language models (LLMs) Large language models are AI systems they’re designed to understand and generate human language . they’re trained on massive datasets (trillion words), learnin..."
+    ]
+  }
+]

@@ -41,7 +41,7 @@ QUESTION_BLUEPRINTS = {
             "explanation": "The course introduction distinguishes understanding visual content from merely storing raw image measurements.",
         },
         {
-            "prompt": "A course overview slide listing robotics, medical imaging, and recognition is most likely illustrating what idea?",
+            "prompt": "The figure shows applications such as robotics, medical imaging, and recognition. What is it meant to show about computer vision as a field?",
             "correct": "Computer vision supports many different application areas that rely on interpreting visual data.",
             "distractors": [
                 "Only camera calibration matters in computer vision.",
@@ -94,7 +94,7 @@ QUESTION_BLUEPRINTS = {
             "explanation": "Smoothing stabilizes derivatives and later processing, but it also softens high-frequency structures such as sharp edges.",
         },
         {
-            "prompt": "The slide image with a local neighborhood and kernel is most likely illustrating which computation?",
+            "prompt": "In the local-neighborhood and kernel figure, how is one output pixel computed?",
             "correct": "An output pixel is obtained as a weighted sum of nearby input pixels.",
             "distractors": [
                 "A 3D point is triangulated from stereo disparity.",
@@ -147,7 +147,7 @@ QUESTION_BLUEPRINTS = {
             "explanation": "Edge maps provide a compact representation of salient structural changes in the image.",
         },
         {
-            "prompt": "A lecture figure showing highlighted outlines around objects is most likely illustrating which objective?",
+            "prompt": "If a figure highlights object outlines while suppressing flat regions, what output is it trying to produce?",
             "correct": "Detecting boundaries by finding large local intensity changes.",
             "distractors": [
                 "Estimating optical flow between frames.",
@@ -200,7 +200,7 @@ QUESTION_BLUEPRINTS = {
             "explanation": "Resampling is about changing spatial sampling or resolution rather than recognition or stereo geometry.",
         },
         {
-            "prompt": "A figure comparing different pixel grids or resized outputs is most likely illustrating which issue?",
+            "prompt": "A figure comparing different sampling grids or resized outputs is mainly asking you to reason about which issue?",
             "correct": "How sampling density and interpolation affect the resampled image.",
             "distractors": [
                 "How epipolar lines reduce the correspondence search space.",
@@ -253,7 +253,7 @@ QUESTION_BLUEPRINTS = {
             "explanation": "Texture and corners capture different kinds of information: regional pattern versus localized feature points.",
         },
         {
-            "prompt": "A lecture figure showing surfaces such as grass or leaves is most likely supporting which topic?",
+            "prompt": "A figure showing surfaces such as grass or leaves is best used to test understanding of which topic?",
             "correct": "Describing repeated local patterns for texture recognition or classification.",
             "distractors": [
                 "Recovering optical flow between adjacent video frames.",
@@ -306,7 +306,7 @@ QUESTION_BLUEPRINTS = {
             "explanation": "CNNs for classification learn increasingly useful representations for separating classes.",
         },
         {
-            "prompt": "A figure showing feature maps or stacked learned filters is most likely explaining which idea?",
+            "prompt": "If a figure shows feature maps or stacked learned filters, what core CNN idea is being emphasized?",
             "correct": "CNNs build hierarchical visual features from local convolutional responses.",
             "distractors": [
                 "Stereo matching is restricted to an epipolar line.",
@@ -359,7 +359,7 @@ QUESTION_BLUEPRINTS = {
             "explanation": "Semantic segmentation labels pixels or regions with category information.",
         },
         {
-            "prompt": "A lecture figure with colored object regions or masks is most likely illustrating which task?",
+            "prompt": "If a figure colors each object region or mask separately, what task is being demonstrated?",
             "correct": "Partitioning the image into meaningful object or semantic regions.",
             "distractors": [
                 "Estimating the disparity of corresponding pixels between two views.",
@@ -412,7 +412,7 @@ QUESTION_BLUEPRINTS = {
             "explanation": "The revision slides note that Harris is shift- and rotation-friendly in common settings, but not scale invariant.",
         },
         {
-            "prompt": "The highlighted local window in the accompanying Harris example is most likely used to compute which quantity?",
+            "prompt": "In the Harris example, what quantity is the highlighted local window used to evaluate under small shifts?",
             "correct": "The Harris matrix and the resulting corner response for that window.",
             "distractors": [
                 "A stereo disparity map for the whole image.",
@@ -465,7 +465,7 @@ QUESTION_BLUEPRINTS = {
             "explanation": "Orientation assignment normalizes the patch before descriptor formation, which makes matching more stable under rotation.",
         },
         {
-            "prompt": "The scale-space figure in the accompanying SIFT material is most likely illustrating which step?",
+            "prompt": "In a SIFT scale-space figure, what step is being decided before the descriptor is built?",
             "correct": "Finding keypoints as local extrema across neighboring locations and scales.",
             "distractors": [
                 "Computing a stereo baseline from two cameras.",
@@ -518,7 +518,7 @@ QUESTION_BLUEPRINTS = {
             "explanation": "A plain histogram keeps counts of visual words but not their exact geometry.",
         },
         {
-            "prompt": "A slide showing descriptors grouped into bins or histogram counts is most likely illustrating which pipeline?",
+            "prompt": "If local descriptors are grouped into bins or histogram counts, which retrieval pipeline step is being shown?",
             "correct": "Quantizing local features into visual words for image retrieval.",
             "distractors": [
                 "Estimating depth from disparity.",
@@ -571,7 +571,7 @@ QUESTION_BLUEPRINTS = {
             "explanation": "The lecture slides state that for translation, the least-squares solution is the average displacement of the matched points.",
         },
         {
-            "prompt": "The accompanying transformed-image figure is most likely illustrating which idea?",
+            "prompt": "If one image is translated, rotated, or scaled relative to another, what concept is the transformed-image figure explaining?",
             "correct": "Image coordinates are being changed by a global geometric transform such as rotation, scaling, shear, or translation.",
             "distractors": [
                 "A SIFT descriptor is being converted into a histogram.",
@@ -624,7 +624,7 @@ QUESTION_BLUEPRINTS = {
             "explanation": "Inverse warping fills each output pixel by mapping backward through the inverse transform into the source image.",
         },
         {
-            "prompt": "The overlaid before-and-after image pair is most likely demonstrating what successful alignment should achieve?",
+            "prompt": "If the before-and-after overlay lines up after warping, what does that tell you about the alignment result?",
             "correct": "Corresponding structures from the two images overlap consistently after warping.",
             "distractors": [
                 "Every image edge disappears after filtering.",

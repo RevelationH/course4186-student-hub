@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import os
 import re
-import shutil
 import socket
 import subprocess
 import sys
@@ -20,7 +19,8 @@ LOG_DIR = PORTAL_DIR / "logs"
 STATUS_PATH = PORTAL_DIR / "status.json"
 PORTAL_LOG = LOG_DIR / "portal.log"
 TUNNEL_LOG = LOG_DIR / "tunnel.log"
-ENV_PYTHON = os.getenv("COURSE4186_PYTHON", sys.executable or "python")
+ENV_PYTHON = Path(r"C:\Users\langhuang6\AppData\Local\anaconda3\envs\env_meta\python.exe")
+CLOUDFLARED_EXE = ROOT_DIR / "public_launch" / "cloudflared.exe"
 PORTAL_PORT = 50186
 LOCAL_URL = f"http://127.0.0.1:{PORTAL_PORT}/healthz"
 PUBLIC_URL_PATTERN = re.compile(r"https://[-a-z0-9]+\.trycloudflare\.com", re.IGNORECASE)
@@ -40,10 +40,6 @@ def ensure_dirs() -> None:
     LOG_DIR.mkdir(parents=True, exist_ok=True)
 
 
-def process_creation_flags() -> int:
-    return int(getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0))
-
-
 def is_port_open(host: str, port: int) -> bool:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.settimeout(1.0)
@@ -61,22 +57,15 @@ def http_ready(url: str) -> bool:
 
 def process_is_running(pid: int) -> bool:
     try:
-        return psutil.pid_exists(int(pid)) and psutil.Process(int(pid)).is_running()
+        proc = subprocess.run(
+            ["tasklist", "/FI", f"PID eq {pid}"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
     except Exception:
         return False
-
-
-def resolve_cloudflared_command() -> list[str] | None:
-    configured = os.getenv("CLOUDFLARED_PATH", "").strip()
-    candidates = [
-        configured,
-        str(ROOT_DIR / "public_launch" / "cloudflared.exe"),
-        shutil.which("cloudflared") or "",
-    ]
-    for candidate in candidates:
-        if candidate and Path(candidate).exists():
-            return [candidate]
-    return None
+    return str(pid) in proc.stdout
 
 
 def find_pid_listening_on_port(port: int) -> int | None:
@@ -133,24 +122,18 @@ def start_portal_process() -> subprocess.Popen:
         env=env,
         stdout=portal_log,
         stderr=subprocess.STDOUT,
-        creationflags=process_creation_flags(),
+        creationflags=subprocess.CREATE_NEW_PROCESS_GROUP,
     )
 
 
 def start_tunnel_process() -> subprocess.Popen:
-    cloudflared_cmd = resolve_cloudflared_command()
-    if not cloudflared_cmd:
-        raise FileNotFoundError(
-            "cloudflared was not found. Install Cloudflare Tunnel and make sure "
-            "`cloudflared` is on PATH, or set CLOUDFLARED_PATH."
-        )
     tunnel_log = TUNNEL_LOG.open("a", encoding="utf-8")
     return subprocess.Popen(
-        cloudflared_cmd + ["tunnel", "--url", f"http://127.0.0.1:{PORTAL_PORT}", "--no-autoupdate"],
+        [str(CLOUDFLARED_EXE), "tunnel", "--url", f"http://127.0.0.1:{PORTAL_PORT}", "--no-autoupdate"],
         cwd=str(PORTAL_DIR),
         stdout=tunnel_log,
         stderr=subprocess.STDOUT,
-        creationflags=process_creation_flags(),
+        creationflags=subprocess.CREATE_NEW_PROCESS_GROUP,
     )
 
 
@@ -219,22 +202,7 @@ def main() -> int:
 
     print("Starting Cloudflare tunnel for Course 4186 portal...", flush=True)
     TUNNEL_LOG.write_text("", encoding="utf-8")
-    try:
-        tunnel_proc = start_tunnel_process()
-    except FileNotFoundError as exc:
-        save_status(
-            {
-                "portal_pid": int(portal_pid),
-                "tunnel_pid": None,
-                "public_url": None,
-                "updated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
-                "local_url": LOCAL_URL,
-                "portal_log": str(PORTAL_LOG),
-                "tunnel_log": str(TUNNEL_LOG),
-            }
-        )
-        print(f"ERROR: {exc}", flush=True)
-        return 1
+    tunnel_proc = start_tunnel_process()
     public_url = wait_for_public_url()
 
     save_status(

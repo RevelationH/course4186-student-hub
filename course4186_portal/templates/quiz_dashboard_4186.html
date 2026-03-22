@@ -33,38 +33,7 @@
 .meta-row{display:flex;gap:10px;flex-wrap:wrap}
 @media(max-width:960px){.stats{grid-template-columns:1fr 1fr}.kp-grid{grid-template-columns:1fr}}
 {% endblock %}
-{% block sidebar_extra %}
-<section class="sidebar-card">
-    <h3 class="sidebar-title">Quick Access</h3>
-    <div class="sidebar-actions">
-        <a class="sidebar-text-link" href="{{ url_for('chatapi_4186') }}">Back to ChatAPI</a>
-        <a class="sidebar-text-link" href="{{ url_for('quiz_analysis_4186') }}">Open Learning Report</a>
-    </div>
-</section>
-
-<section class="sidebar-card">
-    <h3 class="sidebar-title">Progress</h3>
-    <div class="sidebar-metric">
-        <span class="muted">Knowledge Points</span>
-        <b>{{ kps|length }}</b>
-    </div>
-    <div class="sidebar-metric">
-        <span class="muted">Answered</span>
-        <b>{{ course4186_summary.answered }}</b>
-    </div>
-    <div class="sidebar-metric">
-        <span class="muted">Accuracy</span>
-        <b>{{ course4186_summary.accuracy }}%</b>
-    </div>
-</section>
-
-<section class="sidebar-card">
-    <h3 class="sidebar-title">Usage</h3>
-    <div class="sidebar-note">
-        Students can practice by knowledge point here. Every question is multiple choice, each knowledge point has at least five questions, and lecture images are used whenever possible.
-    </div>
-</section>
-{% endblock %}
+{% block sidebar_extra %}{% endblock %}
 {% block content %}
 <section class="hero">
     <h2>Quiz Dashboard</h2>

@@ -1,10 +1,199 @@
 {% extends "base.html" %}
 {% block title %}ChatAPI 4186{% endblock %}
 {% block extra_css %}
-.chat-panel{
+.workspace{
+    padding:14px 16px 12px;
+}
+.page{
+    height:calc(100vh - 26px);
+    max-width:none;
+    gap:12px;
+    grid-template-rows:auto minmax(0,1fr);
+}
+.hero{
+    padding:18px 22px;
+    border-radius:22px;
+}
+.hero h2{
+    font-size:26px;
+}
+.hero p{
+    margin-top:8px;
+    font-size:14px;
+}
+.sidebar-chat-history{
+    display:grid;
+    gap:10px;
+    flex:1 1 220px;
+    min-height:220px;
+    overflow:hidden;
+}
+.history-shell{
+    display:grid;
+    grid-template-rows:auto minmax(0,1fr);
+    gap:10px;
+    min-height:0;
+    height:100%;
+}
+.history-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+.history-inline-btn{
+    appearance:none;
+    border:1px solid var(--line);
+    background:var(--surface-2);
+    color:var(--muted);
+    border-radius:999px;
+    padding:7px 11px;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+    transition:background-color .18s ease,border-color .18s ease,color .18s ease;
+}
+.history-inline-btn:hover{
+    background:#fff;
+    border-color:var(--line-strong);
+    color:var(--ink);
+}
+.history-list{
     display:flex;
     flex-direction:column;
-    min-height:72vh;
+    gap:8px;
+    min-height:0;
+    height:100%;
+    overflow-y:auto;
+    overflow-x:visible;
+    padding-right:4px;
+    padding-bottom:10px;
+}
+.history-row{
+    width:100%;
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    min-height:48px;
+    padding:0 10px 0 12px;
+    border-radius:18px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    cursor:pointer;
+    overflow:visible;
+    flex:0 0 auto;
+    transition:background-color .18s ease,border-color .18s ease,transform .18s ease,box-shadow .18s ease;
+}
+.history-row:hover{
+    background:#fff;
+    border-color:var(--line-strong);
+    transform:translateY(-1px);
+    box-shadow:0 10px 22px rgba(15,23,42,.08);
+    z-index:30;
+}
+.history-row.active{
+    background:var(--brand-soft);
+    border-color:rgba(16,163,127,.28);
+}
+.history-row-main{
+    flex:1 1 auto;
+    min-width:0;
+    text-align:left;
+    padding:13px 0 12px;
+}
+.history-row-title{
+    font-size:13px;
+    font-weight:700;
+    line-height:1.25;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.history-hover-card{
+    position:absolute;
+    left:12px;
+    right:44px;
+    top:calc(100% + 6px);
+    z-index:25;
+    display:grid;
+    gap:6px;
+    padding:10px 12px;
+    border-radius:14px;
+    border:1px solid var(--line);
+    background:#fff;
+    box-shadow:0 12px 28px rgba(15,23,42,.12);
+    opacity:0;
+    transform:translateY(-3px);
+    pointer-events:none;
+    transition:opacity .18s ease,transform .18s ease;
+}
+.history-row:hover .history-hover-card,
+.history-row:focus-within .history-hover-card{
+    opacity:1;
+    transform:translateY(0);
+}
+.history-hover-meta{
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.35;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.history-hover-preview{
+    color:#4b5563;
+    font-size:12px;
+    line-height:1.45;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:3;
+    overflow:hidden;
+}
+.history-delete{
+    appearance:none;
+    width:28px;
+    height:28px;
+    border-radius:10px;
+    border:1px solid transparent;
+    background:transparent;
+    color:var(--muted);
+    cursor:pointer;
+    flex:0 0 auto;
+    opacity:0;
+    pointer-events:none;
+    transition:background-color .18s ease,color .18s ease,border-color .18s ease,opacity .18s ease;
+}
+.history-row:hover .history-delete{
+    opacity:1;
+    pointer-events:auto;
+}
+.history-delete:hover{
+    background:#fff;
+    color:#b91c1c;
+    border-color:#fecaca;
+}
+.history-empty{
+    padding:10px 2px;
+    color:var(--muted);
+    line-height:1.6;
+    font-size:12px;
+}
+.history-list::-webkit-scrollbar{
+    width:7px;
+}
+.history-list::-webkit-scrollbar-track{
+    background:transparent;
+}
+.history-list::-webkit-scrollbar-thumb{
+    background:#d1d5db;
+    border-radius:999px;
+}
+.chat-panel{
+    display:grid;
+    grid-template-rows:auto minmax(0,1fr) auto;
+    min-height:0;
+    height:100%;
     border-radius:24px;
     background:var(--surface);
     border:1px solid var(--line);
@@ -16,7 +205,7 @@
     justify-content:space-between;
     align-items:flex-start;
     gap:16px;
-    padding:18px 20px;
+    padding:16px 18px;
     border-bottom:1px solid var(--line);
     background:var(--surface);
 }
@@ -31,19 +220,36 @@
     line-height:1.6;
     font-size:14px;
 }
+.chat-head-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+.chat-status{
+    padding:7px 10px;
+    border-radius:999px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    color:var(--muted);
+    font-size:12px;
+    font-weight:700;
+}
 .chat-log{
-    flex:1;
-    overflow:auto;
-    padding:24px 22px;
-    background:linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+    min-height:0;
+    overflow-y:auto;
+    padding:18px 18px 24px;
+    background:linear-gradient(180deg,#ffffff 0%,#fafafa 100%);
 }
 .msg{
     display:flex;
     align-items:flex-start;
     gap:12px;
-    margin-bottom:20px;
+    margin-bottom:18px;
 }
-.msg.me{justify-content:flex-end}
+.msg.me{
+    justify-content:flex-end;
+}
 .avatar{
     width:34px;
     height:34px;
@@ -64,8 +270,18 @@
     color:#fff;
     border-color:var(--brand);
 }
+.bubble-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+    max-width:min(960px, 88%);
+}
+.msg.me .bubble-wrap{
+    align-items:flex-end;
+}
 .bubble{
-    max-width:min(760px, 84%);
+    width:100%;
     padding:14px 16px;
     border-radius:20px;
     border:1px solid var(--line);
@@ -81,36 +297,18 @@
     color:#fff;
     border-color:#111827;
 }
-.bubble-wrap{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    gap:8px;
-    max-width:min(760px, 84%);
-}
-.msg.me .bubble-wrap{
-    align-items:flex-end;
-}
-.msg.me .bubble{
-    max-width:100%;
-}
-.msg.bot .bubble{
-    max-width:100%;
-}
 .bubble.thinking-bubble{
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    width:fit-content;
-    max-width:none;
+    width:auto;
     min-width:0;
+    padding:0 10px;
     height:calc(1em * 1.72 + 28px);
     min-height:calc(1em * 1.72 + 28px);
-    padding:0 10px;
     border-radius:12px;
     line-height:1;
     white-space:normal;
-    word-break:normal;
 }
 .bubble.typing{
     position:relative;
@@ -163,140 +361,101 @@
     color:#4b5563;
     font-size:12px;
     line-height:1.3;
+    text-decoration:none;
 }
 .input-wrap{
-    padding:18px 20px 20px;
+    padding:14px 16px 16px;
     border-top:1px solid var(--line);
     background:var(--surface);
 }
 .composer{
     display:grid;
-    grid-template-columns:minmax(0, 1fr) auto;
+    grid-template-columns:minmax(0,1fr) auto;
     gap:12px;
     align-items:end;
 }
 .composer textarea{
     width:100%;
-    min-height:68px;
-    max-height:220px;
+    min-height:56px;
+    max-height:180px;
     padding:14px 16px;
-    resize:vertical;
+    resize:none;
     border-radius:18px;
     border:1px solid var(--line-strong);
     background:var(--surface-2);
     color:var(--ink);
     line-height:1.6;
     outline:none;
+    overflow-y:auto;
 }
 .composer textarea:focus{
     border-color:rgba(16,163,127,.55);
     box-shadow:0 0 0 4px rgba(16,163,127,.08);
 }
-.evidence-card{
-    padding:18px 20px;
-    border-radius:24px;
-    background:var(--surface);
-    border:1px solid var(--line);
-    box-shadow:var(--shadow);
-}
-.evidence-list{
-    display:grid;
-    gap:12px;
-}
-.ref{
-    padding:14px;
-    border-radius:18px;
-    border:1px solid var(--line);
-    background:var(--surface-2);
-}
-.ref b{
-    display:block;
-    margin-bottom:8px;
-    font-size:14px;
-}
-.status{
-    font-size:12px;
-    color:var(--muted);
+@media(max-width:1100px){
+    .page{
+        height:auto;
+        min-height:calc(100vh - 220px);
+    }
 }
 @media(max-width:760px){
-    .chat-head{flex-direction:column}
-    .composer{grid-template-columns:1fr}
-    .bubble{max-width:100%}
+    .workspace{
+        padding:12px;
+    }
+    .page{
+        height:auto;
+        grid-template-rows:auto auto;
+    }
+    .chat-head{
+        flex-direction:column;
+    }
+    .composer{
+        grid-template-columns:1fr;
+    }
+    .bubble-wrap{
+        max-width:100%;
+    }
 }
 @keyframes thinkingPulse{
-    0%, 80%, 100%{transform:translateY(0); opacity:.28}
-    40%{transform:translateY(-3px); opacity:1}
+    0%,80%,100%{transform:translateY(0);opacity:.28}
+    40%{transform:translateY(-3px);opacity:1}
 }
 @keyframes caretBlink{
-    0%, 49%{opacity:1}
-    50%, 100%{opacity:0}
+    0%,49%{opacity:1}
+    50%,100%{opacity:0}
 }
 {% endblock %}
 {% block sidebar_extra %}
-<section class="sidebar-card">
-    <h3 class="sidebar-title">Quick Start</h3>
-    <div class="sidebar-actions">
-        <button class="sidebar-button primary quick-prompt" data-prompt="Explain edge detection in this course.">Edge Detection</button>
-        <button class="sidebar-button quick-prompt" data-prompt="What is SIFT used for in this course?">SIFT</button>
-        <button class="sidebar-button quick-prompt" data-prompt="Explain stereo vision and epipolar geometry.">Stereo + Epipolar</button>
-    </div>
-</section>
-
-<section class="sidebar-card">
-    <h3 class="sidebar-title">Tools</h3>
-    <div class="sidebar-actions">
-        <a class="sidebar-text-link" href="{{ url_for('quiz_dashboard_4186') }}">Open Quiz</a>
-        <a class="sidebar-text-link" href="{{ url_for('quiz_analysis_4186') }}">Open Learning Report</a>
-        <a class="sidebar-text-link" href="{{ url_for('chatapi_4186_classic') }}">Open Classic View</a>
-    </div>
-</section>
-
-<section class="sidebar-card">
-    <h3 class="sidebar-title">Student</h3>
-    <div class="sidebar-note">
-        <strong style="display:block;color:var(--ink);margin-bottom:8px;">{{ course4186_profile.account_name or display_name }}</strong>
-        Your signed-in account is used to store your personal study record.
-    </div>
-    <div class="status">Dense retrieval: {{ 'enabled' if dense_enabled else 'disabled' }}</div>
-</section>
-
-<section class="sidebar-card">
-    <h3 class="sidebar-title">Answer Flow</h3>
-    <div class="sidebar-note">
-        1. Match the most relevant knowledge points.<br>
-        2. Retrieve related lecture evidence.<br>
-        3. Return an answer with traceable support.
+<section class="sidebar-card sidebar-chat-history">
+    <div class="history-shell">
+        <div class="history-head">
+            <h3 class="sidebar-title" style="margin:0;">Recent Chats</h3>
+            <button id="new-chat-btn" class="history-inline-btn" type="button">New Chat</button>
+        </div>
+        <div id="chat-history-list" class="history-list">
+            <div class="history-empty">Your recent course conversations will appear here.</div>
+        </div>
     </div>
 </section>
 {% endblock %}
 {% block content %}
 <section class="hero">
     <h2>Course 4186 Q&amp;A</h2>
-    <p>Welcome students to the 4186 Q&amp;A area. Answers are grounded in lecture notes, knowledge points, and the course question bank.</p>
+    <p>Welcome students to the 4186 Q&amp;A area. Answers are based on the lecture materials, knowledge points, and course practice content.</p>
 </section>
 
 <section class="chat-panel">
     <div class="chat-head">
         <div>
-            <h3>Course Conversation</h3>
-            <p>Ask about concepts, formulas, relationships between methods, or a specific slide topic from the lecture materials.</p>
+            <h3 id="chat-session-title">Course Conversation</h3>
+            <p id="chat-session-subtitle">Ask about concepts, formulas, relationships between methods, or a specific slide topic from the lecture materials.</p>
         </div>
-        <span class="pill">{{ 'Dense retrieval enabled' if dense_enabled else 'Dense retrieval disabled' }}</span>
-    </div>
-
-    <div id="chat-log" class="chat-log">
-        <div class="msg bot">
-            <div class="avatar">AI</div>
-            <div class="bubble">Welcome students to the 4186 learning system.
-
-You can ask questions such as:
-- What is epipolar geometry used for?
-- Explain the role of SIFT.
-- Compare image filtering and edge detection.
-
-The left sidebar gives you direct access to Quiz, Learning Report, and quick prompts.</div>
+        <div class="chat-head-actions">
+            <div id="chat-status" class="chat-status">Draft conversation</div>
         </div>
     </div>
+
+    <div id="chat-log" class="chat-log"></div>
 
     <div class="input-wrap">
         <div class="composer">
@@ -305,20 +464,56 @@ The left sidebar gives you direct access to Quiz, Learning Report, and quick pro
         </div>
     </div>
 </section>
-
-<section class="evidence-card">
-    <div style="margin-bottom:12px;">
-        <h3 class="section-title" style="margin-bottom:4px;">Supporting Evidence</h3>
-        <div class="muted">Relevant knowledge points and lecture evidence will appear here after each answer.</div>
-    </div>
-    <div id="evidence-list" class="evidence-list">
-        <div class="muted">Send a question to see retrieved evidence.</div>
-    </div>
-</section>
 {% endblock %}
 {% block extra_js %}
 <script>
 const historyState = [];
+let currentSessionId = '';
+let sessionListState = [];
+const userAvatarText = {{ ((course4186_profile.account_name or course4186_profile.display_name)[:2]|upper)|tojson }} || 'ME';
+const starterAssistantText = `Welcome students to the 4186 learning system.
+
+You can ask questions such as:
+- What is epipolar geometry used for?
+- Explain the role of SIFT.
+- Compare image filtering and edge detection.
+
+Your recent conversations are saved in the left history list.`;
+
+function resizeComposer() {
+    const input = document.getElementById('chat-input');
+    if (!input) return;
+    input.style.height = 'auto';
+    input.style.height = `${Math.min(input.scrollHeight, 180)}px`;
+}
+
+function scrollChatToBottom() {
+    const log = document.getElementById('chat-log');
+    log.scrollTop = log.scrollHeight;
+}
+
+function relativeDateLabel(rawValue) {
+    if (!rawValue) return 'Just now';
+    const when = new Date(rawValue);
+    if (Number.isNaN(when.getTime())) return 'Saved';
+    const now = new Date();
+    const diffMinutes = Math.round((now - when) / 60000);
+    if (diffMinutes < 1) return 'Just now';
+    if (diffMinutes < 60) return `${diffMinutes} min ago`;
+    const diffHours = Math.round(diffMinutes / 60);
+    if (diffHours < 24) return `${diffHours} hr ago`;
+    return when.toLocaleDateString([], { month: 'short', day: 'numeric' });
+}
+
+function setChatHeader(title, subtitle, statusText) {
+    document.getElementById('chat-session-title').textContent = title;
+    document.getElementById('chat-session-subtitle').textContent = subtitle;
+    document.getElementById('chat-status').textContent = statusText;
+}
+
+function clearChatLog() {
+    document.getElementById('chat-log').innerHTML = '';
+}
 
 function createMessageRow(role) {
     const log = document.getElementById('chat-log');
@@ -330,17 +525,28 @@ function createMessageRow(role) {
             <div class="bubble"></div>
             <div class="msg-sources"></div>
         </div>
-        ${role === 'user' ? '<div class="avatar">ME</div>' : ''}
+        ${role === 'user' ? `<div class="avatar">${userAvatarText}</div>` : ''}
     `;
     log.appendChild(row);
-    log.scrollTop = log.scrollHeight;
+    scrollChatToBottom();
     return row;
 }
 
-function appendMessage(role, text) {
+function appendMessage(role, text, citations = []) {
     const row = createMessageRow(role);
     row.querySelector('.bubble').textContent = text;
+    renderInlineSources(row, citations);
     return row;
+}
+
+function renderStarterConversation() {
+    clearChatLog();
+    appendMessage('assistant', starterAssistantText, []);
+    setChatHeader(
+        'Course Conversation',
+        'Ask about concepts, formulas, relationships between methods, or a specific slide topic from the lecture materials.',
+        'Draft conversation'
+    );
 }
 
 function appendThinkingMessage() {
@@ -356,11 +562,6 @@ function appendThinkingMessage() {
         </div>
     `;
     return row;
-}
-
-function scrollChatToBottom() {
-    const log = document.getElementById('chat-log');
-    log.scrollTop = log.scrollHeight;
 }
 
 function typeWriter(element, text) {
@@ -389,62 +590,191 @@ function typeWriter(element, text) {
 
 function setComposerBusy(isBusy) {
     const button = document.getElementById('send-btn');
+    const input = document.getElementById('chat-input');
     button.disabled = isBusy;
+    input.disabled = isBusy;
     button.textContent = 'Send';
-    document.querySelectorAll('.quick-prompt[data-prompt]').forEach(node => {
-        node.disabled = isBusy;
-    });
 }
 
 function renderInlineSources(row, citations) {
     const box = row.querySelector('.msg-sources');
     if (!box) return;
     box.innerHTML = '';
-    (citations || []).slice(0, 3).forEach(item => {
-        const chip = document.createElement('div');
+    (citations || []).slice(0, 4).forEach(item => {
+        const chip = document.createElement(item.material_url ? 'a' : 'div');
         const location = item.location || `chunk ${item.chunk_index}`;
+        const sourceName = String(item.source || 'Course material').split(/[/\\\\]/).pop();
         chip.className = 'source-pill';
-        chip.textContent = `${item.source} | ${location}`;
+        chip.textContent = `${sourceName} | ${location}`;
+        chip.title = `${item.source || sourceName} | ${location}${item.snippet ? `\n${item.snippet}` : ''}`;
+        if (item.material_url) {
+            chip.href = item.material_url;
+            chip.target = '_blank';
+            chip.rel = 'noreferrer';
+        }
         box.appendChild(chip);
     });
 }
 
-function renderEvidence(payload) {
-    const box = document.getElementById('evidence-list');
-    box.innerHTML = '';
+function renderHistoryList() {
+    const container = document.getElementById('chat-history-list');
+    container.innerHTML = '';
 
-    if (payload.related_kps && payload.related_kps.length) {
-        const kpCard = document.createElement('div');
-        kpCard.className = 'ref';
-        kpCard.innerHTML = `<b>Matched Knowledge Points</b>` + payload.related_kps.map(
-            item => `<div style="margin-top:8px;"><span class="pill">${item.name}</span><div class="muted" style="margin-top:6px;">${item.description}</div></div>`
-        ).join('');
-        box.appendChild(kpCard);
+    if (!currentSessionId) {
+        const draft = document.createElement('div');
+        draft.className = 'history-row active';
+        draft.innerHTML = `
+            <div class="history-row-main">
+                <div class="history-row-title">New chat</div>
+            </div>
+            <div class="history-hover-card">
+                <div class="history-hover-meta">Draft conversation</div>
+                <div class="history-hover-preview">Start a new Course 4186 conversation. The session will be saved after the first message.</div>
+            </div>
+            <div></div>
+        `;
+        draft.addEventListener('click', startDraftConversation);
+        container.appendChild(draft);
     }
 
-    if (payload.citations && payload.citations.length) {
-        payload.citations.forEach(item => {
-            const node = document.createElement('div');
-            const location = item.location || `chunk ${item.chunk_index}`;
-            node.className = 'ref';
-            node.innerHTML = `<b>${item.source} | ${location}</b><div class="muted">${item.snippet}</div>`;
-            box.appendChild(node);
+    if (!sessionListState.length) {
+        if (currentSessionId) return;
+        const empty = document.createElement('div');
+        empty.className = 'history-empty';
+        empty.textContent = 'No saved conversations yet. Start with a course question and it will appear here automatically.';
+        container.appendChild(empty);
+        return;
+    }
+
+    sessionListState.forEach(item => {
+        const row = document.createElement('div');
+        row.className = `history-row ${item.session_id === currentSessionId ? 'active' : ''}`;
+        row.innerHTML = `
+            <div class="history-row-main">
+                <div class="history-row-title">${escapeHtml(item.title || 'New chat')}</div>
+            </div>
+            <div class="history-hover-card">
+                <div class="history-hover-meta">${relativeDateLabel(item.updated_at)} | ${item.message_count || 0} messages</div>
+                <div class="history-hover-preview">${escapeHtml(item.last_message_preview || 'Saved course conversation')}</div>
+            </div>
+            <button class="history-delete" type="button" title="Delete conversation" aria-label="Delete conversation">x</button>
+        `;
+        row.addEventListener('click', event => {
+            if (event.target.closest('.history-delete')) return;
+            openConversation(item.session_id).catch(error => {
+                console.error(error);
+                alert(error.message || 'Conversation could not be opened.');
+            });
         });
-    }
+        row.querySelector('.history-delete').addEventListener('click', async event => {
+            event.stopPropagation();
+            try {
+                await deleteConversation(item.session_id);
+            } catch (error) {
+                console.error(error);
+                alert(error.message || 'Conversation could not be deleted.');
+            }
+        });
+        container.appendChild(row);
+    });
+}
 
-    if (!box.children.length) {
-        box.innerHTML = '<div class="muted">No supporting evidence is available for display yet.</div>';
+function escapeHtml(text) {
+    return String(text || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+}
+
+async function refreshSessions() {
+    const response = await fetch('{{ url_for("api_chat_sessions_4186") }}');
+    const payload = await response.json();
+    if (!payload.ok) throw new Error(payload.error || 'Conversation history could not be loaded.');
+    sessionListState = payload.sessions || [];
+    renderHistoryList();
+}
+
+function syncHistoryStateFromMessages(messages) {
+    historyState.length = 0;
+    (messages || []).forEach(item => {
+        if (item.role && item.content) {
+            historyState.push({ role: item.role, content: item.content });
+        }
+    });
+}
+
+function renderConversationMessages(messages, sessionData) {
+    clearChatLog();
+    if (!(messages || []).length) {
+        renderStarterConversation();
+        return;
+    }
+    (messages || []).forEach(item => {
+        appendMessage(item.role, item.content, item.citations || []);
+    });
+    setChatHeader(
+        sessionData.title || 'Course Conversation',
+        'Conversation history is loaded from your saved Course 4186 session.',
+        'Saved to Firebase'
+    );
+}
+
+async function openConversation(sessionId) {
+    if (!sessionId) {
+        startDraftConversation();
+        return;
+    }
+    const response = await fetch(`{{ url_for("api_chat_sessions_4186") }}/${encodeURIComponent(sessionId)}`);
+    const payload = await response.json();
+    if (!payload.ok) throw new Error(payload.error || 'Conversation could not be opened.');
+    currentSessionId = sessionId;
+    syncHistoryStateFromMessages(payload.messages || []);
+    renderConversationMessages(payload.messages || [], payload.session || {});
+    renderHistoryList();
+}
+
+function startDraftConversation() {
+    currentSessionId = '';
+    historyState.length = 0;
+    renderStarterConversation();
+    renderHistoryList();
+    document.getElementById('chat-input').focus();
+}
+
+async function deleteConversation(sessionId) {
+    if (!sessionId) return;
+    if (!confirm('Delete this saved conversation?')) return;
+    const response = await fetch(`{{ url_for("api_chat_sessions_4186") }}/${encodeURIComponent(sessionId)}`, { method: 'DELETE' });
+    const payload = await response.json();
+    if (!payload.ok) {
+        alert(payload.error || 'Conversation could not be deleted.');
+        return;
+    }
+    if (currentSessionId === sessionId) {
+        startDraftConversation();
+    }
+    await refreshSessions();
+}
+
+async function initializeChatPage() {
+    renderStarterConversation();
+    await refreshSessions();
+    if (sessionListState.length) {
+        await openConversation(sessionListState[0].session_id);
     }
 }
 
-async function sendMessage(prefill) {
+async function sendMessage() {
     const input = document.getElementById('chat-input');
-    const message = (prefill || input.value || '').trim();
+    const message = (input.value || '').trim();
     if (!message) return;
 
     appendMessage('user', message);
     historyState.push({ role: 'user', content: message });
     input.value = '';
+    resizeComposer();
     const thinkingRow = appendThinkingMessage();
     setComposerBusy(true);
 
@@ -452,29 +782,44 @@ async function sendMessage(prefill) {
         const response = await fetch('{{ url_for("api_chat_4186") }}', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message, history: historyState.slice(-8) })
+            body: JSON.stringify({
+                message,
+                history: historyState.slice(-8),
+                session_id: currentSessionId
+            })
         });
         const payload = await response.json();
-        if (!payload.ok) throw new Error(payload.error || 'Chat request failed.');
+        if (!payload.ok) throw new Error(payload.error || 'The reply could not be generated.');
         thinkingRow.remove();
-        const assistantRow = appendMessage('assistant', '');
+        const assistantRow = appendMessage('assistant', '', []);
         const assistantBubble = assistantRow.querySelector('.bubble');
         await typeWriter(assistantBubble, payload.answer);
         renderInlineSources(assistantRow, payload.citations || []);
         historyState.push({ role: 'assistant', content: payload.answer });
-        renderEvidence(payload);
+
+        if (payload.session && payload.session.session_id) {
+            currentSessionId = payload.session.session_id;
+            setChatHeader(
+                payload.session.title || 'Course Conversation',
+                'Conversation history is loaded from your saved Course 4186 session.',
+                'Saved to Firebase'
+            );
+            await refreshSessions();
+        }
     } catch (error) {
         thinkingRow.remove();
-        const assistantRow = appendMessage('assistant', '');
+        const assistantRow = appendMessage('assistant', '', []);
         const assistantBubble = assistantRow.querySelector('.bubble');
-        await typeWriter(assistantBubble, `Request failed: ${error.message}`);
+        await typeWriter(assistantBubble, `Sorry, the reply could not be generated. ${error.message}`);
     } finally {
         setComposerBusy(false);
         input.focus();
     }
 }
 
-document.getElementById('send-btn').addEventListener('click', () => sendMessage());
+document.getElementById('send-btn').addEventListener('click', sendMessage);
+document.getElementById('new-chat-btn').addEventListener('click', startDraftConversation);
+document.getElementById('chat-input').addEventListener('input', resizeComposer);
 document.getElementById('chat-input').addEventListener('keydown', event => {
     if (event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault();
@@ -482,8 +827,10 @@ document.getElementById('chat-input').addEventListener('keydown', event => {
     }
 });
 
-document.querySelectorAll('.quick-prompt[data-prompt]').forEach(button => {
-    button.addEventListener('click', () => sendMessage(button.dataset.prompt));
+resizeComposer();
+initializeChatPage().catch(error => {
+    console.error(error);
+    renderStarterConversation();
 });
 </script>
 {% endblock %}

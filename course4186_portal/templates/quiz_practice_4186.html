@@ -29,45 +29,23 @@
 .result{margin-top:14px;padding:14px 16px;border-radius:18px;background:var(--surface-2);border:1px solid var(--line);display:grid;gap:8px}
 .ok{color:#0f766e;font-weight:800}
 .bad{color:#b91c1c;font-weight:800}
+.neutral{color:#475569;font-weight:800}
+.review-list{display:grid;gap:8px}
+.review-link{
+    display:block;
+    padding:10px 12px;
+    border-radius:14px;
+    border:1px solid var(--line);
+    background:#fff;
+    color:var(--ink);
+    text-decoration:none;
+    line-height:1.5;
+}
+.review-link:hover{border-color:rgba(16,163,127,.45)}
 .actions{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 @media(max-width:960px){.summary-grid{grid-template-columns:1fr 1fr}}
 {% endblock %}
-{% block sidebar_extra %}
-<section class="sidebar-card">
-    <h3 class="sidebar-title">Current Topic</h3>
-    <div class="sidebar-note">
-        <strong style="display:block;color:var(--ink);margin-bottom:8px;">{{ kp.name }}</strong>
-        {{ kp.description }}
-    </div>
-</section>
-
-<section class="sidebar-card">
-    <h3 class="sidebar-title">Actions</h3>
-    <div class="sidebar-actions">
-        <a class="sidebar-text-link" href="{{ url_for('quiz_dashboard_4186') }}">Back to Dashboard</a>
-        <a class="sidebar-text-link" href="{{ url_for('quiz_analysis_4186') }}">Open Learning Report</a>
-        <button class="sidebar-button primary" type="submit" form="practice-form">Submit Answers</button>
-    </div>
-</section>
-
-{% if summary %}
-<section class="sidebar-card">
-    <h3 class="sidebar-title">Latest Result</h3>
-    <div class="sidebar-metric">
-        <span class="muted">Answered</span>
-        <b>{{ summary.answered }}</b>
-    </div>
-    <div class="sidebar-metric">
-        <span class="muted">Correct</span>
-        <b>{{ summary.correct }}</b>
-    </div>
-    <div class="sidebar-metric">
-        <span class="muted">Accuracy</span>
-        <b>{{ summary.accuracy }}%</b>
-    </div>
-</section>
-{% endif %}
-{% endblock %}
+{% block sidebar_extra %}{% endblock %}
 {% block content %}
 <section class="hero">
     <h2>{{ kp.name }}</h2>
@@ -94,7 +72,7 @@
 <section class="card">
     <div style="margin-bottom:14px;">
         <h3 class="section-title" style="margin-bottom:4px;">Practice Set</h3>
-        <div class="muted">{{ grading_note }}</div>
+        <div class="muted">{{ practice_note }}</div>
     </div>
     <form id="practice-form" method="POST">
         <div class="q-list">
@@ -124,14 +102,24 @@
 
                 {% if result %}
                 <div class="result">
-                    <div class="{{ 'ok' if result.is_correct else 'bad' }}">
-                        {{ 'Correct' if result.is_correct else 'Needs Review' }}
+                    <div class="{% if result.status == 'correct' %}ok{% elif result.status == 'not_answered' %}neutral{% else %}bad{% endif %}">
+                        {% if result.status == 'correct' %}Correct{% elif result.status == 'not_answered' %}Not Answered{% else %}Review Needed{% endif %}
                     </div>
-                    <div><b>Reference answer:</b> {{ result.reference_answer }}</div>
-                    {% if result.explanation %}<div><b>Explanation:</b> {{ result.explanation }}</div>{% endif %}
-                    <div class="muted"><b>Grading:</b> {{ result.grading_note }}</div>
-                    {% if result.matched_keywords %}
-                    <div class="muted"><b>Matched keywords:</b> {{ result.matched_keywords|join(', ') }}</div>
+                    {% if result.submitted_answer_display %}
+                    <div><b>Your answer:</b> {{ result.submitted_answer_display }}</div>
+                    {% endif %}
+                    <div><b>Correct answer:</b> {{ result.reference_answer }}</div>
+                    {% if result.explanation %}<div><b>Why:</b> {{ result.explanation }}</div>{% endif %}
+                    {% if result.feedback_note %}<div class="muted">{{ result.feedback_note }}</div>{% endif %}
+                    {% if result.review_refs %}
+                    <div><b>Review in lecture materials:</b></div>
+                    <div class="review-list">
+                        {% for ref in result.review_refs %}
+                        <a class="review-link" href="{{ ref.material_url }}" target="_blank" rel="noreferrer">
+                            {{ ref.display_source }} | {{ ref.location }} | {{ ref.section }}
+                        </a>
+                        {% endfor %}
+                    </div>
                     {% endif %}
                 </div>
                 {% endif %}
@@ -141,7 +129,6 @@
         <div class="actions" style="margin-top:18px;">
             <a class="btn alt" href="{{ url_for('quiz_dashboard_4186') }}">Back to Dashboard</a>
             <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                <a class="btn alt" href="{{ url_for('quiz_analysis_4186') }}">Open Learning Report</a>
                 <button class="btn" type="submit">Submit Answers</button>
             </div>
         </div>

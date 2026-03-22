@@ -22,7 +22,7 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 import xml.etree.ElementTree as ET
 
 from pypdf import PdfReader
-from question_blueprints import QUESTION_BLUEPRINTS
+from exam_question_blueprints import QUESTION_BLUEPRINTS
 
 try:
     from openai import OpenAI
@@ -42,9 +42,8 @@ except Exception:
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-DEFAULT_COURSE_ROOT = Path(os.getenv("COURSE4186_COURSE_ROOT", r"D:\digital_human\4186\4186"))
-DEFAULT_ARTIFACT_DIR = SCRIPT_DIR / "artifacts_week1_week6"
-DEFAULT_MAX_WEEK = int(os.getenv("COURSE4186_MAX_WEEK", "6"))
+DEFAULT_COURSE_ROOT = Path(r"D:\digital_human\4186\4186")
+DEFAULT_ARTIFACT_DIR = SCRIPT_DIR / "artifacts"
 DEFAULT_EMBED_MODEL = os.getenv("COURSE_EMBED_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
 SUPPORTED_EXTENSIONS = {".pdf", ".pptx", ".docx", ".ppt"}
 WORD_RE = re.compile(r"[A-Za-z][A-Za-z0-9_+-]*")
@@ -67,6 +66,7 @@ CHUNK_OVERLAP = 120
 BROWSER_IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp"}
 MIN_SLIDE_IMAGE_BYTES = 4096
 MIN_QUESTION_COUNT = 5
+SOURCE_TYPE_PRIORITY = {"pptx": 0, "ppt": 0, "pdf": 1, "docx": 2}
 
 
 @dataclass
@@ -120,6 +120,7 @@ class QuestionRecord:
     correct_option: Optional[str] = None
     source_chunk_ids: List[str] = field(default_factory=list)
     source_files: List[str] = field(default_factory=list)
+    review_refs: List[Dict[str, Any]] = field(default_factory=list)
     image_path: Optional[str] = None
     image_caption: Optional[str] = None
 
@@ -270,6 +271,22 @@ def clean_display_text(text: str) -> str:
         cleaned = cleaned.replace(source, target)
     cleaned = re.sub(r"\s+", " ", cleaned).strip()
     return cleaned
+
+
+def format_source_location(source_type: str, unit_type: str, unit_index: Any) -> str:
+    try:
+        index = int(unit_index)
+    except Exception:
+        index = 0
+    source_kind = (source_type or "").lower()
+    unit_kind = (unit_type or "").lower()
+    if unit_kind == "page" or source_kind == "pdf":
+        return f"page {index}" if index > 0 else "page"
+    if unit_kind == "slide" or source_kind in {"pptx", "ppt"}:
+        return f"slide {index}" if index > 0 else "slide"
+    if unit_kind == "document" or source_kind == "docx":
+        return f"document {index}" if index > 1 else "document"
+    return f"section {index}" if index > 0 else "section"
 
 
 def sort_slide_name(name: str) -> Tuple[int, str]:
@@ -1079,6 +1096,77 @@ def build_option_lines(correct_text: str, distractors: Sequence[str], seed: str)
     return options, correct_option
 
 
+def section_label_for_chunk(chunk: ChunkRecord) -> str:
+    title = clean_display_text(chunk.title)
+    stem = clean_display_text(PurePosixPath(str(chunk.relative_path).replace("\\", "/")).stem)
+    title_tokens = set(tokenize(title))
+    stem_tokens = set(tokenize(stem))
+    looks_generic = (
+        not title
+        or title.lower() == stem.lower()
+        or (title_tokens and title_tokens.issubset(stem_tokens) and len(title_tokens) <= 4)
+        or len(title) <= 6
+    )
+    if looks_generic:
+        fallback = safe_snippet(clean_display_text(chunk.text), 110)
+        return fallback or title or stem
+    return title
+
+
+def build_review_refs(
+    prompt: str,
+    correct_text: str,
+    explanation: str,
+    support_chunks: Sequence[ChunkRecord],
+    review_terms: Optional[Sequence[str]] = None,
+    max_refs: int = 2,
+) -> List[Dict[str, Any]]:
+    if not support_chunks:
+        return []
+    query = " ".join(
+        part for part in [
+            clean_display_text(prompt),
+            clean_display_text(correct_text),
+            clean_display_text(explanation),
+            " ".join(clean_display_text(term) for term in (review_terms or [])),
+        ]
+        if part
+    ).strip()
+    hits = lexical_rank(
+        query or clean_display_text(correct_text),
+        support_chunks,
+        text_getter=lambda chunk: "\n".join([chunk.title, chunk.relative_path, chunk.text]),
+        top_k=len(support_chunks),
+    )
+    ranked: List[Tuple[float, ChunkRecord]] = []
+    seen: set[Tuple[str, str, int]] = set()
+    for score, chunk in hits:
+        key = (chunk.relative_path, chunk.unit_type, chunk.unit_index)
+        if key in seen:
+            continue
+        seen.add(key)
+        priority_boost = 2.0 - float(SOURCE_TYPE_PRIORITY.get(str(chunk.source_type).lower(), 3))
+        ranked.append((score + priority_boost, chunk))
+    if not ranked:
+        ranked = [
+            (2.0 - float(SOURCE_TYPE_PRIORITY.get(str(chunk.source_type).lower(), 3)), chunk)
+            for chunk in support_chunks
+        ]
+    ranked.sort(key=lambda item: (-item[0], SOURCE_TYPE_PRIORITY.get(str(item[1].source_type).lower(), 3), item[1].unit_index))
+    refs: List[Dict[str, Any]] = []
+    for _, chunk in ranked[:max_refs]:
+        source_path = str(chunk.relative_path).replace("\\", "/")
+        refs.append(
+            {
+                "source": str(chunk.relative_path),
+                "display_source": PurePosixPath(source_path).name,
+                "location": format_source_location(chunk.source_type, chunk.unit_type, chunk.unit_index),
+                "section": section_label_for_chunk(chunk),
+            }
+        )
+    return refs
+
+
 def build_mcq_question(
     question_id: str,
     kp: KnowledgePoint,
@@ -1086,10 +1174,12 @@ def build_mcq_question(
     correct_text: str,
     distractors: Sequence[str],
     explanation: str,
+    review_chunks: Sequence[ChunkRecord],
     source_chunk_ids: Sequence[str],
     source_files: Sequence[str],
     image_path: Optional[str] = None,
     image_caption: Optional[str] = None,
+    review_terms: Optional[Sequence[str]] = None,
 ) -> QuestionRecord:
     options, correct_option = build_option_lines(correct_text, distractors, question_id)
     return QuestionRecord(
@@ -1104,6 +1194,7 @@ def build_mcq_question(
         correct_option=correct_option,
         source_chunk_ids=list(source_chunk_ids),
         source_files=list(source_files),
+        review_refs=build_review_refs(prompt, correct_text, explanation, review_chunks, review_terms=review_terms),
         image_path=image_path,
         image_caption=clean_display_text(image_caption) if image_caption else None,
     )
@@ -1130,6 +1221,7 @@ def select_question_image(
 def fallback_questions_for_kp(
     kp: KnowledgePoint,
     support_chunks: Sequence[ChunkRecord],
+    review_chunks: Sequence[ChunkRecord],
     all_kps: Sequence[KnowledgePoint],
     slide_images_by_doc_id: Dict[str, List[SlideImageRecord]],
     question_count: int,
@@ -1150,10 +1242,12 @@ def fallback_questions_for_kp(
                 correct_text=str(spec.get("correct", "")).strip(),
                 distractors=[str(item).strip() for item in spec.get("distractors", [])],
                 explanation=str(spec.get("explanation", "")).strip(),
+                review_chunks=review_chunks,
                 source_chunk_ids=source_chunk_ids,
                 source_files=source_files,
                 image_path=selected_image.image_path if use_image else None,
                 image_caption=selected_image.image_caption if use_image else None,
+                review_terms=spec.get("review_terms"),
             )
         )
 
@@ -1213,6 +1307,7 @@ def fallback_questions_for_kp(
                 correct_text=str(spec["correct"]),
                 distractors=[str(item) for item in spec["distractors"]],
                 explanation=str(spec["explanation"]),
+                review_chunks=review_chunks,
                 source_chunk_ids=source_chunk_ids,
                 source_files=source_files,
             )
@@ -1314,6 +1409,12 @@ def llm_questions_for_kp(
                 correct_option=(str(item["correct_option"]).strip() if item.get("correct_option") is not None else None),
                 source_chunk_ids=source_chunk_ids,
                 source_files=source_files,
+                review_refs=build_review_refs(
+                    str(item.get("question", "")).strip(),
+                    str(item.get("answer", "")).strip(),
+                    str(item.get("explanation", "")).strip(),
+                    support_chunks,
+                ),
             )
         )
     if not results:
@@ -1347,16 +1448,21 @@ def generate_questions(
         }
 
     for kp in knowledge_points:
-        support_chunks = [chunk_map[chunk_id] for chunk_id in kp.support_chunk_ids if chunk_id in chunk_map][:4]
+        support_chunks = [chunk_map[chunk_id] for chunk_id in kp.support_chunk_ids if chunk_id in chunk_map][:8]
         if not support_chunks:
             continue
-        fallback_generated = fallback_questions_for_kp(kp, support_chunks, knowledge_points, slide_images_by_doc_id, question_count)
+        review_chunks = [chunk for chunk in chunk_records if chunk.relative_path in set(kp.source_files)] or list(support_chunks)
+        fallback_generated = fallback_questions_for_kp(kp, support_chunks, review_chunks, knowledge_points, slide_images_by_doc_id, question_count)
+        if QUESTION_BLUEPRINTS.get(kp.name):
+            questions.extend(fallback_generated[:question_count])
+            continue
         image_questions = [item for item in fallback_generated if item.image_path]
+        llm_support_chunks = support_chunks[:4]
         if client is not None and model:
             last_exc: Optional[Exception] = None
             for attempt in range(3):
                 try:
-                    generated = llm_questions_for_kp(client, model, kp, support_chunks, question_count)
+                    generated = llm_questions_for_kp(client, model, kp, llm_support_chunks, question_count)
                     if len(generated) >= question_count and all(item.question_type == "multiple_choice" for item in generated):
                         if image_questions:
                             merged = [image_questions[0]] + generated
@@ -1606,7 +1712,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--course-root", default=str(DEFAULT_COURSE_ROOT), help="Root folder of the course materials.")
     parser.add_argument("--artifacts", default=str(DEFAULT_ARTIFACT_DIR), help="Output folder for generated artifacts.")
     parser.add_argument("--embedding-model", default=DEFAULT_EMBED_MODEL, help="Embedding model for optional dense retrieval.")
-    parser.add_argument("--max-week", type=int, default=DEFAULT_MAX_WEEK, help="Only include lecture and tutorial materials up to this week number.")
+    parser.add_argument("--max-week", type=int, default=None, help="Only include lecture and tutorial materials up to this week number.")
 
     subparsers = parser.add_subparsers(dest="command", required=True)
     subparsers.add_parser("analyze", help="Extract materials and generate inventory files.")

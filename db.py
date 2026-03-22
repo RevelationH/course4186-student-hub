@@ -1,48 +1,41 @@
-from __future__ import annotations
-
-import os
-from pathlib import Path
-
+import json
 import firebase_admin
 from firebase_admin import credentials, firestore
-
-
-def _resolve_credential_path() -> Path:
-    candidates = [
-        os.getenv("FIREBASE_CREDENTIALS", "").strip(),
-        os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "").strip(),
-        str(Path(__file__).resolve().parent / "firebase-service-account.json"),
-    ]
-    for candidate in candidates:
-        if candidate and Path(candidate).exists():
-            return Path(candidate)
-    raise RuntimeError(
-        "Firebase credentials were not found. Set FIREBASE_CREDENTIALS or "
-        "GOOGLE_APPLICATION_CREDENTIALS, or place firebase-service-account.json "
-        "in the bundle root."
-    )
-
+from google.api_core.datetime_helpers import DatetimeWithNanoseconds
 
 if not firebase_admin._apps:
-    credential_path = _resolve_credential_path()
-    firebase_admin.initialize_app(credentials.Certificate(str(credential_path)))
+    cred = credentials.Certificate(
+        r'./quizsite-fb97c-firebase-adminsdk-fbsvc-76a794e54f.json'
+    )
+if not firebase_admin._apps:
+    firebase_admin.initialize_app(cred)
+
+print("database activate!!!!")
 
 
-class fire_db:
+class fire_db():
     def __init__(self):
         self.db = firestore.client()
-
+    
+    # 添加缺失的方法以兼容原始代码
     def collection(self, collection_name):
+        """直接访问集合"""
         return self.db.collection(collection_name)
-
+    
     def collection_group(self, collection_name):
+        """访问集合组"""
         return self.db.collection_group(collection_name)
-
+    
     def document(self, collection_name, doc_name):
+        """访问文档"""
         return self.db.collection(collection_name).document(doc_name)
 
+    # 保留原有方法
     def read_wq(self, collection_1, username, collection_2):
-        return self.db.collection(collection_1).document(username).collection(collection_2)
-
+        wq_doc = self.db.collection(collection_1).document(username).collection(collection_2)
+        return wq_doc
+    
     def read_doc(self, collection, username):
-        return self.db.collection(collection).document(username).get()
+        doc = self.db.collection(collection).document(username).get()
+        return doc
+    

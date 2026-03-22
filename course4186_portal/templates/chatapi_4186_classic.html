@@ -431,7 +431,6 @@
                     <h3>Quick Access</h3>
                     <ul>
                         <li><a href="{{ url_for('quiz_dashboard_4186') }}" style="color: var(--text);">Open Quiz</a></li>
-                        <li><a href="{{ url_for('quiz_analysis_4186') }}" style="color: var(--text);">Open Learning Report</a></li>
                         <li><a href="{{ url_for('chatapi_4186') }}" style="color: var(--text);">Switch to the student hub UI</a></li>
                     </ul>
                 </div>
@@ -444,12 +443,11 @@
                     <div class="avatar">AI</div>
                     <div class="message-content" id="welcomeMessage">
 <p>Welcome students to the Course 4186 learning system.</p>
-<p>I answer primarily from course content and help you understand knowledge points, enter practice, and review your learning report.</p>
+<p>I answer primarily from course content and help you understand knowledge points and move into quiz practice.</p>
 <p>You can ask me things like:</p>
 <p>1. "What is this course about?" or "Introduce the course."</p>
 <p>2. "Explain [concept] for me."</p>
 <p>3. "I want to practice."</p>
-<p>4. "Show me my learning report."</p>
 <p>If you want to organize the conversation, you can also use "Clear Chat" and "Export Chat" in the top-right corner.</p>
                     </div>
                 </div>
@@ -459,7 +457,6 @@
                 <div class="input-wrapper">
                     <div class="preset-prompts">
                         <button type="button" class="preset-chip" onclick="window.location.href='{{ url_for('quiz_dashboard_4186') }}'">Quiz</button>
-                        <button type="button" class="preset-chip" onclick="window.location.href='{{ url_for('quiz_analysis_4186') }}'">Learning Report</button>
                         <button type="button" class="preset-chip" onclick="sendPresetMessage('Explain epipolar geometry in this course.')">Ask a Topic</button>
                     </div>
                     <textarea class="input-box" id="inputBox" placeholder="Please input message..." rows="1" onkeydown="handleKeyDown(event)"></textarea>
@@ -632,7 +629,7 @@
                 hideLoading();
 
                 if (!payload.ok) {
-                    throw new Error(payload.error || 'Chat request failed.');
+                    throw new Error(payload.error || 'The reply could not be generated.');
                 }
 
                 const botElement = addMessage('', 'assistant');
@@ -641,7 +638,7 @@
             } catch (error) {
                 hideLoading();
                 const botElement = addMessage('', 'assistant');
-                typeWriter(botElement, 'Request failed: ' + error.message);
+                typeWriter(botElement, 'Sorry, the reply could not be generated. ' + error.message);
             }
         }
 

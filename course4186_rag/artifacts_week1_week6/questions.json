@@ -1,135 +1,421 @@
 [
   {
-    "question_id": "kp-computer-vision-foundations-q5",
+    "question_id": "kp-computer-vision-foundations-q1",
     "kp_id": "kp-computer-vision-foundations",
     "kp_name": "Computer vision foundations",
     "question_type": "multiple_choice",
-    "question": "A course overview slide listing robotics, medical imaging, and recognition is most likely illustrating what idea?",
-    "answer": "Computer vision supports many different application areas that rely on interpreting visual data.",
-    "explanation": "The overview material uses applications to show the breadth of computer vision as a field.",
+    "question": "A system receives an image and outputs the identity of the person in it. Which statement best describes the computer vision goal being used?",
+    "answer": "The system is extracting high-level semantic meaning from visual data rather than just storing pixels.",
+    "explanation": "In the introductory lecture, computer vision is defined as making computers gain high-level understanding from images and videos. Identity recognition is a semantic interpretation task, not a storage task.",
     "options": [
-      "A. Every computer vision problem reduces to one fixed convolution kernel.",
-      "B. Only camera calibration matters in computer vision.",
-      "C. Computer vision supports many different application areas that rely on interpreting visual data.",
-      "D. Computer vision is limited to one single application domain."
+      "A. The system is only measuring the camera focal length.",
+      "B. The system is only changing the file format of the image.",
+      "C. The system is extracting high-level semantic meaning from visual data rather than just storing pixels.",
+      "D. The system is only increasing image resolution without interpretation."
     ],
     "correct_option": "C",
     "source_chunk_ids": [
       "chunk-5749a66dfc82",
       "chunk-b20dccb0397a",
       "chunk-abd75ebf4271",
-      "chunk-811353f1e8dc"
+      "chunk-811353f1e8dc",
+      "chunk-ceec7672a33a",
+      "chunk-113dab0800a6",
+      "chunk-6f316b1630b6",
+      "chunk-aad2fe3c1b5c"
     ],
     "source_files": [
       "Week1\\Lecture1-1 (7).pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1 (7).pptx",
+        "location": "slide 5",
+        "section": "The goal of computer vision Computers can gain some high-level understanding from digital images/videos - wikipedia"
+      },
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1 (7).pptx",
+        "location": "slide 8",
+        "section": "The goal of computer vision Recognize objects and people Terminator 2 , 1991"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-computer-vision-foundations-q2",
+    "kp_id": "kp-computer-vision-foundations",
+    "kp_name": "Computer vision foundations",
+    "question_type": "multiple_choice",
+    "question": "Why can the same object category still be difficult to recognize across different photos?",
+    "answer": "Because viewpoint, illumination, scale, clutter, and occlusion can change the image appearance significantly.",
+    "explanation": "The lecture lists viewpoint variation, illumination, scale, background clutter, motion, and occlusion as core reasons why computer vision is difficult.",
+    "options": [
+      "A. Because every object always appears at the same scale and under the same lighting.",
+      "B. Because computer vision methods only work on black-and-white images.",
+      "C. Because digital images cannot be represented numerically.",
+      "D. Because viewpoint, illumination, scale, clutter, and occlusion can change the image appearance significantly."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-5749a66dfc82",
+      "chunk-b20dccb0397a",
+      "chunk-abd75ebf4271",
+      "chunk-811353f1e8dc",
+      "chunk-ceec7672a33a",
+      "chunk-113dab0800a6",
+      "chunk-6f316b1630b6",
+      "chunk-aad2fe3c1b5c"
+    ],
+    "source_files": [
+      "Week1\\Lecture1-1 (7).pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1 (7).pptx",
+        "location": "slide 26",
+        "section": "Why is computer vision difficult? Intra-class variation Background clutter Motion (Source: S. Lazebnik) Occlusion"
+      },
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1 (7).pptx",
+        "location": "slide 25",
+        "section": "Why is computer vision difficult? Viewpoint variation Illumination Scale"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-computer-vision-foundations-q3",
+    "kp_id": "kp-computer-vision-foundations",
+    "kp_name": "Computer vision foundations",
+    "question_type": "multiple_choice",
+    "question": "Which task is closest to the course definition of computer vision?",
+    "answer": "Recognizing objects or people from image evidence.",
+    "explanation": "The Week 1 introduction uses examples such as recognizing objects and people to explain what it means to understand the physical world from images.",
+    "options": [
+      "A. Changing the wallpaper on a laptop screen.",
+      "B. Counting how many bytes the image file uses on disk.",
+      "C. Recognizing objects or people from image evidence.",
+      "D. Renaming an image file in the operating system."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-5749a66dfc82",
+      "chunk-b20dccb0397a",
+      "chunk-abd75ebf4271",
+      "chunk-811353f1e8dc",
+      "chunk-ceec7672a33a",
+      "chunk-113dab0800a6",
+      "chunk-6f316b1630b6",
+      "chunk-aad2fe3c1b5c"
+    ],
+    "source_files": [
+      "Week1\\Lecture1-1 (7).pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1 (7).pptx",
+        "location": "slide 6",
+        "section": "The goal of computer vision Compute and understand the physical world"
+      },
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1 (7).pptx",
+        "location": "slide 8",
+        "section": "The goal of computer vision Recognize objects and people Terminator 2 , 1991"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-computer-vision-foundations-q4",
+    "kp_id": "kp-computer-vision-foundations",
+    "kp_name": "Computer vision foundations",
+    "question_type": "multiple_choice",
+    "question": "Why does the course argue that computer vision is worth studying even before discussing specific algorithms?",
+    "answer": "Because enormous numbers of images and videos are captured every day and many useful applications depend on analyzing them.",
+    "explanation": "The Week 1 motivation slide points to the scale of visual data and the large number of useful applications as the practical reason for studying the field.",
+    "options": [
+      "A. Because computer vision removes the need for any machine learning or geometry.",
+      "B. Because enormous numbers of images and videos are captured every day and many useful applications depend on analyzing them.",
+      "C. Because the field is limited to one single application such as face recognition.",
+      "D. Because every camera already produces perfect scene understanding automatically."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-5749a66dfc82",
+      "chunk-b20dccb0397a",
+      "chunk-abd75ebf4271",
+      "chunk-811353f1e8dc",
+      "chunk-ceec7672a33a",
+      "chunk-113dab0800a6",
+      "chunk-6f316b1630b6",
+      "chunk-aad2fe3c1b5c"
+    ],
+    "source_files": [
+      "Week1\\Lecture1-1 (7).pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1 (7).pptx",
+        "location": "slide 10",
+        "section": "Why study computer vision? Billions of images/videos captured per day Huge number of useful applications"
+      },
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1 (7).pptx",
+        "location": "slide 25",
+        "section": "Why is computer vision difficult? Viewpoint variation Illumination Scale"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-computer-vision-foundations-q5",
+    "kp_id": "kp-computer-vision-foundations",
+    "kp_name": "Computer vision foundations",
+    "question_type": "multiple_choice",
+    "question": "The application figure includes robotics, medical imaging, recognition, and marine-animal counting. What is the main message of that figure?",
+    "answer": "Computer vision is a general field with many application areas that all rely on interpreting visual information.",
+    "explanation": "The figure is used to show the breadth of the field. The point is not one algorithm, but that many different applications depend on extracting meaning from images.",
+    "options": [
+      "A. All computer vision problems reduce to the same single filter.",
+      "B. Computer vision is only about face recognition.",
+      "C. Computer vision is a general field with many application areas that all rely on interpreting visual information.",
+      "D. The figure proves that camera calibration is the only important topic in the course."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-5749a66dfc82",
+      "chunk-b20dccb0397a",
+      "chunk-abd75ebf4271",
+      "chunk-811353f1e8dc",
+      "chunk-ceec7672a33a",
+      "chunk-113dab0800a6",
+      "chunk-6f316b1630b6",
+      "chunk-aad2fe3c1b5c"
+    ],
+    "source_files": [
+      "Week1\\Lecture1-1 (7).pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1 (7).pptx",
+        "location": "slide 19",
+        "section": "Marine Mammal Recognition Under-water fish counting"
+      },
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1 (7).pptx",
+        "location": "slide 5",
+        "section": "The goal of computer vision Computers can gain some high-level understanding from digital images/videos - wikipedia"
+      }
     ],
     "image_path": "images/week1-lecture1-1-7/slide-005-469f8acbdd9e.png",
     "image_caption": "Lecture figure from Week1/Lecture1-1 (7).pptx slide 5"
   },
   {
-    "question_id": "kp-computer-vision-foundations-llm-1",
-    "kp_id": "kp-computer-vision-foundations",
-    "kp_name": "Computer vision foundations",
+    "question_id": "kp-image-filtering-and-convolution-q1",
+    "kp_id": "kp-image-filtering-and-convolution",
+    "kp_name": "Image filtering and convolution",
     "question_type": "multiple_choice",
-    "question": "Based on the provided evidence, what is a primary goal of computer vision?",
-    "answer": "To compute and understand the physical world from digital images and videos.",
-    "explanation": "The evidence explicitly states that the goal of computer vision is to 'Compute and understand the physical world' and to 'gain some high-level understanding from digital images/videos'.",
+    "question": "A 3x3 kernel is applied at one interior pixel. Before the final sum is produced, how many pixel-weight multiplications are performed?",
+    "answer": "9 multiplications.",
+    "explanation": "A 3x3 filter contains 9 weights, so one output value is formed from 9 multiply-and-add terms over the local neighborhood.",
     "options": [
-      "A. To design faster computer processors for rendering graphics.",
-      "B. To compute and understand the physical world from digital images and videos.",
-      "C. To create digital images and videos from textual descriptions.",
-      "D. To study the biological structure of the human eye."
+      "A. 9 multiplications.",
+      "B. 6 multiplications.",
+      "C. 3 multiplications.",
+      "D. 18 multiplications."
     ],
-    "correct_option": "B",
+    "correct_option": "A",
     "source_chunk_ids": [
-      "chunk-5749a66dfc82",
-      "chunk-b20dccb0397a",
-      "chunk-abd75ebf4271",
-      "chunk-811353f1e8dc"
+      "chunk-3dd745e980a4",
+      "chunk-3d54c09b038b",
+      "chunk-97910ba4ced2",
+      "chunk-8af1d1050c19",
+      "chunk-b22aeed7c8dd",
+      "chunk-244ba7460911",
+      "chunk-a56963587747",
+      "chunk-409fe1a7441c"
     ],
     "source_files": [
-      "Week1\\Lecture1-1 (7).pptx"
+      "Week1\\Lecture1-2 (10).pptx",
+      "Week1\\Lecture1-2.pdf",
+      "Week2\\all.pptx",
+      "Week2\\revision (1) (1).pptx",
+      "Week2\\revision_w1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\all.pptx",
+        "display_source": "all.pptx",
+        "location": "slide 3",
+        "section": "Linear filtering One simple version of filtering: linear filtering (cross-correlation, convolution) Replace..."
+      },
+      {
+        "source": "Week2\\revision (1) (1).pptx",
+        "display_source": "revision (1) (1).pptx",
+        "location": "slide 3",
+        "section": "Linear filtering One simple version of filtering: linear filtering (cross-correlation, convolution) Replace..."
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-computer-vision-foundations-llm-2",
-    "kp_id": "kp-computer-vision-foundations",
-    "kp_name": "Computer vision foundations",
+    "question_id": "kp-image-filtering-and-convolution-q2",
+    "kp_id": "kp-image-filtering-and-convolution",
+    "kp_name": "Image filtering and convolution",
     "question_type": "multiple_choice",
-    "question": "According to the evidence, which of the following is a specific task mentioned as part of the goal of computer vision?",
-    "answer": "Recognize objects and people.",
-    "explanation": "The evidence directly lists 'Recognize objects and people' as a goal of computer vision, using the example from 'Terminator 2, 1991'.",
+    "question": "What is the mathematical difference between convolution and cross-correlation in the lecture notes?",
+    "answer": "Convolution flips the kernel before applying it, while cross-correlation uses the kernel in its original order.",
+    "explanation": "The lecture explicitly states that convolution is the same local weighted computation as cross-correlation except that the kernel is flipped horizontally and vertically first.",
     "options": [
-      "A. Synthesize new musical compositions.",
-      "B. Recognize objects and people.",
-      "C. Translate spoken language in real-time.",
-      "D. Predict future stock market trends."
+      "A. They are identical for every kernel and every image.",
+      "B. Convolution flips the kernel before applying it, while cross-correlation uses the kernel in its original order.",
+      "C. Convolution can only be used on color images, while cross-correlation can only be used on grayscale images.",
+      "D. Cross-correlation flips the kernel, while convolution never does."
     ],
     "correct_option": "B",
     "source_chunk_ids": [
-      "chunk-5749a66dfc82",
-      "chunk-b20dccb0397a",
-      "chunk-abd75ebf4271",
-      "chunk-811353f1e8dc"
+      "chunk-3dd745e980a4",
+      "chunk-3d54c09b038b",
+      "chunk-97910ba4ced2",
+      "chunk-8af1d1050c19",
+      "chunk-b22aeed7c8dd",
+      "chunk-244ba7460911",
+      "chunk-a56963587747",
+      "chunk-409fe1a7441c"
     ],
     "source_files": [
-      "Week1\\Lecture1-1 (7).pptx"
+      "Week1\\Lecture1-2 (10).pptx",
+      "Week1\\Lecture1-2.pdf",
+      "Week2\\all.pptx",
+      "Week2\\revision (1) (1).pptx",
+      "Week2\\revision_w1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-2 (10).pptx",
+        "display_source": "Lecture1-2 (10).pptx",
+        "location": "slide 14",
+        "section": "Convolution Same as cross-correlation, except that the kernel is \"flipped\" (horizontally and vertically) Th..."
+      },
+      {
+        "source": "Week1\\Lecture1-2.pdf",
+        "display_source": "Lecture1-2.pdf",
+        "location": "page 14",
+        "section": "Convolution"
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-computer-vision-foundations-llm-3",
-    "kp_id": "kp-computer-vision-foundations",
-    "kp_name": "Computer vision foundations",
+    "question_id": "kp-image-filtering-and-convolution-q3",
+    "kp_id": "kp-image-filtering-and-convolution",
+    "kp_name": "Image filtering and convolution",
     "question_type": "multiple_choice",
-    "question": "What is a key reason, as per the evidence, for studying computer vision?",
-    "answer": "The huge volume of images/videos captured daily enables a huge number of useful applications.",
-    "explanation": "The evidence states that the reason to study computer vision is the 'Billions of images/videos captured per day' which leads to a 'Huge number of useful applications'.",
+    "question": "If a 2D filter can be written as h(x,y) = a(x)b(y), what is the main computational benefit?",
+    "answer": "The 2D filtering can be split into two 1D passes, which reduces computation.",
+    "explanation": "A separable filter replaces one expensive 2D operation with two cheaper 1D convolutions, which is exactly why separability is useful in practice.",
     "options": [
-      "A. It is a theoretical field with few real-world uses.",
-      "B. Computer processors have become too fast for traditional computing tasks.",
-      "C. The huge volume of images/videos captured daily enables a huge number of useful applications.",
-      "D. It is primarily studied to replicate human artistic abilities."
+      "A. The 2D filtering can be split into two 1D passes, which reduces computation.",
+      "B. The filter can then be applied only to binary images.",
+      "C. The filter automatically becomes nonlinear.",
+      "D. The image no longer needs any padding or boundary handling."
     ],
-    "correct_option": "C",
+    "correct_option": "A",
     "source_chunk_ids": [
-      "chunk-5749a66dfc82",
-      "chunk-b20dccb0397a",
-      "chunk-abd75ebf4271",
-      "chunk-811353f1e8dc"
+      "chunk-3dd745e980a4",
+      "chunk-3d54c09b038b",
+      "chunk-97910ba4ced2",
+      "chunk-8af1d1050c19",
+      "chunk-b22aeed7c8dd",
+      "chunk-244ba7460911",
+      "chunk-a56963587747",
+      "chunk-409fe1a7441c"
     ],
     "source_files": [
-      "Week1\\Lecture1-1 (7).pptx"
+      "Week1\\Lecture1-2 (10).pptx",
+      "Week1\\Lecture1-2.pdf",
+      "Week2\\all.pptx",
+      "Week2\\revision (1) (1).pptx",
+      "Week2\\revision_w1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-2 (10).pptx",
+        "display_source": "Lecture1-2 (10).pptx",
+        "location": "slide 6",
+        "section": "We can think of a (grayscale) image as a function , f , from R 2 to R: f ( x,y ) gives the intensity at pos..."
+      },
+      {
+        "source": "Week1\\Lecture1-2.pdf",
+        "display_source": "Lecture1-2.pdf",
+        "location": "page 6",
+        "section": "- We can think of a (grayscale) image as a"
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-computer-vision-foundations-llm-4",
-    "kp_id": "kp-computer-vision-foundations",
-    "kp_name": "Computer vision foundations",
+    "question_id": "kp-image-filtering-and-convolution-q4",
+    "kp_id": "kp-image-filtering-and-convolution",
+    "kp_name": "Image filtering and convolution",
     "question_type": "multiple_choice",
-    "question": "What does computer vision aim to gain from digital images and videos, according to the evidence?",
-    "answer": "Some high-level understanding.",
-    "explanation": "The evidence directly states that computers can 'gain some high-level understanding from digital images/videos'.",
+    "question": "Why is the associative property of convolution useful when smoothing and differentiating an image?",
+    "answer": "Because the filters can be combined first, reducing the number of image-wide operations.",
+    "explanation": "The lecture notes point out that if filtering operations are associative, we can combine filters before applying them to the image and save one full pass over the data.",
     "options": [
-      "A. Only low-level pixel statistics.",
-      "B. Some high-level understanding.",
-      "C. A complete and infallible model of reality.",
-      "D. The original intent of the photographer."
+      "A. Because it guarantees zero noise in the final result.",
+      "B. Because the filters can be combined first, reducing the number of image-wide operations.",
+      "C. Because it removes the need to choose a derivative filter.",
+      "D. Because it makes convolution identical to median filtering."
     ],
     "correct_option": "B",
     "source_chunk_ids": [
-      "chunk-5749a66dfc82",
-      "chunk-b20dccb0397a",
-      "chunk-abd75ebf4271",
-      "chunk-811353f1e8dc"
+      "chunk-3dd745e980a4",
+      "chunk-3d54c09b038b",
+      "chunk-97910ba4ced2",
+      "chunk-8af1d1050c19",
+      "chunk-b22aeed7c8dd",
+      "chunk-244ba7460911",
+      "chunk-a56963587747",
+      "chunk-409fe1a7441c"
     ],
     "source_files": [
-      "Week1\\Lecture1-1 (7).pptx"
+      "Week1\\Lecture1-2 (10).pptx",
+      "Week1\\Lecture1-2.pdf",
+      "Week2\\all.pptx",
+      "Week2\\revision (1) (1).pptx",
+      "Week2\\revision_w1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\all.pptx",
+        "display_source": "all.pptx",
+        "location": "slide 5",
+        "section": "Linear filtering - Convolution Same as cross-correlation, except that the kernel is \"flipped\" (horizontally..."
+      },
+      {
+        "source": "Week2\\revision (1) (1).pptx",
+        "display_source": "revision (1) (1).pptx",
+        "location": "slide 5",
+        "section": "Linear filtering - Convolution Same as cross-correlation, except that the kernel is \"flipped\" (horizontally..."
+      }
     ],
     "image_path": null,
     "image_caption": null
@@ -139,142 +425,230 @@
     "kp_id": "kp-image-filtering-and-convolution",
     "kp_name": "Image filtering and convolution",
     "question_type": "multiple_choice",
-    "question": "The slide image with a local neighborhood and kernel is most likely illustrating which computation?",
-    "answer": "An output pixel is obtained as a weighted sum of nearby input pixels.",
-    "explanation": "Kernel-and-neighborhood diagrams show local filtering, where each output value depends on a weighted neighborhood.",
+    "question": "In the local-neighborhood figure, what does the output pixel represent?",
+    "answer": "A weighted sum of the nearby input pixels defined by the kernel values.",
+    "explanation": "The diagram is illustrating local linear filtering: the output intensity is computed from neighboring pixels and kernel weights, not from geometry or recognition labels.",
     "options": [
-      "A. A camera intrinsic matrix is being calibrated.",
-      "B. An output pixel is obtained as a weighted sum of nearby input pixels.",
-      "C. A 3D point is triangulated from stereo disparity.",
-      "D. A feature descriptor is being quantized into visual words."
+      "A. The camera intrinsic matrix for that neighborhood.",
+      "B. A weighted sum of the nearby input pixels defined by the kernel values.",
+      "C. The exact 3D location of the observed point.",
+      "D. A histogram of visual words from the image patch."
     ],
     "correct_option": "B",
     "source_chunk_ids": [
       "chunk-3dd745e980a4",
       "chunk-3d54c09b038b",
       "chunk-97910ba4ced2",
-      "chunk-8af1d1050c19"
+      "chunk-8af1d1050c19",
+      "chunk-b22aeed7c8dd",
+      "chunk-244ba7460911",
+      "chunk-a56963587747",
+      "chunk-409fe1a7441c"
     ],
     "source_files": [
       "Week1\\Lecture1-2 (10).pptx",
       "Week1\\Lecture1-2.pdf",
+      "Week2\\all.pptx",
+      "Week2\\revision (1) (1).pptx",
       "Week2\\revision_w1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\all.pptx",
+        "display_source": "all.pptx",
+        "location": "slide 3",
+        "section": "Linear filtering One simple version of filtering: linear filtering (cross-correlation, convolution) Replace..."
+      },
+      {
+        "source": "Week2\\revision (1) (1).pptx",
+        "display_source": "revision (1) (1).pptx",
+        "location": "slide 3",
+        "section": "Linear filtering One simple version of filtering: linear filtering (cross-correlation, convolution) Replace..."
+      }
     ],
     "image_path": "images/week1-lecture1-2-10/slide-030-a58b2a0bc463.png",
     "image_caption": "Lecture figure from Week1/Lecture1-2 (10).pptx slide 30"
   },
   {
-    "question_id": "kp-image-filtering-and-convolution-llm-1",
-    "kp_id": "kp-image-filtering-and-convolution",
-    "kp_name": "Image filtering and convolution",
+    "question_id": "kp-edge-detection-q1",
+    "kp_id": "kp-edge-detection",
+    "kp_name": "Edge detection",
     "question_type": "multiple_choice",
-    "question": "In linear filtering, what is the key difference between convolution and cross-correlation?",
-    "answer": "In convolution, the kernel is flipped both horizontally and vertically before applying the operation, whereas cross-correlation does not involve this flipping.",
-    "explanation": "The evidence states that convolution is the same as cross-correlation, except that the kernel is 'flipped' (horizontally and vertically). This flipping step is the defining distinction between the two operations.",
+    "question": "Where should a strong edge response occur in an image?",
+    "answer": "At locations where intensity changes sharply over a short distance.",
+    "explanation": "The lecture models images as intensity functions and explains edges as steep changes in that function, not flat regions.",
     "options": [
-      "A. Convolution uses a Gaussian kernel, while cross-correlation uses a mean kernel.",
-      "B. Convolution is associative, while cross-correlation is not.",
-      "C. In convolution, the kernel is flipped (horizontally and vertically) before application.",
-      "D. Cross-correlation is used for sharpening, while convolution is used for blurring."
+      "A. At every pixel, regardless of local structure.",
+      "B. Only at the optical center of the camera.",
+      "C. At any perfectly uniform flat region.",
+      "D. At locations where intensity changes sharply over a short distance."
     ],
-    "correct_option": "C",
+    "correct_option": "D",
     "source_chunk_ids": [
-      "chunk-3dd745e980a4",
-      "chunk-3d54c09b038b",
-      "chunk-97910ba4ced2",
-      "chunk-8af1d1050c19"
+      "chunk-d92e7f2faf93",
+      "chunk-70a0696356ac",
+      "chunk-85ffb19f28f5",
+      "chunk-a3d471905093",
+      "chunk-b389106a3054",
+      "chunk-a339ea67538f",
+      "chunk-e35e04b1e7b3",
+      "chunk-3350d9c23cb5"
     ],
     "source_files": [
-      "Week1\\Lecture1-2 (10).pptx",
-      "Week1\\Lecture1-2.pdf",
-      "Week2\\revision_w1.pdf"
+      "Week2\\Edge.pptx",
+      "Week2\\Lecture2-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\Edge.pptx",
+        "display_source": "Edge.pptx",
+        "location": "slide 4",
+        "section": "Images as functions… Edges look like steep cliffs"
+      },
+      {
+        "source": "Week2\\Lecture2-1.pdf",
+        "display_source": "Lecture2-1.pdf",
+        "location": "page 4",
+        "section": "Images as functions…"
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-image-filtering-and-convolution-llm-2",
-    "kp_id": "kp-image-filtering-and-convolution",
-    "kp_name": "Image filtering and convolution",
+    "question_id": "kp-edge-detection-q2",
+    "kp_id": "kp-edge-detection",
+    "kp_name": "Edge detection",
     "question_type": "multiple_choice",
-    "question": "According to the evidence, what is a potential drawback of using a mean filter compared to a Gaussian filter?",
-    "answer": "A mean filter may garble high-frequency signal.",
-    "explanation": "The evidence directly states: 'Mean filter may garble high-frequency signal.' This highlights a specific disadvantage of the mean filter in comparison to other filters like the Gaussian.",
+    "question": "Which set of conditions best matches the design criteria for a good edge detector?",
+    "answer": "Good detection, good localization, and only one response per true edge.",
+    "explanation": "The Week 2 edge-detection lecture explicitly lists these three design criteria for a good detector.",
     "options": [
-      "A. It is not a linear filter.",
-      "B. It requires flipping the kernel.",
-      "C. It may garble high-frequency signal.",
-      "D. It cannot be used for image sharpening."
+      "A. Maximum blur, minimum contrast, and repeated responses.",
+      "B. Good detection, good localization, and only one response per true edge.",
+      "C. Large histogram bins, low memory, and no derivatives.",
+      "D. Perfect segmentation masks from a single threshold only."
     ],
-    "correct_option": "C",
+    "correct_option": "B",
     "source_chunk_ids": [
-      "chunk-3dd745e980a4",
-      "chunk-3d54c09b038b",
-      "chunk-97910ba4ced2",
-      "chunk-8af1d1050c19"
+      "chunk-d92e7f2faf93",
+      "chunk-70a0696356ac",
+      "chunk-85ffb19f28f5",
+      "chunk-a3d471905093",
+      "chunk-b389106a3054",
+      "chunk-a339ea67538f",
+      "chunk-e35e04b1e7b3",
+      "chunk-3350d9c23cb5"
     ],
     "source_files": [
-      "Week1\\Lecture1-2 (10).pptx",
-      "Week1\\Lecture1-2.pdf",
-      "Week2\\revision_w1.pdf"
+      "Week2\\Edge.pptx",
+      "Week2\\Lecture2-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\Lecture2-1.pdf",
+        "display_source": "Lecture2-1.pdf",
+        "location": "page 21",
+        "section": "Designing an edge detector"
+      },
+      {
+        "source": "Week2\\Edge.pptx",
+        "display_source": "Edge.pptx",
+        "location": "slide 21",
+        "section": "Designing an edge detector Criteria for a good edge detector: Good detection: the optimal detector should f..."
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-image-filtering-and-convolution-llm-3",
-    "kp_id": "kp-image-filtering-and-convolution",
-    "kp_name": "Image filtering and convolution",
+    "question_id": "kp-edge-detection-q3",
+    "kp_id": "kp-edge-detection",
+    "kp_name": "Edge detection",
     "question_type": "multiple_choice",
-    "question": "In the context of linear filtering, what is the 'kernel'?",
-    "answer": "The kernel is the prescription for the linear combination (the weighted sum) of a pixel's neighbors used to replace that pixel.",
-    "explanation": "The evidence defines the kernel as: 'The prescription for the linear combination is called the \"kernel\" (or \"mask\", \"filter\").' It is the set of weights that defines how neighboring pixels are combined.",
+    "question": "Why is smoothing often applied before taking image derivatives for edge detection?",
+    "answer": "Because derivatives amplify noise, so smoothing produces a more stable edge response.",
+    "explanation": "The derivative operator is sensitive to noise. Smoothing reduces high-frequency noise so that the derivative responds more to meaningful structure.",
     "options": [
-      "A. The original image data before filtering.",
-      "B. The modified image data after filtering.",
-      "C. The prescription (weights) for the linear combination of a pixel's neighbors.",
-      "D. The mathematical property that makes convolution commutative."
+      "A. Because smoothing guarantees perfect subpixel localization.",
+      "B. Because derivatives can only be computed after upsampling the image.",
+      "C. Because smoothing directly converts the image into a segmentation mask.",
+      "D. Because derivatives amplify noise, so smoothing produces a more stable edge response."
     ],
-    "correct_option": "C",
+    "correct_option": "D",
     "source_chunk_ids": [
-      "chunk-3dd745e980a4",
-      "chunk-3d54c09b038b",
-      "chunk-97910ba4ced2",
-      "chunk-8af1d1050c19"
+      "chunk-d92e7f2faf93",
+      "chunk-70a0696356ac",
+      "chunk-85ffb19f28f5",
+      "chunk-a3d471905093",
+      "chunk-b389106a3054",
+      "chunk-a339ea67538f",
+      "chunk-e35e04b1e7b3",
+      "chunk-3350d9c23cb5"
     ],
     "source_files": [
-      "Week1\\Lecture1-2 (10).pptx",
-      "Week1\\Lecture1-2.pdf",
-      "Week2\\revision_w1.pdf"
+      "Week2\\Edge.pptx",
+      "Week2\\Lecture2-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\Edge.pptx",
+        "display_source": "Edge.pptx",
+        "location": "slide 18",
+        "section": "The Sobel operator Common approximation of derivative of Gaussian -1 0 1 -2 0 2 -1 0 1 1 2 1 0 0 0 -1 -2 -1..."
+      },
+      {
+        "source": "Week2\\Lecture2-1.pdf",
+        "display_source": "Lecture2-1.pdf",
+        "location": "page 18",
+        "section": "The Sobel operator"
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-image-filtering-and-convolution-llm-4",
-    "kp_id": "kp-image-filtering-and-convolution",
-    "kp_name": "Image filtering and convolution",
+    "question_id": "kp-edge-detection-q4",
+    "kp_id": "kp-edge-detection",
+    "kp_name": "Edge detection",
     "question_type": "multiple_choice",
-    "question": "Which mathematical property of convolution is described by the equation F*G = G*F?",
-    "answer": "Commutativity.",
-    "explanation": "The evidence explicitly lists 'F*G = G*F (commutative)' as a property of the convolution operation. This means the order of the operands does not change the result.",
+    "question": "Which of the following can produce an image edge according to the lecture?",
+    "answer": "A change in depth, surface color, illumination, or surface normal.",
+    "explanation": "The edge-origin slide lists several physical causes of edges, including depth, color, illumination, and surface-orientation changes.",
     "options": [
-      "A. Associativity",
-      "B. Distributivity",
-      "C. Commutativity",
-      "D. Linearity"
+      "A. Only the image resolution chosen by the viewer.",
+      "B. A change in depth, surface color, illumination, or surface normal.",
+      "C. Only a change in file size on disk.",
+      "D. Only the camera brand used to take the photo."
     ],
-    "correct_option": "C",
+    "correct_option": "B",
     "source_chunk_ids": [
-      "chunk-3dd745e980a4",
-      "chunk-3d54c09b038b",
-      "chunk-97910ba4ced2",
-      "chunk-8af1d1050c19"
+      "chunk-d92e7f2faf93",
+      "chunk-70a0696356ac",
+      "chunk-85ffb19f28f5",
+      "chunk-a3d471905093",
+      "chunk-b389106a3054",
+      "chunk-a339ea67538f",
+      "chunk-e35e04b1e7b3",
+      "chunk-3350d9c23cb5"
     ],
     "source_files": [
-      "Week1\\Lecture1-2 (10).pptx",
-      "Week1\\Lecture1-2.pdf",
-      "Week2\\revision_w1.pdf"
+      "Week2\\Edge.pptx",
+      "Week2\\Lecture2-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\Edge.pptx",
+        "display_source": "Edge.pptx",
+        "location": "slide 3",
+        "section": "Origin of Edges Edges are caused by a variety of factors depth surface color illumination surface normal"
+      },
+      {
+        "source": "Week2\\Lecture2-1.pdf",
+        "display_source": "Lecture2-1.pdf",
+        "location": "page 3",
+        "section": "Origin of Edges"
+      }
     ],
     "image_path": null,
     "image_caption": null
@@ -284,277 +658,461 @@
     "kp_id": "kp-edge-detection",
     "kp_name": "Edge detection",
     "question_type": "multiple_choice",
-    "question": "A lecture figure showing highlighted outlines around objects is most likely illustrating which objective?",
-    "answer": "Detecting boundaries by finding large local intensity changes.",
-    "explanation": "Boundary-outline figures are the classic visual explanation for edge detection.",
+    "question": "If the figure highlights object outlines while suppressing flat image regions, what result is the algorithm trying to produce?",
+    "answer": "A compact boundary-based representation that keeps salient structure and removes much of the less informative interior texture.",
+    "explanation": "The lecture motivates edge detection as converting a 2D image into a set of curves so that the scene is represented more compactly than raw pixels.",
     "options": [
-      "A. Building a bag-of-words histogram for retrieval.",
-      "B. Detecting boundaries by finding large local intensity changes.",
-      "C. Projecting a 3D line through a pinhole camera.",
-      "D. Estimating optical flow between frames."
+      "A. A bag-of-words histogram for image retrieval.",
+      "B. A compact boundary-based representation that keeps salient structure and removes much of the less informative interior texture.",
+      "C. A camera-calibration matrix estimated from one frame.",
+      "D. A full 3D reconstruction of the scene."
     ],
     "correct_option": "B",
     "source_chunk_ids": [
       "chunk-d92e7f2faf93",
       "chunk-70a0696356ac",
       "chunk-85ffb19f28f5",
-      "chunk-a3d471905093"
+      "chunk-a3d471905093",
+      "chunk-b389106a3054",
+      "chunk-a339ea67538f",
+      "chunk-e35e04b1e7b3",
+      "chunk-3350d9c23cb5"
     ],
     "source_files": [
       "Week2\\Edge.pptx",
       "Week2\\Lecture2-1.pdf"
     ],
-    "image_path": "images/week2-edge/slide-001-ff84fae7b905.png",
-    "image_caption": "Lecture figure from Week2/Edge.pptx slide 1"
+    "review_refs": [
+      {
+        "source": "Week2\\Edge.pptx",
+        "display_source": "Edge.pptx",
+        "location": "slide 1",
+        "section": "Edge detection Convert a 2D image into a set of curves Extracts salient features of the scene More compact than pixels"
+      },
+      {
+        "source": "Week2\\Lecture2-1.pdf",
+        "display_source": "Lecture2-1.pdf",
+        "location": "page 1",
+        "section": "Edge detection"
+      }
+    ],
+    "image_path": "images/week2-edge/slide-005-af151554946d.jpeg",
+    "image_caption": "Lecture figure from Week2/Edge.pptx slide 5"
   },
   {
-    "question_id": "kp-edge-detection-llm-1",
-    "kp_id": "kp-edge-detection",
-    "kp_name": "Edge detection",
-    "question_type": "multiple_choice",
-    "question": "What is the primary goal of edge detection in computer vision?",
-    "answer": "To identify visual changes (discontinuities) in an image.",
-    "explanation": "The evidence states that the goal of edge detection is to identify visual changes or discontinuities in an image. This process aims to capture where significant changes in intensity or color occur, which often correspond to important boundaries in the scene.",
-    "options": [
-      "A. To convert a 2D image into a set of curves",
-      "B. To identify visual changes (discontinuities) in an image",
-      "C. To extract semantic information directly from pixel values",
-      "D. To reduce image noise and blur"
-    ],
-    "correct_option": "B",
-    "source_chunk_ids": [
-      "chunk-d92e7f2faf93",
-      "chunk-70a0696356ac",
-      "chunk-85ffb19f28f5",
-      "chunk-a3d471905093"
-    ],
-    "source_files": [
-      "Week2\\Edge.pptx",
-      "Week2\\Lecture2-1.pdf"
-    ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-edge-detection-llm-2",
-    "kp_id": "kp-edge-detection",
-    "kp_name": "Edge detection",
-    "question_type": "multiple_choice",
-    "question": "According to the provided evidence, which of the following is NOT listed as a cause of visual edges in an image?",
-    "answer": "Texture uniformity",
-    "explanation": "The evidence explicitly lists depth discontinuities, surface color changes, illumination changes, and changes in surface normal as causes of edges. Texture uniformity would not cause an edge, as edges are defined by discontinuities or changes.",
-    "options": [
-      "A. Depth discontinuities",
-      "B. Surface color changes",
-      "C. Texture uniformity",
-      "D. Changes in surface normal"
-    ],
-    "correct_option": "C",
-    "source_chunk_ids": [
-      "chunk-d92e7f2faf93",
-      "chunk-70a0696356ac",
-      "chunk-85ffb19f28f5",
-      "chunk-a3d471905093"
-    ],
-    "source_files": [
-      "Week2\\Edge.pptx",
-      "Week2\\Lecture2-1.pdf"
-    ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-edge-detection-llm-3",
-    "kp_id": "kp-edge-detection",
-    "kp_name": "Edge detection",
-    "question_type": "multiple_choice",
-    "question": "Why is edge detection considered a useful step in image analysis, based on the provided descriptions?",
-    "answer": "It extracts salient features and provides a more compact representation than raw pixels.",
-    "explanation": "The evidence states that edge detection converts a 2D image into a set of curves, extracts salient features of the scene, and that this representation is more compact than pixels. This makes subsequent processing and analysis more efficient and focused on important structural information.",
-    "options": [
-      "A. It increases the total number of pixels for higher resolution analysis.",
-      "B. It removes all color information to simplify processing.",
-      "C. It extracts salient features and provides a more compact representation than raw pixels.",
-      "D. It primarily serves to enhance the brightness and contrast of the entire image."
-    ],
-    "correct_option": "C",
-    "source_chunk_ids": [
-      "chunk-d92e7f2faf93",
-      "chunk-70a0696356ac",
-      "chunk-85ffb19f28f5",
-      "chunk-a3d471905093"
-    ],
-    "source_files": [
-      "Week2\\Edge.pptx",
-      "Week2\\Lecture2-1.pdf"
-    ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-edge-detection-llm-4",
-    "kp_id": "kp-edge-detection",
-    "kp_name": "Edge detection",
-    "question_type": "multiple_choice",
-    "question": "What kind of information is intuitively encoded in the edges of an image, as per the evidence?",
-    "answer": "Semantic information",
-    "explanation": "The evidence directly states, 'Intuitively, semantic information is encoded in edges.' This means edges often correspond to the boundaries of objects and structures, which carry meaning about the content of the scene.",
-    "options": [
-      "A. Low-level pixel noise",
-      "B. Semantic information",
-      "C. The exact RGB values of every object",
-      "D. Camera metadata and settings"
-    ],
-    "correct_option": "B",
-    "source_chunk_ids": [
-      "chunk-d92e7f2faf93",
-      "chunk-70a0696356ac",
-      "chunk-85ffb19f28f5",
-      "chunk-a3d471905093"
-    ],
-    "source_files": [
-      "Week2\\Edge.pptx",
-      "Week2\\Lecture2-1.pdf"
-    ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-image-resampling-llm-1",
+    "question_id": "kp-image-resampling-q1",
     "kp_id": "kp-image-resampling",
     "kp_name": "Image resampling",
     "question_type": "multiple_choice",
-    "question": "What is the primary purpose of image resampling?",
-    "answer": "To change image resolution or coordinate sampling while preserving useful information.",
-    "explanation": "The description of the knowledge point defines image resampling as the process of changing image resolution or coordinate sampling while preserving useful information.",
+    "question": "What is the main risk of reducing image resolution without low-pass filtering first?",
+    "answer": "Aliasing can appear because high-frequency content is sampled too coarsely.",
+    "explanation": "When high-frequency image content is sampled on a coarser grid without prefiltering, it folds into misleading low-frequency patterns. That is the aliasing problem discussed in the lecture.",
     "options": [
-      "A. To increase the file size of an image without changing its content.",
-      "B. To change image resolution or coordinate sampling while preserving useful information.",
-      "C. To convert an image from color to grayscale.",
-      "D. To apply artistic filters to an image for visual effects."
-    ],
-    "correct_option": "B",
-    "source_chunk_ids": [
-      "chunk-e2d9fe54b950",
-      "chunk-bd7f80cf87d4",
-      "chunk-5b645983b7ee",
-      "chunk-cf8c9ab7f3d5"
-    ],
-    "source_files": [
-      "Week2\\Lecture2-2.pdf",
-      "Week2\\sampling.pptx"
-    ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-image-resampling-llm-2",
-    "kp_id": "kp-image-resampling",
-    "kp_name": "Image resampling",
-    "question_type": "multiple_choice",
-    "question": "What is a direct method for creating a smaller image, as described in the evidence?",
-    "answer": "Throw away every other row and column.",
-    "explanation": "The evidence states: 'Image sub-sampling Throw away every other row and column to create a smaller size image - called image sub-sampling'.",
-    "options": [
-      "A. Apply a Gaussian filter and then increase resolution.",
-      "B. Throw away every other row and column.",
-      "C. Duplicate pixels to fill new rows and columns.",
-      "D. Convert the image to a frequency domain representation."
-    ],
-    "correct_option": "B",
-    "source_chunk_ids": [
-      "chunk-e2d9fe54b950",
-      "chunk-bd7f80cf87d4",
-      "chunk-5b645983b7ee",
-      "chunk-cf8c9ab7f3d5"
-    ],
-    "source_files": [
-      "Week2\\Lecture2-2.pdf",
-      "Week2\\sampling.pptx"
-    ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-image-resampling-llm-3",
-    "kp_id": "kp-image-resampling",
-    "kp_name": "Image resampling",
-    "question_type": "multiple_choice",
-    "question": "According to the evidence, what is a recommended solution before subsampling an image to reduce artifacts?",
-    "answer": "Filter the image, then subsample.",
-    "explanation": "The evidence explicitly states under 'Subsampling with Gaussian pre-filtering': 'Solution: filter the image, then subsample'.",
-    "options": [
-      "A. Subsample first, then filter the result.",
-      "B. Filter the image, then subsample.",
-      "C. Convert the image to a vector format.",
-      "D. Increase the brightness before subsampling."
-    ],
-    "correct_option": "B",
-    "source_chunk_ids": [
-      "chunk-e2d9fe54b950",
-      "chunk-bd7f80cf87d4",
-      "chunk-5b645983b7ee",
-      "chunk-cf8c9ab7f3d5"
-    ],
-    "source_files": [
-      "Week2\\Lecture2-2.pdf",
-      "Week2\\sampling.pptx"
-    ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-image-resampling-llm-4",
-    "kp_id": "kp-image-resampling",
-    "kp_name": "Image resampling",
-    "question_type": "multiple_choice",
-    "question": "What specific type of pre-filtering is mentioned in the evidence for use before subsampling?",
-    "answer": "Gaussian pre-filtering.",
-    "explanation": "The evidence has a section titled 'Subsampling with Gaussian pre-filtering' and shows examples labeled 'Gaussian 1/2'.",
-    "options": [
-      "A. Median pre-filtering",
-      "B. Laplacian pre-filtering",
-      "C. Gaussian pre-filtering",
-      "D. Sobel pre-filtering"
+      "A. The image automatically gains new geometric detail.",
+      "B. The camera focal length changes during resampling.",
+      "C. Aliasing can appear because high-frequency content is sampled too coarsely.",
+      "D. All edges become perfectly sharp after subsampling."
     ],
     "correct_option": "C",
     "source_chunk_ids": [
       "chunk-e2d9fe54b950",
       "chunk-bd7f80cf87d4",
       "chunk-5b645983b7ee",
-      "chunk-cf8c9ab7f3d5"
+      "chunk-cf8c9ab7f3d5",
+      "chunk-41356a9265fb",
+      "chunk-75d860d76684",
+      "chunk-fe89394b1e69",
+      "chunk-46975f9d78d0"
     ],
     "source_files": [
       "Week2\\Lecture2-2.pdf",
       "Week2\\sampling.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\sampling.pptx",
+        "display_source": "sampling.pptx",
+        "location": "slide 2",
+        "section": "Image Scaling This image is too big to fit on the screen. How can we generate a half-sized version? Source: S. Seitz"
+      },
+      {
+        "source": "Week2\\Lecture2-2.pdf",
+        "display_source": "Lecture2-2.pdf",
+        "location": "page 2",
+        "section": "Image Scaling"
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-image-resampling-llm-5",
+    "question_id": "kp-image-resampling-q2",
     "kp_id": "kp-image-resampling",
     "kp_name": "Image resampling",
     "question_type": "multiple_choice",
-    "question": "If you perform image sub-sampling by throwing away every other row and column, what fraction of the original pixels remain in the resulting image?",
-    "answer": "1/4",
-    "explanation": "The evidence shows that sub-sampling by throwing away every other row and column creates a '1/4' size image. This means keeping 1 out of every 4 pixels (half the rows and half the columns: 1/2 * 1/2 = 1/4).",
+    "question": "Before downsampling by a factor of 2, what does the lecture recommend doing first?",
+    "answer": "Apply a low-pass filter such as a Gaussian, then subsample.",
+    "explanation": "The course notes explicitly present Gaussian prefiltering as the solution before subsampling, because it removes frequencies that would otherwise alias.",
     "options": [
-      "A. 1/2",
-      "B. 1/4",
-      "C. 1/8",
-      "D. 1/16"
+      "A. Run Harris corner detection, then downsample.",
+      "B. Differentiate the image twice, then downsample.",
+      "C. Apply a low-pass filter such as a Gaussian, then subsample.",
+      "D. Sharpen the image to emphasize high frequencies, then downsample."
     ],
-    "correct_option": "B",
+    "correct_option": "C",
     "source_chunk_ids": [
       "chunk-e2d9fe54b950",
       "chunk-bd7f80cf87d4",
       "chunk-5b645983b7ee",
-      "chunk-cf8c9ab7f3d5"
+      "chunk-cf8c9ab7f3d5",
+      "chunk-41356a9265fb",
+      "chunk-75d860d76684",
+      "chunk-fe89394b1e69",
+      "chunk-46975f9d78d0"
     ],
     "source_files": [
       "Week2\\Lecture2-2.pdf",
       "Week2\\sampling.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\sampling.pptx",
+        "display_source": "sampling.pptx",
+        "location": "slide 5",
+        "section": "Subsampling with Gaussian pre-filtering G 1/4 G 1/8 Gaussian 1/2 Solution: filter the image, then subsample..."
+      },
+      {
+        "source": "Week2\\Lecture2-2.pdf",
+        "display_source": "Lecture2-2.pdf",
+        "location": "page 5",
+        "section": "Subsampling with Gaussian pre-filtering"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-resampling-q3",
+    "kp_id": "kp-image-resampling",
+    "kp_name": "Image resampling",
+    "question_type": "multiple_choice",
+    "question": "If you keep every other row and every other column from an image, what fraction of the original pixels remains?",
+    "answer": "One quarter of the original pixels.",
+    "explanation": "Keeping every other row leaves half the rows, and keeping every other column leaves half the columns. The combined effect is one half times one half, which is one quarter.",
+    "options": [
+      "A. One eighth of the original pixels.",
+      "B. One half of the original pixels.",
+      "C. The same number of pixels remains.",
+      "D. One quarter of the original pixels."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-e2d9fe54b950",
+      "chunk-bd7f80cf87d4",
+      "chunk-5b645983b7ee",
+      "chunk-cf8c9ab7f3d5",
+      "chunk-41356a9265fb",
+      "chunk-75d860d76684",
+      "chunk-fe89394b1e69",
+      "chunk-46975f9d78d0"
+    ],
+    "source_files": [
+      "Week2\\Lecture2-2.pdf",
+      "Week2\\sampling.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\sampling.pptx",
+        "display_source": "sampling.pptx",
+        "location": "slide 3",
+        "section": "Image sub-sampling Throw away every other row and column to create a smaller size image - called image sub-..."
+      },
+      {
+        "source": "Week2\\Lecture2-2.pdf",
+        "display_source": "Lecture2-2.pdf",
+        "location": "page 3",
+        "section": "Image sub-sampling"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-resampling-q4",
+    "kp_id": "kp-image-resampling",
+    "kp_name": "Image resampling",
+    "question_type": "multiple_choice",
+    "question": "When an image is enlarged, what problem does interpolation solve?",
+    "answer": "It estimates intensity values at new sample locations that were not present on the original grid.",
+    "explanation": "Upsampling creates a denser grid. Interpolation provides the new pixel values on that grid using nearby known samples.",
+    "options": [
+      "A. It converts local descriptors into visual words.",
+      "B. It removes the need for any image sampling model.",
+      "C. It estimates intensity values at new sample locations that were not present on the original grid.",
+      "D. It estimates the camera baseline from the enlarged image."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-e2d9fe54b950",
+      "chunk-bd7f80cf87d4",
+      "chunk-5b645983b7ee",
+      "chunk-cf8c9ab7f3d5",
+      "chunk-41356a9265fb",
+      "chunk-75d860d76684",
+      "chunk-fe89394b1e69",
+      "chunk-46975f9d78d0"
+    ],
+    "source_files": [
+      "Week2\\Lecture2-2.pdf",
+      "Week2\\sampling.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\sampling.pptx",
+        "display_source": "sampling.pptx",
+        "location": "slide 2",
+        "section": "Image Scaling This image is too big to fit on the screen. How can we generate a half-sized version? Source: S. Seitz"
+      },
+      {
+        "source": "Week2\\Lecture2-2.pdf",
+        "display_source": "Lecture2-2.pdf",
+        "location": "page 2",
+        "section": "Image Scaling"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-resampling-q5",
+    "kp_id": "kp-image-resampling",
+    "kp_name": "Image resampling",
+    "question_type": "multiple_choice",
+    "question": "A figure compares a coarse grid, a filtered image, and a resized output. What concept is that figure primarily designed to test?",
+    "answer": "How sampling density and prefiltering affect the quality of the resampled image.",
+    "explanation": "The Week 2 resampling lecture uses these figures to show that grid spacing alone is not enough; proper filtering before subsampling changes the final visual result.",
+    "options": [
+      "A. How bag-of-words histograms are normalized.",
+      "B. How object detectors classify sliding windows.",
+      "C. How sampling density and prefiltering affect the quality of the resampled image.",
+      "D. How epipolar geometry reduces stereo search."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-e2d9fe54b950",
+      "chunk-bd7f80cf87d4",
+      "chunk-5b645983b7ee",
+      "chunk-cf8c9ab7f3d5",
+      "chunk-41356a9265fb",
+      "chunk-75d860d76684",
+      "chunk-fe89394b1e69",
+      "chunk-46975f9d78d0"
+    ],
+    "source_files": [
+      "Week2\\Lecture2-2.pdf",
+      "Week2\\sampling.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\sampling.pptx",
+        "display_source": "sampling.pptx",
+        "location": "slide 2",
+        "section": "Image Scaling This image is too big to fit on the screen. How can we generate a half-sized version? Source: S. Seitz"
+      },
+      {
+        "source": "Week2\\sampling.pptx",
+        "display_source": "sampling.pptx",
+        "location": "slide 5",
+        "section": "Subsampling with Gaussian pre-filtering G 1/4 G 1/8 Gaussian 1/2 Solution: filter the image, then subsample..."
+      }
+    ],
+    "image_path": "images/week2-sampling/slide-002-47cbed6a31f7.jpeg",
+    "image_caption": "Lecture figure from Week2/sampling.pptx slide 2"
+  },
+  {
+    "question_id": "kp-texture-analysis-q1",
+    "kp_id": "kp-texture-analysis",
+    "kp_name": "Texture analysis",
+    "question_type": "multiple_choice",
+    "question": "What kind of visual evidence is texture analysis designed to describe?",
+    "answer": "Repeated local appearance patterns over a region, such as grass, leaves, or fabric-like surfaces.",
+    "explanation": "Texture analysis is about region-level repeated appearance structure, not about a single keypoint or a camera parameter.",
+    "options": [
+      "A. Only the 3D coordinates of scene points.",
+      "B. Only one single isolated corner in the entire image.",
+      "C. The exact focal length of the camera lens.",
+      "D. Repeated local appearance patterns over a region, such as grass, leaves, or fabric-like surfaces."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-70a07948f1f9",
+      "chunk-cea10b0f15e6",
+      "chunk-7cbc2829bfe1",
+      "chunk-38c0dea6a1c4",
+      "chunk-d14d03227587",
+      "chunk-a498334b0e82",
+      "chunk-3204548da2e7",
+      "chunk-1e5f89b5bde3"
+    ],
+    "source_files": [
+      "Week2\\ColorTexture.pptx",
+      "Week3\\Lecture3-1 (1).pptx",
+      "Week3\\Lecture3-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week3\\Lecture3-1 (1).pptx",
+        "display_source": "Lecture3-1 (1).pptx",
+        "location": "slide 1",
+        "section": "Natural Textures grass leaves What/ w here are the textures? How to describe the textures? 1"
+      },
+      {
+        "source": "Week3\\Lecture3-1.pdf",
+        "display_source": "Lecture3-1.pdf",
+        "location": "page 1",
+        "section": "Natural Textures"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-texture-analysis-q2",
+    "kp_id": "kp-texture-analysis",
+    "kp_name": "Texture analysis",
+    "question_type": "multiple_choice",
+    "question": "In a normalized gray-level histogram P[i], what must the sum over all bins equal?",
+    "answer": "1.",
+    "explanation": "A normalized histogram represents proportions or probabilities, so all bin values must sum to 1.",
+    "options": [
+      "A. 1.",
+      "B. The maximum gray value times the number of bins.",
+      "C. The number of corners in the image.",
+      "D. The image width in pixels."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-70a07948f1f9",
+      "chunk-cea10b0f15e6",
+      "chunk-7cbc2829bfe1",
+      "chunk-38c0dea6a1c4",
+      "chunk-d14d03227587",
+      "chunk-a498334b0e82",
+      "chunk-3204548da2e7",
+      "chunk-1e5f89b5bde3"
+    ],
+    "source_files": [
+      "Week2\\ColorTexture.pptx",
+      "Week3\\Lecture3-1 (1).pptx",
+      "Week3\\Lecture3-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\ColorTexture.pptx",
+        "display_source": "ColorTexture.pptx",
+        "location": "slide 2",
+        "section": "Histograms A histogram of a gray-tone image is an array H[*] of bins, one for each gray tone. H[ i ] gives ..."
+      },
+      {
+        "source": "Week3\\Lecture3-1 (1).pptx",
+        "display_source": "Lecture3-1 (1).pptx",
+        "location": "slide 4",
+        "section": "Local Binary Pattern Measure 100 101 103 40 50 80 50 60 90 For each pixel p, create an 8-bit number b 1 b 2..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-texture-analysis-q3",
+    "kp_id": "kp-texture-analysis",
+    "kp_name": "Texture analysis",
+    "question_type": "multiple_choice",
+    "question": "Why can two image regions have the same average intensity but still look like different textures?",
+    "answer": "Because texture depends on the distribution and arrangement of local intensity patterns, not only on the mean intensity.",
+    "explanation": "Texture is a richer description than a single mean value. Histograms and other local statistics capture variation that the mean alone misses.",
+    "options": [
+      "A. Because average intensity already determines the exact texture uniquely.",
+      "B. Because texture depends on the distribution and arrangement of local intensity patterns, not only on the mean intensity.",
+      "C. Because texture can only be measured in color images, never grayscale images.",
+      "D. Because texture is defined only by camera motion."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-70a07948f1f9",
+      "chunk-cea10b0f15e6",
+      "chunk-7cbc2829bfe1",
+      "chunk-38c0dea6a1c4",
+      "chunk-d14d03227587",
+      "chunk-a498334b0e82",
+      "chunk-3204548da2e7",
+      "chunk-1e5f89b5bde3"
+    ],
+    "source_files": [
+      "Week2\\ColorTexture.pptx",
+      "Week3\\Lecture3-1 (1).pptx",
+      "Week3\\Lecture3-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\ColorTexture.pptx",
+        "display_source": "ColorTexture.pptx",
+        "location": "slide 4",
+        "section": "Color histograms can represent distribution of pixel values Histogram is fast and easy to compute. Size can..."
+      },
+      {
+        "source": "Week2\\ColorTexture.pptx",
+        "display_source": "ColorTexture.pptx",
+        "location": "slide 2",
+        "section": "Histograms A histogram of a gray-tone image is an array H[*] of bins, one for each gray tone. H[ i ] gives ..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-texture-analysis-q4",
+    "kp_id": "kp-texture-analysis",
+    "kp_name": "Texture analysis",
+    "question_type": "multiple_choice",
+    "question": "Which example is most naturally treated as a texture-analysis problem?",
+    "answer": "Distinguishing regions of grass from regions of leaves using repeated local appearance patterns.",
+    "explanation": "Texture analysis is introduced through natural surfaces such as grass and leaves, where the key cue is repeated local appearance.",
+    "options": [
+      "A. Computing an essential matrix from two calibrated cameras.",
+      "B. Estimating an affine transformation from point correspondences.",
+      "C. Distinguishing regions of grass from regions of leaves using repeated local appearance patterns.",
+      "D. Recovering stereo depth from disparity."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-70a07948f1f9",
+      "chunk-cea10b0f15e6",
+      "chunk-7cbc2829bfe1",
+      "chunk-38c0dea6a1c4",
+      "chunk-d14d03227587",
+      "chunk-a498334b0e82",
+      "chunk-3204548da2e7",
+      "chunk-1e5f89b5bde3"
+    ],
+    "source_files": [
+      "Week2\\ColorTexture.pptx",
+      "Week3\\Lecture3-1 (1).pptx",
+      "Week3\\Lecture3-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week3\\Lecture3-1 (1).pptx",
+        "display_source": "Lecture3-1 (1).pptx",
+        "location": "slide 1",
+        "section": "Natural Textures grass leaves What/ w here are the textures? How to describe the textures? 1"
+      },
+      {
+        "source": "Week3\\Lecture3-1.pdf",
+        "display_source": "Lecture3-1.pdf",
+        "location": "page 1",
+        "section": "Natural Textures"
+      }
     ],
     "image_path": null,
     "image_caption": null
@@ -564,142 +1122,236 @@
     "kp_id": "kp-texture-analysis",
     "kp_name": "Texture analysis",
     "question_type": "multiple_choice",
-    "question": "A lecture figure showing surfaces such as grass or leaves is most likely supporting which topic?",
-    "answer": "Describing repeated local patterns for texture recognition or classification.",
-    "explanation": "Natural-surface imagery is a standard example when explaining texture analysis.",
+    "question": "A figure shows surfaces such as grass and leaves rather than isolated keypoints. What should a student infer from that figure?",
+    "answer": "The lecture is focusing on describing regional surface patterns instead of single-point features.",
+    "explanation": "The figure is there to shift attention from isolated local points to repeated surface patterns spread across an image region.",
     "options": [
-      "A. Constraining correspondences with epipolar lines.",
-      "B. Recovering optical flow between adjacent video frames.",
-      "C. Describing repeated local patterns for texture recognition or classification.",
-      "D. Aligning two views by estimating a global warp."
+      "A. The lecture is explaining epipolar lines.",
+      "B. The lecture is introducing camera calibration.",
+      "C. The lecture is focusing on describing regional surface patterns instead of single-point features.",
+      "D. The lecture is showing a fully convolutional segmentation network."
     ],
     "correct_option": "C",
     "source_chunk_ids": [
       "chunk-70a07948f1f9",
       "chunk-cea10b0f15e6",
       "chunk-7cbc2829bfe1",
-      "chunk-38c0dea6a1c4"
+      "chunk-38c0dea6a1c4",
+      "chunk-d14d03227587",
+      "chunk-a498334b0e82",
+      "chunk-3204548da2e7",
+      "chunk-1e5f89b5bde3"
     ],
     "source_files": [
       "Week2\\ColorTexture.pptx",
       "Week3\\Lecture3-1 (1).pptx",
       "Week3\\Lecture3-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week3\\Lecture3-1 (1).pptx",
+        "display_source": "Lecture3-1 (1).pptx",
+        "location": "slide 1",
+        "section": "Natural Textures grass leaves What/ w here are the textures? How to describe the textures? 1"
+      },
+      {
+        "source": "Week3\\Lecture3-1.pdf",
+        "display_source": "Lecture3-1.pdf",
+        "location": "page 1",
+        "section": "Natural Textures"
+      }
     ],
     "image_path": "images/week2-colortexture/slide-001-4de50a96fbe2.jpeg",
     "image_caption": "Lecture figure from Week2/ColorTexture.pptx slide 1"
   },
   {
-    "question_id": "kp-texture-analysis-llm-1",
-    "kp_id": "kp-texture-analysis",
-    "kp_name": "Texture analysis",
+    "question_id": "kp-convolutional-neural-networks-q1",
+    "kp_id": "kp-convolutional-neural-networks",
+    "kp_name": "Convolutional neural networks",
     "question_type": "multiple_choice",
-    "question": "What is the primary focus of texture analysis in computer vision?",
-    "answer": "Describing repeated local appearance patterns and using them for recognition or classification.",
-    "explanation": "Texture analysis involves identifying and characterizing repeated patterns in an image, which can then be used for tasks like recognizing objects or classifying scenes based on their texture properties.",
+    "question": "In the sliding-window approach shown in the lecture, what is the CNN doing at each window location?",
+    "answer": "It is classifying the image crop to decide whether the target object is present.",
+    "explanation": "The object-detection slide frames detection as repeated classification over candidate windows. The CNN is acting as the classifier for each cropped region.",
     "options": [
-      "A. Analyzing the overall color distribution of an image",
-      "B. Describing repeated local appearance patterns and using them for recognition or classification",
-      "C. Detecting edges and contours in an image",
-      "D. Compressing image data to reduce file size"
+      "A. It is classifying the image crop to decide whether the target object is present.",
+      "B. It is converting the crop directly into a bag-of-words histogram.",
+      "C. It is estimating dense optical flow from one still image.",
+      "D. It is computing the camera intrinsic matrix of the crop."
     ],
-    "correct_option": "B",
+    "correct_option": "A",
     "source_chunk_ids": [
-      "chunk-70a07948f1f9",
-      "chunk-cea10b0f15e6",
-      "chunk-7cbc2829bfe1",
-      "chunk-38c0dea6a1c4"
+      "chunk-7e8a00fd8fb5",
+      "chunk-0f572bda5322",
+      "chunk-187760cc9a0a",
+      "chunk-3b68283213d2",
+      "chunk-1e1e5b8f0a2b",
+      "chunk-9ee5fa0181b8",
+      "chunk-76fc92f790dc",
+      "chunk-cdb24eb06246"
     ],
     "source_files": [
-      "Week2\\ColorTexture.pptx",
-      "Week3\\Lecture3-1 (1).pptx",
-      "Week3\\Lecture3-1.pdf"
+      "Week3\\Lecture3-2.pdf",
+      "Week3\\Lecture3_2 (1).pptx",
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4_2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week4\\lecture4_2.pdf",
+        "display_source": "lecture4_2.pdf",
+        "location": "page 6",
+        "section": "RegionProposals"
+      },
+      {
+        "source": "Week4\\lecture4.pdf",
+        "display_source": "lecture4.pdf",
+        "location": "page 31",
+        "section": "RegionProposals"
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-texture-analysis-llm-2",
-    "kp_id": "kp-texture-analysis",
-    "kp_name": "Texture analysis",
+    "question_id": "kp-convolutional-neural-networks-q2",
+    "kp_id": "kp-convolutional-neural-networks",
+    "kp_name": "Convolutional neural networks",
     "question_type": "multiple_choice",
-    "question": "Which of the following is an example of a natural texture?",
-    "answer": "grass leaves",
-    "explanation": "Natural textures refer to patterns found in nature, such as grass, leaves, wood grain, or sand. These are distinct from artificial or synthetic textures.",
+    "question": "Why are convolutional layers particularly appropriate for images?",
+    "answer": "Because the same learned local filter can be reused across many spatial locations.",
+    "explanation": "Images contain repeated local structure. Shared filters let the network detect the same pattern at different positions without learning separate weights everywhere.",
     "options": [
-      "A. A brick wall pattern",
-      "B. A checkerboard pattern",
-      "C. grass leaves",
-      "D. A striped fabric"
+      "A. Because every pixel requires a completely separate filter bank.",
+      "B. Because convolutional layers eliminate the need for training data.",
+      "C. Because they can only be applied after camera calibration.",
+      "D. Because the same learned local filter can be reused across many spatial locations."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-7e8a00fd8fb5",
+      "chunk-0f572bda5322",
+      "chunk-187760cc9a0a",
+      "chunk-3b68283213d2",
+      "chunk-1e1e5b8f0a2b",
+      "chunk-9ee5fa0181b8",
+      "chunk-76fc92f790dc",
+      "chunk-cdb24eb06246"
+    ],
+    "source_files": [
+      "Week3\\Lecture3-2.pdf",
+      "Week3\\Lecture3_2 (1).pptx",
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4_2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week3\\Lecture3_2 (1).pptx",
+        "display_source": "Lecture3_2 (1).pptx",
+        "location": "slide 13",
+        "section": "Composition Layers that are in between the input and the output are called hidden layers , because we are g..."
+      },
+      {
+        "source": "Week3\\Lecture3_2 (1).pptx",
+        "display_source": "Lecture3_2 (1).pptx",
+        "location": "slide 1",
+        "section": "Convolutional Neural Network W hich is the dog?"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-convolutional-neural-networks-q3",
+    "kp_id": "kp-convolutional-neural-networks",
+    "kp_name": "Convolutional neural networks",
+    "question_type": "multiple_choice",
+    "question": "What is the practical role of pooling or strided downsampling inside a CNN?",
+    "answer": "It reduces spatial resolution while retaining stronger feature evidence and broadening the receptive field.",
+    "explanation": "Pooling and strided downsampling compress the spatial grid so that deeper layers can aggregate information more efficiently.",
+    "options": [
+      "A. It guarantees invariance to every geometric transformation.",
+      "B. It estimates the scene depth directly from one feature map.",
+      "C. It reduces spatial resolution while retaining stronger feature evidence and broadening the receptive field.",
+      "D. It converts every hidden layer into a segmentation mask immediately."
     ],
     "correct_option": "C",
     "source_chunk_ids": [
-      "chunk-70a07948f1f9",
-      "chunk-cea10b0f15e6",
-      "chunk-7cbc2829bfe1",
-      "chunk-38c0dea6a1c4"
+      "chunk-7e8a00fd8fb5",
+      "chunk-0f572bda5322",
+      "chunk-187760cc9a0a",
+      "chunk-3b68283213d2",
+      "chunk-1e1e5b8f0a2b",
+      "chunk-9ee5fa0181b8",
+      "chunk-76fc92f790dc",
+      "chunk-cdb24eb06246"
     ],
     "source_files": [
-      "Week2\\ColorTexture.pptx",
-      "Week3\\Lecture3-1 (1).pptx",
-      "Week3\\Lecture3-1.pdf"
+      "Week3\\Lecture3-2.pdf",
+      "Week3\\Lecture3_2 (1).pptx",
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4_2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week3\\Lecture3_2 (1).pptx",
+        "display_source": "Lecture3_2 (1).pptx",
+        "location": "slide 14",
+        "section": "Linear functions We have formed chains of linear functions. We know that linear functions can be combined g..."
+      },
+      {
+        "source": "Week4\\lecture4.pdf",
+        "display_source": "lecture4.pdf",
+        "location": "page 17",
+        "section": "Fei-Fei Li & Justin Johnson & SerenaYeung Lecture 11"
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-texture-analysis-llm-3",
-    "kp_id": "kp-texture-analysis",
-    "kp_name": "Texture analysis",
+    "question_id": "kp-convolutional-neural-networks-q4",
+    "kp_id": "kp-convolutional-neural-networks",
+    "kp_name": "Convolutional neural networks",
     "question_type": "multiple_choice",
-    "question": "What is a histogram in the context of a gray-tone image?",
-    "answer": "An array H[*] of bins, one for each gray tone, where H[i] gives the count of how many pixels have gray tone i.",
-    "explanation": "A histogram for a gray-tone image is a statistical representation that shows the frequency of each gray tone (intensity level) in the image. It is an array where each index corresponds to a gray tone, and the value at that index is the number of pixels with that tone.",
+    "question": "How do deeper CNN layers usually differ from early layers in the course discussion?",
+    "answer": "They tend to encode more abstract, task-relevant visual patterns built from simpler earlier responses.",
+    "explanation": "The main idea is hierarchical representation: early layers detect simple local cues and deeper layers combine them into more meaningful features for the task.",
     "options": [
-      "A. A graph showing the edges detected in an image",
-      "B. An array H[*] of bins, one for each gray tone, where H[i] gives the count of how many pixels have gray tone i.",
-      "C. A list of all pixel coordinates sorted by intensity",
-      "D. A measure of the average brightness of an image"
+      "A. They always have fewer channels than the input image.",
+      "B. They stop using any spatial information at all.",
+      "C. They tend to encode more abstract, task-relevant visual patterns built from simpler earlier responses.",
+      "D. They can only respond to raw RGB values without intermediate features."
     ],
-    "correct_option": "B",
+    "correct_option": "C",
     "source_chunk_ids": [
-      "chunk-70a07948f1f9",
-      "chunk-cea10b0f15e6",
-      "chunk-7cbc2829bfe1",
-      "chunk-38c0dea6a1c4"
+      "chunk-7e8a00fd8fb5",
+      "chunk-0f572bda5322",
+      "chunk-187760cc9a0a",
+      "chunk-3b68283213d2",
+      "chunk-1e1e5b8f0a2b",
+      "chunk-9ee5fa0181b8",
+      "chunk-76fc92f790dc",
+      "chunk-cdb24eb06246"
     ],
     "source_files": [
-      "Week2\\ColorTexture.pptx",
-      "Week3\\Lecture3-1 (1).pptx",
-      "Week3\\Lecture3-1.pdf"
+      "Week3\\Lecture3-2.pdf",
+      "Week3\\Lecture3_2 (1).pptx",
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4_2.pdf"
     ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-texture-analysis-llm-4",
-    "kp_id": "kp-texture-analysis",
-    "kp_name": "Texture analysis",
-    "question_type": "multiple_choice",
-    "question": "If a normalized histogram P[i] gives the percentage of pixels with gray tone i, what does this imply about the sum of all P[i] values?",
-    "answer": "The sum of all P[i] values must equal 1 (or 100%).",
-    "explanation": "Since P[i] represents the percentage (or proportion) of pixels with gray tone i, the sum over all possible gray tones must account for all pixels in the image, totaling 1 (if expressed as a fraction) or 100% (if expressed as a percentage).",
-    "options": [
-      "A. The sum is equal to the total number of pixels in the image.",
-      "B. The sum must equal 1 (or 100%).",
-      "C. The sum is equal to the average gray tone of the image.",
-      "D. The sum is always less than the number of gray tones."
-    ],
-    "correct_option": "B",
-    "source_chunk_ids": [
-      "chunk-70a07948f1f9",
-      "chunk-cea10b0f15e6",
-      "chunk-7cbc2829bfe1",
-      "chunk-38c0dea6a1c4"
-    ],
-    "source_files": [
-      "Week2\\ColorTexture.pptx",
-      "Week3\\Lecture3-1 (1).pptx",
-      "Week3\\Lecture3-1.pdf"
+    "review_refs": [
+      {
+        "source": "Week3\\Lecture3-2.pdf",
+        "display_source": "Lecture3-2.pdf",
+        "location": "page 2",
+        "section": "-Given a feature representation for images, how do we learn a model for distinguishing features from different classes?"
+      },
+      {
+        "source": "Week3\\Lecture3_2 (1).pptx",
+        "display_source": "Lecture3_2 (1).pptx",
+        "location": "slide 1",
+        "section": "Convolutional Neural Network W hich is the dog?"
+      }
     ],
     "image_path": null,
     "image_caption": null
@@ -709,21 +1361,25 @@
     "kp_id": "kp-convolutional-neural-networks",
     "kp_name": "Convolutional neural networks",
     "question_type": "multiple_choice",
-    "question": "A figure showing feature maps or stacked learned filters is most likely explaining which idea?",
-    "answer": "CNNs build hierarchical visual features from local convolutional responses.",
-    "explanation": "Feature-map diagrams are standard visual explanations for convolutional neural networks.",
+    "question": "If a figure shows stacked learned filters and intermediate feature maps, what core point is it making?",
+    "answer": "CNNs build image understanding through a hierarchy of local convolutional responses.",
+    "explanation": "Feature-map figures are used to show that the network learns and composes visual detectors layer by layer rather than reasoning from raw pixels alone.",
     "options": [
-      "A. Stereo matching is restricted to an epipolar line.",
-      "B. CNNs build hierarchical visual features from local convolutional responses.",
-      "C. A bag-of-words model quantizes descriptors into a histogram.",
-      "D. A pinhole camera maps 3D points by perspective projection."
+      "A. Stereo correspondence is restricted to a single epipolar line.",
+      "B. CNNs build image understanding through a hierarchy of local convolutional responses.",
+      "C. A camera model is projecting 3D points into the image.",
+      "D. Feature descriptors are being quantized into visual words."
     ],
     "correct_option": "B",
     "source_chunk_ids": [
       "chunk-7e8a00fd8fb5",
       "chunk-0f572bda5322",
       "chunk-187760cc9a0a",
-      "chunk-3b68283213d2"
+      "chunk-3b68283213d2",
+      "chunk-1e1e5b8f0a2b",
+      "chunk-9ee5fa0181b8",
+      "chunk-76fc92f790dc",
+      "chunk-cdb24eb06246"
     ],
     "source_files": [
       "Week3\\Lecture3-2.pdf",
@@ -731,125 +1387,215 @@
       "Week4\\lecture4.pdf",
       "Week4\\lecture4_2.pdf"
     ],
-    "image_path": "images/week3-lecture3-2-1/slide-001-8048719b2349.jpg",
-    "image_caption": "Lecture figure from Week3/Lecture3_2 (1).pptx slide 1"
+    "review_refs": [
+      {
+        "source": "Week3\\Lecture3_2 (1).pptx",
+        "display_source": "Lecture3_2 (1).pptx",
+        "location": "slide 13",
+        "section": "Composition Layers that are in between the input and the output are called hidden layers , because we are g..."
+      },
+      {
+        "source": "Week3\\Lecture3-2.pdf",
+        "display_source": "Lecture3-2.pdf",
+        "location": "page 13",
+        "section": "Composition"
+      }
+    ],
+    "image_path": "images/week3-lecture3-2-1/slide-002-526615ae9a5d.jpeg",
+    "image_caption": "Lecture figure from Week3/Lecture3_2 (1).pptx slide 2"
   },
   {
-    "question_id": "kp-convolutional-neural-networks-llm-1",
-    "kp_id": "kp-convolutional-neural-networks",
-    "kp_name": "Convolutional neural networks",
+    "question_id": "kp-image-segmentation-q1",
+    "kp_id": "kp-image-segmentation",
+    "kp_name": "Image segmentation",
     "question_type": "multiple_choice",
-    "question": "According to the provided evidence, how is object detection approached using a Convolutional Neural Network (CNN) in the sliding window method?",
-    "answer": "A CNN is applied to many different crops of the image, and the CNN classifies each crop as either an object or background.",
-    "explanation": "The evidence explicitly states that the method involves applying a CNN to many different crops of the image, with the CNN classifying each crop as an object (like a dog or cat) or as background.",
+    "question": "Why is the lecture's 'How many zebras?' example a segmentation problem rather than a plain classification problem?",
+    "answer": "Because the system must separate image regions or object instances before counting them.",
+    "explanation": "The zebra example is meant to show that counting requires knowing which pixels or regions belong to each object, not just assigning one label to the whole image.",
     "options": [
-      "A. The CNN directly outputs bounding box coordinates for all objects in the image.",
-      "B. A CNN is applied to many different crops of the image, and the CNN classifies each crop as either an object or background.",
-      "C. The CNN segments the image into foreground and background pixels before classification.",
-      "D. The CNN is used only to extract features, which are then passed to a separate classifier for the whole image."
-    ],
-    "correct_option": "B",
-    "source_chunk_ids": [
-      "chunk-7e8a00fd8fb5",
-      "chunk-0f572bda5322",
-      "chunk-187760cc9a0a",
-      "chunk-3b68283213d2"
-    ],
-    "source_files": [
-      "Week3\\Lecture3-2.pdf",
-      "Week3\\Lecture3_2 (1).pptx",
-      "Week4\\lecture4.pdf",
-      "Week4\\lecture4_2.pdf"
-    ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-convolutional-neural-networks-llm-2",
-    "kp_id": "kp-convolutional-neural-networks",
-    "kp_name": "Convolutional neural networks",
-    "question_type": "multiple_choice",
-    "question": "In the described sliding window approach for object detection, what is the primary role of the Convolutional Neural Network?",
-    "answer": "To classify individual image crops as containing a specific object or as background.",
-    "explanation": "The evidence frames object detection as a classification problem over many image crops. The CNN's role is to perform this classification, deciding for each crop if it is an object (e.g., 'Dog?', 'Cat?') or 'Background?'.",
-    "options": [
-      "A. To generate the set of image crops (sliding windows) to evaluate.",
-      "B. To regress the exact pixel-wise mask of the object within a crop.",
-      "C. To classify individual image crops as containing a specific object or as background.",
-      "D. To reduce the dimensionality of the entire image before processing."
+      "A. Because classification and segmentation are exactly the same task in the lecture.",
+      "B. Because the image must first be converted into a grayscale histogram only.",
+      "C. Because the system must separate image regions or object instances before counting them.",
+      "D. Because segmentation ignores object boundaries and counts directly from file names."
     ],
     "correct_option": "C",
     "source_chunk_ids": [
-      "chunk-7e8a00fd8fb5",
-      "chunk-0f572bda5322",
-      "chunk-187760cc9a0a",
-      "chunk-3b68283213d2"
+      "chunk-90dff34f7783",
+      "chunk-ba2d2e3679e8",
+      "chunk-f3c2d1e2cffe",
+      "chunk-9efc86c908ae",
+      "chunk-da8e6c11541d",
+      "chunk-0282f8c5c931",
+      "chunk-afc7c6412a32",
+      "chunk-023c4d883038"
     ],
     "source_files": [
       "Week3\\Lecture3-2.pdf",
       "Week3\\Lecture3_2 (1).pptx",
       "Week4\\lecture4.pdf",
-      "Week4\\lecture4_2.pdf"
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week4\\lecture4.pptx",
+        "display_source": "lecture4.pptx",
+        "location": "slide 1",
+        "section": "Image Segmentation From Sandlot Science How many zebras?"
+      },
+      {
+        "source": "Week4\\lecture4.pptx",
+        "display_source": "lecture4.pptx",
+        "location": "slide 4",
+        "section": "…because it's on the road! Why is this road?"
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-convolutional-neural-networks-llm-3",
-    "kp_id": "kp-convolutional-neural-networks",
-    "kp_name": "Convolutional neural networks",
+    "question_id": "kp-image-segmentation-q2",
+    "kp_id": "kp-image-segmentation",
+    "kp_name": "Image segmentation",
     "question_type": "multiple_choice",
-    "question": "Based on the evidence, which of the following best describes the fundamental task being performed by the CNN in the presented object detection framework?",
-    "answer": "Binary or multi-class classification at the region (crop) level.",
-    "explanation": "The evidence shows the CNN answering questions like 'Dog? NO', 'Cat? NO', 'Background? YES' for a given crop. This indicates the network is performing a classification task (distinguishing between classes like dog, cat, and background) for each region it processes.",
+    "question": "What is the defining output of an image-segmentation system?",
+    "answer": "A partition of the image into meaningful regions or labeled pixels.",
+    "explanation": "Segmentation differs from whole-image classification because it produces spatially organized region or pixel assignments.",
     "options": [
-      "A. Semantic segmentation of the entire image.",
-      "B. Binary or multi-class classification at the region (crop) level.",
-      "C. Unsupervised feature learning from the full image.",
-      "D. Image captioning for the detected object."
+      "A. A single class label for the entire image only.",
+      "B. A camera focal length estimate.",
+      "C. A histogram of descriptor clusters for retrieval.",
+      "D. A partition of the image into meaningful regions or labeled pixels."
     ],
-    "correct_option": "B",
+    "correct_option": "D",
     "source_chunk_ids": [
-      "chunk-7e8a00fd8fb5",
-      "chunk-0f572bda5322",
-      "chunk-187760cc9a0a",
-      "chunk-3b68283213d2"
+      "chunk-90dff34f7783",
+      "chunk-ba2d2e3679e8",
+      "chunk-f3c2d1e2cffe",
+      "chunk-9efc86c908ae",
+      "chunk-da8e6c11541d",
+      "chunk-0282f8c5c931",
+      "chunk-afc7c6412a32",
+      "chunk-023c4d883038"
     ],
     "source_files": [
       "Week3\\Lecture3-2.pdf",
       "Week3\\Lecture3_2 (1).pptx",
       "Week4\\lecture4.pdf",
-      "Week4\\lecture4_2.pdf"
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week3\\Lecture3_2 (1).pptx",
+        "display_source": "Lecture3_2 (1).pptx",
+        "location": "slide 10",
+        "section": "Multi-class classifying an image Each pixel of the image would be an input. So, for a 28 x 28 image, we vec..."
+      },
+      {
+        "source": "Week4\\lecture4.pptx",
+        "display_source": "lecture4.pptx",
+        "location": "slide 11",
+        "section": "intensity pixel count input image black pixels gray pixels white pixels These intensities define the three ..."
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-convolutional-neural-networks-llm-4",
-    "kp_id": "kp-convolutional-neural-networks",
-    "kp_name": "Convolutional neural networks",
+    "question_id": "kp-image-segmentation-q3",
+    "kp_id": "kp-image-segmentation",
+    "kp_name": "Image segmentation",
     "question_type": "multiple_choice",
-    "question": "What is a key characteristic of the input data processed by the CNN in the sliding window object detection method described?",
-    "answer": "The input consists of multiple, overlapping sub-regions (crops) extracted from a larger image.",
-    "explanation": "The method involves applying the CNN to 'many different crops of the image.' This means the CNN does not process the whole image at once for detection; instead, it processes numerous smaller windows extracted from it.",
+    "question": "What does 'binary segmentation' mean in the Week 4 materials?",
+    "answer": "Separating the image into two groups, typically foreground and background.",
+    "explanation": "Binary segmentation is about dividing the image into two semantic groups, usually the object of interest and everything else.",
     "options": [
-      "A. The input is always a single, centered crop from the image.",
-      "B. The input consists of multiple, overlapping sub-regions (crops) extracted from a larger image.",
-      "C. The input is a downsampled version of the entire original image.",
-      "D. The input is a text description paired with the image."
+      "A. Using only two convolutional layers in a network.",
+      "B. Separating the image into two groups, typically foreground and background.",
+      "C. Restricting the image to two camera views.",
+      "D. Representing every pixel with exactly 8 bits."
     ],
     "correct_option": "B",
     "source_chunk_ids": [
-      "chunk-7e8a00fd8fb5",
-      "chunk-0f572bda5322",
-      "chunk-187760cc9a0a",
-      "chunk-3b68283213d2"
+      "chunk-90dff34f7783",
+      "chunk-ba2d2e3679e8",
+      "chunk-f3c2d1e2cffe",
+      "chunk-9efc86c908ae",
+      "chunk-da8e6c11541d",
+      "chunk-0282f8c5c931",
+      "chunk-afc7c6412a32",
+      "chunk-023c4d883038"
     ],
     "source_files": [
       "Week3\\Lecture3-2.pdf",
       "Week3\\Lecture3_2 (1).pptx",
       "Week4\\lecture4.pdf",
-      "Week4\\lecture4_2.pdf"
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week4\\lecture4.pptx",
+        "display_source": "lecture4.pptx",
+        "location": "slide 9",
+        "section": "Semi-automatic binary segmentation"
+      },
+      {
+        "source": "Week4\\lecture4.pdf",
+        "display_source": "lecture4.pdf",
+        "location": "page 9",
+        "section": "Semi-automatic binary segmentation"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-segmentation-q4",
+    "kp_id": "kp-image-segmentation",
+    "kp_name": "Image segmentation",
+    "question_type": "multiple_choice",
+    "question": "In the toy intensity-based segmentation example, what is the key idea behind grouping pixels?",
+    "answer": "Pixels are assigned to groups based on an image feature such as intensity, but this may be too simple for real scenes.",
+    "explanation": "The slide shows that intensity can define groups in a toy case, but the lecture also warns that realistic images are more complicated than that simple setup.",
+    "options": [
+      "A. Every region must contain exactly the same number of pixels.",
+      "B. Pixels are grouped only by file order in memory.",
+      "C. Pixels are assigned to groups based on an image feature such as intensity, but this may be too simple for real scenes.",
+      "D. Intensity segmentation always solves every real image correctly."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-90dff34f7783",
+      "chunk-ba2d2e3679e8",
+      "chunk-f3c2d1e2cffe",
+      "chunk-9efc86c908ae",
+      "chunk-da8e6c11541d",
+      "chunk-0282f8c5c931",
+      "chunk-afc7c6412a32",
+      "chunk-023c4d883038"
+    ],
+    "source_files": [
+      "Week3\\Lecture3-2.pdf",
+      "Week3\\Lecture3_2 (1).pptx",
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week4\\lecture4.pdf",
+        "display_source": "lecture4.pdf",
+        "location": "page 11",
+        "section": "intensity"
+      },
+      {
+        "source": "Week4\\lecture4_1.pdf",
+        "display_source": "lecture4_1.pdf",
+        "location": "page 11",
+        "section": "intensity"
+      }
     ],
     "image_path": null,
     "image_caption": null
@@ -859,142 +1605,230 @@
     "kp_id": "kp-image-segmentation",
     "kp_name": "Image segmentation",
     "question_type": "multiple_choice",
-    "question": "A lecture figure with colored object regions or masks is most likely illustrating which task?",
-    "answer": "Partitioning the image into meaningful object or semantic regions.",
-    "explanation": "Colored regions or masks are the clearest visual cue for segmentation.",
+    "question": "If a figure colors different object regions or masks separately, what task is it illustrating?",
+    "answer": "Assigning pixels or regions to different objects or semantic groups.",
+    "explanation": "Colored region masks are the standard way to visualize segmentation output, because they show which pixels belong to which region or object.",
     "options": [
-      "A. Partitioning the image into meaningful object or semantic regions.",
-      "B. Estimating the disparity of corresponding pixels between two views.",
-      "C. Describing repeated local texture for retrieval.",
-      "D. Normalizing a feature descriptor for scale and rotation."
+      "A. Assigning pixels or regions to different objects or semantic groups.",
+      "B. Estimating motion vectors between video frames.",
+      "C. Detecting SIFT keypoints at multiple scales.",
+      "D. Computing a convolution kernel from image patches."
     ],
     "correct_option": "A",
     "source_chunk_ids": [
       "chunk-90dff34f7783",
       "chunk-ba2d2e3679e8",
       "chunk-f3c2d1e2cffe",
-      "chunk-9efc86c908ae"
+      "chunk-9efc86c908ae",
+      "chunk-da8e6c11541d",
+      "chunk-0282f8c5c931",
+      "chunk-afc7c6412a32",
+      "chunk-023c4d883038"
     ],
     "source_files": [
+      "Week3\\Lecture3-2.pdf",
+      "Week3\\Lecture3_2 (1).pptx",
       "Week4\\lecture4.pdf",
       "Week4\\lecture4.pptx",
       "Week4\\lecture4_1.pdf"
     ],
-    "image_path": "images/week4-lecture4/slide-001-4b840541931e.png",
-    "image_caption": "Lecture figure from Week4/lecture4.pptx slide 1"
+    "review_refs": [
+      {
+        "source": "Week4\\lecture4.pptx",
+        "display_source": "lecture4.pptx",
+        "location": "slide 11",
+        "section": "intensity pixel count input image black pixels gray pixels white pixels These intensities define the three ..."
+      },
+      {
+        "source": "Week4\\lecture4.pdf",
+        "display_source": "lecture4.pdf",
+        "location": "page 11",
+        "section": "intensity"
+      }
+    ],
+    "image_path": "images/week4-lecture4/slide-009-c5a64bad3385.png",
+    "image_caption": "Lecture figure from Week4/lecture4.pptx slide 9"
   },
   {
-    "question_id": "kp-image-segmentation-llm-1",
-    "kp_id": "kp-image-segmentation",
-    "kp_name": "Image segmentation",
+    "question_id": "kp-harris-corners-and-local-features-q1",
+    "kp_id": "kp-harris-corners-and-local-features",
+    "kp_name": "Harris corners and local features",
     "question_type": "multiple_choice",
-    "question": "Based on the provided evidence, what is the primary purpose of the 'How many zebras?' example in the context of image segmentation?",
-    "answer": "It illustrates the goal of image segmentation: to partition an image into meaningful regions or objects (like individual zebras) so they can be counted or analyzed.",
-    "explanation": "The 'How many zebras?' example is referenced across multiple lecture materials as an introduction to image segmentation. It demonstrates the core task of partitioning an image into distinct regions (each zebra) to answer a meaningful question about the scene.",
+    "question": "In the Harris-corner formulation, what does the SSD error E(u,v) measure?",
+    "answer": "How much the image window changes when it is shifted by a small displacement (u,v).",
+    "explanation": "The Harris detector studies how the local window changes under small shifts. The SSD error is precisely the shifted-window change measure used in that derivation.",
     "options": [
-      "A. To demonstrate edge detection techniques.",
-      "B. To illustrate the goal of partitioning an image into meaningful regions or objects.",
-      "C. To show how to classify different animal species.",
-      "D. To explain the process of image compression."
+      "A. How much the camera focal length changes during motion.",
+      "B. How much the image window changes when it is shifted by a small displacement (u,v).",
+      "C. How similar two different object categories are in a classifier.",
+      "D. How many visual words are present in the patch."
     ],
     "correct_option": "B",
     "source_chunk_ids": [
-      "chunk-90dff34f7783",
-      "chunk-ba2d2e3679e8",
-      "chunk-f3c2d1e2cffe",
-      "chunk-9efc86c908ae"
+      "chunk-e49346fe1c98",
+      "chunk-24245265ea4c",
+      "chunk-c1bc5145d6eb",
+      "chunk-153ae1508801",
+      "chunk-aa322bf7478c",
+      "chunk-070e045b40c5",
+      "chunk-d6bc111f29cd",
+      "chunk-0ec7d64ad791"
     ],
     "source_files": [
-      "Week4\\lecture4.pdf",
-      "Week4\\lecture4.pptx",
-      "Week4\\lecture4_1.pdf"
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 25",
+        "section": "Corner detection: the math Consider shifting the window W by ( u,v ) define an SSD \"error\" E( u,v ) : W ( u,v )"
+      },
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 26",
+        "section": "Corner detection: the math Consider shifting the window W by ( u,v ) define an SSD \"error\" E( u,v ) : W ( u,v )"
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-image-segmentation-llm-2",
-    "kp_id": "kp-image-segmentation",
-    "kp_name": "Image segmentation",
+    "question_id": "kp-harris-corners-and-local-features-q2",
+    "kp_id": "kp-harris-corners-and-local-features",
+    "kp_name": "Harris corners and local features",
     "question_type": "multiple_choice",
-    "question": "According to the evidence, which of the following terms is explicitly mentioned alongside the 'How many zebras?' segmentation example?",
-    "answer": "Semi-automatic binary segmentation.",
-    "explanation": "The evidence lists 'Semi-automatic binary segmentation' in the same context (Week4 lecture materials) as the 'How many zebras?' example. This suggests a connection between the illustrative example and a specific segmentation method.",
+    "question": "If a local image window changes very little for shifts in both x and y directions, what kind of region is it?",
+    "answer": "A flat region.",
+    "explanation": "A flat region has little intensity variation, so shifting the window in any small direction changes the patch very little.",
     "options": [
-      "A. Fully convolutional networks",
-      "B. K-means clustering",
-      "C. Semi-automatic binary segmentation",
-      "D. Graph-based segmentation"
+      "A. A strong edge.",
+      "B. A flat region.",
+      "C. A corner.",
+      "D. A descriptor histogram."
     ],
-    "correct_option": "C",
+    "correct_option": "B",
     "source_chunk_ids": [
-      "chunk-90dff34f7783",
-      "chunk-ba2d2e3679e8",
-      "chunk-f3c2d1e2cffe",
-      "chunk-9efc86c908ae"
+      "chunk-e49346fe1c98",
+      "chunk-24245265ea4c",
+      "chunk-c1bc5145d6eb",
+      "chunk-153ae1508801",
+      "chunk-aa322bf7478c",
+      "chunk-070e045b40c5",
+      "chunk-d6bc111f29cd",
+      "chunk-0ec7d64ad791"
     ],
     "source_files": [
-      "Week4\\lecture4.pdf",
-      "Week4\\lecture4.pptx",
-      "Week4\\lecture4_1.pdf"
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 22",
+        "section": "Local measure of feature uniqueness \"flat\" region: no change in all directions \"edge\" : no change along the..."
+      },
+      {
+        "source": "Week5\\lecture5-1.pdf",
+        "display_source": "lecture5-1.pdf",
+        "location": "page 22",
+        "section": "Local measure of feature uniqueness"
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-image-segmentation-llm-3",
-    "kp_id": "kp-image-segmentation",
-    "kp_name": "Image segmentation",
+    "question_id": "kp-harris-corners-and-local-features-q3",
+    "kp_id": "kp-harris-corners-and-local-features",
+    "kp_name": "Harris corners and local features",
     "question_type": "multiple_choice",
-    "question": "In the 'How many zebras?' segmentation problem, what would a successful segmentation output primarily enable?",
-    "answer": "Counting the number of distinct zebra objects in the image.",
-    "explanation": "The question 'How many zebras?' directly implies that the goal of segmentation here is to identify and separate each zebra as an individual region, enabling an accurate count.",
+    "question": "If a window changes strongly for shifts in both orthogonal directions, what image structure is most likely present?",
+    "answer": "A corner.",
+    "explanation": "A corner is distinctive in two directions. That is exactly why the shifted-window error becomes large no matter which small 2D direction is used.",
     "options": [
-      "A. Classifying the species of each animal.",
-      "B. Estimating the distance to each zebra.",
-      "C. Counting the number of distinct zebra objects in the image.",
-      "D. Enhancing the color contrast of the stripes."
+      "A. A flat patch with constant intensity.",
+      "B. A bag-of-words vocabulary cluster center.",
+      "C. A pure edge with variation in only one main direction.",
+      "D. A corner."
     ],
-    "correct_option": "C",
+    "correct_option": "D",
     "source_chunk_ids": [
-      "chunk-90dff34f7783",
-      "chunk-ba2d2e3679e8",
-      "chunk-f3c2d1e2cffe",
-      "chunk-9efc86c908ae"
+      "chunk-e49346fe1c98",
+      "chunk-24245265ea4c",
+      "chunk-c1bc5145d6eb",
+      "chunk-153ae1508801",
+      "chunk-aa322bf7478c",
+      "chunk-070e045b40c5",
+      "chunk-d6bc111f29cd",
+      "chunk-0ec7d64ad791"
     ],
     "source_files": [
-      "Week4\\lecture4.pdf",
-      "Week4\\lecture4.pptx",
-      "Week4\\lecture4_1.pdf"
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 22",
+        "section": "Local measure of feature uniqueness \"flat\" region: no change in all directions \"edge\" : no change along the..."
+      },
+      {
+        "source": "Week5\\lecture5-1.pdf",
+        "display_source": "lecture5-1.pdf",
+        "location": "page 22",
+        "section": "Local measure of feature uniqueness"
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-image-segmentation-llm-4",
-    "kp_id": "kp-image-segmentation",
-    "kp_name": "Image segmentation",
+    "question_id": "kp-harris-corners-and-local-features-q4",
+    "kp_id": "kp-harris-corners-and-local-features",
+    "kp_name": "Harris corners and local features",
     "question_type": "multiple_choice",
-    "question": "Based on the evidence, the 'How many zebras?' scenario is used to introduce which fundamental computer vision task?",
-    "answer": "Image segmentation.",
-    "explanation": "All evidence chunks explicitly link the 'How many zebras?' example to the topic of 'Image Segmentation,' identifying it as a canonical example of the task.",
+    "question": "Why are corners usually more useful than flat regions for matching between two views?",
+    "answer": "Because they are locally distinctive in two directions and therefore easier to localize repeatably.",
+    "explanation": "Matching needs points that can be localized reliably. Corners are more repeatable than flat regions because the image intensity changes around them in multiple directions.",
     "options": [
-      "A. Image classification",
-      "B. Object detection",
-      "C. Image segmentation",
-      "D. Optical flow estimation"
+      "A. Because corners never change under viewpoint variation.",
+      "B. Because flat regions contain more unique information than corners.",
+      "C. Because corners eliminate the need for descriptors.",
+      "D. Because they are locally distinctive in two directions and therefore easier to localize repeatably."
     ],
-    "correct_option": "C",
+    "correct_option": "D",
     "source_chunk_ids": [
-      "chunk-90dff34f7783",
-      "chunk-ba2d2e3679e8",
-      "chunk-f3c2d1e2cffe",
-      "chunk-9efc86c908ae"
+      "chunk-e49346fe1c98",
+      "chunk-24245265ea4c",
+      "chunk-c1bc5145d6eb",
+      "chunk-153ae1508801",
+      "chunk-aa322bf7478c",
+      "chunk-070e045b40c5",
+      "chunk-d6bc111f29cd",
+      "chunk-0ec7d64ad791"
     ],
     "source_files": [
-      "Week4\\lecture4.pdf",
-      "Week4\\lecture4.pptx",
-      "Week4\\lecture4_1.pdf"
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 3",
+        "section": "Feature extraction: Corners and blobs Interest points: A corner can be defined as the intersection of two e..."
+      },
+      {
+        "source": "Week5\\lecture5-1.pdf",
+        "display_source": "lecture5-1.pdf",
+        "location": "page 3",
+        "section": "Feature extraction: Corners and blobs-Interest points:-A corner can be defined as the intersection of two e..."
+      }
     ],
     "image_path": null,
     "image_caption": null
@@ -1004,137 +1838,239 @@
     "kp_id": "kp-harris-corners-and-local-features",
     "kp_name": "Harris corners and local features",
     "question_type": "multiple_choice",
-    "question": "The highlighted local window in the accompanying Harris example is most likely used to compute which quantity?",
-    "answer": "The Harris matrix and the resulting corner response for that window.",
-    "explanation": "Tutorial Harris questions ask students to compute derivatives, form the Harris matrix, and then evaluate the corner response inside a selected window.",
+    "question": "In the Harris example, why is the highlighted local window evaluated under several small shifts?",
+    "answer": "To determine whether the local patch behaves like a flat region, an edge, or a corner.",
+    "explanation": "The entire point of the shifted-window analysis is to separate flat regions, edges, and corners based on how the patch response changes with displacement.",
     "options": [
-      "A. A camera projection matrix.",
-      "B. The Harris matrix and the resulting corner response for that window.",
-      "C. A stereo disparity map for the whole image.",
-      "D. A CNN pooling score."
+      "A. To compute the global histogram of the whole image.",
+      "B. To determine whether the local patch behaves like a flat region, an edge, or a corner.",
+      "C. To estimate the scene depth from one image.",
+      "D. To quantize the patch into a visual word."
     ],
     "correct_option": "B",
     "source_chunk_ids": [
       "chunk-e49346fe1c98",
       "chunk-24245265ea4c",
       "chunk-c1bc5145d6eb",
-      "chunk-153ae1508801"
+      "chunk-153ae1508801",
+      "chunk-aa322bf7478c",
+      "chunk-070e045b40c5",
+      "chunk-d6bc111f29cd",
+      "chunk-0ec7d64ad791"
     ],
     "source_files": [
       "Week5\\lecture5-1 (5).pptx",
       "Week5\\lecture5-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 33",
+        "section": "Interpreting the eigenvalues  1  2 \"Corner\"  1 and  2 are large,  1 ~  2 ; E increases in all directi..."
+      },
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 22",
+        "section": "Local measure of feature uniqueness \"flat\" region: no change in all directions \"edge\" : no change along the..."
+      }
     ],
     "image_path": "images/week5-lecture5-1-5/slide-002-57839b870d35.jpeg",
     "image_caption": "Lecture figure from Week5/lecture5-1 (5).pptx slide 2"
   },
   {
-    "question_id": "kp-harris-corners-and-local-features-llm-1",
-    "kp_id": "kp-harris-corners-and-local-features",
-    "kp_name": "Harris corners and local features",
+    "question_id": "kp-sift-and-scale-invariant-features-q1",
+    "kp_id": "kp-sift-and-scale-invariant-features",
+    "kp_name": "SIFT and scale-invariant features",
     "question_type": "multiple_choice",
-    "question": "What is the primary goal of Harris corner detection?",
-    "answer": "To detect repeatable corner-like structures in an image.",
-    "explanation": "Harris corner detection is a method for identifying points in an image where the intensity changes significantly in multiple directions, which are useful as stable, repeatable features for tasks like image matching and tracking.",
+    "question": "Which stage comes immediately before the SIFT descriptor is formed?",
+    "answer": "Orientation assignment.",
+    "explanation": "The SIFT pipeline in the lecture is: scale-space peak selection, keypoint localization, orientation assignment, and then keypoint descriptor construction.",
     "options": [
-      "A. To smooth the image and reduce noise.",
-      "B. To detect repeatable corner-like structures in an image.",
-      "C. To segment the image into different color regions.",
-      "D. To compress the image by removing high-frequency details."
+      "A. Visual-word clustering.",
+      "B. Orientation assignment.",
+      "C. Epipolar-line estimation.",
+      "D. Semantic segmentation."
     ],
     "correct_option": "B",
     "source_chunk_ids": [
-      "chunk-e49346fe1c98",
-      "chunk-24245265ea4c",
-      "chunk-c1bc5145d6eb",
-      "chunk-153ae1508801"
+      "chunk-987c014644dc",
+      "chunk-8dbe9e48de6d",
+      "chunk-9e704538558f",
+      "chunk-2de77b4882c9",
+      "chunk-0e663d56f081",
+      "chunk-4b81c31dd837",
+      "chunk-dedd74614c6f",
+      "chunk-523922f47edf"
     ],
     "source_files": [
       "Week5\\lecture5-1 (5).pptx",
-      "Week5\\lecture5-1.pdf"
+      "Week5\\lecture5-1.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture6-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-1.pdf",
+        "display_source": "lecture6-1.pdf",
+        "location": "page 2",
+        "section": "Scale Invariant Feature Transform"
+      },
+      {
+        "source": "Week6\\lecture6-1.pdf",
+        "display_source": "lecture6-1.pdf",
+        "location": "page 6",
+        "section": "Assignment of the Orientation"
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-harris-corners-and-local-features-llm-2",
-    "kp_id": "kp-harris-corners-and-local-features",
-    "kp_name": "Harris corners and local features",
+    "question_id": "kp-sift-and-scale-invariant-features-q2",
+    "kp_id": "kp-sift-and-scale-invariant-features",
+    "kp_name": "SIFT and scale-invariant features",
     "question_type": "multiple_choice",
-    "question": "In the context of feature extraction, what type of image structures are primarily targeted by methods like Harris corner detection?",
-    "answer": "Corners and blobs.",
-    "explanation": "The evidence explicitly groups 'Corners and blobs' under the topic of feature extraction, indicating these are the local structures such methods aim to detect.",
+    "question": "Why does SIFT assign a dominant orientation to each keypoint?",
+    "answer": "To make the descriptor more robust to image rotation.",
+    "explanation": "Orientation assignment normalizes the descriptor frame so that the same local structure can still match after rotation.",
     "options": [
-      "A. Only straight edges and lines.",
-      "B. Large, homogeneous regions of uniform color.",
-      "C. Corners and blobs.",
-      "D. Global color histograms of the entire image."
+      "A. To make the descriptor more robust to image rotation.",
+      "B. To remove the need for scale-space detection.",
+      "C. To force every keypoint into the same image location.",
+      "D. To estimate the 3D camera translation vector."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-987c014644dc",
+      "chunk-8dbe9e48de6d",
+      "chunk-9e704538558f",
+      "chunk-2de77b4882c9",
+      "chunk-0e663d56f081",
+      "chunk-4b81c31dd837",
+      "chunk-dedd74614c6f",
+      "chunk-523922f47edf"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture6-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-1.pdf",
+        "display_source": "lecture6-1.pdf",
+        "location": "page 5",
+        "section": "Assignment of the Orientation"
+      },
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 15",
+        "section": "Advantages of local features Locality features are local, so robust to occlusion and clutter Quantity hundr..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-sift-and-scale-invariant-features-q3",
+    "kp_id": "kp-sift-and-scale-invariant-features",
+    "kp_name": "SIFT and scale-invariant features",
+    "question_type": "multiple_choice",
+    "question": "A SIFT descriptor uses a 16x16 window divided into a 4x4 grid, and each cell stores an 8-bin orientation histogram. What is the final descriptor dimension?",
+    "answer": "128.",
+    "explanation": "There are 16 cells in the 4x4 grid, and each cell contributes 8 orientation bins. Therefore the descriptor dimension is 16 times 8, which is 128.",
+    "options": [
+      "A. 256.",
+      "B. 128.",
+      "C. 64.",
+      "D. 32."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-987c014644dc",
+      "chunk-8dbe9e48de6d",
+      "chunk-9e704538558f",
+      "chunk-2de77b4882c9",
+      "chunk-0e663d56f081",
+      "chunk-4b81c31dd837",
+      "chunk-dedd74614c6f",
+      "chunk-523922f47edf"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture6-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-1.pdf",
+        "display_source": "lecture6-1.pdf",
+        "location": "page 7",
+        "section": "SIFT descriptor"
+      },
+      {
+        "source": "Week6\\lecture6-1.pdf",
+        "display_source": "lecture6-1.pdf",
+        "location": "page 6",
+        "section": "Assignment of the Orientation"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-sift-and-scale-invariant-features-q4",
+    "kp_id": "kp-sift-and-scale-invariant-features",
+    "kp_name": "SIFT and scale-invariant features",
+    "question_type": "multiple_choice",
+    "question": "Why is a SIFT descriptor generally more reliable than matching raw square windows directly?",
+    "answer": "Because it is designed to be more stable to scale and rotation changes while summarizing local gradient structure.",
+    "explanation": "The lecture contrasts simple square-window matching with SIFT precisely to motivate a descriptor that is more invariant and therefore more matchable across views.",
+    "options": [
+      "A. Because it guarantees perfect correspondence without any distance test.",
+      "B. Because it stores the entire image rather than a local neighborhood.",
+      "C. Because it is designed to be more stable to scale and rotation changes while summarizing local gradient structure.",
+      "D. Because it uses no local gradients at all."
     ],
     "correct_option": "C",
     "source_chunk_ids": [
-      "chunk-e49346fe1c98",
-      "chunk-24245265ea4c",
-      "chunk-c1bc5145d6eb",
-      "chunk-153ae1508801"
+      "chunk-987c014644dc",
+      "chunk-8dbe9e48de6d",
+      "chunk-9e704538558f",
+      "chunk-2de77b4882c9",
+      "chunk-0e663d56f081",
+      "chunk-4b81c31dd837",
+      "chunk-dedd74614c6f",
+      "chunk-523922f47edf"
     ],
     "source_files": [
       "Week5\\lecture5-1 (5).pptx",
-      "Week5\\lecture5-1.pdf"
+      "Week5\\lecture5-1.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture6-1.pdf"
     ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-harris-corners-and-local-features-llm-3",
-    "kp_id": "kp-harris-corners-and-local-features",
-    "kp_name": "Harris corners and local features",
-    "question_type": "multiple_choice",
-    "question": "When analyzing a window W in an image for corner detection, what does the SSD error E(u,v) measure when the window is shifted by (u,v)?",
-    "answer": "The sum of squared differences between pixel intensities before and after the shift.",
-    "explanation": "The evidence states that E(u,v) is defined by 'summing up the squared differences (SSD)' to 'compare each pixel before and after' a shift (u,v). A high error indicates a significant change, which is characteristic of a corner.",
-    "options": [
-      "A. The average color change within the window.",
-      "B. The sum of squared differences between pixel intensities before and after the shift.",
-      "C. The correlation coefficient between the original and shifted window.",
-      "D. The gradient magnitude at the center of the window."
-    ],
-    "correct_option": "B",
-    "source_chunk_ids": [
-      "chunk-e49346fe1c98",
-      "chunk-24245265ea4c",
-      "chunk-c1bc5145d6eb",
-      "chunk-153ae1508801"
-    ],
-    "source_files": [
-      "Week5\\lecture5-1 (5).pptx",
-      "Week5\\lecture5-1.pdf"
-    ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-harris-corners-and-local-features-llm-4",
-    "kp_id": "kp-harris-corners-and-local-features",
-    "kp_name": "Harris corners and local features",
-    "question_type": "multiple_choice",
-    "question": "Why is computing the SSD error E(u,v) exactly for every pixel and offset considered slow in the basic formulation?",
-    "answer": "It requires evaluating the sum for each pixel and for many possible displacement values (u,v).",
-    "explanation": "The evidence notes it is 'Slow to compute exactly for each pixel and each offset (u,v)', implying the computational cost scales with the number of pixels and the range of displacements considered.",
-    "options": [
-      "A. Because it requires specialized GPU hardware.",
-      "B. It requires evaluating the sum for each pixel and for many possible displacement values (u,v).",
-      "C. Because the SSD function is inherently non-deterministic.",
-      "D. It depends on comparing the window to every other window in the image."
-    ],
-    "correct_option": "B",
-    "source_chunk_ids": [
-      "chunk-e49346fe1c98",
-      "chunk-24245265ea4c",
-      "chunk-c1bc5145d6eb",
-      "chunk-153ae1508801"
-    ],
-    "source_files": [
-      "Week5\\lecture5-1 (5).pptx",
-      "Week5\\lecture5-1.pdf"
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-2 (1) (2).pptx",
+        "display_source": "lecture5-2 (1) (2).pptx",
+        "location": "slide 26",
+        "section": "Feature descriptors We know how to detect good points Next question: How to match them? Lots of possibiliti..."
+      },
+      {
+        "source": "Week5\\lecture5-2.pdf",
+        "display_source": "lecture5-2.pdf",
+        "location": "page 26",
+        "section": "Feature descriptorsWe know how to detect good pointsNext question: How to match them?"
+      }
     ],
     "image_path": null,
     "image_caption": null
@@ -1144,282 +2080,486 @@
     "kp_id": "kp-sift-and-scale-invariant-features",
     "kp_name": "SIFT and scale-invariant features",
     "question_type": "multiple_choice",
-    "question": "The scale-space figure in the accompanying SIFT material is most likely illustrating which step?",
-    "answer": "Finding keypoints as local extrema across neighboring locations and scales.",
-    "explanation": "The tutorial questions explicitly refer to identifying a single keypoint by checking extrema in scale space.",
+    "question": "Why does the lecture introduce Difference of Gaussian (DoG) in the SIFT section?",
+    "answer": "Because DoG provides a practical approximation to LoG for detecting features across scale.",
+    "explanation": "The SIFT lecture explicitly connects LoG and DoG and uses DoG as the practical mechanism for finding scale-space extrema.",
     "options": [
-      "A. Computing a stereo baseline from two cameras.",
-      "B. Finding keypoints as local extrema across neighboring locations and scales.",
-      "C. Projecting a 3D point through a pinhole camera.",
-      "D. Estimating optical flow under brightness constancy."
+      "A. Because DoG is used to estimate the camera baseline in stereo vision.",
+      "B. Because DoG provides a practical approximation to LoG for detecting features across scale.",
+      "C. Because DoG is the standard classifier used in sliding-window CNN detection.",
+      "D. Because DoG converts descriptors into visual words."
     ],
     "correct_option": "B",
     "source_chunk_ids": [
       "chunk-987c014644dc",
       "chunk-8dbe9e48de6d",
       "chunk-9e704538558f",
-      "chunk-2de77b4882c9"
+      "chunk-2de77b4882c9",
+      "chunk-0e663d56f081",
+      "chunk-4b81c31dd837",
+      "chunk-dedd74614c6f",
+      "chunk-523922f47edf"
     ],
     "source_files": [
       "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
       "Week5\\lecture5-2.pdf",
       "Week6\\lecture6-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-1.pdf",
+        "display_source": "lecture6-1.pdf",
+        "location": "page 1",
+        "section": "LoG-DoG (Difference of Gaussian)"
+      },
+      {
+        "source": "Week6\\lecture6-1.pdf",
+        "display_source": "lecture6-1.pdf",
+        "location": "page 2",
+        "section": "Scale Invariant Feature Transform"
+      }
     ],
     "image_path": "images/week5-lecture5-1-5/slide-011-bfae5f8c76ea.png",
     "image_caption": "Lecture figure from Week5/lecture5-1 (5).pptx slide 11"
   },
   {
-    "question_id": "kp-sift-and-scale-invariant-features-llm-1",
-    "kp_id": "kp-sift-and-scale-invariant-features",
-    "kp_name": "SIFT and scale-invariant features",
+    "question_id": "kp-bag-of-words-image-retrieval-q1",
+    "kp_id": "kp-bag-of-words-image-retrieval",
+    "kp_name": "Bag-of-words image retrieval",
     "question_type": "multiple_choice",
-    "question": "According to the SIFT algorithm, what is the purpose of the orientation assignment step?",
-    "answer": "Assigning orientation to the key points",
-    "explanation": "The evidence explicitly lists 'Orientation assignment' as a step with the description 'Assigning orientation to the key points'. This step ensures the descriptor is invariant to image rotation.",
+    "question": "What is the representation stored for one image in a plain bag-of-words retrieval model?",
+    "answer": "A histogram counting how many local descriptors fall into each visual-word bin.",
+    "explanation": "The image is represented by counts of quantized local features, not by geometry or dense per-pixel labels.",
     "options": [
-      "A. Dividing the local window into a grid of cells",
-      "B. Accurately locating the feature key points",
-      "C. Assigning orientation to the key points",
-      "D. Selecting potential feature locations in scale space"
+      "A. A camera intrinsic matrix estimated from the image.",
+      "B. A semantic segmentation mask for every object class.",
+      "C. A histogram counting how many local descriptors fall into each visual-word bin.",
+      "D. A single corner point with no descriptor information."
     ],
     "correct_option": "C",
     "source_chunk_ids": [
-      "chunk-987c014644dc",
-      "chunk-8dbe9e48de6d",
-      "chunk-9e704538558f",
-      "chunk-2de77b4882c9"
+      "chunk-70fe148113f3",
+      "chunk-343d0d575e52",
+      "chunk-724382c02e8d",
+      "chunk-d8675396be35",
+      "chunk-2e93daba7f59",
+      "chunk-b40ccf3d79ec",
+      "chunk-d844665788c6",
+      "chunk-65f20f8c00dd"
     ],
     "source_files": [
       "Week5\\lecture5-1 (5).pptx",
-      "Week5\\lecture5-2.pdf",
-      "Week6\\lecture6-1.pdf"
+      "Week5\\lecture5-1.pdf",
+      "Week6\\lecture6-2.pdf",
+      "Week6\\lecture6-2.ppt"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-2.ppt",
+        "display_source": "lecture6-2.ppt",
+        "location": "slide 13",
+        "section": "Quiz: What is BoW for one image?"
+      },
+      {
+        "source": "Week6\\lecture6-2.pdf",
+        "display_source": "lecture6-2.pdf",
+        "location": "page 13",
+        "section": "Quiz: What is BoW for one image?"
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-sift-and-scale-invariant-features-llm-2",
-    "kp_id": "kp-sift-and-scale-invariant-features",
-    "kp_name": "SIFT and scale-invariant features",
+    "question_id": "kp-bag-of-words-image-retrieval-q2",
+    "kp_id": "kp-bag-of-words-image-retrieval",
+    "kp_name": "Bag-of-words image retrieval",
     "question_type": "multiple_choice",
-    "question": "How does the SIFT descriptor differ from a simple square window matching approach for feature description?",
-    "answer": "SIFT creates a high-dimensional vector (e.g., 128-D) based on orientation histograms, while simple matching uses raw pixel intensities from a square window.",
-    "explanation": "The evidence contrasts a 'Simple option: match square windows around the point' with the 'Popular approach: SIFT', which describes the key point as a high dimensional vector (128). The SIFT descriptor specifically uses a grid of cells and orientation histograms to build this vector.",
+    "question": "What is a visual vocabulary in the bag-of-words pipeline?",
+    "answer": "A set of prototype descriptor clusters used to quantize local features into visual words.",
+    "explanation": "The vocabulary is the codebook of representative local-descriptor types. Each extracted local feature is assigned to one of these visual words.",
     "options": [
-      "A. SIFT is faster to compute than square window matching.",
-      "B. SIFT uses color information, while square window matching uses only grayscale.",
-      "C. SIFT creates a high-dimensional vector based on orientation histograms, while simple matching uses raw pixel intensities from a square window.",
-      "D. SIFT descriptors are only 8-dimensional, making them more compact."
+      "A. A set of prototype descriptor clusters used to quantize local features into visual words.",
+      "B. A collection of gradient filters used for edge detection.",
+      "C. A list of object names that appear in the dataset.",
+      "D. A set of camera poses used for alignment."
     ],
-    "correct_option": "C",
+    "correct_option": "A",
     "source_chunk_ids": [
-      "chunk-987c014644dc",
-      "chunk-8dbe9e48de6d",
-      "chunk-9e704538558f",
-      "chunk-2de77b4882c9"
+      "chunk-70fe148113f3",
+      "chunk-343d0d575e52",
+      "chunk-724382c02e8d",
+      "chunk-d8675396be35",
+      "chunk-2e93daba7f59",
+      "chunk-b40ccf3d79ec",
+      "chunk-d844665788c6",
+      "chunk-65f20f8c00dd"
     ],
     "source_files": [
       "Week5\\lecture5-1 (5).pptx",
-      "Week5\\lecture5-2.pdf",
-      "Week6\\lecture6-1.pdf"
+      "Week5\\lecture5-1.pdf",
+      "Week6\\lecture6-2.pdf",
+      "Week6\\lecture6-2.ppt"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-2.ppt",
+        "display_source": "lecture6-2.ppt",
+        "location": "slide 25",
+        "section": "From clustering to vector quantization"
+      },
+      {
+        "source": "Week6\\lecture6-2.pdf",
+        "display_source": "lecture6-2.pdf",
+        "location": "page 25",
+        "section": "From clustering to vector quantization"
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-sift-and-scale-invariant-features-llm-3",
-    "kp_id": "kp-sift-and-scale-invariant-features",
-    "kp_name": "SIFT and scale-invariant features",
+    "question_id": "kp-bag-of-words-image-retrieval-q3",
+    "kp_id": "kp-bag-of-words-image-retrieval",
+    "kp_name": "Bag-of-words image retrieval",
     "question_type": "multiple_choice",
-    "question": "In the full version of the SIFT descriptor, a 16x16 window around a keypoint is divided into a 4x4 grid of cells. If each cell contributes an 8-bin orientation histogram, what is the total dimensionality of the resulting descriptor?",
-    "answer": "128",
-    "explanation": "The evidence states: '16 cells * 8 orientations = 128 dimensional descriptor'. A 4x4 grid results in 16 cells. Multiplying 16 cells by 8 orientation bins per cell gives the 128-dimensional vector.",
+    "question": "Why is bag-of-words useful for large-scale image retrieval?",
+    "answer": "Because histogram representations can be compared efficiently across a large database.",
+    "explanation": "Large-scale retrieval needs a compact searchable representation. A histogram of visual words is much cheaper to compare than a full pairwise local-feature matching procedure for every image pair.",
     "options": [
-      "A. 16",
-      "B. 32",
-      "C. 64",
-      "D. 128"
+      "A. Because it solves depth reconstruction at the same time.",
+      "B. Because histogram representations can be compared efficiently across a large database.",
+      "C. Because it removes the need to extract any local features.",
+      "D. Because the method stores the exact geometric layout of every local feature."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-70fe148113f3",
+      "chunk-343d0d575e52",
+      "chunk-724382c02e8d",
+      "chunk-d8675396be35",
+      "chunk-2e93daba7f59",
+      "chunk-b40ccf3d79ec",
+      "chunk-d844665788c6",
+      "chunk-65f20f8c00dd"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week6\\lecture6-2.pdf",
+      "Week6\\lecture6-2.ppt"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-2.ppt",
+        "display_source": "lecture6-2.ppt",
+        "location": "slide 29",
+        "section": "Large-scale image matching"
+      },
+      {
+        "source": "Week6\\lecture6-2.pdf",
+        "display_source": "lecture6-2.pdf",
+        "location": "page 29",
+        "section": "Large-scale image matching"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-bag-of-words-image-retrieval-q4",
+    "kp_id": "kp-bag-of-words-image-retrieval",
+    "kp_name": "Bag-of-words image retrieval",
+    "question_type": "multiple_choice",
+    "question": "What important information is lost in a plain bag-of-words model?",
+    "answer": "The exact spatial arrangement of the local features in the image.",
+    "explanation": "A plain bag-of-words histogram keeps counts of descriptor types, but not where those descriptors occurred in the image.",
+    "options": [
+      "A. The exact spatial arrangement of the local features in the image.",
+      "B. Whether the image can be represented as a histogram.",
+      "C. Whether the image contains any pixels at all.",
+      "D. Whether the descriptors were extracted from local image patches."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-70fe148113f3",
+      "chunk-343d0d575e52",
+      "chunk-724382c02e8d",
+      "chunk-d8675396be35",
+      "chunk-2e93daba7f59",
+      "chunk-b40ccf3d79ec",
+      "chunk-d844665788c6",
+      "chunk-65f20f8c00dd"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week6\\lecture6-2.pdf",
+      "Week6\\lecture6-2.ppt"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-2.ppt",
+        "display_source": "lecture6-2.ppt",
+        "location": "slide 13",
+        "section": "Quiz: What is BoW for one image?"
+      },
+      {
+        "source": "Week6\\lecture6-2.pdf",
+        "display_source": "lecture6-2.pdf",
+        "location": "page 13",
+        "section": "Quiz: What is BoW for one image?"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-bag-of-words-image-retrieval-q5",
+    "kp_id": "kp-bag-of-words-image-retrieval",
+    "kp_name": "Bag-of-words image retrieval",
+    "question_type": "multiple_choice",
+    "question": "If local descriptors are grouped into bins and then counted, which part of the retrieval pipeline is being shown?",
+    "answer": "Quantizing descriptors into visual words and building the bag-of-words histogram.",
+    "explanation": "The grouped-bin figure is illustrating the step that converts many local descriptors into a fixed-length histogram representation for retrieval.",
+    "options": [
+      "A. Assigning orientations to SIFT keypoints.",
+      "B. Estimating the essential matrix from stereo matches.",
+      "C. Upsampling a low-resolution feature map.",
+      "D. Quantizing descriptors into visual words and building the bag-of-words histogram."
     ],
     "correct_option": "D",
     "source_chunk_ids": [
-      "chunk-987c014644dc",
-      "chunk-8dbe9e48de6d",
-      "chunk-9e704538558f",
-      "chunk-2de77b4882c9"
+      "chunk-70fe148113f3",
+      "chunk-343d0d575e52",
+      "chunk-724382c02e8d",
+      "chunk-d8675396be35",
+      "chunk-2e93daba7f59",
+      "chunk-b40ccf3d79ec",
+      "chunk-d844665788c6",
+      "chunk-65f20f8c00dd"
     ],
     "source_files": [
       "Week5\\lecture5-1 (5).pptx",
-      "Week5\\lecture5-2.pdf",
-      "Week6\\lecture6-1.pdf"
+      "Week5\\lecture5-1.pdf",
+      "Week6\\lecture6-2.pdf",
+      "Week6\\lecture6-2.ppt"
     ],
-    "image_path": null,
-    "image_caption": null
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-2.ppt",
+        "display_source": "lecture6-2.ppt",
+        "location": "slide 11",
+        "section": "Bag of words"
+      },
+      {
+        "source": "Week6\\lecture6-2.pdf",
+        "display_source": "lecture6-2.pdf",
+        "location": "page 11",
+        "section": "Bag of words"
+      }
+    ],
+    "image_path": "images/week5-lecture5-1-5/slide-008-d71cbf358c12.jpeg",
+    "image_caption": "Lecture figure from Week5/lecture5-1 (5).pptx slide 8"
   },
   {
-    "question_id": "kp-sift-and-scale-invariant-features-llm-4",
-    "kp_id": "kp-sift-and-scale-invariant-features",
-    "kp_name": "SIFT and scale-invariant features",
+    "question_id": "kp-geometric-transformations-q1",
+    "kp_id": "kp-geometric-transformations",
+    "kp_name": "Geometric transformations",
     "question_type": "multiple_choice",
-    "question": "What is a primary application of the SIFT algorithm as shown in the provided evidence?",
-    "answer": "Finding feature matches between images, such as in planetary rover imagery.",
-    "explanation": "The evidence includes an example titled 'NASA Mars Rover images with SIFT feature matches', indicating its use for matching features across different images, a core application for tasks like image stitching and object recognition.",
+    "question": "Which transformation class consists of a linear transformation followed by a translation?",
+    "answer": "An affine transformation.",
+    "explanation": "Affine transformations extend linear maps by adding translation, which is why homogeneous coordinates are so useful in this topic.",
     "options": [
-      "A. Image compression and storage optimization.",
-      "B. Real-time video frame rate enhancement.",
-      "C. Finding feature matches between images, such as in planetary rover imagery.",
-      "D. Synthesizing entirely new images from text descriptions."
+      "A. A histogram equalization transformation.",
+      "B. A bag-of-words transformation.",
+      "C. A median transformation.",
+      "D. An affine transformation."
     ],
-    "correct_option": "C",
+    "correct_option": "D",
     "source_chunk_ids": [
-      "chunk-987c014644dc",
-      "chunk-8dbe9e48de6d",
-      "chunk-9e704538558f",
-      "chunk-2de77b4882c9"
+      "chunk-e0ea4ba6fcc6",
+      "chunk-4c356a570c0c",
+      "chunk-639f12ff670a",
+      "chunk-4b81c31dd837",
+      "chunk-6a0bb72c9feb",
+      "chunk-8f4eb28cf94f",
+      "chunk-6323c7607ff6",
+      "chunk-3a581046a8ab"
     ],
     "source_files": [
+      "Week1\\Lecture1-2.pdf",
       "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
       "Week5\\lecture5-2.pdf",
-      "Week6\\lecture6-1.pdf"
+      "Week6\\lecture5_revision.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-2.pdf",
+        "display_source": "Lecture1-2.pdf",
+        "location": "page 7",
+        "section": "Image transformations"
+      },
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 30",
+        "section": "Quick eigenvalue/eigenvector review The eigenvectors of a matrix A are the vectors x that satisfy: The scal..."
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-bag-of-words-image-retrieval-llm-1",
-    "kp_id": "kp-bag-of-words-image-retrieval",
-    "kp_name": "Bag-of-words image retrieval",
+    "question_id": "kp-geometric-transformations-q2",
+    "kp_id": "kp-geometric-transformations",
+    "kp_name": "Geometric transformations",
     "question_type": "multiple_choice",
-    "question": "In large-scale image matching for city-sized datasets, what is the primary reason for using a bag-of-words representation?",
-    "answer": "To provide a fast global similarity measure to identify likely matches, avoiding the need to compare all image pairs.",
-    "explanation": "The evidence states that for city-sized datasets, fewer than 0.1% of image pairs actually match. The key idea is to only consider likely matches, and the solution is to use fast global similarity measures, such as a bag-of-words representation.",
+    "question": "Which homogeneous coordinate triple represents the same 2D point as (3, 2, 1)?",
+    "answer": "(6, 4, 2).",
+    "explanation": "Homogeneous coordinates represent the same Cartesian point if one triple is a nonzero scalar multiple of the other. Doubling all three entries keeps the same point.",
     "options": [
-      "A. To perform detailed pixel-by-pixel comparisons for every image pair.",
-      "B. To provide a fast global similarity measure to identify likely matches, avoiding the need to compare all image pairs.",
-      "C. To increase the total number of image pairs that need to be compared.",
-      "D. To replace local feature extraction entirely in the matching pipeline."
+      "A. (6, 4, 2).",
+      "B. (6, 2, 1).",
+      "C. (4, 6, 2).",
+      "D. (3, 2, 2)."
     ],
-    "correct_option": "B",
+    "correct_option": "A",
     "source_chunk_ids": [
-      "chunk-70fe148113f3",
-      "chunk-343d0d575e52",
-      "chunk-724382c02e8d",
-      "chunk-d8675396be35"
+      "chunk-e0ea4ba6fcc6",
+      "chunk-4c356a570c0c",
+      "chunk-639f12ff670a",
+      "chunk-4b81c31dd837",
+      "chunk-6a0bb72c9feb",
+      "chunk-8f4eb28cf94f",
+      "chunk-6323c7607ff6",
+      "chunk-3a581046a8ab"
     ],
     "source_files": [
-      "Week6\\lecture6-2.pdf",
-      "Week6\\lecture6-2.ppt"
+      "Week1\\Lecture1-2.pdf",
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture5_revision.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-2.pdf",
+        "display_source": "Lecture1-2.pdf",
+        "location": "page 14",
+        "section": "Convolution"
+      },
+      {
+        "source": "Week6\\lecture5_revision.pptx",
+        "display_source": "lecture5_revision.pptx",
+        "location": "slide 9",
+        "section": "Other Versions of The Harris operator  min is a variant of the \"Harris operator\" for feature detection"
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-bag-of-words-image-retrieval-llm-2",
-    "kp_id": "kp-bag-of-words-image-retrieval",
-    "kp_name": "Bag-of-words image retrieval",
+    "question_id": "kp-geometric-transformations-q3",
+    "kp_id": "kp-geometric-transformations",
+    "kp_name": "Geometric transformations",
     "question_type": "multiple_choice",
-    "question": "Given a database of 11,400 images of game covers, which approach would be most suitable for efficiently finding a specific query image in the database, according to the evidence?",
-    "answer": "Using a bag-of-words model for large-scale image matching.",
-    "explanation": "The evidence directly states: 'Bag-of-words models have been useful in matching an image to a large database of object instances' and uses the example of '11,400 images of game covers (Caltech games dataset) how do I find this image in the database?'",
+    "question": "Which of the following belongs to photometric rather than geometric change in the lecture taxonomy?",
+    "answer": "Brightness or exposure change.",
+    "explanation": "The course separates geometric transformations such as rotation and scale from photometric changes such as brightness and exposure variation.",
     "options": [
-      "A. Manually inspecting each of the 11,400 images.",
-      "B. Using a bag-of-words model for large-scale image matching.",
-      "C. Comparing the query image to every other image using dense optical flow.",
-      "D. Training a deep neural network from scratch for this specific 11,400-image dataset."
-    ],
-    "correct_option": "B",
-    "source_chunk_ids": [
-      "chunk-70fe148113f3",
-      "chunk-343d0d575e52",
-      "chunk-724382c02e8d",
-      "chunk-d8675396be35"
-    ],
-    "source_files": [
-      "Week6\\lecture6-2.pdf",
-      "Week6\\lecture6-2.ppt"
-    ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-bag-of-words-image-retrieval-llm-3",
-    "kp_id": "kp-bag-of-words-image-retrieval",
-    "kp_name": "Bag-of-words image retrieval",
-    "question_type": "multiple_choice",
-    "question": "What is the fundamental problem that motivates the use of fast global similarity measures like bag-of-words in image matching for large datasets?",
-    "answer": "The extremely low percentage of image pairs that are actual matches, making exhaustive comparison inefficient.",
-    "explanation": "The evidence identifies the core problem: 'For city-sized datasets, fewer than 0.1% of image pairs actually match.' The purpose of the fast global measure (bag-of-words) is to efficiently filter for this small subset of likely matches.",
-    "options": [
-      "A. The high cost of storing local feature descriptors.",
-      "B. The difficulty of extracting keypoints from blurry images.",
-      "C. The extremely low percentage of image pairs that are actual matches, making exhaustive comparison inefficient.",
-      "D. The lack of distinctive textures in urban environments."
+      "A. Uniform scale.",
+      "B. Rotation.",
+      "C. Brightness or exposure change.",
+      "D. Translation."
     ],
     "correct_option": "C",
     "source_chunk_ids": [
-      "chunk-70fe148113f3",
-      "chunk-343d0d575e52",
-      "chunk-724382c02e8d",
-      "chunk-d8675396be35"
+      "chunk-e0ea4ba6fcc6",
+      "chunk-4c356a570c0c",
+      "chunk-639f12ff670a",
+      "chunk-4b81c31dd837",
+      "chunk-6a0bb72c9feb",
+      "chunk-8f4eb28cf94f",
+      "chunk-6323c7607ff6",
+      "chunk-3a581046a8ab"
     ],
     "source_files": [
-      "Week6\\lecture6-2.pdf",
-      "Week6\\lecture6-2.ppt"
+      "Week1\\Lecture1-2.pdf",
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture5_revision.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-2 (1) (2).pptx",
+        "display_source": "lecture5-2 (1) (2).pptx",
+        "location": "slide 2",
+        "section": "Image transformations Geometric Rotation Scale Photometric Intensity change"
+      },
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 14",
+        "section": "Invariant local features Find features that are invariant to transformations geometric invariance: translat..."
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-bag-of-words-image-retrieval-llm-4",
-    "kp_id": "kp-bag-of-words-image-retrieval",
-    "kp_name": "Bag-of-words image retrieval",
+    "question_id": "kp-geometric-transformations-q4",
+    "kp_id": "kp-geometric-transformations",
+    "kp_name": "Geometric transformations",
     "question_type": "multiple_choice",
-    "question": "In the context of matching an image to a large database, what is a key advantage of using a bag-of-words representation over a naive approach that compares all possible image pairs?",
-    "answer": "It enables the system to quickly prune unlikely matches, focusing computational resources on only the most promising candidate pairs.",
-    "explanation": "The evidence's 'Key idea' is to 'only consider likely matches.' A bag-of-words representation serves as a 'fast global similarity measure' to achieve this pruning, which is critical when the match rate is below 0.1%.",
+    "question": "Why can translation not be expressed by a 2x2 matrix acting on ordinary 2D coordinates alone?",
+    "answer": "Because translation is not a linear operation in standard 2D coordinates and needs an augmented representation such as homogeneous coordinates.",
+    "explanation": "A 2x2 linear matrix can rotate, scale, or shear about the origin, but adding translation requires moving to homogeneous coordinates so that the translation term is included in matrix form.",
     "options": [
-      "A. It guarantees 100% recall of all matching image pairs.",
-      "B. It provides a more accurate geometric verification than the naive approach.",
-      "C. It enables the system to quickly prune unlikely matches, focusing computational resources on only the most promising candidate pairs.",
-      "D. It eliminates the need for any form of local feature detection."
+      "A. Because translation can only be defined for 3D points.",
+      "B. Because translation changes the dimensionality of the image.",
+      "C. Because translation is not a linear operation in standard 2D coordinates and needs an augmented representation such as homogeneous coordinates.",
+      "D. Because translation is always nonlinear in homogeneous coordinates."
     ],
     "correct_option": "C",
     "source_chunk_ids": [
-      "chunk-70fe148113f3",
-      "chunk-343d0d575e52",
-      "chunk-724382c02e8d",
-      "chunk-d8675396be35"
+      "chunk-e0ea4ba6fcc6",
+      "chunk-4c356a570c0c",
+      "chunk-639f12ff670a",
+      "chunk-4b81c31dd837",
+      "chunk-6a0bb72c9feb",
+      "chunk-8f4eb28cf94f",
+      "chunk-6323c7607ff6",
+      "chunk-3a581046a8ab"
     ],
     "source_files": [
-      "Week6\\lecture6-2.pdf",
-      "Week6\\lecture6-2.ppt"
+      "Week1\\Lecture1-2.pdf",
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture5_revision.pptx"
     ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-bag-of-words-image-retrieval-llm-5",
-    "kp_id": "kp-bag-of-words-image-retrieval",
-    "kp_name": "Bag-of-words image retrieval",
-    "question_type": "multiple_choice",
-    "question": "According to the provided evidence, what is a primary application scenario where bag-of-words models have proven useful?",
-    "answer": "Matching a single query image to a large database of object instances.",
-    "explanation": "The evidence explicitly states: 'Bag-of-words models have been useful in matching an image to a large database of object instances,' and provides the concrete example of searching within 11,400 game cover images.",
-    "options": [
-      "A. Performing real-time video stabilization on a mobile phone.",
-      "B. Generating photorealistic images from text descriptions.",
-      "C. Matching a single query image to a large database of object instances.",
-      "D. Compressing images for efficient network transmission."
-    ],
-    "correct_option": "C",
-    "source_chunk_ids": [
-      "chunk-70fe148113f3",
-      "chunk-343d0d575e52",
-      "chunk-724382c02e8d",
-      "chunk-d8675396be35"
-    ],
-    "source_files": [
-      "Week6\\lecture6-2.pdf",
-      "Week6\\lecture6-2.ppt"
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 30",
+        "section": "Quick eigenvalue/eigenvector review The eigenvectors of a matrix A are the vectors x that satisfy: The scal..."
+      },
+      {
+        "source": "Week1\\Lecture1-2.pdf",
+        "display_source": "Lecture1-2.pdf",
+        "location": "page 7",
+        "section": "Image transformations"
+      }
     ],
     "image_path": null,
     "image_caption": null
@@ -1429,147 +2569,215 @@
     "kp_id": "kp-geometric-transformations",
     "kp_name": "Geometric transformations",
     "question_type": "multiple_choice",
-    "question": "The accompanying transformed-image figure is most likely illustrating which idea?",
-    "answer": "Image coordinates are being changed by a global geometric transform such as rotation, scaling, shear, or translation.",
-    "explanation": "The course uses warped coordinates and transformed images to explain planar transforms and warping.",
+    "question": "If one image differs from another by rotation, scaling, or translation, what is the lecture emphasizing?",
+    "answer": "The need for feature descriptions that remain stable under geometric transformations.",
+    "explanation": "The transformations slide is connected to invariance: a good local-feature pipeline should still function when these geometric changes occur between views.",
     "options": [
-      "A. Stereo disparity is being converted into depth.",
-      "B. Image coordinates are being changed by a global geometric transform such as rotation, scaling, shear, or translation.",
-      "C. A SIFT descriptor is being converted into a histogram.",
-      "D. A CNN is assigning semantic classes to pixels."
+      "A. The fact that only intensity histograms matter for matching.",
+      "B. The need for feature descriptions that remain stable under geometric transformations.",
+      "C. The need to convert all local features into binary masks.",
+      "D. The fact that every geometric change can be ignored completely during recognition."
     ],
     "correct_option": "B",
     "source_chunk_ids": [
       "chunk-e0ea4ba6fcc6",
       "chunk-4c356a570c0c",
       "chunk-639f12ff670a",
-      "chunk-4b81c31dd837"
+      "chunk-4b81c31dd837",
+      "chunk-6a0bb72c9feb",
+      "chunk-8f4eb28cf94f",
+      "chunk-6323c7607ff6",
+      "chunk-3a581046a8ab"
     ],
     "source_files": [
+      "Week1\\Lecture1-2.pdf",
       "Week5\\lecture5-1 (5).pptx",
       "Week5\\lecture5-1.pdf",
       "Week5\\lecture5-2 (1) (2).pptx",
-      "Week5\\lecture5-2.pdf"
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture5_revision.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 14",
+        "section": "Invariant local features Find features that are invariant to transformations geometric invariance: translat..."
+      },
+      {
+        "source": "Week5\\lecture5-1.pdf",
+        "display_source": "lecture5-1.pdf",
+        "location": "page 14",
+        "section": "Feature Descriptors"
+      }
     ],
     "image_path": "images/week5-lecture5-2-1-2/slide-002-82cda1c4a30d.jpeg",
     "image_caption": "Lecture figure from Week5/lecture5-2 (1) (2).pptx slide 2"
   },
   {
-    "question_id": "kp-geometric-transformations-llm-1",
-    "kp_id": "kp-geometric-transformations",
-    "kp_name": "Geometric transformations",
+    "question_id": "kp-image-alignment-q1",
+    "kp_id": "kp-image-alignment",
+    "kp_name": "Image alignment",
     "question_type": "multiple_choice",
-    "question": "Which of the following is a primary category of image transformations discussed in the context of invariant local features?",
-    "answer": "Geometric transformations, which include translation, rotation, and scale.",
-    "explanation": "The evidence explicitly categorizes transformations into two main types when discussing invariant local features: geometric invariance (translation, rotation, scale) and photometric invariance (brightness, exposure).",
+    "question": "In the panorama-stitching workflow from the lecture, which step comes immediately after extracting features?",
+    "answer": "Match features between the two images.",
+    "explanation": "The pipeline shown in the lecture is organized as interest-point detection, feature extraction, feature matching, and then image alignment.",
     "options": [
-      "A. Geometric transformations",
-      "B. Photometric transformations",
-      "C. Temporal transformations",
-      "D. Semantic transformations"
+      "A. Match features between the two images.",
+      "B. Assign a semantic label to every pixel.",
+      "C. Estimate a bag-of-words histogram for each crop first.",
+      "D. Compute dense optical flow over the whole video."
     ],
     "correct_option": "A",
     "source_chunk_ids": [
-      "chunk-e0ea4ba6fcc6",
-      "chunk-4c356a570c0c",
-      "chunk-639f12ff670a",
-      "chunk-4b81c31dd837"
+      "chunk-382ce6802a08",
+      "chunk-1d141ffaa6dd",
+      "chunk-4b045e129f29",
+      "chunk-0fb3f7f32da7"
     ],
     "source_files": [
       "Week5\\lecture5-1 (5).pptx",
-      "Week5\\lecture5-1.pdf",
-      "Week5\\lecture5-2 (1) (2).pptx",
-      "Week5\\lecture5-2.pdf"
+      "Week5\\lecture5-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 7",
+        "section": "Why extract features? Motivation: panorama stitching We have two images - how do we combine them? Step 1: e..."
+      },
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 6",
+        "section": "Why extract features? Motivation: panorama stitching We have two images - how do we combine them? Step 0: i..."
+      }
     ],
     "image_path": null,
     "image_caption": null
   },
   {
-    "question_id": "kp-geometric-transformations-llm-2",
-    "kp_id": "kp-geometric-transformations",
-    "kp_name": "Geometric transformations",
+    "question_id": "kp-image-alignment-q2",
+    "kp_id": "kp-image-alignment",
+    "kp_name": "Image alignment",
     "question_type": "multiple_choice",
-    "question": "When designing feature descriptors for computer vision, invariance to which set of transformations is specifically grouped under 'geometric invariance'?",
-    "answer": "Translation, rotation, and scale.",
-    "explanation": "The evidence directly states that geometric invariance for features encompasses translation, rotation, and scale transformations.",
+    "question": "Why does panorama stitching need local features rather than only raw pixel overlap?",
+    "answer": "Because corresponding features provide reliable matches that can be used to estimate the transformation between images.",
+    "explanation": "The lecture motivates feature extraction precisely because two images need reliable correspondences before they can be aligned into one panorama.",
     "options": [
-      "A. Brightness, exposure, and contrast",
-      "B. Translation, rotation, and scale",
-      "C. Shear, perspective, and distortion",
-      "D. Noise, blur, and compression"
-    ],
-    "correct_option": "B",
-    "source_chunk_ids": [
-      "chunk-e0ea4ba6fcc6",
-      "chunk-4c356a570c0c",
-      "chunk-639f12ff670a",
-      "chunk-4b81c31dd837"
-    ],
-    "source_files": [
-      "Week5\\lecture5-1 (5).pptx",
-      "Week5\\lecture5-1.pdf",
-      "Week5\\lecture5-2 (1) (2).pptx",
-      "Week5\\lecture5-2.pdf"
-    ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-geometric-transformations-llm-3",
-    "kp_id": "kp-geometric-transformations",
-    "kp_name": "Geometric transformations",
-    "question_type": "multiple_choice",
-    "question": "Based on the classification of image transformations, if a feature descriptor is said to be invariant to changes in image brightness, to which primary category of invariance does this belong?",
-    "answer": "Photometric invariance.",
-    "explanation": "The evidence separates invariance into two categories: geometric (translation, rotation, scale) and photometric. Changes in brightness are explicitly listed under photometric invariance.",
-    "options": [
-      "A. Geometric invariance",
-      "B. Photometric invariance",
-      "C. Structural invariance",
-      "D. Topological invariance"
-    ],
-    "correct_option": "B",
-    "source_chunk_ids": [
-      "chunk-e0ea4ba6fcc6",
-      "chunk-4c356a570c0c",
-      "chunk-639f12ff670a",
-      "chunk-4b81c31dd837"
-    ],
-    "source_files": [
-      "Week5\\lecture5-1 (5).pptx",
-      "Week5\\lecture5-1.pdf",
-      "Week5\\lecture5-2 (1) (2).pptx",
-      "Week5\\lecture5-2.pdf"
-    ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-geometric-transformations-llm-4",
-    "kp_id": "kp-geometric-transformations",
-    "kp_name": "Geometric transformations",
-    "question_type": "multiple_choice",
-    "question": "Which of the following transformations is NOT listed as an example of geometric transformation in the provided evidence?",
-    "answer": "Intensity change.",
-    "explanation": "The evidence lists 'Rotation' and 'Scale' as geometric transformations, while 'Intensity change' is separately categorized under 'Photometric' transformations.",
-    "options": [
-      "A. Rotation",
-      "B. Scale",
-      "C. Intensity change",
-      "D. Translation"
+      "A. Because panorama stitching ignores geometric transformations entirely.",
+      "B. Because local features automatically label every object in the scene.",
+      "C. Because corresponding features provide reliable matches that can be used to estimate the transformation between images.",
+      "D. Because raw pixels cannot be represented numerically."
     ],
     "correct_option": "C",
     "source_chunk_ids": [
-      "chunk-e0ea4ba6fcc6",
-      "chunk-4c356a570c0c",
-      "chunk-639f12ff670a",
-      "chunk-4b81c31dd837"
+      "chunk-382ce6802a08",
+      "chunk-1d141ffaa6dd",
+      "chunk-4b045e129f29",
+      "chunk-0fb3f7f32da7"
     ],
     "source_files": [
       "Week5\\lecture5-1 (5).pptx",
-      "Week5\\lecture5-1.pdf",
-      "Week5\\lecture5-2 (1) (2).pptx",
-      "Week5\\lecture5-2.pdf"
+      "Week5\\lecture5-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 5",
+        "section": "Why extract features? Motivation: panorama stitching We have two images - how do we combine them?"
+      },
+      {
+        "source": "Week5\\lecture5-1.pdf",
+        "display_source": "lecture5-1.pdf",
+        "location": "page 5",
+        "section": "Why extract features?-Motivation: panorama stitching-We have two images -how do we combine them?"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-alignment-q3",
+    "kp_id": "kp-image-alignment",
+    "kp_name": "Image alignment",
+    "question_type": "multiple_choice",
+    "question": "What is the main goal of the final alignment step in the lecture pipeline?",
+    "answer": "To find a transformation that makes corresponding scene content line up across the images.",
+    "explanation": "Alignment is successful when corresponding structures from the two views overlap after applying the estimated transformation.",
+    "options": [
+      "A. To estimate a gray-level histogram for each image independently.",
+      "B. To find a transformation that makes corresponding scene content line up across the images.",
+      "C. To remove all local features before stitching.",
+      "D. To assign one class label to the entire panorama."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-382ce6802a08",
+      "chunk-1d141ffaa6dd",
+      "chunk-4b045e129f29",
+      "chunk-0fb3f7f32da7"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 7",
+        "section": "Why extract features? Motivation: panorama stitching We have two images - how do we combine them? Step 1: e..."
+      },
+      {
+        "source": "Week5\\lecture5-1.pdf",
+        "display_source": "lecture5-1.pdf",
+        "location": "page 7",
+        "section": "Why extract features?-Motivation: panorama stitching-We have two images -how do we combine them?"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-alignment-q4",
+    "kp_id": "kp-image-alignment",
+    "kp_name": "Image alignment",
+    "question_type": "multiple_choice",
+    "question": "If feature matches are wrong, what is the most direct consequence for image alignment?",
+    "answer": "The estimated transformation is likely to be wrong, so the images will not line up correctly.",
+    "explanation": "Alignment depends on correct correspondences. If the matches are wrong, the transformation fitted from those matches will also be wrong.",
+    "options": [
+      "A. The descriptors become rotation invariant automatically.",
+      "B. The bag-of-words histogram becomes denser.",
+      "C. The estimated transformation is likely to be wrong, so the images will not line up correctly.",
+      "D. The image automatically becomes segmentation-ready."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-382ce6802a08",
+      "chunk-1d141ffaa6dd",
+      "chunk-4b045e129f29",
+      "chunk-0fb3f7f32da7"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 7",
+        "section": "Why extract features? Motivation: panorama stitching We have two images - how do we combine them? Step 1: e..."
+      },
+      {
+        "source": "Week5\\lecture5-1.pdf",
+        "display_source": "lecture5-1.pdf",
+        "location": "page 7",
+        "section": "Why extract features?-Motivation: panorama stitching-We have two images -how do we combine them?"
+      }
     ],
     "image_path": null,
     "image_caption": null
@@ -1579,14 +2787,14 @@
     "kp_id": "kp-image-alignment",
     "kp_name": "Image alignment",
     "question_type": "multiple_choice",
-    "question": "The overlaid before-and-after image pair is most likely demonstrating what successful alignment should achieve?",
-    "answer": "Corresponding structures from the two images overlap consistently after warping.",
-    "explanation": "Image alignment is successful when the warped source and target image content line up well.",
+    "question": "If the before-and-after overlay lines up after warping, what has the alignment stage achieved?",
+    "answer": "It has brought corresponding image content into a common coordinate frame closely enough for stitching or comparison.",
+    "explanation": "The visual sign of good alignment is that corresponding content overlays correctly after the estimated transform is applied.",
     "options": [
-      "A. Optical flow is computed for every video frame.",
-      "B. Corresponding structures from the two images overlap consistently after warping.",
-      "C. Every image edge disappears after filtering.",
-      "D. The camera focal length changes automatically."
+      "A. It has replaced feature matching with edge detection.",
+      "B. It has brought corresponding image content into a common coordinate frame closely enough for stitching or comparison.",
+      "C. It has converted the image pair into a texture histogram.",
+      "D. It has found every object category in the scene."
     ],
     "correct_option": "B",
     "source_chunk_ids": [
@@ -1598,120 +2806,22 @@
     "source_files": [
       "Week5\\lecture5-1 (5).pptx",
       "Week5\\lecture5-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 24",
+        "section": "Taylor Series expansion of I : If the motion ( u,v ) is small, then first order approximation is good Plugg..."
+      },
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 21",
+        "section": "Local measures of uniqueness Suppose we only consider a small window of pixels What defines whether a featu..."
+      }
     ],
     "image_path": "images/week5-lecture5-1-5/slide-007-e430546994ba.jpeg",
     "image_caption": "Lecture figure from Week5/lecture5-1 (5).pptx slide 7"
-  },
-  {
-    "question_id": "kp-image-alignment-llm-1",
-    "kp_id": "kp-image-alignment",
-    "kp_name": "Image alignment",
-    "question_type": "multiple_choice",
-    "question": "According to the provided evidence, what is the primary purpose of extracting feature points in the context of panorama stitching?",
-    "answer": "To match features between images as a step towards aligning them.",
-    "explanation": "The evidence clearly outlines the steps for panorama stitching: Step 1 is to extract features, Step 2 is to match features, and Step 3 is to align images. Therefore, the extracted features are used for matching, which is a prerequisite for alignment.",
-    "options": [
-      "A. To directly reconstruct a 3D model of the scene",
-      "B. To match features between images as a step towards aligning them",
-      "C. To perform object recognition within a single image",
-      "D. To index the image for database retrieval"
-    ],
-    "correct_option": "B",
-    "source_chunk_ids": [
-      "chunk-382ce6802a08",
-      "chunk-1d141ffaa6dd",
-      "chunk-4b045e129f29",
-      "chunk-0fb3f7f32da7"
-    ],
-    "source_files": [
-      "Week5\\lecture5-1 (5).pptx",
-      "Week5\\lecture5-1.pdf"
-    ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-image-alignment-llm-2",
-    "kp_id": "kp-image-alignment",
-    "kp_name": "Image alignment",
-    "question_type": "multiple_choice",
-    "question": "Based on the listed applications, which of the following tasks is NOT directly mentioned as a use for feature points?",
-    "answer": "Image segmentation",
-    "explanation": "The evidence lists specific applications: Image alignment, 3D reconstruction, Motion tracking, Object recognition, Indexing and database retrieval, and Robot navigation. Image segmentation is not included in this list.",
-    "options": [
-      "A. 3D reconstruction",
-      "B. Motion tracking",
-      "C. Image segmentation",
-      "D. Robot navigation"
-    ],
-    "correct_option": "C",
-    "source_chunk_ids": [
-      "chunk-382ce6802a08",
-      "chunk-1d141ffaa6dd",
-      "chunk-4b045e129f29",
-      "chunk-0fb3f7f32da7"
-    ],
-    "source_files": [
-      "Week5\\lecture5-1 (5).pptx",
-      "Week5\\lecture5-1.pdf"
-    ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-image-alignment-llm-3",
-    "kp_id": "kp-image-alignment",
-    "kp_name": "Image alignment",
-    "question_type": "multiple_choice",
-    "question": "In the panorama stitching workflow described, what is the step that immediately follows 'match features'?",
-    "answer": "Align images",
-    "explanation": "The evidence presents a sequential order: Step 1: extract features, Step 2: match features, Step 3: align images. Therefore, aligning images is the step that directly follows matching features.",
-    "options": [
-      "A. Extract features",
-      "B. Align images",
-      "C. Interest point detection",
-      "D. 3D reconstruction"
-    ],
-    "correct_option": "B",
-    "source_chunk_ids": [
-      "chunk-382ce6802a08",
-      "chunk-1d141ffaa6dd",
-      "chunk-4b045e129f29",
-      "chunk-0fb3f7f32da7"
-    ],
-    "source_files": [
-      "Week5\\lecture5-1 (5).pptx",
-      "Week5\\lecture5-1.pdf"
-    ],
-    "image_path": null,
-    "image_caption": null
-  },
-  {
-    "question_id": "kp-image-alignment-llm-4",
-    "kp_id": "kp-image-alignment",
-    "kp_name": "Image alignment",
-    "question_type": "multiple_choice",
-    "question": "What is the overarching goal of the process that includes the steps: extract features, match features, and align images?",
-    "answer": "Panorama stitching",
-    "explanation": "The evidence explicitly states that this sequence of steps is the answer to 'how do we combine them?' in the context of 'Motivation: panorama stitching' for combining two images.",
-    "options": [
-      "A. Object recognition",
-      "B. Motion tracking",
-      "C. Panorama stitching",
-      "D. Robot navigation"
-    ],
-    "correct_option": "C",
-    "source_chunk_ids": [
-      "chunk-382ce6802a08",
-      "chunk-1d141ffaa6dd",
-      "chunk-4b045e129f29",
-      "chunk-0fb3f7f32da7"
-    ],
-    "source_files": [
-      "Week5\\lecture5-1 (5).pptx",
-      "Week5\\lecture5-1.pdf"
-    ],
-    "image_path": null,
-    "image_caption": null
   }
 ]
