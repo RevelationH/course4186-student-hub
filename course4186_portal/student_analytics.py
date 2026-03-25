@@ -394,7 +394,7 @@ def _build_follow_up_questions(
                     answered_ids=answered_ids,
                     used_ids=used_ids,
                     limit=1,
-                    reason="Recommended to broaden your coverage across the current week 1-6 course content.",
+                    reason="Recommended to broaden your coverage across the current full-course content.",
                     focus_topic=row["kp_name"],
                 )
             )

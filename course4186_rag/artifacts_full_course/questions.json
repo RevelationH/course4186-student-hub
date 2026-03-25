@@ -1,0 +1,4015 @@
+[
+  {
+    "question_id": "kp-computer-vision-foundations-q1",
+    "kp_id": "kp-computer-vision-foundations",
+    "kp_name": "Computer vision foundations",
+    "question_type": "multiple_choice",
+    "question": "A student says computer vision is just recording pixels from a camera. According to the course definition, how should that statement be corrected?",
+    "answer": "Computer vision is about interpreting images and video for tasks such as recognition, measurement, and scene understanding.",
+    "explanation": "The introductory lecture defines computer vision as making computers gain useful understanding from images and videos, not merely storing raw pixels.",
+    "options": [
+      "A. Computer vision means recovering exact 3D structure from a single pixel in every scene.",
+      "B. Computer vision is mainly about storing images without interpreting what they show.",
+      "C. Computer vision is about interpreting images and video for tasks such as recognition, measurement, and scene understanding.",
+      "D. Computer vision is the same thing as manually choosing camera parameters for every image."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-1039f9e18b2e",
+      "chunk-5749a66dfc82",
+      "chunk-8619055a4c73",
+      "chunk-bee11c80729e",
+      "chunk-501143daf540",
+      "chunk-b20dccb0397a",
+      "chunk-abd75ebf4271",
+      "chunk-02999c2f8759"
+    ],
+    "source_files": [
+      "Week1\\Lecture1-1 (7).pptx",
+      "Week1\\Lecture1-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1 (7).pptx",
+        "location": "slide 5",
+        "section": "The goal of computer vision Computers can gain some high-level understanding from digital images/videos - wikipedia"
+      },
+      {
+        "source": "Week1\\Lecture1-1.pdf",
+        "display_source": "Lecture1-1.pdf",
+        "location": "page 5",
+        "section": "The goal of computer vision"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-computer-vision-foundations-q2",
+    "kp_id": "kp-computer-vision-foundations",
+    "kp_name": "Computer vision foundations",
+    "question_type": "multiple_choice",
+    "question": "Why is computer vision considered difficult in the introductory lecture?",
+    "answer": "Because real images contain variation, clutter, occlusion, and other factors that make the same object look very different.",
+    "explanation": "The lecture highlights intra-class variation, clutter, and occlusion as central sources of difficulty.",
+    "options": [
+      "A. Because objects always appear in front of a clean and uniform background.",
+      "B. Because every vision task uses exactly the same algorithm and data representation.",
+      "C. Because digital images cannot be represented as numeric arrays.",
+      "D. Because real images contain variation, clutter, occlusion, and other factors that make the same object look very different."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-1039f9e18b2e",
+      "chunk-5749a66dfc82",
+      "chunk-8619055a4c73",
+      "chunk-bee11c80729e",
+      "chunk-501143daf540",
+      "chunk-b20dccb0397a",
+      "chunk-abd75ebf4271",
+      "chunk-02999c2f8759"
+    ],
+    "source_files": [
+      "Week1\\Lecture1-1 (7).pptx",
+      "Week1\\Lecture1-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1 (7).pptx",
+        "location": "slide 26",
+        "section": "Why is computer vision difficult? Intra-class variation Background clutter Motion (Source: S. Lazebnik) Occlusion"
+      },
+      {
+        "source": "Week1\\Lecture1-1.pdf",
+        "display_source": "Lecture1-1.pdf",
+        "location": "page 26",
+        "section": "Why is computer vision difficult?"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-computer-vision-foundations-q3",
+    "kp_id": "kp-computer-vision-foundations",
+    "kp_name": "Computer vision foundations",
+    "question_type": "multiple_choice",
+    "question": "Which of the following is a typical computer vision task rather than a low-level storage operation?",
+    "answer": "Recognizing an object category from an input image.",
+    "explanation": "Computer vision is about interpreting image content, such as recognition and scene understanding.",
+    "options": [
+      "A. Counting how many bytes a file occupies without using the image content.",
+      "B. Replacing a folder path in the operating system.",
+      "C. Recognizing an object category from an input image.",
+      "D. Saving the same image to disk under a different file name."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-1039f9e18b2e",
+      "chunk-5749a66dfc82",
+      "chunk-8619055a4c73",
+      "chunk-bee11c80729e",
+      "chunk-501143daf540",
+      "chunk-b20dccb0397a",
+      "chunk-abd75ebf4271",
+      "chunk-02999c2f8759"
+    ],
+    "source_files": [
+      "Week1\\Lecture1-1 (7).pptx",
+      "Week1\\Lecture1-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1 (7).pptx",
+        "location": "slide 5",
+        "section": "The goal of computer vision Computers can gain some high-level understanding from digital images/videos - wikipedia"
+      },
+      {
+        "source": "Week1\\Lecture1-1.pdf",
+        "display_source": "Lecture1-1.pdf",
+        "location": "page 5",
+        "section": "The goal of computer vision"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-computer-vision-foundations-q4",
+    "kp_id": "kp-computer-vision-foundations",
+    "kp_name": "Computer vision foundations",
+    "question_type": "multiple_choice",
+    "question": "What makes a vision system different from simply recording pixels?",
+    "answer": "A vision system tries to infer structure or meaning from the visual input, not just keep the raw image values.",
+    "explanation": "The course introduction distinguishes understanding visual content from merely storing raw image measurements.",
+    "options": [
+      "A. A vision system is defined only by the camera focal length.",
+      "B. A vision system tries to infer structure or meaning from the visual input, not just keep the raw image values.",
+      "C. A vision system never uses any numerical representation.",
+      "D. A vision system can only operate on handwritten images."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-1039f9e18b2e",
+      "chunk-5749a66dfc82",
+      "chunk-8619055a4c73",
+      "chunk-bee11c80729e",
+      "chunk-501143daf540",
+      "chunk-b20dccb0397a",
+      "chunk-abd75ebf4271",
+      "chunk-02999c2f8759"
+    ],
+    "source_files": [
+      "Week1\\Lecture1-1 (7).pptx",
+      "Week1\\Lecture1-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1 (7).pptx",
+        "location": "slide 5",
+        "section": "The goal of computer vision Computers can gain some high-level understanding from digital images/videos - wikipedia"
+      },
+      {
+        "source": "Week1\\Lecture1-1.pdf",
+        "display_source": "Lecture1-1.pdf",
+        "location": "page 5",
+        "section": "The goal of computer vision"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-computer-vision-foundations-q5",
+    "kp_id": "kp-computer-vision-foundations",
+    "kp_name": "Computer vision foundations",
+    "question_type": "multiple_choice",
+    "question": "Which statement correctly describes the scope of computer vision?",
+    "answer": "Computer vision is a broad field with many applications that all depend on interpreting visual information.",
+    "explanation": "The application collage is used to show breadth: many very different real tasks still rely on extracting meaning from images.",
+    "options": [
+      "A. All computer vision applications reduce to one identical low-level filtering problem.",
+      "B. Computer vision is useful only when the camera has already been perfectly calibrated.",
+      "C. Computer vision is a broad field with many applications that all depend on interpreting visual information.",
+      "D. Computer vision is limited to one narrow application area rather than a broad field."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-1039f9e18b2e",
+      "chunk-5749a66dfc82",
+      "chunk-8619055a4c73",
+      "chunk-bee11c80729e",
+      "chunk-501143daf540",
+      "chunk-b20dccb0397a",
+      "chunk-abd75ebf4271",
+      "chunk-02999c2f8759"
+    ],
+    "source_files": [
+      "Week1\\Lecture1-1 (7).pptx",
+      "Week1\\Lecture1-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-1.pdf",
+        "display_source": "Lecture1-1.pdf",
+        "location": "page 27",
+        "section": "Scope Robotics Neuroscience Graphics Computational Photography Machine Learning Medical Imaging Human Compu..."
+      },
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1 (7).pptx",
+        "location": "slide 27",
+        "section": "Scope Robotics Neuroscience Graphics Computational Photography Machine Learning Medical Imaging Human Compu..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-filtering-and-convolution-q1",
+    "kp_id": "kp-image-filtering-and-convolution",
+    "kp_name": "Image filtering and convolution",
+    "question_type": "multiple_choice",
+    "question": "A 3x3 linear filter is applied at one interior pixel. How many input-weight multiplications contribute to that output value?",
+    "answer": "9 multiplications.",
+    "explanation": "A 3x3 kernel contains 9 weights, so one output value uses 9 multiply terms before summation.",
+    "options": [
+      "A. 9 multiplications.",
+      "B. 6 multiplications.",
+      "C. 3 multiplications.",
+      "D. 18 multiplications."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-022a046464ab",
+      "chunk-8af1d1050c19",
+      "chunk-3d54c09b038b",
+      "chunk-97910ba4ced2",
+      "chunk-862ff07ad259",
+      "chunk-3dd745e980a4",
+      "chunk-fa2e9460bd16",
+      "chunk-45b47081ef81"
+    ],
+    "source_files": [
+      "Week12\\Revision.pdf",
+      "Week1\\Lecture1-2 (10).pptx",
+      "Week1\\Lecture1-2.pdf",
+      "Week2\\revision_w1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-2.pdf",
+        "display_source": "Lecture1-2.pdf",
+        "location": "page 12",
+        "section": "Linear filtering"
+      },
+      {
+        "source": "Week1\\Lecture1-2 (10).pptx",
+        "display_source": "Lecture1-2 (10).pptx",
+        "location": "slide 12",
+        "section": "Linear filtering One simple version of filtering: linear filtering (cross-correlation, convolution) Replace..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-filtering-and-convolution-q2",
+    "kp_id": "kp-image-filtering-and-convolution",
+    "kp_name": "Image filtering and convolution",
+    "question_type": "multiple_choice",
+    "question": "A filter h(x,y) = a(x)b(y) is separable. What practical advantage does this give when filtering an image?",
+    "answer": "The 2D convolution can be carried out as two 1D convolutions with fewer operations.",
+    "explanation": "A separable filter reduces the cost by replacing one 2D filtering pass with two cheaper 1D passes.",
+    "options": [
+      "A. The filter can only be used on binary images.",
+      "B. The 2D convolution can be carried out as two 1D convolutions with fewer operations.",
+      "C. The image no longer needs any interpolation or resampling.",
+      "D. The filter must be applied four times instead of once."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-022a046464ab",
+      "chunk-8af1d1050c19",
+      "chunk-3d54c09b038b",
+      "chunk-97910ba4ced2",
+      "chunk-862ff07ad259",
+      "chunk-3dd745e980a4",
+      "chunk-fa2e9460bd16",
+      "chunk-45b47081ef81"
+    ],
+    "source_files": [
+      "Week12\\Revision.pdf",
+      "Week1\\Lecture1-2 (10).pptx",
+      "Week1\\Lecture1-2.pdf",
+      "Week2\\revision_w1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-2.pdf",
+        "display_source": "Lecture1-2.pdf",
+        "location": "page 12",
+        "section": "Linear filtering"
+      },
+      {
+        "source": "Week1\\Lecture1-2 (10).pptx",
+        "display_source": "Lecture1-2 (10).pptx",
+        "location": "slide 12",
+        "section": "Linear filtering One simple version of filtering: linear filtering (cross-correlation, convolution) Replace..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-filtering-and-convolution-q3",
+    "kp_id": "kp-image-filtering-and-convolution",
+    "kp_name": "Image filtering and convolution",
+    "question_type": "multiple_choice",
+    "question": "For a non-symmetric kernel, which statement correctly distinguishes convolution from cross-correlation?",
+    "answer": "Convolution flips the kernel, while cross-correlation uses the kernel in its original order.",
+    "explanation": "The lecture material explicitly distinguishes convolution from cross-correlation by the kernel flip.",
+    "options": [
+      "A. Convolution flips the kernel, while cross-correlation uses the kernel in its original order.",
+      "B. Convolution can only be used for color images, while cross-correlation can only be used for grayscale images.",
+      "C. Both operations always produce identical results for every kernel.",
+      "D. Cross-correlation flips the kernel, while convolution keeps it unchanged."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-022a046464ab",
+      "chunk-8af1d1050c19",
+      "chunk-3d54c09b038b",
+      "chunk-97910ba4ced2",
+      "chunk-862ff07ad259",
+      "chunk-3dd745e980a4",
+      "chunk-fa2e9460bd16",
+      "chunk-45b47081ef81"
+    ],
+    "source_files": [
+      "Week12\\Revision.pdf",
+      "Week1\\Lecture1-2 (10).pptx",
+      "Week1\\Lecture1-2.pdf",
+      "Week2\\revision_w1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-2 (10).pptx",
+        "display_source": "Lecture1-2 (10).pptx",
+        "location": "slide 14",
+        "section": "Convolution Same as cross-correlation, except that the kernel is \"flipped\" (horizontally and vertically) Th..."
+      },
+      {
+        "source": "Week1\\Lecture1-2.pdf",
+        "display_source": "Lecture1-2.pdf",
+        "location": "page 14",
+        "section": "Convolution"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-filtering-and-convolution-q4",
+    "kp_id": "kp-image-filtering-and-convolution",
+    "kp_name": "Image filtering and convolution",
+    "question_type": "multiple_choice",
+    "question": "In the figure, the right lower result keeps the thin grass strands slightly clearer than the left lower result. What property of Gaussian smoothing explains that difference?",
+    "answer": "Gaussian smoothing gives more weight to nearby pixels, so it reduces noise without flattening local structure as uniformly as a mean filter.",
+    "explanation": "The comparison is meant to show that Gaussian weighting still smooths noise, but its center-weighted averaging usually preserves fine local structure better than a uniform mean filter.",
+    "options": [
+      "A. Gaussian smoothing flips the kernel, which automatically sharpens every edge in the image.",
+      "B. Gaussian smoothing gives more weight to nearby pixels, so it reduces noise without flattening local structure as uniformly as a mean filter.",
+      "C. Gaussian smoothing changes the camera focal length so the strands appear sharper.",
+      "D. Gaussian smoothing ignores neighboring pixels and keeps only the center pixel value."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-022a046464ab",
+      "chunk-8af1d1050c19",
+      "chunk-3d54c09b038b",
+      "chunk-97910ba4ced2",
+      "chunk-862ff07ad259",
+      "chunk-3dd745e980a4",
+      "chunk-fa2e9460bd16",
+      "chunk-45b47081ef81"
+    ],
+    "source_files": [
+      "Week12\\Revision.pdf",
+      "Week1\\Lecture1-2 (10).pptx",
+      "Week1\\Lecture1-2.pdf",
+      "Week2\\revision_w1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-2 (10).pptx",
+        "display_source": "Lecture1-2 (10).pptx",
+        "location": "slide 30",
+        "section": "Mean vs. Gaussian filtering Mean filter may garble high-frequency signal"
+      },
+      {
+        "source": "Week1\\Lecture1-2.pdf",
+        "display_source": "Lecture1-2.pdf",
+        "location": "page 30",
+        "section": "Mean vs. Gaussian filtering"
+      }
+    ],
+    "image_path": "images/week1-lecture1-2-10/slide-030-a58b2a0bc463.png",
+    "image_caption": "Lecture figure from Week1/Lecture1-2 (10).pptx slide 30"
+  },
+  {
+    "question_id": "kp-image-filtering-and-convolution-q5",
+    "kp_id": "kp-image-filtering-and-convolution",
+    "kp_name": "Image filtering and convolution",
+    "question_type": "multiple_choice",
+    "question": "In the kernel-over-image diagram, which pixels determine the output value at the marked location?",
+    "answer": "Only the pixels covered by the current kernel window contribute, through a weighted sum.",
+    "explanation": "A local filter uses the pixels under the kernel window only. The output is the weighted combination of that local neighborhood.",
+    "options": [
+      "A. Only the single center pixel contributes, because filtering does not use neighbors.",
+      "B. Only the pixels covered by the current kernel window contribute, through a weighted sum.",
+      "C. Every pixel in the whole image contributes equally to the marked output value.",
+      "D. The output is determined by camera geometry rather than nearby pixel values."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-022a046464ab",
+      "chunk-8af1d1050c19",
+      "chunk-3d54c09b038b",
+      "chunk-97910ba4ced2",
+      "chunk-862ff07ad259",
+      "chunk-3dd745e980a4",
+      "chunk-fa2e9460bd16",
+      "chunk-45b47081ef81"
+    ],
+    "source_files": [
+      "Week12\\Revision.pdf",
+      "Week1\\Lecture1-2 (10).pptx",
+      "Week1\\Lecture1-2.pdf",
+      "Week2\\revision_w1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week1\\Lecture1-2.pdf",
+        "display_source": "Lecture1-2.pdf",
+        "location": "page 12",
+        "section": "Linear filtering"
+      },
+      {
+        "source": "Week1\\Lecture1-2 (10).pptx",
+        "display_source": "Lecture1-2 (10).pptx",
+        "location": "slide 12",
+        "section": "Linear filtering One simple version of filtering: linear filtering (cross-correlation, convolution) Replace..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-edge-detection-q1",
+    "kp_id": "kp-edge-detection",
+    "kp_name": "Edge detection",
+    "question_type": "multiple_choice",
+    "question": "A vision pipeline extracts strong boundaries before later recognition or matching. What is the edge detector trying to locate?",
+    "answer": "Strong intensity discontinuities that often correspond to object boundaries or structure changes.",
+    "explanation": "Edge detectors respond where image intensity changes rapidly. Those locations often align with meaningful boundaries and structure.",
+    "options": [
+      "A. A stereo baseline directly from local brightness alone.",
+      "B. A set of visual words for large-scale retrieval.",
+      "C. The focal length of the camera from one pixel value.",
+      "D. Strong intensity discontinuities that often correspond to object boundaries or structure changes."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-d92e7f2faf93",
+      "chunk-70a0696356ac",
+      "chunk-f8bbb46e6881",
+      "chunk-bfa2ed8cfb64",
+      "chunk-faf10000c0bb",
+      "chunk-26264ce1e8b0",
+      "chunk-ecd975cbd63c",
+      "chunk-eb9bf04742c3"
+    ],
+    "source_files": [
+      "Week2\\Edge.pptx",
+      "Week2\\Lecture2-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\Edge.pptx",
+        "display_source": "Edge.pptx",
+        "location": "slide 2",
+        "section": "Edge detection Goal: Identify visual changes (discontinuities) in an image. Intuitively, semantic informati..."
+      },
+      {
+        "source": "Week2\\Lecture2-1.pdf",
+        "display_source": "Lecture2-1.pdf",
+        "location": "page 2",
+        "section": "Edge detection"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-edge-detection-q2",
+    "kp_id": "kp-edge-detection",
+    "kp_name": "Edge detection",
+    "question_type": "multiple_choice",
+    "question": "Why is smoothing often applied before computing image derivatives for edge detection?",
+    "answer": "Because derivatives amplify noise, so smoothing makes the edge response more stable.",
+    "explanation": "Noise creates unstable derivative responses, so smoothing is commonly used before edge detection.",
+    "options": [
+      "A. Because smoothing converts edges directly into segmentation masks.",
+      "B. Because derivatives amplify noise, so smoothing makes the edge response more stable.",
+      "C. Because derivatives can only be computed on binary images.",
+      "D. Because smoothing guarantees the image has no corners."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-d92e7f2faf93",
+      "chunk-70a0696356ac",
+      "chunk-f8bbb46e6881",
+      "chunk-bfa2ed8cfb64",
+      "chunk-faf10000c0bb",
+      "chunk-26264ce1e8b0",
+      "chunk-ecd975cbd63c",
+      "chunk-eb9bf04742c3"
+    ],
+    "source_files": [
+      "Week2\\Edge.pptx",
+      "Week2\\Lecture2-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\Edge.pptx",
+        "display_source": "Edge.pptx",
+        "location": "slide 1",
+        "section": "Edge detection Convert a 2D image into a set of curves Extracts salient features of the scene More compact than pixels"
+      },
+      {
+        "source": "Week2\\Edge.pptx",
+        "display_source": "Edge.pptx",
+        "location": "slide 13",
+        "section": "Effects of noise Where is the edge? Source: S. Seitz Noisy input image"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-edge-detection-q3",
+    "kp_id": "kp-edge-detection",
+    "kp_name": "Edge detection",
+    "question_type": "multiple_choice",
+    "question": "Where should the strongest edge response appear?",
+    "answer": "At locations where the image intensity changes abruptly over a short distance.",
+    "explanation": "Edges correspond to rapid local intensity variation rather than flat regions.",
+    "options": [
+      "A. Only at the optical center of the camera.",
+      "B. At every pixel with the same response regardless of structure.",
+      "C. At perfectly uniform flat regions with constant intensity.",
+      "D. At locations where the image intensity changes abruptly over a short distance."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-d92e7f2faf93",
+      "chunk-70a0696356ac",
+      "chunk-f8bbb46e6881",
+      "chunk-bfa2ed8cfb64",
+      "chunk-faf10000c0bb",
+      "chunk-26264ce1e8b0",
+      "chunk-ecd975cbd63c",
+      "chunk-eb9bf04742c3"
+    ],
+    "source_files": [
+      "Week2\\Edge.pptx",
+      "Week2\\Lecture2-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\Edge.pptx",
+        "display_source": "Edge.pptx",
+        "location": "slide 9",
+        "section": "Characterizing edges An edge is a place of rapid change in the image intensity function image intensity fun..."
+      },
+      {
+        "source": "Week2\\Edge.pptx",
+        "display_source": "Edge.pptx",
+        "location": "slide 25",
+        "section": "thresholding Finding edges where is the edge?"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-edge-detection-q4",
+    "kp_id": "kp-edge-detection",
+    "kp_name": "Edge detection",
+    "question_type": "multiple_choice",
+    "question": "Why are edge maps useful in later vision tasks?",
+    "answer": "They preserve important boundary structure while discarding much of the less informative interior appearance.",
+    "explanation": "Edge maps provide a compact representation of salient structural changes in the image.",
+    "options": [
+      "A. They replace the need for feature descriptors in all matching tasks.",
+      "B. They preserve important boundary structure while discarding much of the less informative interior appearance.",
+      "C. They recover absolute scene depth without any second view.",
+      "D. They always provide the final semantic label of every object."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-d92e7f2faf93",
+      "chunk-70a0696356ac",
+      "chunk-f8bbb46e6881",
+      "chunk-bfa2ed8cfb64",
+      "chunk-faf10000c0bb",
+      "chunk-26264ce1e8b0",
+      "chunk-ecd975cbd63c",
+      "chunk-eb9bf04742c3"
+    ],
+    "source_files": [
+      "Week2\\Edge.pptx",
+      "Week2\\Lecture2-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\Edge.pptx",
+        "display_source": "Edge.pptx",
+        "location": "slide 1",
+        "section": "Edge detection Convert a 2D image into a set of curves Extracts salient features of the scene More compact than pixels"
+      },
+      {
+        "source": "Week2\\Edge.pptx",
+        "display_source": "Edge.pptx",
+        "location": "slide 2",
+        "section": "Edge detection Goal: Identify visual changes (discontinuities) in an image. Intuitively, semantic informati..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-edge-detection-q5",
+    "kp_id": "kp-edge-detection",
+    "kp_name": "Edge detection",
+    "question_type": "multiple_choice",
+    "question": "In the displayed output, the face outline and earrings remain visible while broad smooth regions such as the cheek are mostly blank. What does that reveal about the operator?",
+    "answer": "It responds strongly to local intensity changes while giving weak response in nearly uniform regions.",
+    "explanation": "The displayed contour image keeps boundaries and other rapid intensity transitions, while smooth interior regions contribute little response.",
+    "options": [
+      "A. It is building a visual-word histogram for retrieval.",
+      "B. It responds strongly to local intensity changes while giving weak response in nearly uniform regions.",
+      "C. It is projecting a 3D scene by the pinhole camera model.",
+      "D. It is estimating optical flow between two time frames."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-d92e7f2faf93",
+      "chunk-70a0696356ac",
+      "chunk-f8bbb46e6881",
+      "chunk-bfa2ed8cfb64",
+      "chunk-faf10000c0bb",
+      "chunk-26264ce1e8b0",
+      "chunk-ecd975cbd63c",
+      "chunk-eb9bf04742c3"
+    ],
+    "source_files": [
+      "Week2\\Edge.pptx",
+      "Week2\\Lecture2-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\Edge.pptx",
+        "display_source": "Edge.pptx",
+        "location": "slide 2",
+        "section": "Edge detection Goal: Identify visual changes (discontinuities) in an image. Intuitively, semantic informati..."
+      },
+      {
+        "source": "Week2\\Lecture2-1.pdf",
+        "display_source": "Lecture2-1.pdf",
+        "location": "page 2",
+        "section": "Edge detection"
+      }
+    ],
+    "image_path": "images/week2-edge/slide-002-0ba5ae211981.png",
+    "image_caption": "Lecture figure from Week2/Edge.pptx slide 2"
+  },
+  {
+    "question_id": "kp-image-resampling-q1",
+    "kp_id": "kp-image-resampling",
+    "kp_name": "Image resampling",
+    "question_type": "multiple_choice",
+    "question": "If an image is subsampled by a factor of 2 without low-pass filtering, what artifact can occur?",
+    "answer": "Aliasing artifacts can appear because high-frequency content is sampled too coarsely.",
+    "explanation": "Downsampling without proper filtering can fold high frequencies into misleading lower-frequency patterns.",
+    "options": [
+      "A. The image automatically gains more geometric detail.",
+      "B. The camera focal length becomes smaller.",
+      "C. Aliasing artifacts can appear because high-frequency content is sampled too coarsely.",
+      "D. The image is forced into a corner detector response map."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-e2d9fe54b950",
+      "chunk-1bb754d8cad9",
+      "chunk-5b645983b7ee",
+      "chunk-41356a9265fb",
+      "chunk-c88bd7bb5936",
+      "chunk-20759439093f",
+      "chunk-d51997e53e7e",
+      "chunk-bd7f80cf87d4"
+    ],
+    "source_files": [
+      "Week11\\Lecture11.pdf",
+      "Week12\\Revision.pdf",
+      "Week2\\Lecture2-2.pdf",
+      "Week2\\sampling.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week11\\Lecture11.pdf",
+        "display_source": "Lecture11.pdf",
+        "location": "page 34",
+        "section": "nearest match is correct (no aliasing)nearest match is incorrect (aliasing)To overcome aliasing"
+      },
+      {
+        "source": "Week2\\sampling.pptx",
+        "display_source": "sampling.pptx",
+        "location": "slide 2",
+        "section": "Image Scaling This image is too big to fit on the screen. How can we generate a half-sized version? Source: S. Seitz"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-resampling-q2",
+    "kp_id": "kp-image-resampling",
+    "kp_name": "Image resampling",
+    "question_type": "multiple_choice",
+    "question": "When enlarging an image, what is interpolation actually used to compute?",
+    "answer": "To estimate pixel values at new sample locations that were not originally present.",
+    "explanation": "Interpolation fills in values when the image grid changes, especially during resizing or warping.",
+    "options": [
+      "A. To convert edges into texture descriptors.",
+      "B. To recover the exact 3D pose of the camera.",
+      "C. To estimate pixel values at new sample locations that were not originally present.",
+      "D. To cluster SIFT features into visual words."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-e2d9fe54b950",
+      "chunk-1bb754d8cad9",
+      "chunk-5b645983b7ee",
+      "chunk-41356a9265fb",
+      "chunk-c88bd7bb5936",
+      "chunk-20759439093f",
+      "chunk-d51997e53e7e",
+      "chunk-bd7f80cf87d4"
+    ],
+    "source_files": [
+      "Week11\\Lecture11.pdf",
+      "Week12\\Revision.pdf",
+      "Week2\\Lecture2-2.pdf",
+      "Week2\\sampling.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\Lecture2-2.pdf",
+        "display_source": "Lecture2-2.pdf",
+        "location": "page 9",
+        "section": "Upsampling"
+      },
+      {
+        "source": "Week2\\sampling.pptx",
+        "display_source": "sampling.pptx",
+        "location": "slide 9",
+        "section": "Upsampling This image is too small for this screen: How can we make it 10 times as big? Simplest approach: ..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-resampling-q3",
+    "kp_id": "kp-image-resampling",
+    "kp_name": "Image resampling",
+    "question_type": "multiple_choice",
+    "question": "After upsampling onto a denser grid, what extra information must the algorithm provide?",
+    "answer": "New pixel values on a denser grid using an interpolation rule.",
+    "explanation": "Upsampling creates new sample positions that require estimated intensities.",
+    "options": [
+      "A. A semantic segmentation label for each region.",
+      "B. A disparity map from two rectified images.",
+      "C. A fundamental matrix between the original and enlarged images.",
+      "D. New pixel values on a denser grid using an interpolation rule."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-e2d9fe54b950",
+      "chunk-1bb754d8cad9",
+      "chunk-5b645983b7ee",
+      "chunk-41356a9265fb",
+      "chunk-c88bd7bb5936",
+      "chunk-20759439093f",
+      "chunk-d51997e53e7e",
+      "chunk-bd7f80cf87d4"
+    ],
+    "source_files": [
+      "Week11\\Lecture11.pdf",
+      "Week12\\Revision.pdf",
+      "Week2\\Lecture2-2.pdf",
+      "Week2\\sampling.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\Lecture2-2.pdf",
+        "display_source": "Lecture2-2.pdf",
+        "location": "page 9",
+        "section": "Upsampling"
+      },
+      {
+        "source": "Week2\\sampling.pptx",
+        "display_source": "sampling.pptx",
+        "location": "slide 9",
+        "section": "Upsampling This image is too small for this screen: How can we make it 10 times as big? Simplest approach: ..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-resampling-q4",
+    "kp_id": "kp-image-resampling",
+    "kp_name": "Image resampling",
+    "question_type": "multiple_choice",
+    "question": "In this course, what does image resampling change?",
+    "answer": "It changes how an image is sampled in space while trying to preserve useful visual information.",
+    "explanation": "Resampling is about changing spatial sampling or resolution rather than recognition or stereo geometry.",
+    "options": [
+      "A. It computes corner strength from second-moment statistics.",
+      "B. It enforces the coplanarity relation between two camera rays.",
+      "C. It changes how an image is sampled in space while trying to preserve useful visual information.",
+      "D. It learns a decision boundary directly from labeled training data."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-e2d9fe54b950",
+      "chunk-1bb754d8cad9",
+      "chunk-5b645983b7ee",
+      "chunk-41356a9265fb",
+      "chunk-c88bd7bb5936",
+      "chunk-20759439093f",
+      "chunk-d51997e53e7e",
+      "chunk-bd7f80cf87d4"
+    ],
+    "source_files": [
+      "Week11\\Lecture11.pdf",
+      "Week12\\Revision.pdf",
+      "Week2\\Lecture2-2.pdf",
+      "Week2\\sampling.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\sampling.pptx",
+        "display_source": "sampling.pptx",
+        "location": "slide 1",
+        "section": "Image Resampling"
+      },
+      {
+        "source": "Week2\\sampling.pptx",
+        "display_source": "sampling.pptx",
+        "location": "slide 9",
+        "section": "Upsampling This image is too small for this screen: How can we make it 10 times as big? Simplest approach: ..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-resampling-q5",
+    "kp_id": "kp-image-resampling",
+    "kp_name": "Image resampling",
+    "question_type": "multiple_choice",
+    "question": "A resized image contains jagged or moire-like patterns after shrinking. Which processing step was likely omitted?",
+    "answer": "Downsampling or resampling without adequate low-pass filtering, which causes aliasing.",
+    "explanation": "Resampling figures with jagged or false patterns usually illustrate aliasing, which occurs when sampling is too coarse or insufficiently filtered.",
+    "options": [
+      "A. Using CNN pooling to reduce feature-map resolution.",
+      "B. Recovering camera motion from feature tracks.",
+      "C. Downsampling or resampling without adequate low-pass filtering, which causes aliasing.",
+      "D. Restricting stereo matching to an epipolar line."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-e2d9fe54b950",
+      "chunk-1bb754d8cad9",
+      "chunk-5b645983b7ee",
+      "chunk-41356a9265fb",
+      "chunk-c88bd7bb5936",
+      "chunk-20759439093f",
+      "chunk-d51997e53e7e",
+      "chunk-bd7f80cf87d4"
+    ],
+    "source_files": [
+      "Week11\\Lecture11.pdf",
+      "Week12\\Revision.pdf",
+      "Week2\\Lecture2-2.pdf",
+      "Week2\\sampling.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\sampling.pptx",
+        "display_source": "sampling.pptx",
+        "location": "slide 1",
+        "section": "Image Resampling"
+      },
+      {
+        "source": "Week11\\Lecture11.pdf",
+        "display_source": "Lecture11.pdf",
+        "location": "page 34",
+        "section": "nearest match is correct (no aliasing)nearest match is incorrect (aliasing)To overcome aliasing"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-texture-analysis-q1",
+    "kp_id": "kp-texture-analysis",
+    "kp_name": "Texture analysis",
+    "question_type": "multiple_choice",
+    "question": "What type of visual signal is texture analysis designed to capture?",
+    "answer": "Repeated local appearance patterns such as grass, fabric, or brick-like structure.",
+    "explanation": "Texture analysis focuses on repeated local structure rather than isolated geometric primitives.",
+    "options": [
+      "A. Only the strongest single edge in the whole image.",
+      "B. Exact camera intrinsic parameters.",
+      "C. The optical center of the imaging system.",
+      "D. Repeated local appearance patterns such as grass, fabric, or brick-like structure."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-70a07948f1f9",
+      "chunk-cea10b0f15e6",
+      "chunk-0efeef9b520e",
+      "chunk-0df1f078ed63",
+      "chunk-1ca07a400c4e",
+      "chunk-84c8769e9841",
+      "chunk-d1eba19540ca",
+      "chunk-24248e5099ef"
+    ],
+    "source_files": [
+      "Week2\\Lecture2-3.pdf",
+      "Week3\\Lecture3-1 (1).pptx",
+      "Week3\\Lecture3-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week3\\Lecture3-1.pdf",
+        "display_source": "Lecture3-1.pdf",
+        "location": "page 4",
+        "section": "Local Binary PatternMeasure"
+      },
+      {
+        "source": "Week3\\Lecture3-1 (1).pptx",
+        "display_source": "Lecture3-1 (1).pptx",
+        "location": "slide 1",
+        "section": "Natural Textures grass leaves What/ w here are the textures? How to describe the textures? 1"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-texture-analysis-q2",
+    "kp_id": "kp-texture-analysis",
+    "kp_name": "Texture analysis",
+    "question_type": "multiple_choice",
+    "question": "Why can texture be useful for recognition?",
+    "answer": "Because different surfaces often produce characteristic repeated local patterns that are discriminative.",
+    "explanation": "Texture cues help distinguish surfaces and categories when local appearance patterns differ.",
+    "options": [
+      "A. Because different surfaces often produce characteristic repeated local patterns that are discriminative.",
+      "B. Because texture always stays unchanged under every possible transformation.",
+      "C. Because texture directly returns a 3D point cloud.",
+      "D. Because texture removes the need for any segmentation or matching."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-70a07948f1f9",
+      "chunk-cea10b0f15e6",
+      "chunk-0efeef9b520e",
+      "chunk-0df1f078ed63",
+      "chunk-1ca07a400c4e",
+      "chunk-84c8769e9841",
+      "chunk-d1eba19540ca",
+      "chunk-24248e5099ef"
+    ],
+    "source_files": [
+      "Week2\\Lecture2-3.pdf",
+      "Week3\\Lecture3-1 (1).pptx",
+      "Week3\\Lecture3-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week2\\Lecture2-3.pdf",
+        "display_source": "Lecture2-3.pdf",
+        "location": "page 4",
+        "section": "Color histograms can represent"
+      },
+      {
+        "source": "Week3\\Lecture3-1.pdf",
+        "display_source": "Lecture3-1.pdf",
+        "location": "page 4",
+        "section": "Local Binary PatternMeasure"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-texture-analysis-q3",
+    "kp_id": "kp-texture-analysis",
+    "kp_name": "Texture analysis",
+    "question_type": "multiple_choice",
+    "question": "Suppose object shape is unreliable, but surface appearance differs between grass, leaves, and brick. Which cue should a recognition system emphasize?",
+    "answer": "Repeated local surface patterns such as texture statistics over a region.",
+    "explanation": "Texture analysis is about repeated appearance patterns, not camera geometry.",
+    "options": [
+      "A. Estimating the baseline between two calibrated cameras from one point.",
+      "B. Repeated local surface patterns such as texture statistics over a region.",
+      "C. Choosing a focal length to widen the field of view.",
+      "D. Projecting a 3D point through a pinhole model."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-70a07948f1f9",
+      "chunk-cea10b0f15e6",
+      "chunk-0efeef9b520e",
+      "chunk-0df1f078ed63",
+      "chunk-1ca07a400c4e",
+      "chunk-84c8769e9841",
+      "chunk-d1eba19540ca",
+      "chunk-24248e5099ef"
+    ],
+    "source_files": [
+      "Week2\\Lecture2-3.pdf",
+      "Week3\\Lecture3-1 (1).pptx",
+      "Week3\\Lecture3-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week3\\Lecture3-1 (1).pptx",
+        "display_source": "Lecture3-1 (1).pptx",
+        "location": "slide 1",
+        "section": "Natural Textures grass leaves What/ w here are the textures? How to describe the textures? 1"
+      },
+      {
+        "source": "Week3\\Lecture3-1 (1).pptx",
+        "display_source": "Lecture3-1 (1).pptx",
+        "location": "slide 8",
+        "section": "But how do you choose d? This is actually a critical question with all the statistical texture methods. Are..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-texture-analysis-q4",
+    "kp_id": "kp-texture-analysis",
+    "kp_name": "Texture analysis",
+    "question_type": "multiple_choice",
+    "question": "Why is texture analysis different from corner detection?",
+    "answer": "Texture analysis describes repeated appearance over regions, while corner detection looks for localized point-like structure.",
+    "explanation": "Texture and corners capture different kinds of information: regional pattern versus localized feature points.",
+    "options": [
+      "A. Texture analysis requires two cameras, while corner detection requires four cameras.",
+      "B. Texture analysis uses only 3D points, while corner detection uses only 2D lines.",
+      "C. Texture analysis describes repeated appearance over regions, while corner detection looks for localized point-like structure.",
+      "D. Texture analysis estimates depth, while corner detection estimates focal length."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-70a07948f1f9",
+      "chunk-cea10b0f15e6",
+      "chunk-0efeef9b520e",
+      "chunk-0df1f078ed63",
+      "chunk-1ca07a400c4e",
+      "chunk-84c8769e9841",
+      "chunk-d1eba19540ca",
+      "chunk-24248e5099ef"
+    ],
+    "source_files": [
+      "Week2\\Lecture2-3.pdf",
+      "Week3\\Lecture3-1 (1).pptx",
+      "Week3\\Lecture3-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week3\\Lecture3-1.pdf",
+        "display_source": "Lecture3-1.pdf",
+        "location": "page 5",
+        "section": "Local Binary Pattern (LBP)𝐿 𝐵 𝑃 𝑝 , 𝑟 ( 𝑁 𝑐 ) = , 𝑔"
+      },
+      {
+        "source": "Week3\\Lecture3-1 (1).pptx",
+        "display_source": "Lecture3-1 (1).pptx",
+        "location": "slide 2",
+        "section": "Some Simple Statistical Texture Measures 1. Edge Density and Direction Use an edge detector as the first st..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-texture-analysis-q5",
+    "kp_id": "kp-texture-analysis",
+    "kp_name": "Texture analysis",
+    "question_type": "multiple_choice",
+    "question": "The displayed patch is made of many small repeated intensity variations rather than one clean object boundary. Which kind of visual cue should be used to describe it?",
+    "answer": "Texture statistics over a region, because the information lies in repeated local patterns rather than one isolated edge or corner.",
+    "explanation": "This kind of patch is recognized by repeated local appearance over an area. A single contour or corner is not the main cue here.",
+    "options": [
+      "A. Epipolar constraints between two cameras.",
+      "B. Apparent motion between adjacent video frames.",
+      "C. Texture statistics over a region, because the information lies in repeated local patterns rather than one isolated edge or corner.",
+      "D. A global image warp estimated from feature matches."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-70a07948f1f9",
+      "chunk-cea10b0f15e6",
+      "chunk-0efeef9b520e",
+      "chunk-0df1f078ed63",
+      "chunk-1ca07a400c4e",
+      "chunk-84c8769e9841",
+      "chunk-d1eba19540ca",
+      "chunk-24248e5099ef"
+    ],
+    "source_files": [
+      "Week2\\Lecture2-3.pdf",
+      "Week3\\Lecture3-1 (1).pptx",
+      "Week3\\Lecture3-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week3\\Lecture3-1 (1).pptx",
+        "display_source": "Lecture3-1 (1).pptx",
+        "location": "slide 1",
+        "section": "Natural Textures grass leaves What/ w here are the textures? How to describe the textures? 1"
+      },
+      {
+        "source": "Week3\\Lecture3-1.pdf",
+        "display_source": "Lecture3-1.pdf",
+        "location": "page 4",
+        "section": "Local Binary PatternMeasure"
+      }
+    ],
+    "image_path": "images/week3-lecture3-1-1/slide-001-4f992ec27007.png",
+    "image_caption": "Lecture figure from Week3/Lecture3-1 (1).pptx slide 1"
+  },
+  {
+    "question_id": "kp-convolutional-neural-networks-q1",
+    "kp_id": "kp-convolutional-neural-networks",
+    "kp_name": "Convolutional neural networks",
+    "question_type": "multiple_choice",
+    "question": "Why are convolutional layers well suited for images?",
+    "answer": "They reuse local filters across the image, allowing shared feature detectors at many locations.",
+    "explanation": "Convolution exploits local connectivity and weight sharing, which matches the structure of images.",
+    "options": [
+      "A. They reuse local filters across the image, allowing shared feature detectors at many locations.",
+      "B. They replace the need for any labeled data.",
+      "C. They compute the essential matrix from a stereo pair.",
+      "D. They require a different weight matrix for every pixel location."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-3b68283213d2",
+      "chunk-7e8a00fd8fb5",
+      "chunk-1e1e5b8f0a2b",
+      "chunk-0f572bda5322",
+      "chunk-bf5eda76df87",
+      "chunk-2685d9125776",
+      "chunk-8aac209deeec",
+      "chunk-9cca56155155"
+    ],
+    "source_files": [
+      "Week3\\Lecture3_2 (1).pptx",
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week4\\lecture4.pdf",
+        "display_source": "lecture4.pdf",
+        "location": "page 23",
+        "section": "Transpose Convolution: 1DExample"
+      },
+      {
+        "source": "Week3\\Lecture3_2 (1).pptx",
+        "display_source": "Lecture3_2 (1).pptx",
+        "location": "slide 19",
+        "section": "Filter = 'local' perceptron. Also called kernel."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-convolutional-neural-networks-q2",
+    "kp_id": "kp-convolutional-neural-networks",
+    "kp_name": "Convolutional neural networks",
+    "question_type": "multiple_choice",
+    "question": "What is the role of pooling in a CNN?",
+    "answer": "To reduce spatial resolution while preserving strong local evidence and improving robustness.",
+    "explanation": "Pooling compresses feature maps and can make the network less sensitive to small shifts.",
+    "options": [
+      "A. To calibrate the camera's focal length.",
+      "B. To generate a semantic segmentation mask directly from a single pixel.",
+      "C. To convert every descriptor into a geometric transformation matrix.",
+      "D. To reduce spatial resolution while preserving strong local evidence and improving robustness."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-3b68283213d2",
+      "chunk-7e8a00fd8fb5",
+      "chunk-1e1e5b8f0a2b",
+      "chunk-0f572bda5322",
+      "chunk-bf5eda76df87",
+      "chunk-2685d9125776",
+      "chunk-8aac209deeec",
+      "chunk-9cca56155155"
+    ],
+    "source_files": [
+      "Week3\\Lecture3_2 (1).pptx",
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week4\\lecture4.pdf",
+        "display_source": "lecture4.pdf",
+        "location": "page 19",
+        "section": "… Rest of the network"
+      },
+      {
+        "source": "Week3\\Lecture3_2 (1).pptx",
+        "display_source": "Lecture3_2 (1).pptx",
+        "location": "slide 1",
+        "section": "Convolutional Neural Network W hich is the dog?"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-convolutional-neural-networks-q3",
+    "kp_id": "kp-convolutional-neural-networks",
+    "kp_name": "Convolutional neural networks",
+    "question_type": "multiple_choice",
+    "question": "How do deeper CNN layers usually differ from earlier layers?",
+    "answer": "They tend to represent more abstract and task-specific visual patterns.",
+    "explanation": "Early layers often capture simple patterns while deeper layers combine them into more semantic features.",
+    "options": [
+      "A. They can only respond to raw grayscale intensity values.",
+      "B. They always contain fewer parameters than the input image.",
+      "C. They tend to represent more abstract and task-specific visual patterns.",
+      "D. They stop using any local spatial information at all."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-3b68283213d2",
+      "chunk-7e8a00fd8fb5",
+      "chunk-1e1e5b8f0a2b",
+      "chunk-0f572bda5322",
+      "chunk-bf5eda76df87",
+      "chunk-2685d9125776",
+      "chunk-8aac209deeec",
+      "chunk-9cca56155155"
+    ],
+    "source_files": [
+      "Week3\\Lecture3_2 (1).pptx",
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week3\\Lecture3_2 (1).pptx",
+        "display_source": "Lecture3_2 (1).pptx",
+        "location": "slide 2",
+        "section": "Given a feature representation for images, how do we learn a model for distinguishing features from differe..."
+      },
+      {
+        "source": "Week3\\Lecture3_2 (1).pptx",
+        "display_source": "Lecture3_2 (1).pptx",
+        "location": "slide 11",
+        "section": "Composition Attempt to represent complex functions as compositions of smaller functions. Outputs from one p..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-convolutional-neural-networks-q4",
+    "kp_id": "kp-convolutional-neural-networks",
+    "kp_name": "Convolutional neural networks",
+    "question_type": "multiple_choice",
+    "question": "A CNN is trained to assign one label to each whole image. What is it learning to do?",
+    "answer": "The network learns feature hierarchies that help separate image categories with a decision boundary.",
+    "explanation": "CNNs for classification learn increasingly useful representations for separating classes.",
+    "options": [
+      "A. The network computes vanishing points by analytic projection only.",
+      "B. The network guarantees exact geometric alignment between any two views.",
+      "C. The network learns feature hierarchies that help separate image categories with a decision boundary.",
+      "D. The network enforces brightness constancy for optical flow."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-3b68283213d2",
+      "chunk-7e8a00fd8fb5",
+      "chunk-1e1e5b8f0a2b",
+      "chunk-0f572bda5322",
+      "chunk-bf5eda76df87",
+      "chunk-2685d9125776",
+      "chunk-8aac209deeec",
+      "chunk-9cca56155155"
+    ],
+    "source_files": [
+      "Week3\\Lecture3_2 (1).pptx",
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week3\\Lecture3_2 (1).pptx",
+        "display_source": "Lecture3_2 (1).pptx",
+        "location": "slide 2",
+        "section": "Given a feature representation for images, how do we learn a model for distinguishing features from differe..."
+      },
+      {
+        "source": "Week3\\Lecture3_2 (1).pptx",
+        "display_source": "Lecture3_2 (1).pptx",
+        "location": "slide 3",
+        "section": "Classification Assign input vector to one of two or more classes Input space divided into decision regions ..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-convolutional-neural-networks-q5",
+    "kp_id": "kp-convolutional-neural-networks",
+    "kp_name": "Convolutional neural networks",
+    "question_type": "multiple_choice",
+    "question": "Why do the course materials contrast early edge-like filters with deeper part-like responses in a CNN?",
+    "answer": "CNNs build a hierarchy of features, from simple local patterns to more task-specific representations.",
+    "explanation": "Feature-map stacks are typically used to show that deeper CNN layers combine simpler responses into more abstract visual patterns.",
+    "options": [
+      "A. Stereo matching becomes one-dimensional after rectification.",
+      "B. CNNs build a hierarchy of features, from simple local patterns to more task-specific representations.",
+      "C. A bag-of-words system quantizes descriptors into histogram bins.",
+      "D. Perspective projection maps 3D points to 2D image coordinates."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-3b68283213d2",
+      "chunk-7e8a00fd8fb5",
+      "chunk-1e1e5b8f0a2b",
+      "chunk-0f572bda5322",
+      "chunk-bf5eda76df87",
+      "chunk-2685d9125776",
+      "chunk-8aac209deeec",
+      "chunk-9cca56155155"
+    ],
+    "source_files": [
+      "Week3\\Lecture3_2 (1).pptx",
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week3\\Lecture3_2 (1).pptx",
+        "display_source": "Lecture3_2 (1).pptx",
+        "location": "slide 9",
+        "section": "Neural Networks - multiclass Add more perceptrons Binary output Binary output Binary output"
+      },
+      {
+        "source": "Week3\\Lecture3_2 (1).pptx",
+        "display_source": "Lecture3_2 (1).pptx",
+        "location": "slide 16",
+        "section": "Images as input to neural networks"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-segmentation-q1",
+    "kp_id": "kp-image-segmentation",
+    "kp_name": "Image segmentation",
+    "question_type": "multiple_choice",
+    "question": "In the displayed image, each animal is localized by a rectangular box, but the object pixels are not separated from the background. Relative to segmentation, what information is still missing?",
+    "answer": "Pixel-level masks or region labels that separate each object from the background.",
+    "explanation": "The boxes show object detection. Segmentation would go further by assigning the pixels of each dog, cat, and background region to separate masks or labels.",
+    "options": [
+      "A. The optical-flow vector at every pixel.",
+      "B. The focal length of the camera in pixel units.",
+      "C. Pixel-level masks or region labels that separate each object from the background.",
+      "D. The epipolar line for each object center."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-90dff34f7783",
+      "chunk-4057bcb4baa7",
+      "chunk-ba2d2e3679e8",
+      "chunk-f3c2d1e2cffe",
+      "chunk-da8e6c11541d",
+      "chunk-9efc86c908ae",
+      "chunk-0282f8c5c931",
+      "chunk-305b6d7b6d1e"
+    ],
+    "source_files": [
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week4\\lecture4.pdf",
+        "display_source": "lecture4.pdf",
+        "location": "page 40",
+        "section": "-For Pascal VOC:-7x7 grid-2 bounding boxes / cell-20 classes-7 x 7 x (2 x 5 + 20) = 7 x 7 x 30 tensor = 1470 outputs"
+      },
+      {
+        "source": "Week4\\lecture4.pptx",
+        "display_source": "lecture4.pptx",
+        "location": "slide 40",
+        "section": "This parameterization fixes the output size Each cell predicts: For each bounding box: 4 coordinates (x, y,..."
+      }
+    ],
+    "image_path": "images/week4-lecture4/slide-013-8b3bdfeb1124.png",
+    "image_caption": "Lecture figure from Week4/lecture4.pptx slide 13"
+  },
+  {
+    "question_id": "kp-image-segmentation-q2",
+    "kp_id": "kp-image-segmentation",
+    "kp_name": "Image segmentation",
+    "question_type": "multiple_choice",
+    "question": "A segmentation system is run on a street image. Which output is the most reasonable?",
+    "answer": "A region or mask assignment for pixels belonging to different objects or classes.",
+    "explanation": "Segmentation outputs pixel- or region-level assignments, not just image-level labels.",
+    "options": [
+      "A. A single focal-length value for the whole image.",
+      "B. A histogram of visual words only.",
+      "C. A list of camera rotations without any pixel labels.",
+      "D. A region or mask assignment for pixels belonging to different objects or classes."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-90dff34f7783",
+      "chunk-4057bcb4baa7",
+      "chunk-ba2d2e3679e8",
+      "chunk-f3c2d1e2cffe",
+      "chunk-da8e6c11541d",
+      "chunk-9efc86c908ae",
+      "chunk-0282f8c5c931",
+      "chunk-305b6d7b6d1e"
+    ],
+    "source_files": [
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week4\\lecture4.pptx",
+        "display_source": "lecture4.pptx",
+        "location": "slide 31",
+        "section": "Region Proposals Fei-Fei Li & Justin Johnson & Serena Yeung Lecture 11 - 31 Find image regions that are lik..."
+      },
+      {
+        "source": "Week4\\lecture4.pdf",
+        "display_source": "lecture4.pdf",
+        "location": "page 31",
+        "section": "RegionProposals"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-segmentation-q3",
+    "kp_id": "kp-image-segmentation",
+    "kp_name": "Image segmentation",
+    "question_type": "multiple_choice",
+    "question": "Why is segmentation harder than simple edge detection?",
+    "answer": "Because segmentation must group pixels into coherent regions or objects, not just mark local discontinuities.",
+    "explanation": "Segmentation goes beyond local boundaries and reasons about region consistency and object extent.",
+    "options": [
+      "A. Because segmentation requires every scene to contain stereo pairs.",
+      "B. Because segmentation must group pixels into coherent regions or objects, not just mark local discontinuities.",
+      "C. Because segmentation cannot use any appearance information.",
+      "D. Because segmentation works only on binary images."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-90dff34f7783",
+      "chunk-4057bcb4baa7",
+      "chunk-ba2d2e3679e8",
+      "chunk-f3c2d1e2cffe",
+      "chunk-da8e6c11541d",
+      "chunk-9efc86c908ae",
+      "chunk-0282f8c5c931",
+      "chunk-305b6d7b6d1e"
+    ],
+    "source_files": [
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week4\\lecture4.pptx",
+        "display_source": "lecture4.pptx",
+        "location": "slide 31",
+        "section": "Region Proposals Fei-Fei Li & Justin Johnson & Serena Yeung Lecture 11 - 31 Find image regions that are lik..."
+      },
+      {
+        "source": "Week4\\lecture4.pptx",
+        "display_source": "lecture4.pptx",
+        "location": "slide 41",
+        "section": "Split the image into a grid Redmon et al., \"You Only Look Once: Unified, Real-Time Object Detection\", CVPR 2016"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-segmentation-q4",
+    "kp_id": "kp-image-segmentation",
+    "kp_name": "Image segmentation",
+    "question_type": "multiple_choice",
+    "question": "What makes semantic segmentation different from assigning one class label to the whole image?",
+    "answer": "Pixels are assigned to categories such as road, zebra, sky, or person.",
+    "explanation": "Semantic segmentation labels pixels or regions with category information.",
+    "options": [
+      "A. Each image is reduced to a 3D point cloud directly.",
+      "B. Only a single corner point is marked in each object.",
+      "C. Pixels are assigned to categories such as road, zebra, sky, or person.",
+      "D. Every descriptor is converted into a camera matrix."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-90dff34f7783",
+      "chunk-4057bcb4baa7",
+      "chunk-ba2d2e3679e8",
+      "chunk-f3c2d1e2cffe",
+      "chunk-da8e6c11541d",
+      "chunk-9efc86c908ae",
+      "chunk-0282f8c5c931",
+      "chunk-305b6d7b6d1e"
+    ],
+    "source_files": [
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week4\\lecture4.pptx",
+        "display_source": "lecture4.pptx",
+        "location": "slide 14",
+        "section": "Fei-Fei Li & Justin Johnson & Serena Yeung Lecture 11 - 14 Sky Cow Grass Trees Label each pixel in the imag..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-segmentation-q5",
+    "kp_id": "kp-image-segmentation",
+    "kp_name": "Image segmentation",
+    "question_type": "multiple_choice",
+    "question": "If two touching objects receive different region labels in the final output, what has the system done correctly?",
+    "answer": "The image has been partitioned into distinct object or semantic regions rather than treated as one undivided area.",
+    "explanation": "When touching areas are given separate masks or colors, the figure is demonstrating successful segmentation into coherent regions.",
+    "options": [
+      "A. The image has been partitioned into distinct object or semantic regions rather than treated as one undivided area.",
+      "B. Estimating stereo disparity between corresponding pixels.",
+      "C. Describing repeated texture for image retrieval.",
+      "D. Normalizing a local descriptor for scale and rotation."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-90dff34f7783",
+      "chunk-4057bcb4baa7",
+      "chunk-ba2d2e3679e8",
+      "chunk-f3c2d1e2cffe",
+      "chunk-da8e6c11541d",
+      "chunk-9efc86c908ae",
+      "chunk-0282f8c5c931",
+      "chunk-305b6d7b6d1e"
+    ],
+    "source_files": [
+      "Week4\\lecture4.pdf",
+      "Week4\\lecture4.pptx",
+      "Week4\\lecture4_1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week4\\lecture4.pptx",
+        "display_source": "lecture4.pptx",
+        "location": "slide 7",
+        "section": "From images to objects What defines an object? Subjective problem, but has been well-studied"
+      },
+      {
+        "source": "Week4\\lecture4.pptx",
+        "display_source": "lecture4.pptx",
+        "location": "slide 31",
+        "section": "Region Proposals Fei-Fei Li & Justin Johnson & Serena Yeung Lecture 11 - 31 Find image regions that are lik..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-harris-corners-and-local-features-q1",
+    "kp_id": "kp-harris-corners-and-local-features",
+    "kp_name": "Harris corners and local features",
+    "question_type": "multiple_choice",
+    "question": "In Harris corner detection, what does it usually mean if one eigenvalue is large and the other is small?",
+    "answer": "The local patch is likely an edge rather than a corner.",
+    "explanation": "An edge changes strongly in one direction only, which gives one large and one small eigenvalue.",
+    "options": [
+      "A. The local patch is a strong corner.",
+      "B. The local patch is likely an edge rather than a corner.",
+      "C. The local patch is completely flat.",
+      "D. The camera focal length is too small."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-e49346fe1c98",
+      "chunk-c1bc5145d6eb",
+      "chunk-f75601f7badc",
+      "chunk-24245265ea4c",
+      "chunk-153ae1508801",
+      "chunk-b6e52e0430cd",
+      "chunk-aa322bf7478c",
+      "chunk-070e045b40c5"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 34",
+        "section": "Other Versions of The Harris operator  min is a variant of the \"Harris operator\" for feature detection"
+      },
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 1",
+        "section": "Harris corner detection"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-harris-corners-and-local-features-q2",
+    "kp_id": "kp-harris-corners-and-local-features",
+    "kp_name": "Harris corners and local features",
+    "question_type": "multiple_choice",
+    "question": "What does it usually mean if both eigenvalues of the Harris matrix are large?",
+    "answer": "The local patch is a corner because intensity changes strongly in two directions.",
+    "explanation": "Corners are the locations where the image patch varies strongly under small shifts in both x and y directions.",
+    "options": [
+      "A. The local patch is a pure edge.",
+      "B. The local patch is a corner because intensity changes strongly in two directions.",
+      "C. The local patch is flat.",
+      "D. The image has already been rectified for stereo."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-e49346fe1c98",
+      "chunk-c1bc5145d6eb",
+      "chunk-f75601f7badc",
+      "chunk-24245265ea4c",
+      "chunk-153ae1508801",
+      "chunk-b6e52e0430cd",
+      "chunk-aa322bf7478c",
+      "chunk-070e045b40c5"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 33",
+        "section": "Interpreting the eigenvalues  1  2 \"Corner\"  1 and  2 are large,  1 ~  2 ; E increases in all directi..."
+      },
+      {
+        "source": "Week5\\lecture5-1.pdf",
+        "display_source": "lecture5-1.pdf",
+        "location": "page 33",
+        "section": "Interpreting the eigenvalues"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-harris-corners-and-local-features-q3",
+    "kp_id": "kp-harris-corners-and-local-features",
+    "kp_name": "Harris corners and local features",
+    "question_type": "multiple_choice",
+    "question": "What does it usually mean if both eigenvalues of the Harris matrix are small?",
+    "answer": "The local patch is a flat region with little intensity change.",
+    "explanation": "Flat regions do not change much under small shifts, so both directional variations remain small.",
+    "options": [
+      "A. The local patch is a strong corner.",
+      "B. The descriptor has become rotation invariant.",
+      "C. The local patch is a strong edge.",
+      "D. The local patch is a flat region with little intensity change."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-e49346fe1c98",
+      "chunk-c1bc5145d6eb",
+      "chunk-f75601f7badc",
+      "chunk-24245265ea4c",
+      "chunk-153ae1508801",
+      "chunk-b6e52e0430cd",
+      "chunk-aa322bf7478c",
+      "chunk-070e045b40c5"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 22",
+        "section": "Local measure of feature uniqueness \"flat\" region: no change in all directions \"edge\" : no change along the..."
+      },
+      {
+        "source": "Week5\\lecture5-1.pdf",
+        "display_source": "lecture5-1.pdf",
+        "location": "page 22",
+        "section": "Local measure of feature uniqueness"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-harris-corners-and-local-features-q4",
+    "kp_id": "kp-harris-corners-and-local-features",
+    "kp_name": "Harris corners and local features",
+    "question_type": "multiple_choice",
+    "question": "Which transformation is standard Harris corner detection not invariant to?",
+    "answer": "Scaling.",
+    "explanation": "The revision slides note that Harris is shift- and rotation-friendly in common settings, but not scale invariant.",
+    "options": [
+      "A. Image rotation.",
+      "B. Image translation.",
+      "C. Intensity shift.",
+      "D. Scaling."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-e49346fe1c98",
+      "chunk-c1bc5145d6eb",
+      "chunk-f75601f7badc",
+      "chunk-24245265ea4c",
+      "chunk-153ae1508801",
+      "chunk-b6e52e0430cd",
+      "chunk-aa322bf7478c",
+      "chunk-070e045b40c5"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-2 (1) (2).pptx",
+        "display_source": "lecture5-2 (1) (2).pptx",
+        "location": "slide 5",
+        "section": "Harris Detector: Invariance Properties Scaling All points will be classified as edges Corner Not invariant to scaling"
+      },
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 1",
+        "section": "Harris corner detection"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-harris-corners-and-local-features-q5",
+    "kp_id": "kp-harris-corners-and-local-features",
+    "kp_name": "Harris corners and local features",
+    "question_type": "multiple_choice",
+    "question": "In the displayed expression E(u, v) = sum[I(x+u, y+v) - I(x, y)]^2, what quantity is E(u, v) measuring?",
+    "answer": "How much the image patch changes when the window is shifted by (u, v).",
+    "explanation": "The SSD expression is the Harris starting point: it measures how different the window looks after a small spatial shift. Corners are the locations where this change becomes large in more than one direction.",
+    "options": [
+      "A. The stereo disparity between the left and right cameras.",
+      "B. How much the image patch changes when the window is shifted by (u, v).",
+      "C. The camera focal length used to project the patch into the image.",
+      "D. The semantic class probability of the patch after CNN inference."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-e49346fe1c98",
+      "chunk-c1bc5145d6eb",
+      "chunk-f75601f7badc",
+      "chunk-24245265ea4c",
+      "chunk-153ae1508801",
+      "chunk-b6e52e0430cd",
+      "chunk-aa322bf7478c",
+      "chunk-070e045b40c5"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 25",
+        "section": "Corner detection: the math Consider shifting the window W by ( u,v ) define an SSD \"error\" E( u,v ) : W ( u,v )"
+      },
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 26",
+        "section": "Corner detection: the math Consider shifting the window W by ( u,v ) define an SSD \"error\" E( u,v ) : W ( u,v )"
+      }
+    ],
+    "image_path": "images/week5-lecture5-1-5/slide-025-a48befb87f0e.png",
+    "image_caption": "Lecture figure from Week5/lecture5-1 (5).pptx slide 25"
+  },
+  {
+    "question_id": "kp-sift-and-scale-invariant-features-q1",
+    "kp_id": "kp-sift-and-scale-invariant-features",
+    "kp_name": "SIFT and scale-invariant features",
+    "question_type": "multiple_choice",
+    "question": "What role does the Difference-of-Gaussian stage play in SIFT?",
+    "answer": "It detects candidate keypoints as extrema across scale space.",
+    "explanation": "SIFT first searches for stable extrema across scale space before building descriptors.",
+    "options": [
+      "A. It rectifies a stereo pair into scanlines.",
+      "B. It detects candidate keypoints as extrema across scale space.",
+      "C. It computes the final bag-of-words histogram directly.",
+      "D. It replaces the descriptor with a semantic class label."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-987c014644dc",
+      "chunk-f4d5c7ec2d2d",
+      "chunk-8dbe9e48de6d",
+      "chunk-9e704538558f",
+      "chunk-36743dad3bc9",
+      "chunk-523922f47edf",
+      "chunk-7e6f94d18d8d",
+      "chunk-4b4c92926fa1"
+    ],
+    "source_files": [
+      "Week12\\Revision.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture6-1.pdf",
+      "Week6\\lecture6-1.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-1.pptx",
+        "display_source": "lecture6-1.pptx",
+        "location": "slide 4",
+        "section": "Building the Scale Space Adapted from IJCV 2004 by David Lowe"
+      },
+      {
+        "source": "Week6\\lecture6-1.pdf",
+        "display_source": "lecture6-1.pdf",
+        "location": "page 3",
+        "section": "Building the Scale Space"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-sift-and-scale-invariant-features-q2",
+    "kp_id": "kp-sift-and-scale-invariant-features",
+    "kp_name": "SIFT and scale-invariant features",
+    "question_type": "multiple_choice",
+    "question": "A full SIFT descriptor uses a 4x4 grid of cells with 8 orientation bins per cell. What is the descriptor dimension?",
+    "answer": "128.",
+    "explanation": "The lecture slides state 16 cells times 8 orientation bins, which gives 128 dimensions.",
+    "options": [
+      "A. 128.",
+      "B. 256.",
+      "C. 64.",
+      "D. 32."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-987c014644dc",
+      "chunk-f4d5c7ec2d2d",
+      "chunk-8dbe9e48de6d",
+      "chunk-9e704538558f",
+      "chunk-36743dad3bc9",
+      "chunk-523922f47edf",
+      "chunk-7e6f94d18d8d",
+      "chunk-4b4c92926fa1"
+    ],
+    "source_files": [
+      "Week12\\Revision.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture6-1.pdf",
+      "Week6\\lecture6-1.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-1.pptx",
+        "display_source": "lecture6-1.pptx",
+        "location": "slide 8",
+        "section": "SIFT descriptor Full version Divide the 16x16 window into a 4x4 grid of cells (2x2 case shown below) Comput..."
+      },
+      {
+        "source": "Week6\\lecture6-1.pdf",
+        "display_source": "lecture6-1.pdf",
+        "location": "page 7",
+        "section": "SIFT descriptor"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-sift-and-scale-invariant-features-q3",
+    "kp_id": "kp-sift-and-scale-invariant-features",
+    "kp_name": "SIFT and scale-invariant features",
+    "question_type": "multiple_choice",
+    "question": "Why can SIFT remain fairly robust under illumination change?",
+    "answer": "Because the descriptor is built from local gradients rather than raw pixel values alone.",
+    "explanation": "The tutorial answer notes that SIFT depends on gradient information, which is more stable than raw brightness values.",
+    "options": [
+      "A. Because SIFT ignores all local structure inside the patch.",
+      "B. Because the descriptor is built from local gradients rather than raw pixel values alone.",
+      "C. Because SIFT always normalizes the camera focal length.",
+      "D. Because SIFT assumes every image is captured with the same exposure."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-987c014644dc",
+      "chunk-f4d5c7ec2d2d",
+      "chunk-8dbe9e48de6d",
+      "chunk-9e704538558f",
+      "chunk-36743dad3bc9",
+      "chunk-523922f47edf",
+      "chunk-7e6f94d18d8d",
+      "chunk-4b4c92926fa1"
+    ],
+    "source_files": [
+      "Week12\\Revision.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture6-1.pdf",
+      "Week6\\lecture6-1.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-1.pptx",
+        "display_source": "lecture6-1.pptx",
+        "location": "slide 9",
+        "section": "Properties of SIFT Robust matching technique Can handle changes in viewpoint Can handle significant changes..."
+      },
+      {
+        "source": "Week6\\lecture6-1.pdf",
+        "display_source": "lecture6-1.pdf",
+        "location": "page 8",
+        "section": "Properties of SIFT"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-sift-and-scale-invariant-features-q4",
+    "kp_id": "kp-sift-and-scale-invariant-features",
+    "kp_name": "SIFT and scale-invariant features",
+    "question_type": "multiple_choice",
+    "question": "How does SIFT achieve rotation invariance?",
+    "answer": "It aligns the descriptor to a dominant local orientation before describing the patch.",
+    "explanation": "Orientation assignment normalizes the patch before descriptor formation, which makes matching more stable under rotation.",
+    "options": [
+      "A. It requires the input images to be physically rotated back before matching.",
+      "B. It removes all orientation information from the image gradients.",
+      "C. It aligns the descriptor to a dominant local orientation before describing the patch.",
+      "D. It estimates rotation by comparing stereo disparity values."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-987c014644dc",
+      "chunk-f4d5c7ec2d2d",
+      "chunk-8dbe9e48de6d",
+      "chunk-9e704538558f",
+      "chunk-36743dad3bc9",
+      "chunk-523922f47edf",
+      "chunk-7e6f94d18d8d",
+      "chunk-4b4c92926fa1"
+    ],
+    "source_files": [
+      "Week12\\Revision.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture6-1.pdf",
+      "Week6\\lecture6-1.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-1.pdf",
+        "display_source": "lecture6-1.pdf",
+        "location": "page 5",
+        "section": "Assignment of the Orientation"
+      },
+      {
+        "source": "Week6\\lecture6-1.pptx",
+        "display_source": "lecture6-1.pptx",
+        "location": "slide 6",
+        "section": "Assignment of the Orientation Adapted from IJCV 2004 by David Lowe For the rotation invariance, compute the..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-sift-and-scale-invariant-features-q5",
+    "kp_id": "kp-sift-and-scale-invariant-features",
+    "kp_name": "SIFT and scale-invariant features",
+    "question_type": "multiple_choice",
+    "question": "In SIFT scale-space detection, what must be true before a candidate point is kept as a keypoint?",
+    "answer": "It must be a local extremum compared with neighboring locations and neighboring scales.",
+    "explanation": "SIFT keeps candidates that are extrema in scale space before orientation assignment and descriptor construction are performed.",
+    "options": [
+      "A. It must define a stereo baseline between two cameras.",
+      "B. It must be a local extremum compared with neighboring locations and neighboring scales.",
+      "C. It must be projected from a 3D point by the pinhole model.",
+      "D. It must satisfy the optical-flow constraint equation."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-987c014644dc",
+      "chunk-f4d5c7ec2d2d",
+      "chunk-8dbe9e48de6d",
+      "chunk-9e704538558f",
+      "chunk-36743dad3bc9",
+      "chunk-523922f47edf",
+      "chunk-7e6f94d18d8d",
+      "chunk-4b4c92926fa1"
+    ],
+    "source_files": [
+      "Week12\\Revision.pdf",
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week6\\lecture6-1.pdf",
+      "Week6\\lecture6-1.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-1.pptx",
+        "display_source": "lecture6-1.pptx",
+        "location": "slide 3",
+        "section": "S cale I nvariant F eature T ransform Scale space peak selection Potential locations for finding features K..."
+      },
+      {
+        "source": "Week6\\lecture6-1.pdf",
+        "display_source": "lecture6-1.pdf",
+        "location": "page 2",
+        "section": "Scale Invariant Feature Transform"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-bag-of-words-image-retrieval-q1",
+    "kp_id": "kp-bag-of-words-image-retrieval",
+    "kp_name": "Bag-of-words image retrieval",
+    "question_type": "multiple_choice",
+    "question": "After extracting many local descriptors from an image, which representation allows the system to compare whole images efficiently for retrieval?",
+    "answer": "A histogram of visual words built by quantizing the local descriptors.",
+    "explanation": "Bag-of-words retrieval replaces many local descriptors with counts over a visual vocabulary, making whole-image comparison efficient.",
+    "options": [
+      "A. Only the camera intrinsic matrix of the image.",
+      "B. A full semantic segmentation mask of the image.",
+      "C. A histogram of visual words built by quantizing the local descriptors.",
+      "D. A single strongest corner point from the image."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-65f20f8c00dd",
+      "chunk-70fe148113f3",
+      "chunk-a0eaa70e819e",
+      "chunk-343d0d575e52",
+      "chunk-724382c02e8d",
+      "chunk-d8675396be35",
+      "chunk-d844665788c6",
+      "chunk-51cef86daef2"
+    ],
+    "source_files": [
+      "Week6\\lecture6-2.pdf",
+      "Week6\\lecture6-2.ppt"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-2.ppt",
+        "display_source": "lecture6-2.ppt",
+        "location": "slide 12",
+        "section": "Images as histograms of visual words"
+      },
+      {
+        "source": "Week6\\lecture6-2.pdf",
+        "display_source": "lecture6-2.pdf",
+        "location": "page 12",
+        "section": "Images as histograms of visual words"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-bag-of-words-image-retrieval-q2",
+    "kp_id": "kp-bag-of-words-image-retrieval",
+    "kp_name": "Bag-of-words image retrieval",
+    "question_type": "multiple_choice",
+    "question": "What is a visual vocabulary in a bag-of-words retrieval pipeline?",
+    "answer": "A set of prototype descriptor clusters used to quantize local features into visual words.",
+    "explanation": "Visual words come from clustering local descriptors into representative prototypes.",
+    "options": [
+      "A. A set of prototype descriptor clusters used to quantize local features into visual words.",
+      "B. A collection of camera baselines from stereo pairs.",
+      "C. A list of all object names in the dataset.",
+      "D. A matrix that enforces the epipolar constraint."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-65f20f8c00dd",
+      "chunk-70fe148113f3",
+      "chunk-a0eaa70e819e",
+      "chunk-343d0d575e52",
+      "chunk-724382c02e8d",
+      "chunk-d8675396be35",
+      "chunk-d844665788c6",
+      "chunk-51cef86daef2"
+    ],
+    "source_files": [
+      "Week6\\lecture6-2.pdf",
+      "Week6\\lecture6-2.ppt"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-2.ppt",
+        "display_source": "lecture6-2.ppt",
+        "location": "slide 25",
+        "section": "From clustering to vector quantization"
+      },
+      {
+        "source": "Week6\\lecture6-2.ppt",
+        "display_source": "lecture6-2.ppt",
+        "location": "slide 17",
+        "section": "Bag of features: outline"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-bag-of-words-image-retrieval-q3",
+    "kp_id": "kp-bag-of-words-image-retrieval",
+    "kp_name": "Bag-of-words image retrieval",
+    "question_type": "multiple_choice",
+    "question": "Why can bag-of-words support large-scale retrieval?",
+    "answer": "Because histograms of visual words give a compact representation that can be compared efficiently.",
+    "explanation": "Histogram representations are compact and efficient for indexing and matching.",
+    "options": [
+      "A. Because it estimates optical flow between all image pairs.",
+      "B. Because histograms of visual words give a compact representation that can be compared efficiently.",
+      "C. Because it removes the need for any feature extraction.",
+      "D. Because it stores every image as a full 3D point cloud."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-65f20f8c00dd",
+      "chunk-70fe148113f3",
+      "chunk-a0eaa70e819e",
+      "chunk-343d0d575e52",
+      "chunk-724382c02e8d",
+      "chunk-d8675396be35",
+      "chunk-d844665788c6",
+      "chunk-51cef86daef2"
+    ],
+    "source_files": [
+      "Week6\\lecture6-2.pdf",
+      "Week6\\lecture6-2.ppt"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-2.ppt",
+        "display_source": "lecture6-2.ppt",
+        "location": "slide 12",
+        "section": "Images as histograms of visual words"
+      },
+      {
+        "source": "Week6\\lecture6-2.pdf",
+        "display_source": "lecture6-2.pdf",
+        "location": "page 12",
+        "section": "Images as histograms of visual words"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-bag-of-words-image-retrieval-q4",
+    "kp_id": "kp-bag-of-words-image-retrieval",
+    "kp_name": "Bag-of-words image retrieval",
+    "question_type": "multiple_choice",
+    "question": "What information does a plain bag-of-words model usually lose?",
+    "answer": "The exact spatial arrangement of the local features in the image.",
+    "explanation": "A plain histogram keeps counts of visual words but not their exact geometry.",
+    "options": [
+      "A. The exact spatial arrangement of the local features in the image.",
+      "B. Whether edges correspond to intensity changes.",
+      "C. Whether the image contains any pixel values at all.",
+      "D. Whether the camera uses perspective projection."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-65f20f8c00dd",
+      "chunk-70fe148113f3",
+      "chunk-a0eaa70e819e",
+      "chunk-343d0d575e52",
+      "chunk-724382c02e8d",
+      "chunk-d8675396be35",
+      "chunk-d844665788c6",
+      "chunk-51cef86daef2"
+    ],
+    "source_files": [
+      "Week6\\lecture6-2.pdf",
+      "Week6\\lecture6-2.ppt"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-2.ppt",
+        "display_source": "lecture6-2.ppt",
+        "location": "slide 36",
+        "section": "Spatial pyramid: BoW disregards all information about the spatial layout of the features"
+      },
+      {
+        "source": "Week6\\lecture6-2.pdf",
+        "display_source": "lecture6-2.pdf",
+        "location": "page 36",
+        "section": "Spatial pyramid: BoW disregards all information"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-bag-of-words-image-retrieval-q5",
+    "kp_id": "kp-bag-of-words-image-retrieval",
+    "kp_name": "Bag-of-words image retrieval",
+    "question_type": "multiple_choice",
+    "question": "If several local descriptors are assigned to the same visual-word bin, what changes in the bag-of-words representation?",
+    "answer": "The histogram count of that visual word increases.",
+    "explanation": "Bag-of-words representations count how many local descriptors fall into each visual-word bin, so repeated assignments raise that bin count.",
+    "options": [
+      "A. The optical-flow magnitude between frames increases.",
+      "B. The estimated depth of the image point increases.",
+      "C. The focal length of the camera increases.",
+      "D. The histogram count of that visual word increases."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-65f20f8c00dd",
+      "chunk-70fe148113f3",
+      "chunk-a0eaa70e819e",
+      "chunk-343d0d575e52",
+      "chunk-724382c02e8d",
+      "chunk-d8675396be35",
+      "chunk-d844665788c6",
+      "chunk-51cef86daef2"
+    ],
+    "source_files": [
+      "Week6\\lecture6-2.pdf",
+      "Week6\\lecture6-2.ppt"
+    ],
+    "review_refs": [
+      {
+        "source": "Week6\\lecture6-2.ppt",
+        "display_source": "lecture6-2.ppt",
+        "location": "slide 25",
+        "section": "From clustering to vector quantization"
+      },
+      {
+        "source": "Week6\\lecture6-2.pdf",
+        "display_source": "lecture6-2.pdf",
+        "location": "page 25",
+        "section": "From clustering to vector quantization"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-geometric-transformations-q1",
+    "kp_id": "kp-geometric-transformations",
+    "kp_name": "Geometric transformations",
+    "question_type": "multiple_choice",
+    "question": "Which homogeneous coordinate represents the same 2D point as (3, 2, 1)?",
+    "answer": "(6, 4, 2).",
+    "explanation": "Homogeneous coordinates that differ by a nonzero scale factor represent the same Cartesian point.",
+    "options": [
+      "A. (4, 6, 2).",
+      "B. (3, 2, 2).",
+      "C. (6, 2, 1).",
+      "D. (6, 4, 2)."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-72762b7a4705",
+      "chunk-443d555e133e",
+      "chunk-94213b5dcead",
+      "chunk-83303cea07c5",
+      "chunk-e0ea4ba6fcc6",
+      "chunk-c2a09fac6202",
+      "chunk-6c5e475895f6",
+      "chunk-4c356a570c0c"
+    ],
+    "source_files": [
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week7\\Lecture7-1.pdf",
+      "Week7\\Lecture7-1.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week7\\Lecture7-1.pdf",
+        "display_source": "Lecture7-1.pdf",
+        "location": "page 13",
+        "section": "Homogeneous coordinates"
+      },
+      {
+        "source": "Week7\\Lecture7-1.pptx",
+        "display_source": "Lecture7-1.pptx",
+        "location": "slide 14",
+        "section": "Quiz Which one is true about the homogeneous coordinate? The points (2,3,1) and (2,3,2) refer to the same p..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-geometric-transformations-q2",
+    "kp_id": "kp-geometric-transformations",
+    "kp_name": "Geometric transformations",
+    "question_type": "multiple_choice",
+    "question": "Which transformation class combines linear transformations with translation?",
+    "answer": "An affine transformation.",
+    "explanation": "The course notes define affine transformations as linear transforms together with translations.",
+    "options": [
+      "A. An affine transformation.",
+      "B. A Gaussian transformation.",
+      "C. A disparity transformation.",
+      "D. A bag-of-words transformation."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-72762b7a4705",
+      "chunk-443d555e133e",
+      "chunk-94213b5dcead",
+      "chunk-83303cea07c5",
+      "chunk-e0ea4ba6fcc6",
+      "chunk-c2a09fac6202",
+      "chunk-6c5e475895f6",
+      "chunk-4c356a570c0c"
+    ],
+    "source_files": [
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week7\\Lecture7-1.pdf",
+      "Week7\\Lecture7-1.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week7\\Lecture7-1.pptx",
+        "display_source": "Lecture7-1.pptx",
+        "location": "slide 16",
+        "section": "Affine transformations any transformation with last row [ 0 0 1 ] we call an affine transformation"
+      },
+      {
+        "source": "Week7\\Lecture7-1.pdf",
+        "display_source": "Lecture7-1.pdf",
+        "location": "page 16",
+        "section": "Affine transformations"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-geometric-transformations-q3",
+    "kp_id": "kp-geometric-transformations",
+    "kp_name": "Geometric transformations",
+    "question_type": "multiple_choice",
+    "question": "Which motion cannot be represented by a 2x2 linear matrix alone and is usually added via homogeneous coordinates?",
+    "answer": "Translation.",
+    "explanation": "A pure 2x2 linear transform handles operations about the origin, while translation is added naturally in homogeneous coordinates.",
+    "options": [
+      "A. Shear.",
+      "B. Rotation about the origin.",
+      "C. Translation.",
+      "D. Uniform scaling."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-72762b7a4705",
+      "chunk-443d555e133e",
+      "chunk-94213b5dcead",
+      "chunk-83303cea07c5",
+      "chunk-e0ea4ba6fcc6",
+      "chunk-c2a09fac6202",
+      "chunk-6c5e475895f6",
+      "chunk-4c356a570c0c"
+    ],
+    "source_files": [
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week7\\Lecture7-1.pdf",
+      "Week7\\Lecture7-1.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week7\\Lecture7-1.pptx",
+        "display_source": "Lecture7-1.pptx",
+        "location": "slide 11",
+        "section": "What types of transformations can be represented with a 2x2 matrix? 2D Translation? NO! 2x2 Matrices"
+      },
+      {
+        "source": "Week7\\Lecture7-1.pptx",
+        "display_source": "Lecture7-1.pptx",
+        "location": "slide 15",
+        "section": "Translation Solution: homogeneous coordinates to the rescue"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-geometric-transformations-q4",
+    "kp_id": "kp-geometric-transformations",
+    "kp_name": "Geometric transformations",
+    "question_type": "multiple_choice",
+    "question": "In the simple image-alignment case where the transform is pure translation, what is the least-squares estimate from feature matches?",
+    "answer": "The mean displacement vector across the matches.",
+    "explanation": "The lecture slides state that for translation, the least-squares solution is the average displacement of the matched points.",
+    "options": [
+      "A. The camera principal point.",
+      "B. The largest single displacement vector only.",
+      "C. The mean displacement vector across the matches.",
+      "D. The disparity with the smallest magnitude."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-72762b7a4705",
+      "chunk-443d555e133e",
+      "chunk-94213b5dcead",
+      "chunk-83303cea07c5",
+      "chunk-e0ea4ba6fcc6",
+      "chunk-c2a09fac6202",
+      "chunk-6c5e475895f6",
+      "chunk-4c356a570c0c"
+    ],
+    "source_files": [
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week7\\Lecture7-1.pdf",
+      "Week7\\Lecture7-1.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week7\\Lecture7-1.pptx",
+        "display_source": "Lecture7-1.pptx",
+        "location": "slide 15",
+        "section": "Translation Solution: homogeneous coordinates to the rescue"
+      },
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 11",
+        "section": "NASA Mars Rover images with SIFT feature matches Answer below (look for tiny colored squares…)"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-geometric-transformations-q5",
+    "kp_id": "kp-geometric-transformations",
+    "kp_name": "Geometric transformations",
+    "question_type": "multiple_choice",
+    "question": "A global warp preserves straight structures in the image. What family of mappings is being illustrated?",
+    "answer": "A global geometric transform, such as affine or related coordinate warping.",
+    "explanation": "Transformation figures typically show how one global mapping changes image coordinates while preserving geometric structure such as straight lines.",
+    "options": [
+      "A. Stereo disparity is being converted into scene depth.",
+      "B. A global geometric transform, such as affine or related coordinate warping.",
+      "C. A SIFT descriptor is being turned into a bag-of-words histogram.",
+      "D. A CNN is assigning semantic labels to image regions."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-72762b7a4705",
+      "chunk-443d555e133e",
+      "chunk-94213b5dcead",
+      "chunk-83303cea07c5",
+      "chunk-e0ea4ba6fcc6",
+      "chunk-c2a09fac6202",
+      "chunk-6c5e475895f6",
+      "chunk-4c356a570c0c"
+    ],
+    "source_files": [
+      "Week5\\lecture5-2 (1) (2).pptx",
+      "Week5\\lecture5-2.pdf",
+      "Week7\\Lecture7-1.pdf",
+      "Week7\\Lecture7-1.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week7\\Lecture7-1.pptx",
+        "display_source": "Lecture7-1.pptx",
+        "location": "slide 16",
+        "section": "Affine transformations any transformation with last row [ 0 0 1 ] we call an affine transformation"
+      },
+      {
+        "source": "Week7\\Lecture7-1.pdf",
+        "display_source": "Lecture7-1.pdf",
+        "location": "page 16",
+        "section": "Affine transformations"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-alignment-q1",
+    "kp_id": "kp-image-alignment",
+    "kp_name": "Image alignment",
+    "question_type": "multiple_choice",
+    "question": "The displayed pair is covered with correspondence lines linking matched points. Before one image can be warped onto the other, what must be estimated from these matches?",
+    "answer": "A geometric transform, such as a homography, that best aligns the matched points.",
+    "explanation": "Matched correspondences are not the final output. They are the evidence used to estimate the transform that will align one image with the other.",
+    "options": [
+      "A. A geometric transform, such as a homography, that best aligns the matched points.",
+      "B. Replace all feature matches with a CNN classifier.",
+      "C. Recover depth from a single image without any geometry.",
+      "D. Estimate a segmentation mask for each image independently."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-3e20fa2cfc45",
+      "chunk-f5428633b49c",
+      "chunk-ae006354717d",
+      "chunk-382ce6802a08",
+      "chunk-1d141ffaa6dd",
+      "chunk-d8abfdb33155",
+      "chunk-b46ed0313093",
+      "chunk-7cdf884aa451"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week8\\Lecture7-2 (2).pptx",
+      "Week8\\Lecture8-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week8\\Lecture8-1.pdf",
+        "display_source": "Lecture8-1.pdf",
+        "location": "page 9",
+        "section": "Image Alignment Algorithm"
+      },
+      {
+        "source": "Week8\\Lecture7-2 (2).pptx",
+        "display_source": "Lecture7-2 (2).pptx",
+        "location": "slide 2",
+        "section": "Computing transformations Given a set of matches between images A and B How can we compute the transform T ..."
+      }
+    ],
+    "image_path": "images/week8-lecture7-2-2/slide-002-37b7c9fbe4ce.png",
+    "image_caption": "Lecture figure from Week8/Lecture7-2 (2).pptx slide 2"
+  },
+  {
+    "question_id": "kp-image-alignment-q2",
+    "kp_id": "kp-image-alignment",
+    "kp_name": "Image alignment",
+    "question_type": "multiple_choice",
+    "question": "In the lecture alignment pipeline, what is typically estimated after computing and matching image features?",
+    "answer": "A homography or other geometric transform between the two images.",
+    "explanation": "The course alignment algorithm computes features, matches them, and then estimates a homography from those matches.",
+    "options": [
+      "A. A dense semantic segmentation map.",
+      "B. A stereo baseline from a calibrated rig.",
+      "C. A homography or other geometric transform between the two images.",
+      "D. A bag-of-words vocabulary."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-3e20fa2cfc45",
+      "chunk-f5428633b49c",
+      "chunk-ae006354717d",
+      "chunk-382ce6802a08",
+      "chunk-1d141ffaa6dd",
+      "chunk-d8abfdb33155",
+      "chunk-b46ed0313093",
+      "chunk-7cdf884aa451"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week8\\Lecture7-2 (2).pptx",
+      "Week8\\Lecture8-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week8\\Lecture8-1.pdf",
+        "display_source": "Lecture8-1.pdf",
+        "location": "page 9",
+        "section": "Image Alignment Algorithm"
+      },
+      {
+        "source": "Week8\\Lecture7-2 (2).pptx",
+        "display_source": "Lecture7-2 (2).pptx",
+        "location": "slide 9",
+        "section": "Image Alignment Algorithm Given images A and B Compute image features for A and B Match features between A ..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-alignment-q3",
+    "kp_id": "kp-image-alignment",
+    "kp_name": "Image alignment",
+    "question_type": "multiple_choice",
+    "question": "Why is RANSAC used before the final least-squares fit in image alignment?",
+    "answer": "To remove outlier matches and keep the transform supported by the largest inlier set.",
+    "explanation": "RANSAC is used to reject mismatches so the final transform is estimated from geometrically consistent correspondences.",
+    "options": [
+      "A. To increase the image brightness before matching.",
+      "B. To remove outlier matches and keep the transform supported by the largest inlier set.",
+      "C. To replace the transform with semantic labels.",
+      "D. To convert the images into grayscale histograms."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-3e20fa2cfc45",
+      "chunk-f5428633b49c",
+      "chunk-ae006354717d",
+      "chunk-382ce6802a08",
+      "chunk-1d141ffaa6dd",
+      "chunk-d8abfdb33155",
+      "chunk-b46ed0313093",
+      "chunk-7cdf884aa451"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week8\\Lecture7-2 (2).pptx",
+      "Week8\\Lecture8-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week8\\Lecture7-2 (2).pptx",
+        "display_source": "Lecture7-2 (2).pptx",
+        "location": "slide 2",
+        "section": "Computing transformations Given a set of matches between images A and B How can we compute the transform T ..."
+      },
+      {
+        "source": "Week8\\Lecture7-2 (2).pptx",
+        "display_source": "Lecture7-2 (2).pptx",
+        "location": "slide 28",
+        "section": "Final step: least squares fit Find average translation vector over all inliers"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-alignment-q4",
+    "kp_id": "kp-image-alignment",
+    "kp_name": "Image alignment",
+    "question_type": "multiple_choice",
+    "question": "In inverse warping, where does each output pixel g(x', y') sample its value from?",
+    "answer": "From the source image location T^-1(x', y') in the input image.",
+    "explanation": "Inverse warping fills each output pixel by mapping backward through the inverse transform into the source image.",
+    "options": [
+      "A. From the camera center in 3D space.",
+      "B. From the largest SIFT bin only.",
+      "C. From the source image location T^-1(x', y') in the input image.",
+      "D. From the output image location T(x', y') itself."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-3e20fa2cfc45",
+      "chunk-f5428633b49c",
+      "chunk-ae006354717d",
+      "chunk-382ce6802a08",
+      "chunk-1d141ffaa6dd",
+      "chunk-d8abfdb33155",
+      "chunk-b46ed0313093",
+      "chunk-7cdf884aa451"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week8\\Lecture7-2 (2).pptx",
+      "Week8\\Lecture8-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1.pdf",
+        "display_source": "lecture5-1.pdf",
+        "location": "page 23",
+        "section": "-We are happy if this error is high-Slow to compute exactly for each pixel and each offset (u,v)"
+      },
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 23",
+        "section": "Consider shifting the window W by ( u,v ) how do the pixels in W change? compare each pixel before and afte..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-image-alignment-q5",
+    "kp_id": "kp-image-alignment",
+    "kp_name": "Image alignment",
+    "question_type": "multiple_choice",
+    "question": "After warping one image onto another, corresponding structures overlap closely. What does that indicate?",
+    "answer": "Corresponding structures from the two images overlap consistently after warping.",
+    "explanation": "Image alignment is successful when the warped source and target image content line up well.",
+    "options": [
+      "A. Optical flow is computed for every video frame.",
+      "B. Corresponding structures from the two images overlap consistently after warping.",
+      "C. Every image edge disappears after filtering.",
+      "D. The camera focal length changes automatically."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-3e20fa2cfc45",
+      "chunk-f5428633b49c",
+      "chunk-ae006354717d",
+      "chunk-382ce6802a08",
+      "chunk-1d141ffaa6dd",
+      "chunk-d8abfdb33155",
+      "chunk-b46ed0313093",
+      "chunk-7cdf884aa451"
+    ],
+    "source_files": [
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week8\\Lecture7-2 (2).pptx",
+      "Week8\\Lecture8-1.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1 (5).pptx",
+        "location": "slide 5",
+        "section": "Why extract features? Motivation: panorama stitching We have two images - how do we combine them?"
+      },
+      {
+        "source": "Week5\\lecture5-1.pdf",
+        "display_source": "lecture5-1.pdf",
+        "location": "page 5",
+        "section": "Why extract features?-Motivation: panorama stitching-We have two images -how do we combine them?"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-camera-model-and-projection-q1",
+    "kp_id": "kp-camera-model-and-projection",
+    "kp_name": "Camera model and projection",
+    "question_type": "multiple_choice",
+    "question": "A pinhole camera has focal length 5 mm and pixel size 0.02 mm. What is the focal length in pixel units?",
+    "answer": "250 pixels.",
+    "explanation": "Dividing 5 mm by 0.02 mm per pixel gives 250 pixels for both fx and fy.",
+    "options": [
+      "A. 250 pixels.",
+      "B. 100 pixels.",
+      "C. 500 pixels.",
+      "D. 25 pixels."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-7bc833a421f8",
+      "chunk-ac365367ad16",
+      "chunk-b17bf3ee7d5b",
+      "chunk-ff2d0ff9d33a",
+      "chunk-04e13ad962cb",
+      "chunk-c2e26e9db0cd",
+      "chunk-2a499fab0ef8",
+      "chunk-8f1c4b90aec4"
+    ],
+    "source_files": [
+      "Week10\\Question.docx",
+      "Week12\\Revision.pdf",
+      "Week8\\Lecture8-2.pdf",
+      "Week8\\cameras.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week8\\cameras.pptx",
+        "display_source": "cameras.pptx",
+        "location": "slide 19",
+        "section": "19 A pinhole camera has focal length 5mm. Each pixel is 0.02mm 0.02mm and the image principle point is at p..."
+      },
+      {
+        "source": "Week8\\Lecture8-2.pdf",
+        "display_source": "Lecture8-2.pdf",
+        "location": "page 19",
+        "section": "19 A pinhole camera has focal length 5mm. Each pixel is 0.02mm×0.02mm and the image principlepoint is at pi..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-camera-model-and-projection-q2",
+    "kp_id": "kp-camera-model-and-projection",
+    "kp_name": "Camera model and projection",
+    "question_type": "multiple_choice",
+    "question": "Using focal length 5 mm, pixel size 0.02 mm, and principal point (500, 500), what is the image projection of the 3D point (100, 150, 800) when world and camera coordinates are aligned?",
+    "answer": "(531.25, 546.875).",
+    "explanation": "fx = fy = 250, so x = 250*(100/800)+500 = 531.25 and y = 250*(150/800)+500 = 546.875.",
+    "options": [
+      "A. (31.25, 46.875).",
+      "B. (546.875, 531.25).",
+      "C. (525, 537.5).",
+      "D. (531.25, 546.875)."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-7bc833a421f8",
+      "chunk-ac365367ad16",
+      "chunk-b17bf3ee7d5b",
+      "chunk-ff2d0ff9d33a",
+      "chunk-04e13ad962cb",
+      "chunk-c2e26e9db0cd",
+      "chunk-2a499fab0ef8",
+      "chunk-8f1c4b90aec4"
+    ],
+    "source_files": [
+      "Week10\\Question.docx",
+      "Week12\\Revision.pdf",
+      "Week8\\Lecture8-2.pdf",
+      "Week8\\cameras.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week8\\cameras.pptx",
+        "display_source": "cameras.pptx",
+        "location": "slide 19",
+        "section": "19 A pinhole camera has focal length 5mm. Each pixel is 0.02mm 0.02mm and the image principle point is at p..."
+      },
+      {
+        "source": "Week8\\Lecture8-2.pdf",
+        "display_source": "Lecture8-2.pdf",
+        "location": "page 19",
+        "section": "19 A pinhole camera has focal length 5mm. Each pixel is 0.02mm×0.02mm and the image principlepoint is at pi..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-camera-model-and-projection-q3",
+    "kp_id": "kp-camera-model-and-projection",
+    "kp_name": "Camera model and projection",
+    "question_type": "multiple_choice",
+    "question": "Two photos are taken with the same sensor, but the second uses a longer focal length. What change should appear in the second image?",
+    "answer": "The field of view becomes narrower and objects appear larger in the image.",
+    "explanation": "Increasing focal length enlarges the projected image scale and narrows the field of view when the sensor size is unchanged.",
+    "options": [
+      "A. All stereo disparity values become zero automatically.",
+      "B. The principal point disappears from the camera model.",
+      "C. The field of view becomes narrower and objects appear larger in the image.",
+      "D. The field of view becomes wider and objects appear smaller."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-7bc833a421f8",
+      "chunk-ac365367ad16",
+      "chunk-b17bf3ee7d5b",
+      "chunk-ff2d0ff9d33a",
+      "chunk-04e13ad962cb",
+      "chunk-c2e26e9db0cd",
+      "chunk-2a499fab0ef8",
+      "chunk-8f1c4b90aec4"
+    ],
+    "source_files": [
+      "Week10\\Question.docx",
+      "Week12\\Revision.pdf",
+      "Week8\\Lecture8-2.pdf",
+      "Week8\\cameras.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week8\\cameras.pptx",
+        "display_source": "cameras.pptx",
+        "location": "slide 7",
+        "section": "Pinhole camera model Figure from Forsyth f f = Focal length c = Optical center of the camera c Real object"
+      },
+      {
+        "source": "Week8\\cameras.pptx",
+        "display_source": "cameras.pptx",
+        "location": "slide 19",
+        "section": "19 A pinhole camera has focal length 5mm. Each pixel is 0.02mm 0.02mm and the image principle point is at p..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-camera-model-and-projection-q4",
+    "kp_id": "kp-camera-model-and-projection",
+    "kp_name": "Camera model and projection",
+    "question_type": "multiple_choice",
+    "question": "Why do vanishing points appear in perspective images?",
+    "answer": "Parallel 3D lines that are not parallel to the image plane can project to image lines that meet at a point.",
+    "explanation": "Vanishing points are a direct consequence of perspective projection of sets of parallel scene lines.",
+    "options": [
+      "A. Parallel 3D lines that are not parallel to the image plane can project to image lines that meet at a point.",
+      "B. Because every 3D line stays parallel after perspective projection.",
+      "C. Because the principal point always lies on every 3D line.",
+      "D. Because vanishing points are caused only by Gaussian filtering."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-7bc833a421f8",
+      "chunk-ac365367ad16",
+      "chunk-b17bf3ee7d5b",
+      "chunk-ff2d0ff9d33a",
+      "chunk-04e13ad962cb",
+      "chunk-c2e26e9db0cd",
+      "chunk-2a499fab0ef8",
+      "chunk-8f1c4b90aec4"
+    ],
+    "source_files": [
+      "Week10\\Question.docx",
+      "Week12\\Revision.pdf",
+      "Week8\\Lecture8-2.pdf",
+      "Week8\\cameras.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week8\\cameras.pptx",
+        "display_source": "cameras.pptx",
+        "location": "slide 9",
+        "section": "Pinhole camera model 3D point projects to 2D image point By symmetric and i.e., Simplest form of perspective projection"
+      },
+      {
+        "source": "Week8\\cameras.pptx",
+        "display_source": "cameras.pptx",
+        "location": "slide 6",
+        "section": "Pinhole and the Perspective Projection (x,y) screen scene image plane effective focal length, f' optical ax..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-camera-model-and-projection-q5",
+    "kp_id": "kp-camera-model-and-projection",
+    "kp_name": "Camera model and projection",
+    "question_type": "multiple_choice",
+    "question": "In the ray diagram, the red rays cross at the pinhole before reaching the image plane. What geometric effect does that crossing explain?",
+    "answer": "Because light rays from the scene cross at the small aperture before reaching the image plane.",
+    "explanation": "The diagram shows the rays crossing at the aperture, which is exactly why the physical image plane receives an inverted projection of the scene.",
+    "options": [
+      "A. Because the principal point forces all projected rays to flip vertically.",
+      "B. Because light rays from the scene cross at the small aperture before reaching the image plane.",
+      "C. Because the camera automatically rotates every scene point by 180 degrees.",
+      "D. Because image inversion is introduced later by stereo rectification."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-7bc833a421f8",
+      "chunk-ac365367ad16",
+      "chunk-b17bf3ee7d5b",
+      "chunk-ff2d0ff9d33a",
+      "chunk-04e13ad962cb",
+      "chunk-c2e26e9db0cd",
+      "chunk-2a499fab0ef8",
+      "chunk-8f1c4b90aec4"
+    ],
+    "source_files": [
+      "Week10\\Question.docx",
+      "Week12\\Revision.pdf",
+      "Week8\\Lecture8-2.pdf",
+      "Week8\\cameras.pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week8\\Lecture8-2.pdf",
+        "display_source": "Lecture8-2.pdf",
+        "location": "page 4",
+        "section": "Pinhole camera"
+      },
+      {
+        "source": "Week8\\cameras.pptx",
+        "display_source": "cameras.pptx",
+        "location": "slide 4",
+        "section": "Pinhole camera Add a barrier to block off most of the rays This reduces blurring The opening known as the a..."
+      }
+    ],
+    "image_path": "images/week8-cameras/slide-007-8545a6b628b0.png",
+    "image_caption": "Lecture figure from Week8/cameras.pptx slide 7"
+  },
+  {
+    "question_id": "kp-stereo-vision-and-depth-q1",
+    "kp_id": "kp-stereo-vision-and-depth",
+    "kp_name": "Stereo vision and depth",
+    "question_type": "multiple_choice",
+    "question": "In the stereo relation z = fB / d, what happens to depth if disparity doubles while f and B stay fixed?",
+    "answer": "The depth is halved.",
+    "explanation": "Depth is inversely proportional to disparity, so doubling disparity cuts depth by a factor of two.",
+    "options": [
+      "A. The depth stays the same.",
+      "B. The depth is halved.",
+      "C. The depth doubles.",
+      "D. The depth becomes zero regardless of the scene point."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-52f4a0bd9369",
+      "chunk-8ba0825f91b1",
+      "chunk-db3ef361a258",
+      "chunk-e92d0a0f4627",
+      "chunk-dfb3af915d02",
+      "chunk-b8beaa6a4b00",
+      "chunk-d541fa49c5e6",
+      "chunk-a0ee412dcc7a"
+    ],
+    "source_files": [
+      "Week10\\lecture10-1 (4).pptx",
+      "Week10\\lecture10-2 (3).pptx",
+      "Week9\\lecture10 (1) (7).pptx",
+      "Week9\\lecture9 (1) (5).pptx",
+      "Week9\\lecture9-2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week9\\lecture10 (1) (7).pptx",
+        "display_source": "lecture10 (1) (7).pptx",
+        "location": "slide 6",
+        "section": "3D from Stereo Images For stereo cameras with parallel optical axes, focal length f, baseline b, correspond..."
+      },
+      {
+        "source": "Week9\\lecture10 (1) (7).pptx",
+        "display_source": "lecture10 (1) (7).pptx",
+        "location": "slide 3",
+        "section": "Amount of horizontal movement is … …inversely proportional to the distance from the camera 3"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-stereo-vision-and-depth-q2",
+    "kp_id": "kp-stereo-vision-and-depth",
+    "kp_name": "Stereo vision and depth",
+    "question_type": "multiple_choice",
+    "question": "Why is stereo rectification applied before dense matching in a calibrated stereo pair?",
+    "answer": "It turns epipolar lines into horizontal scanlines, so the search becomes one-dimensional.",
+    "explanation": "The stereo lecture states that rectification makes pixel motion horizontal and simplifies correspondence search.",
+    "options": [
+      "A. It makes every image patch rotation invariant.",
+      "B. It turns epipolar lines into horizontal scanlines, so the search becomes one-dimensional.",
+      "C. It converts disparity directly into a segmentation mask.",
+      "D. It removes the need for camera calibration entirely."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-52f4a0bd9369",
+      "chunk-8ba0825f91b1",
+      "chunk-db3ef361a258",
+      "chunk-e92d0a0f4627",
+      "chunk-dfb3af915d02",
+      "chunk-b8beaa6a4b00",
+      "chunk-d541fa49c5e6",
+      "chunk-a0ee412dcc7a"
+    ],
+    "source_files": [
+      "Week10\\lecture10-1 (4).pptx",
+      "Week10\\lecture10-2 (3).pptx",
+      "Week9\\lecture10 (1) (7).pptx",
+      "Week9\\lecture9 (1) (5).pptx",
+      "Week9\\lecture9-2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week10\\lecture10-1.pdf",
+        "display_source": "lecture10-1.pdf",
+        "location": "page 10",
+        "section": "Basic stereo matching algorithm"
+      },
+      {
+        "source": "Week10\\lecture10-1 (4).pptx",
+        "display_source": "lecture10-1 (4).pptx",
+        "location": "slide 10",
+        "section": "Basic stereo matching algorithm If necessary, rectify the two stereo images to transform epipolar lines int..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-stereo-vision-and-depth-q3",
+    "kp_id": "kp-stereo-vision-and-depth",
+    "kp_name": "Stereo vision and depth",
+    "question_type": "multiple_choice",
+    "question": "Two points in the same stereo pair have disparities 8 and 16 pixels. Which point is closer to the cameras?",
+    "answer": "The point with disparity 16 pixels.",
+    "explanation": "Larger disparity means the scene point is closer when the stereo rig is fixed.",
+    "options": [
+      "A. The point with disparity 16 pixels.",
+      "B. The point with disparity 8 pixels.",
+      "C. The answer depends only on the principal point, not disparity.",
+      "D. They are at the same depth."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-52f4a0bd9369",
+      "chunk-8ba0825f91b1",
+      "chunk-db3ef361a258",
+      "chunk-e92d0a0f4627",
+      "chunk-dfb3af915d02",
+      "chunk-b8beaa6a4b00",
+      "chunk-d541fa49c5e6",
+      "chunk-a0ee412dcc7a"
+    ],
+    "source_files": [
+      "Week10\\lecture10-1 (4).pptx",
+      "Week10\\lecture10-2 (3).pptx",
+      "Week9\\lecture10 (1) (7).pptx",
+      "Week9\\lecture9 (1) (5).pptx",
+      "Week9\\lecture9-2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week9\\lecture9 (1) (5).pptx",
+        "display_source": "lecture9 (1) (5).pptx",
+        "location": "slide 1",
+        "section": "Q uiz 1 A ssume: 1) the optical axes of 2 cameras are parallel; 2) the intrinsic parameters of both cameras..."
+      },
+      {
+        "source": "Week9\\lecture9-2.pdf",
+        "display_source": "lecture9-2.pdf",
+        "location": "page 14",
+        "section": "Moving on to stereo…Fuse a calibrated binocular stereo pair to produce a depth imageimage 1image 2"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-stereo-vision-and-depth-q4",
+    "kp_id": "kp-stereo-vision-and-depth",
+    "kp_name": "Stereo vision and depth",
+    "question_type": "multiple_choice",
+    "question": "In the basic stereo matching algorithm, which quantity is computed immediately before depth?",
+    "answer": "Disparity, computed as the horizontal difference x - x'.",
+    "explanation": "The lecture pipeline is: find correspondence, compute disparity, then convert disparity to depth.",
+    "options": [
+      "A. Disparity, computed as the horizontal difference x - x'.",
+      "B. The vanishing point of the scene.",
+      "C. The dominant SIFT orientation.",
+      "D. The Harris corner response."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-52f4a0bd9369",
+      "chunk-8ba0825f91b1",
+      "chunk-db3ef361a258",
+      "chunk-e92d0a0f4627",
+      "chunk-dfb3af915d02",
+      "chunk-b8beaa6a4b00",
+      "chunk-d541fa49c5e6",
+      "chunk-a0ee412dcc7a"
+    ],
+    "source_files": [
+      "Week10\\lecture10-1 (4).pptx",
+      "Week10\\lecture10-2 (3).pptx",
+      "Week9\\lecture10 (1) (7).pptx",
+      "Week9\\lecture9 (1) (5).pptx",
+      "Week9\\lecture9-2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week9\\lecture9-2.pdf",
+        "display_source": "lecture9-2.pdf",
+        "location": "page 15",
+        "section": "Basic stereo matching algorithm"
+      },
+      {
+        "source": "Week10\\lecture10-1.pdf",
+        "display_source": "lecture10-1.pdf",
+        "location": "page 10",
+        "section": "Basic stereo matching algorithm"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-stereo-vision-and-depth-q5",
+    "kp_id": "kp-stereo-vision-and-depth",
+    "kp_name": "Stereo vision and depth",
+    "question_type": "multiple_choice",
+    "question": "In a rectified stereo pair, the same object appears with a larger horizontal shift between left and right images. What does that imply about depth?",
+    "answer": "It is closer to the cameras, because larger disparity implies smaller depth in the stereo setup.",
+    "explanation": "In a fixed stereo rig, nearer points produce larger disparities. The horizontal offset is exactly the cue used to recover depth.",
+    "options": [
+      "A. It is farther away, because disparity grows with depth.",
+      "B. Its depth is unchanged, because horizontal shift carries no geometric meaning.",
+      "C. It is closer to the cameras, because larger disparity implies smaller depth in the stereo setup.",
+      "D. Its segmentation label has changed rather than its depth."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-52f4a0bd9369",
+      "chunk-8ba0825f91b1",
+      "chunk-db3ef361a258",
+      "chunk-e92d0a0f4627",
+      "chunk-dfb3af915d02",
+      "chunk-b8beaa6a4b00",
+      "chunk-d541fa49c5e6",
+      "chunk-a0ee412dcc7a"
+    ],
+    "source_files": [
+      "Week10\\lecture10-1 (4).pptx",
+      "Week10\\lecture10-2 (3).pptx",
+      "Week9\\lecture10 (1) (7).pptx",
+      "Week9\\lecture9 (1) (5).pptx",
+      "Week9\\lecture9-2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week9\\lecture9-2.pdf",
+        "display_source": "lecture9-2.pdf",
+        "location": "page 14",
+        "section": "Moving on to stereo…Fuse a calibrated binocular stereo pair to produce a depth imageimage 1image 2"
+      },
+      {
+        "source": "Week9\\lecture10 (1) (7).pptx",
+        "display_source": "lecture10 (1) (7).pptx",
+        "location": "slide 6",
+        "section": "3D from Stereo Images For stereo cameras with parallel optical axes, focal length f, baseline b, correspond..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-epipolar-geometry-q1",
+    "kp_id": "kp-epipolar-geometry",
+    "kp_name": "Epipolar geometry",
+    "question_type": "multiple_choice",
+    "question": "For a point selected in image 1, where can its corresponding point lie in image 2 according to epipolar geometry?",
+    "answer": "On the associated epipolar line.",
+    "explanation": "A point in one view maps to an epipolar line in the other view, which is the core search constraint.",
+    "options": [
+      "A. Only at the principal point.",
+      "B. Only at a Harris corner with the largest response.",
+      "C. At any pixel in the second image with no geometric restriction.",
+      "D. On the associated epipolar line."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-9da02991c407",
+      "chunk-ddc83b11d06f",
+      "chunk-1e39284e2939",
+      "chunk-a71ec0cfa6aa",
+      "chunk-fd2ce2a5984e",
+      "chunk-78baa3b29ad9",
+      "chunk-df78969275fc",
+      "chunk-b86d54f37226"
+    ],
+    "source_files": [
+      "Week10\\lecture10-1 (4).pptx",
+      "Week10\\lecture10-1.pdf",
+      "Week10\\lecture10-2 (3).pptx",
+      "Week12\\Revision.pdf",
+      "Week9\\lecture9 (1) (5).pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week10\\lecture10-1 (4).pptx",
+        "display_source": "lecture10-1 (4).pptx",
+        "location": "slide 8",
+        "section": "Essential Matrix E ( Longuet -Higgins, 1981) Epipolar constraint: Calibrated case X x x' The vectors R , t ..."
+      },
+      {
+        "source": "Week9\\lecture9 (1) (5).pptx",
+        "display_source": "lecture9 (1) (5).pptx",
+        "location": "slide 9",
+        "section": "Essential Matrix E ( Longuet -Higgins, 1981) Epipolar constraint: Calibrated case X x x' The vectors R , t ..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-epipolar-geometry-q2",
+    "kp_id": "kp-epipolar-geometry",
+    "kp_name": "Epipolar geometry",
+    "question_type": "multiple_choice",
+    "question": "In the displayed two-view geometry, once point p is fixed in the left image, what does the line l' in the right image represent?",
+    "answer": "The epipolar line on which the corresponding point p' must lie.",
+    "explanation": "The geometric diagram shows the key epipolar constraint: a point in one image does not map to the whole second image, but to one specific epipolar line.",
+    "options": [
+      "A. The orientation bin selected by a SIFT descriptor.",
+      "B. The image row containing the camera principal point only.",
+      "C. The epipolar line on which the corresponding point p' must lie.",
+      "D. The boundary of the object's segmentation mask."
+    ],
+    "correct_option": "C",
+    "source_chunk_ids": [
+      "chunk-9da02991c407",
+      "chunk-ddc83b11d06f",
+      "chunk-1e39284e2939",
+      "chunk-a71ec0cfa6aa",
+      "chunk-fd2ce2a5984e",
+      "chunk-78baa3b29ad9",
+      "chunk-df78969275fc",
+      "chunk-b86d54f37226"
+    ],
+    "source_files": [
+      "Week10\\lecture10-1 (4).pptx",
+      "Week10\\lecture10-1.pdf",
+      "Week10\\lecture10-2 (3).pptx",
+      "Week12\\Revision.pdf",
+      "Week9\\lecture9 (1) (5).pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week10\\lecture10-1 (4).pptx",
+        "display_source": "lecture10-1 (4).pptx",
+        "location": "slide 8",
+        "section": "Essential Matrix E ( Longuet -Higgins, 1981) Epipolar constraint: Calibrated case X x x' The vectors R , t ..."
+      },
+      {
+        "source": "Week9\\lecture9 (1) (5).pptx",
+        "display_source": "lecture9 (1) (5).pptx",
+        "location": "slide 9",
+        "section": "Essential Matrix E ( Longuet -Higgins, 1981) Epipolar constraint: Calibrated case X x x' The vectors R , t ..."
+      }
+    ],
+    "image_path": "images/week10-lecture10-1-4/slide-008-ee715e3737c9.png",
+    "image_caption": "Lecture figure from Week10/lecture10-1 (4).pptx slide 8"
+  },
+  {
+    "question_id": "kp-epipolar-geometry-q3",
+    "kp_id": "kp-epipolar-geometry",
+    "kp_name": "Epipolar geometry",
+    "question_type": "multiple_choice",
+    "question": "In an uncalibrated two-view setting, which matrix relates corresponding image points?",
+    "answer": "The fundamental matrix.",
+    "explanation": "The fundamental matrix links image points across uncalibrated views.",
+    "options": [
+      "A. The segmentation confusion matrix.",
+      "B. The fundamental matrix.",
+      "C. The Gaussian smoothing matrix.",
+      "D. The SIFT orientation matrix."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-9da02991c407",
+      "chunk-ddc83b11d06f",
+      "chunk-1e39284e2939",
+      "chunk-a71ec0cfa6aa",
+      "chunk-fd2ce2a5984e",
+      "chunk-78baa3b29ad9",
+      "chunk-df78969275fc",
+      "chunk-b86d54f37226"
+    ],
+    "source_files": [
+      "Week10\\lecture10-1 (4).pptx",
+      "Week10\\lecture10-1.pdf",
+      "Week10\\lecture10-2 (3).pptx",
+      "Week12\\Revision.pdf",
+      "Week9\\lecture9 (1) (5).pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week10\\lecture10-2 (3).pptx",
+        "display_source": "lecture10-2 (3).pptx",
+        "location": "slide 16",
+        "section": "Feature matching Estimate fundamental matrix between each pair (with RANSAC)"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-epipolar-geometry-q4",
+    "kp_id": "kp-epipolar-geometry",
+    "kp_name": "Epipolar geometry",
+    "question_type": "multiple_choice",
+    "question": "The two camera centers and a 3D scene point define which plane?",
+    "answer": "The epipolar plane.",
+    "explanation": "The two camera centers and the 3D point define the epipolar plane, from which the epipolar lines are induced.",
+    "options": [
+      "A. The focal plane only.",
+      "B. A segmentation region.",
+      "C. The image plane only.",
+      "D. The epipolar plane."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-9da02991c407",
+      "chunk-ddc83b11d06f",
+      "chunk-1e39284e2939",
+      "chunk-a71ec0cfa6aa",
+      "chunk-fd2ce2a5984e",
+      "chunk-78baa3b29ad9",
+      "chunk-df78969275fc",
+      "chunk-b86d54f37226"
+    ],
+    "source_files": [
+      "Week10\\lecture10-1 (4).pptx",
+      "Week10\\lecture10-1.pdf",
+      "Week10\\lecture10-2 (3).pptx",
+      "Week12\\Revision.pdf",
+      "Week9\\lecture9 (1) (5).pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week10\\lecture10-1 (4).pptx",
+        "display_source": "lecture10-1 (4).pptx",
+        "location": "slide 13",
+        "section": "Stereo image rectification Reproject image planes onto a common plane parallel to the line between camera c..."
+      },
+      {
+        "source": "Week9\\lecture9 (1) (5).pptx",
+        "display_source": "lecture9 (1) (5).pptx",
+        "location": "slide 14",
+        "section": "Stereo image rectification Reproject image planes onto a common plane parallel to the line between camera c..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-epipolar-geometry-q5",
+    "kp_id": "kp-epipolar-geometry",
+    "kp_name": "Epipolar geometry",
+    "question_type": "multiple_choice",
+    "question": "Once a point is fixed in image 1, why is the search in image 2 restricted to a line rather than the whole image?",
+    "answer": "Because epipolar geometry constrains the corresponding point to lie on the associated epipolar line.",
+    "explanation": "The practical value of epipolar geometry is exactly this reduction of correspondence search from a 2D region to a 1D epipolar line.",
+    "options": [
+      "A. Because bag-of-words quantization replaces geometric search.",
+      "B. Because CNN pooling reduces the image to one spatial position.",
+      "C. Because SIFT normalization removes the need to search elsewhere.",
+      "D. Because epipolar geometry constrains the corresponding point to lie on the associated epipolar line."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-9da02991c407",
+      "chunk-ddc83b11d06f",
+      "chunk-1e39284e2939",
+      "chunk-a71ec0cfa6aa",
+      "chunk-fd2ce2a5984e",
+      "chunk-78baa3b29ad9",
+      "chunk-df78969275fc",
+      "chunk-b86d54f37226"
+    ],
+    "source_files": [
+      "Week10\\lecture10-1 (4).pptx",
+      "Week10\\lecture10-1.pdf",
+      "Week10\\lecture10-2 (3).pptx",
+      "Week12\\Revision.pdf",
+      "Week9\\lecture9 (1) (5).pptx"
+    ],
+    "review_refs": [
+      {
+        "source": "Week10\\lecture10-1 (4).pptx",
+        "display_source": "lecture10-1 (4).pptx",
+        "location": "slide 10",
+        "section": "Basic stereo matching algorithm If necessary, rectify the two stereo images to transform epipolar lines int..."
+      },
+      {
+        "source": "Week9\\lecture9 (1) (5).pptx",
+        "display_source": "lecture9 (1) (5).pptx",
+        "location": "slide 11",
+        "section": "Basic stereo matching algorithm If necessary, rectify the two stereo images to transform epipolar lines int..."
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-structure-from-motion-q1",
+    "kp_id": "kp-structure-from-motion",
+    "kp_name": "Structure from motion",
+    "question_type": "multiple_choice",
+    "question": "How does structure from motion differ from traditional stereo vision in the course materials?",
+    "answer": "SfM can work with multiple images and arbitrary camera motion while jointly estimating camera poses and 3D structure.",
+    "explanation": "The tutorial notes contrast SfM with stereo by emphasizing arbitrary motion and joint estimation of structure and camera pose.",
+    "options": [
+      "A. SfM requires exactly two rectified cameras with fixed known baseline.",
+      "B. SfM can work with multiple images and arbitrary camera motion while jointly estimating camera poses and 3D structure.",
+      "C. SfM is only another name for edge detection.",
+      "D. SfM ignores camera motion and estimates only image smoothing."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-0c662378356a",
+      "chunk-2eccc825e7e3",
+      "chunk-58e1f23fcd02",
+      "chunk-a740e4a8db39",
+      "chunk-ccf0659a9efd",
+      "chunk-afc6d20fc77f",
+      "chunk-b1a1aeb3039f",
+      "chunk-72fce3690733"
+    ],
+    "source_files": [
+      "Week10\\lecture10-2 (3).pptx",
+      "Week10\\lecture10-2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week10\\lecture10-2 (3).pptx",
+        "display_source": "lecture10-2 (3).pptx",
+        "location": "slide 10",
+        "section": "Structure from motion SfM solves both of these problems at once A kind of chicken-and-egg problem (but solvable)"
+      },
+      {
+        "source": "Week10\\lecture10-2.pdf",
+        "display_source": "lecture10-2.pdf",
+        "location": "page 5",
+        "section": "Structure from motion"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-structure-from-motion-q2",
+    "kp_id": "kp-structure-from-motion",
+    "kp_name": "Structure from motion",
+    "question_type": "multiple_choice",
+    "question": "What kind of input does an SfM pipeline need?",
+    "answer": "Multiple overlapping 2D images of the same scene, optionally with known intrinsics.",
+    "explanation": "The tutorial Q&A states that SfM uses multiple 2D images of the same scene and may also use known camera intrinsics.",
+    "options": [
+      "A. Only a disparity map with no original images.",
+      "B. A 1D signal with no image coordinates.",
+      "C. A single segmented image only.",
+      "D. Multiple overlapping 2D images of the same scene, optionally with known intrinsics."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-0c662378356a",
+      "chunk-2eccc825e7e3",
+      "chunk-58e1f23fcd02",
+      "chunk-a740e4a8db39",
+      "chunk-ccf0659a9efd",
+      "chunk-afc6d20fc77f",
+      "chunk-b1a1aeb3039f",
+      "chunk-72fce3690733"
+    ],
+    "source_files": [
+      "Week10\\lecture10-2 (3).pptx",
+      "Week10\\lecture10-2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week10\\lecture10-2 (3).pptx",
+        "display_source": "lecture10-2 (3).pptx",
+        "location": "slide 10",
+        "section": "Structure from motion SfM solves both of these problems at once A kind of chicken-and-egg problem (but solvable)"
+      },
+      {
+        "source": "Week10\\lecture10-2.pdf",
+        "display_source": "lecture10-2.pdf",
+        "location": "page 9",
+        "section": "Camera calibration & triangulation"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-structure-from-motion-q3",
+    "kp_id": "kp-structure-from-motion",
+    "kp_name": "Structure from motion",
+    "question_type": "multiple_choice",
+    "question": "Why is RANSAC applied to feature matches in a typical SfM pipeline?",
+    "answer": "To reject outlier correspondences before estimating the two-view geometry.",
+    "explanation": "The tutorial material describes RANSAC as fitting a model, counting inliers, and rejecting outliers among matches.",
+    "options": [
+      "A. To reject outlier correspondences before estimating the two-view geometry.",
+      "B. To remove the need for camera pose estimation.",
+      "C. To enlarge the camera baseline automatically.",
+      "D. To convert the matches into CNN feature maps."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-0c662378356a",
+      "chunk-2eccc825e7e3",
+      "chunk-58e1f23fcd02",
+      "chunk-a740e4a8db39",
+      "chunk-ccf0659a9efd",
+      "chunk-afc6d20fc77f",
+      "chunk-b1a1aeb3039f",
+      "chunk-72fce3690733"
+    ],
+    "source_files": [
+      "Week10\\lecture10-2 (3).pptx",
+      "Week10\\lecture10-2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week10\\lecture10-2 (3).pptx",
+        "display_source": "lecture10-2 (3).pptx",
+        "location": "slide 16",
+        "section": "Feature matching Estimate fundamental matrix between each pair (with RANSAC)"
+      },
+      {
+        "source": "Week10\\lecture10-2 (3).pptx",
+        "display_source": "lecture10-2 (3).pptx",
+        "location": "slide 12",
+        "section": "First step: how to get correspondence? Feature detection and matching"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-structure-from-motion-q4",
+    "kp_id": "kp-structure-from-motion",
+    "kp_name": "Structure from motion",
+    "question_type": "multiple_choice",
+    "question": "What does the reconstructed sparse point cloud in SfM represent?",
+    "answer": "Estimated 3D scene points recovered from multiple images.",
+    "explanation": "Sparse 3D points are a standard SfM output, reconstructed from repeated observations across views.",
+    "options": [
+      "A. Estimated 3D scene points recovered from multiple images.",
+      "B. Only the set of camera intrinsics.",
+      "C. A histogram of visual words for retrieval.",
+      "D. A dense semantic segmentation map."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-0c662378356a",
+      "chunk-2eccc825e7e3",
+      "chunk-58e1f23fcd02",
+      "chunk-a740e4a8db39",
+      "chunk-ccf0659a9efd",
+      "chunk-afc6d20fc77f",
+      "chunk-b1a1aeb3039f",
+      "chunk-72fce3690733"
+    ],
+    "source_files": [
+      "Week10\\lecture10-2 (3).pptx",
+      "Week10\\lecture10-2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week10\\lecture10-2 (3).pptx",
+        "display_source": "lecture10-2 (3).pptx",
+        "location": "slide 7",
+        "section": "Structure from motion Input: images with points in correspondence p i , j = ( u i , j , v i , j ) Output st..."
+      },
+      {
+        "source": "Week10\\lecture10-2.pdf",
+        "display_source": "lecture10-2.pdf",
+        "location": "page 2",
+        "section": "What is Point Cloud"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-structure-from-motion-q5",
+    "kp_id": "kp-structure-from-motion",
+    "kp_name": "Structure from motion",
+    "question_type": "multiple_choice",
+    "question": "A reconstruction result shows estimated camera poses around a sparse 3D point cloud. What has been recovered?",
+    "answer": "Both the scene structure and the camera poses from multiple overlapping images.",
+    "explanation": "An SfM reconstruction is typically visualized by camera poses together with a sparse 3D point cloud, indicating joint recovery of motion and structure.",
+    "options": [
+      "A. A bag-of-words histogram for image retrieval.",
+      "B. Both the scene structure and the camera poses from multiple overlapping images.",
+      "C. Dense optical flow between a pair of neighboring frames only.",
+      "D. A local smoothing result from image filtering."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-0c662378356a",
+      "chunk-2eccc825e7e3",
+      "chunk-58e1f23fcd02",
+      "chunk-a740e4a8db39",
+      "chunk-ccf0659a9efd",
+      "chunk-afc6d20fc77f",
+      "chunk-b1a1aeb3039f",
+      "chunk-72fce3690733"
+    ],
+    "source_files": [
+      "Week10\\lecture10-2 (3).pptx",
+      "Week10\\lecture10-2.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week10\\lecture10-2 (3).pptx",
+        "display_source": "lecture10-2 (3).pptx",
+        "location": "slide 10",
+        "section": "Structure from motion SfM solves both of these problems at once A kind of chicken-and-egg problem (but solvable)"
+      },
+      {
+        "source": "Week10\\lecture10-2.pdf",
+        "display_source": "lecture10-2.pdf",
+        "location": "page 7",
+        "section": "Structure from motion"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-motion-and-optical-flow-q1",
+    "kp_id": "kp-motion-and-optical-flow",
+    "kp_name": "Motion and optical flow",
+    "question_type": "multiple_choice",
+    "question": "When Lucas-Kanade derives the optical-flow constraint equation for a moving point, which assumption is being used?",
+    "answer": "The same moving point keeps approximately the same image brightness between nearby frames.",
+    "explanation": "Lucas-Kanade starts from the assumption that the brightness of a moving image point does not change much over a short time interval.",
+    "options": [
+      "A. The camera focal length changes together with the motion field.",
+      "B. The same moving point keeps approximately the same image brightness between nearby frames.",
+      "C. Every moving point keeps exactly the same depth in world coordinates.",
+      "D. Every frame has the same global histogram after smoothing."
+    ],
+    "correct_option": "B",
+    "source_chunk_ids": [
+      "chunk-d794fc211e2d",
+      "chunk-8f2925e40e2d",
+      "chunk-e95ff2f7c0de",
+      "chunk-af4d3b373f64",
+      "chunk-ed079ab8f230",
+      "chunk-4606c92a8c5f",
+      "chunk-64e64c251e7a",
+      "chunk-56d7cf3e06fc"
+    ],
+    "source_files": [
+      "Week11\\Lecture-opticalflow1.pptx",
+      "Week11\\Lecture11.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week11\\Lecture11.pdf",
+        "display_source": "Lecture11.pdf",
+        "location": "page 16",
+        "section": "Optical Flow"
+      },
+      {
+        "source": "Week11\\Lecture11.pdf",
+        "display_source": "Lecture11.pdf",
+        "location": "page 18",
+        "section": "The brightness constancy constraint"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-motion-and-optical-flow-q2",
+    "kp_id": "kp-motion-and-optical-flow",
+    "kp_name": "Motion and optical flow",
+    "question_type": "multiple_choice",
+    "question": "If motion is observed only through a small aperture on a straight edge, which motion component can usually be estimated reliably?",
+    "answer": "Only the motion component perpendicular to the edge.",
+    "explanation": "This is the aperture problem: a straight edge gives insufficient information to determine full 2D motion.",
+    "options": [
+      "A. Only the scene depth of the point.",
+      "B. Only the motion component parallel to the edge.",
+      "C. The full 2D motion vector with no ambiguity.",
+      "D. Only the motion component perpendicular to the edge."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-d794fc211e2d",
+      "chunk-8f2925e40e2d",
+      "chunk-e95ff2f7c0de",
+      "chunk-af4d3b373f64",
+      "chunk-ed079ab8f230",
+      "chunk-4606c92a8c5f",
+      "chunk-64e64c251e7a",
+      "chunk-56d7cf3e06fc"
+    ],
+    "source_files": [
+      "Week11\\Lecture-opticalflow1.pptx",
+      "Week11\\Lecture11.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week11\\Lecture-opticalflow1.pptx",
+        "display_source": "Lecture-opticalflow1.pptx",
+        "location": "slide 21",
+        "section": "Aperture Problem Exposed Motion along just an edge is ambiguous"
+      },
+      {
+        "source": "Week11\\Lecture11.pdf",
+        "display_source": "Lecture11.pdf",
+        "location": "page 21",
+        "section": "Aperture Problem Exposed"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-motion-and-optical-flow-q3",
+    "kp_id": "kp-motion-and-optical-flow",
+    "kp_name": "Motion and optical flow",
+    "question_type": "multiple_choice",
+    "question": "Why does Lucas-Kanade usually aggregate information over a small neighborhood instead of using a single pixel only?",
+    "answer": "Because one pixel gives too little information to solve for the two motion components reliably.",
+    "explanation": "The optical-flow equation alone is underconstrained, so Lucas-Kanade uses nearby pixels and spatial coherence to estimate motion.",
+    "options": [
+      "A. Because a single pixel already gives three independent motion equations.",
+      "B. Because neighborhoods remove the need for brightness constancy.",
+      "C. Because neighborhoods guarantee perfect semantic segmentation.",
+      "D. Because one pixel gives too little information to solve for the two motion components reliably."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-d794fc211e2d",
+      "chunk-8f2925e40e2d",
+      "chunk-e95ff2f7c0de",
+      "chunk-af4d3b373f64",
+      "chunk-ed079ab8f230",
+      "chunk-4606c92a8c5f",
+      "chunk-64e64c251e7a",
+      "chunk-56d7cf3e06fc"
+    ],
+    "source_files": [
+      "Week11\\Lecture-opticalflow1.pptx",
+      "Week11\\Lecture11.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week11\\Lecture-opticalflow1.pptx",
+        "display_source": "Lecture-opticalflow1.pptx",
+        "location": "slide 18",
+        "section": "The brightness constancy constraint How many equations and unknowns per pixel? One equation, two unknowns (..."
+      },
+      {
+        "source": "Week11\\Lecture11.pdf",
+        "display_source": "Lecture11.pdf",
+        "location": "page 35",
+        "section": "Revisiting the small motion assumption"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-motion-and-optical-flow-q4",
+    "kp_id": "kp-motion-and-optical-flow",
+    "kp_name": "Motion and optical flow",
+    "question_type": "multiple_choice",
+    "question": "What is the purpose of the coarse-to-fine pyramid used in iterative optical flow estimation?",
+    "answer": "It allows larger motions to be handled by first solving them at coarse resolution and then refining at finer levels.",
+    "explanation": "The lecture shows Gaussian pyramids and iterative refinement so that large displacements become easier to estimate.",
+    "options": [
+      "A. It removes the need to warp images during refinement.",
+      "B. It guarantees that brightness constancy is always exact.",
+      "C. It converts optical flow into stereo disparity.",
+      "D. It allows larger motions to be handled by first solving them at coarse resolution and then refining at finer levels."
+    ],
+    "correct_option": "D",
+    "source_chunk_ids": [
+      "chunk-d794fc211e2d",
+      "chunk-8f2925e40e2d",
+      "chunk-e95ff2f7c0de",
+      "chunk-af4d3b373f64",
+      "chunk-ed079ab8f230",
+      "chunk-4606c92a8c5f",
+      "chunk-64e64c251e7a",
+      "chunk-56d7cf3e06fc"
+    ],
+    "source_files": [
+      "Week11\\Lecture-opticalflow1.pptx",
+      "Week11\\Lecture11.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week11\\Lecture11.pdf",
+        "display_source": "Lecture11.pdf",
+        "location": "page 37",
+        "section": "image Iimage JGaussian pyramid of image 1 (t)Gaussian pyramid of image 2 (t+1)image 2image 1"
+      },
+      {
+        "source": "Week11\\Lecture11.pdf",
+        "display_source": "Lecture11.pdf",
+        "location": "page 39",
+        "section": "image Iimage HGaussian pyramid of image 1Gaussian pyramid of image 2image 2image 1u=10 pixels"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  },
+  {
+    "question_id": "kp-motion-and-optical-flow-q5",
+    "kp_id": "kp-motion-and-optical-flow",
+    "kp_name": "Motion and optical flow",
+    "question_type": "multiple_choice",
+    "question": "In an optical-flow field, what does a longer motion vector at a pixel indicate?",
+    "answer": "A larger magnitude of apparent image motion at that pixel.",
+    "explanation": "Optical-flow arrows encode motion vectors, so longer arrows represent larger estimated image displacement magnitudes.",
+    "options": [
+      "A. A larger magnitude of apparent image motion at that pixel.",
+      "B. A longer projection ray in the pinhole camera model.",
+      "C. A higher probability that the pixel belongs to a semantic class.",
+      "D. A larger visual-word cluster center in bag-of-words retrieval."
+    ],
+    "correct_option": "A",
+    "source_chunk_ids": [
+      "chunk-d794fc211e2d",
+      "chunk-8f2925e40e2d",
+      "chunk-e95ff2f7c0de",
+      "chunk-af4d3b373f64",
+      "chunk-ed079ab8f230",
+      "chunk-4606c92a8c5f",
+      "chunk-64e64c251e7a",
+      "chunk-56d7cf3e06fc"
+    ],
+    "source_files": [
+      "Week11\\Lecture-opticalflow1.pptx",
+      "Week11\\Lecture11.pdf"
+    ],
+    "review_refs": [
+      {
+        "source": "Week11\\Lecture-opticalflow1.pptx",
+        "display_source": "Lecture-opticalflow1.pptx",
+        "location": "slide 14",
+        "section": "What is Optical Flow? Optical Flow Velocity vectors Optical flow is the pattern of apparent motion of objec..."
+      },
+      {
+        "source": "Week11\\Lecture11.pdf",
+        "display_source": "Lecture11.pdf",
+        "location": "page 9",
+        "section": "-Optical flow-Recover image motion at each pixel from spatio-temporal image brightness variations (optical flow)"
+      }
+    ],
+    "image_path": null,
+    "image_caption": null
+  }
+]

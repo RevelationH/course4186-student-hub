@@ -106,7 +106,7 @@ def start_portal_process() -> subprocess.Popen:
     env = os.environ.copy()
     env["PYTHONUTF8"] = "1"
     env["PYTHONIOENCODING"] = "utf-8"
-    preferred_artifact_dir = ROOT_DIR / "course4186_rag" / "artifacts_week1_week6"
+    preferred_artifact_dir = ROOT_DIR / "course4186_rag" / "artifacts_full_course"
     if preferred_artifact_dir.exists() and not env.get("COURSE4186_ARTIFACT_DIR"):
         env["COURSE4186_ARTIFACT_DIR"] = str(preferred_artifact_dir)
     if not any(env.get(name) for name in ("COURSE_LLM_API_KEY", "DEEPSEEK_API_KEY", "KIMI_API_KEY")) and KIMI_API_KEY:

@@ -22,7 +22,10 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 import xml.etree.ElementTree as ET
 
 from pypdf import PdfReader
-from exam_question_blueprints import QUESTION_BLUEPRINTS
+try:
+    from question_blueprints import QUESTION_BLUEPRINTS
+except Exception:
+    from exam_question_blueprints import QUESTION_BLUEPRINTS
 
 try:
     from openai import OpenAI
@@ -67,6 +70,20 @@ BROWSER_IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp"}
 MIN_SLIDE_IMAGE_BYTES = 4096
 MIN_QUESTION_COUNT = 5
 SOURCE_TYPE_PRIORITY = {"pptx": 0, "ppt": 0, "pdf": 1, "docx": 2}
+REVIEW_STOPWORDS = {
+    "the", "and", "for", "with", "from", "that", "this", "what", "which", "when",
+    "where", "how", "why", "into", "onto", "about", "under", "over", "their", "there",
+    "these", "those", "used", "using", "being", "between", "through", "after", "before",
+    "during", "main", "best", "most", "does", "used", "same", "course", "lecture",
+    "question", "image", "figure", "shown", "showing", "illustrating", "system", "task",
+    "point", "points", "would", "should", "could", "because", "into", "only", "than",
+    "then", "while", "they", "them", "their", "your", "yours", "have", "has", "had",
+    "are", "was", "were", "is", "to", "of", "in", "on", "at", "by", "as", "be", "a",
+    "an", "or", "it", "if",
+}
+QUIZ_EXCLUDED_KP_NAMES = {
+    "LLM prompting and DeepSeek overview",
+}
 
 
 @dataclass
@@ -635,11 +652,13 @@ COURSE_TAXONOMY: List[Dict[str, Any]] = [
         "description": "Understanding what computer vision studies: how images are represented, interpreted, and used for recognition, measurement, and scene understanding.",
         "keywords": [
             "computer vision",
-            "image understanding",
-            "image representation",
-            "recognition",
-            "scene understanding",
-            "vision tasks",
+            "goal of computer vision",
+            "what is computer vision",
+            "why is computer vision difficult",
+            "viewpoint variation",
+            "illumination",
+            "background clutter",
+            "occlusion",
         ],
     },
     {
@@ -666,7 +685,15 @@ COURSE_TAXONOMY: List[Dict[str, Any]] = [
         "name": "Image resampling",
         "start_week": 2,
         "description": "Changing image resolution or coordinate sampling while preserving useful information.",
-        "keywords": ["image resampling", "resampling", "sampling", "resolution"],
+        "keywords": [
+            "image resampling",
+            "image scaling",
+            "sub-sampling",
+            "upsampling",
+            "interpolation",
+            "nearest neighbor interpolation",
+            "aliasing",
+        ],
     },
     {
         "name": "Texture analysis",
@@ -726,13 +753,13 @@ COURSE_TAXONOMY: List[Dict[str, Any]] = [
         "name": "Stereo vision and depth",
         "start_week": 10,
         "description": "Recovering depth or 3D structure from multiple views by finding correspondences across images.",
-        "keywords": ["stereo vision", "depth map", "stereo reconstruction", "correspondence"],
+        "keywords": ["stereo vision", "depth map", "stereo reconstruction", "correspondence", "disparity", "rectification"],
     },
     {
         "name": "Epipolar geometry",
         "start_week": 10,
         "description": "Constraining stereo correspondences with epipolar lines and geometric relations.",
-        "keywords": ["epipolar", "epipolar constraint", "cross product", "essential matrix", "fundamental matrix"],
+        "keywords": ["epipolar", "epipolar line", "epipolar plane", "epipolar constraint", "essential matrix", "fundamental matrix"],
     },
     {
         "name": "Structure from motion",
@@ -744,7 +771,7 @@ COURSE_TAXONOMY: List[Dict[str, Any]] = [
         "name": "Motion and optical flow",
         "start_week": 11,
         "description": "Estimating pixel or feature motion across frames to understand dynamic scenes.",
-        "keywords": ["motion", "optical flow", "moving world"],
+        "keywords": ["motion", "optical flow", "brightness constancy", "Lucas-Kanade", "aperture problem"],
     },
     {
         "name": "LLM prompting and DeepSeek overview",
@@ -906,21 +933,72 @@ def build_knowledge_points(chunk_records: Sequence[ChunkRecord]) -> List[Knowled
         max_supported_week = max((parse_week_number(chunk.week) or 0) for chunk in chunk_records) if chunk_records else 0
         if max_supported_week and start_week > max_supported_week:
             continue
-        scored: List[Tuple[int, ChunkRecord]] = []
+        scored: List[Tuple[float, ChunkRecord, List[str]]] = []
+        best_by_keyword: Dict[str, Tuple[float, ChunkRecord]] = {}
         for chunk in chunk_records:
             blob = "\n".join([chunk.title, chunk.relative_path, chunk.text]).lower()
-            score = 0
+            title_blob = "\n".join([chunk.title, chunk.relative_path]).lower()
+            matched_keywords: List[str] = []
+            score = 0.0
             for keyword in entry["keywords"]:
                 term = keyword.lower()
                 if term in blob:
-                    score += 2 if term in chunk.title.lower() or term in chunk.relative_path.lower() else 1
+                    matched_keywords.append(keyword)
+                    score += 3.0 if term in title_blob else 1.5
+            if not matched_keywords:
+                continue
+            if len(matched_keywords) > 1:
+                score += min(len(matched_keywords) - 1, 3) * 0.9
+
+            relative_path = normalized_relative_path(chunk.relative_path)
+            week_number = parse_week_number(chunk.week) or start_week
+            if not is_revision_path(relative_path):
+                score -= abs(week_number - start_week) * 0.6
+            else:
+                score -= 1.5
+            if "lecture" in relative_path:
+                score += 2.0
+            if str(chunk.source_type).lower() in {"pptx", "pdf"}:
+                score += 1.0
+            if "tutorial/" in relative_path:
+                score -= 1.2
+            if "question" in relative_path:
+                score -= 3.5
+            if "answer" in relative_path:
+                score -= 2.5
             if score > 0:
-                scored.append((score, chunk))
+                scored.append((score, chunk, matched_keywords))
+                for keyword in matched_keywords:
+                    current = best_by_keyword.get(keyword)
+                    if current is None or support_sort_key(score, chunk) < support_sort_key(current[0], current[1]):
+                        best_by_keyword[keyword] = (score, chunk)
         if not scored:
             continue
 
-        scored.sort(key=lambda pair: (-pair[0], pair[1].relative_path, pair[1].chunk_index))
-        selected = [chunk for _, chunk in scored[:8]]
+        scored.sort(key=lambda pair: support_sort_key(pair[0], pair[1]))
+        selected: List[ChunkRecord] = []
+        seen_chunk_ids: set[str] = set()
+
+        for keyword in entry["keywords"]:
+            candidate = best_by_keyword.get(keyword)
+            if candidate is None:
+                continue
+            chunk = candidate[1]
+            if chunk.chunk_id in seen_chunk_ids:
+                continue
+            selected.append(chunk)
+            seen_chunk_ids.add(chunk.chunk_id)
+            if len(selected) >= 10:
+                break
+
+        for score, chunk, _matched_keywords in scored:
+            if len(selected) >= 10:
+                break
+            if chunk.chunk_id in seen_chunk_ids:
+                continue
+            selected.append(chunk)
+            seen_chunk_ids.add(chunk.chunk_id)
+
         knowledge_points.append(
             KnowledgePoint(
                 kp_id=f"kp-{slugify(entry['name'])}",
@@ -1113,16 +1191,71 @@ def section_label_for_chunk(chunk: ChunkRecord) -> str:
     return title
 
 
-def build_review_refs(
+def normalized_relative_path(relative_path: str) -> str:
+    return str(relative_path or "").replace("\\", "/").lower()
+
+
+def is_revision_path(relative_path: str) -> bool:
+    return "revision" in normalized_relative_path(relative_path)
+
+
+def is_low_priority_review_source(relative_path: str, source_type: str) -> bool:
+    path = normalized_relative_path(relative_path)
+    return (
+        is_revision_path(path)
+        or "question" in path
+        or "answer" in path
+        or "tutorial/" in path
+        or str(source_type or "").lower() == "docx"
+    )
+
+
+def support_sort_key(score: float, chunk: ChunkRecord) -> Tuple[float, int, int, str, int]:
+    return (
+        -float(score),
+        1 if is_revision_path(str(chunk.relative_path)) else 0,
+        SOURCE_TYPE_PRIORITY.get(str(chunk.source_type).lower(), 3),
+        str(chunk.relative_path),
+        int(chunk.unit_index or 0),
+    )
+
+
+def review_path_penalty(relative_path: str, source_type: str) -> float:
+    path = normalized_relative_path(relative_path)
+    penalty = 0.0
+    if "revision" in path:
+        penalty += 2.0
+    if "question" in path:
+        penalty += 4.5
+    if "answer" in path:
+        penalty += 3.0
+    if "tutorial/" in path:
+        penalty += 1.2
+    if str(source_type or "").lower() == "docx":
+        penalty += 0.8
+    return penalty
+
+
+def review_token_set(*texts: str) -> set[str]:
+    tokens: set[str] = set()
+    for text in texts:
+        for token in tokenize(text):
+            if len(token) <= 2 or token in REVIEW_STOPWORDS:
+                continue
+            tokens.add(token)
+    return tokens
+
+
+def rank_review_chunks(
     prompt: str,
     correct_text: str,
     explanation: str,
     support_chunks: Sequence[ChunkRecord],
     review_terms: Optional[Sequence[str]] = None,
-    max_refs: int = 2,
-) -> List[Dict[str, Any]]:
+) -> List[Tuple[float, ChunkRecord]]:
     if not support_chunks:
         return []
+
     query = " ".join(
         part for part in [
             clean_display_text(prompt),
@@ -1132,29 +1265,124 @@ def build_review_refs(
         ]
         if part
     ).strip()
-    hits = lexical_rank(
+    query_terms = review_token_set(query)
+    anchor_terms = review_token_set(" ".join(clean_display_text(term) for term in (review_terms or [])))
+
+    lexical_hits = lexical_rank(
         query or clean_display_text(correct_text),
         support_chunks,
         text_getter=lambda chunk: "\n".join([chunk.title, chunk.relative_path, chunk.text]),
         top_k=len(support_chunks),
     )
+    lexical_scores: Dict[str, float] = {
+        chunk.chunk_id: float(score)
+        for score, chunk in lexical_hits
+    }
+
     ranked: List[Tuple[float, ChunkRecord]] = []
     seen: set[Tuple[str, str, int]] = set()
-    for score, chunk in hits:
+    for chunk in support_chunks:
         key = (chunk.relative_path, chunk.unit_type, chunk.unit_index)
         if key in seen:
             continue
         seen.add(key)
-        priority_boost = 2.0 - float(SOURCE_TYPE_PRIORITY.get(str(chunk.source_type).lower(), 3))
-        ranked.append((score + priority_boost, chunk))
+
+        title_text = clean_display_text(chunk.title)
+        section_text = section_label_for_chunk(chunk)
+        path_text = str(chunk.relative_path).replace("\\", "/")
+        title_terms = review_token_set(title_text)
+        section_terms = review_token_set(section_text)
+        path_terms = review_token_set(path_text)
+        body_terms = review_token_set(chunk.text[:600])
+        combined_terms = title_terms | section_terms | path_terms | body_terms
+
+        title_overlap = len(query_terms & title_terms)
+        section_overlap = len(query_terms & section_terms)
+        path_overlap = len(query_terms & path_terms)
+        body_overlap = len(query_terms & body_terms)
+        anchor_overlap = len(anchor_terms & combined_terms) if anchor_terms else 0
+
+        exact_phrase_bonus = 0.0
+        for term in review_terms or []:
+            phrase = clean_display_text(str(term or "")).lower()
+            if not phrase:
+                continue
+            haystack = " ".join([title_text, section_text, chunk.text[:600]]).lower()
+            if phrase in haystack:
+                exact_phrase_bonus += 3.0
+
+        score = (
+            lexical_scores.get(chunk.chunk_id, 0.0)
+            + title_overlap * 4.5
+            + section_overlap * 3.5
+            + path_overlap * 3.0
+            + body_overlap * 1.5
+            + anchor_overlap * 5.0
+            + exact_phrase_bonus
+            + (2.0 - float(SOURCE_TYPE_PRIORITY.get(str(chunk.source_type).lower(), 3)))
+        )
+
+        relative_path = path_text.lower()
+        if "revision" in relative_path and anchor_overlap == 0 and (title_overlap + section_overlap) == 0:
+            score -= 3.5
+        score -= review_path_penalty(relative_path, str(chunk.source_type))
+        if not (title_overlap or section_overlap or path_overlap or body_overlap or anchor_overlap or lexical_scores.get(chunk.chunk_id)):
+            score -= 5.0
+
+        ranked.append((score, chunk))
+
+    ranked.sort(
+        key=lambda item: (
+            -item[0],
+            SOURCE_TYPE_PRIORITY.get(str(item[1].source_type).lower(), 3),
+            item[1].relative_path,
+            item[1].unit_index,
+        )
+    )
+    return ranked
+
+
+def build_review_refs(
+    prompt: str,
+    correct_text: str,
+    explanation: str,
+    support_chunks: Sequence[ChunkRecord],
+    review_terms: Optional[Sequence[str]] = None,
+    max_refs: int = 2,
+) -> List[Dict[str, Any]]:
+    ranked = rank_review_chunks(
+        prompt=prompt,
+        correct_text=correct_text,
+        explanation=explanation,
+        support_chunks=support_chunks,
+        review_terms=review_terms,
+    )
     if not ranked:
-        ranked = [
-            (2.0 - float(SOURCE_TYPE_PRIORITY.get(str(chunk.source_type).lower(), 3)), chunk)
-            for chunk in support_chunks
+        return []
+
+    top_score = ranked[0][0]
+    strong_threshold = max(2.0, top_score * 0.55)
+    relaxed_threshold = max(1.5, top_score * 0.35)
+    viable_ranked = [(score, chunk) for score, chunk in ranked if score >= strong_threshold]
+    if not viable_ranked:
+        viable_ranked = ranked[:1]
+
+    preferred_ranked = [
+        (score, chunk)
+        for score, chunk in viable_ranked
+        if not is_low_priority_review_source(str(chunk.relative_path), str(chunk.source_type))
+    ]
+    if not preferred_ranked:
+        preferred_ranked = [
+            (score, chunk)
+            for score, chunk in ranked
+            if score >= relaxed_threshold and not is_low_priority_review_source(str(chunk.relative_path), str(chunk.source_type))
         ]
-    ranked.sort(key=lambda item: (-item[0], SOURCE_TYPE_PRIORITY.get(str(item[1].source_type).lower(), 3), item[1].unit_index))
+    if not preferred_ranked:
+        preferred_ranked = viable_ranked
+
     refs: List[Dict[str, Any]] = []
-    for _, chunk in ranked[:max_refs]:
+    for score, chunk in preferred_ranked:
         source_path = str(chunk.relative_path).replace("\\", "/")
         refs.append(
             {
@@ -1164,6 +1392,8 @@ def build_review_refs(
                 "section": section_label_for_chunk(chunk),
             }
         )
+        if len(refs) >= max_refs:
+            break
     return refs
 
 
@@ -1203,19 +1433,66 @@ def build_mcq_question(
 def select_question_image(
     support_chunks: Sequence[ChunkRecord],
     slide_images_by_doc_id: Dict[str, List[SlideImageRecord]],
+    prompt: str,
+    correct_text: str,
+    explanation: str,
+    review_terms: Optional[Sequence[str]] = None,
 ) -> Optional[SlideImageRecord]:
-    candidates: List[SlideImageRecord] = []
-    seen_paths: set[str] = set()
-    for chunk in support_chunks:
-        for image in slide_images_by_doc_id.get(chunk.doc_id, []):
-            if image.image_path in seen_paths:
-                continue
-            seen_paths.add(image.image_path)
-            candidates.append(image)
-    if not candidates:
+    ranked_chunks = rank_review_chunks(
+        prompt=prompt,
+        correct_text=correct_text,
+        explanation=explanation,
+        support_chunks=support_chunks,
+        review_terms=review_terms,
+    )
+    if not ranked_chunks:
         return None
-    candidates.sort(key=lambda item: (-item.size_bytes, item.relative_path, item.slide_index))
-    return candidates[0]
+
+    preferred_ranked = [
+        (score, chunk)
+        for score, chunk in ranked_chunks
+        if not is_low_priority_review_source(str(chunk.relative_path), str(chunk.source_type))
+    ] or ranked_chunks
+    top_score, top_chunk = preferred_ranked[0]
+
+    if str(top_chunk.source_type).lower() in {"pptx", "ppt"} and str(top_chunk.unit_type).lower() == "slide":
+        candidates = list(slide_images_by_doc_id.get(top_chunk.doc_id, []))
+        if candidates:
+            candidates.sort(key=lambda item: (-item.size_bytes, item.relative_path, item.slide_index))
+            return candidates[0]
+        return None
+
+    top_terms = review_token_set(top_chunk.title, top_chunk.text[:260])
+    for score, chunk in preferred_ranked[1:]:
+        if score < max(2.5, top_score * 0.72):
+            break
+        if str(chunk.source_type).lower() not in {"pptx", "ppt"} or str(chunk.unit_type).lower() != "slide":
+            continue
+        if chunk.week != top_chunk.week or int(chunk.unit_index or 0) != int(top_chunk.unit_index or 0):
+            continue
+        candidate_terms = review_token_set(chunk.title, chunk.text[:260])
+        if top_terms and len(top_terms & candidate_terms) < min(2, len(top_terms)):
+            continue
+        candidates = list(slide_images_by_doc_id.get(chunk.doc_id, []))
+        if not candidates:
+            continue
+        candidates.sort(key=lambda item: (-item.size_bytes, item.relative_path, item.slide_index))
+        return candidates[0]
+    return None
+
+
+def select_overridden_question_image(
+    slide_images_by_source: Dict[Tuple[str, int], SlideImageRecord],
+    source_path: Optional[str],
+    slide_index: Any,
+) -> Optional[SlideImageRecord]:
+    if not source_path:
+        return None
+    try:
+        normalized_slide_index = int(slide_index)
+    except (TypeError, ValueError):
+        return None
+    return slide_images_by_source.get((normalized_relative_path(str(source_path)), normalized_slide_index))
 
 
 def fallback_questions_for_kp(
@@ -1224,15 +1501,29 @@ def fallback_questions_for_kp(
     review_chunks: Sequence[ChunkRecord],
     all_kps: Sequence[KnowledgePoint],
     slide_images_by_doc_id: Dict[str, List[SlideImageRecord]],
+    slide_images_by_source: Dict[Tuple[str, int], SlideImageRecord],
     question_count: int,
 ) -> List[QuestionRecord]:
     question_count = max(MIN_QUESTION_COUNT, question_count)
     source_files = sorted({chunk.relative_path for chunk in support_chunks})
     source_chunk_ids = [chunk.chunk_id for chunk in support_chunks]
-    selected_image = select_question_image(support_chunks, slide_images_by_doc_id)
     specs = QUESTION_BLUEPRINTS.get(kp.name, [])
     questions: List[QuestionRecord] = []
     for index, spec in enumerate(specs[:question_count], start=1):
+        selected_image = select_overridden_question_image(
+            slide_images_by_source,
+            source_path=spec.get("image_source"),
+            slide_index=spec.get("image_slide"),
+        )
+        if selected_image is None:
+            selected_image = select_question_image(
+                review_chunks,
+                slide_images_by_doc_id,
+                prompt=str(spec.get("prompt", "")).strip(),
+                correct_text=str(spec.get("correct", "")).strip(),
+                explanation=str(spec.get("explanation", "")).strip(),
+                review_terms=spec.get("review_terms"),
+            )
         use_image = bool(spec.get("use_image")) and selected_image is not None
         questions.append(
             build_mcq_question(
@@ -1432,8 +1723,13 @@ def generate_questions(
     question_count = max(MIN_QUESTION_COUNT, question_count)
     chunk_map = {chunk.chunk_id: chunk for chunk in chunk_records}
     slide_images_by_doc_id: Dict[str, List[SlideImageRecord]] = defaultdict(list)
+    slide_images_by_source: Dict[Tuple[str, int], SlideImageRecord] = {}
     for image in slide_images:
         slide_images_by_doc_id[image.doc_id].append(image)
+        source_key = (normalized_relative_path(image.relative_path), int(image.slide_index))
+        current = slide_images_by_source.get(source_key)
+        if current is None or int(image.size_bytes) > int(current.size_bytes):
+            slide_images_by_source[source_key] = image
     questions: List[QuestionRecord] = []
     llm_meta: Dict[str, Any] = {"enabled": False}
 
@@ -1448,11 +1744,21 @@ def generate_questions(
         }
 
     for kp in knowledge_points:
+        if kp.name in QUIZ_EXCLUDED_KP_NAMES:
+            continue
         support_chunks = [chunk_map[chunk_id] for chunk_id in kp.support_chunk_ids if chunk_id in chunk_map][:8]
         if not support_chunks:
             continue
         review_chunks = [chunk for chunk in chunk_records if chunk.relative_path in set(kp.source_files)] or list(support_chunks)
-        fallback_generated = fallback_questions_for_kp(kp, support_chunks, review_chunks, knowledge_points, slide_images_by_doc_id, question_count)
+        fallback_generated = fallback_questions_for_kp(
+            kp,
+            support_chunks,
+            review_chunks,
+            knowledge_points,
+            slide_images_by_doc_id,
+            slide_images_by_source,
+            question_count,
+        )
         if QUESTION_BLUEPRINTS.get(kp.name):
             questions.extend(fallback_generated[:question_count])
             continue

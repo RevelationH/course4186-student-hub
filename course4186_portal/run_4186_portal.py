@@ -15,7 +15,7 @@ except Exception:
     KIMI_API_KEY = None
     KIMI_MODEL = None
 
-preferred_artifact_dir = ROOT_DIR / "course4186_rag" / "artifacts_week1_week6"
+preferred_artifact_dir = ROOT_DIR / "course4186_rag" / "artifacts_full_course"
 if preferred_artifact_dir.exists():
     os.environ.setdefault("COURSE4186_ARTIFACT_DIR", str(preferred_artifact_dir))
 

@@ -28,6 +28,7 @@ if os.getenv("COURSE4186_ARTIFACT_DIR", "").strip():
     ARTIFACT_CANDIDATES.append(Path(os.getenv("COURSE4186_ARTIFACT_DIR", "").strip()))
 ARTIFACT_CANDIDATES.extend(
     [
+        ROOT_DIR / "course4186_rag" / "artifacts_full_course",
         ROOT_DIR / "course4186_rag" / "artifacts_week1_week6",
         ROOT_DIR / "course4186_rag" / "artifacts_dense",
         ROOT_DIR / "course4186_rag" / "artifacts",
@@ -485,13 +486,16 @@ class Course4186KnowledgeBase:
     def list_knowledge_points(self) -> List[Dict[str, Any]]:
         rows: List[Dict[str, Any]] = []
         for kp in self.kps:
+            question_count = len(self.questions_by_kp.get(kp["kp_id"], []))
+            if question_count <= 0:
+                continue
             rows.append(
                 {
                     "kp_id": kp["kp_id"],
                     "name": kp["name"],
                     "description": kp["description"],
                     "weeks": kp.get("weeks", []),
-                    "question_count": len(self.questions_by_kp.get(kp["kp_id"], [])),
+                    "question_count": question_count,
                 }
             )
         rows.sort(key=lambda row: (row["weeks"][0] if row["weeks"] else "ZZZ", row["name"]))
@@ -501,8 +505,11 @@ class Course4186KnowledgeBase:
         kp = self.kp_by_id.get(kp_id)
         if not kp:
             return None
+        questions = list(self.questions_by_kp.get(kp_id, []))
+        if not questions:
+            return None
         payload = dict(kp)
-        payload["questions"] = list(self.questions_by_kp.get(kp_id, []))
+        payload["questions"] = questions
         return payload
 
     def related_questions(self, kp_id: str) -> List[Dict[str, Any]]:
