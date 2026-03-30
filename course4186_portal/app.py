@@ -1,19 +1,23 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import os
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 from urllib.parse import urlsplit
 
-from flask import Flask, jsonify, redirect, render_template, request, send_from_directory, session, url_for
+from flask import Flask, abort, jsonify, redirect, render_template, request, send_file, send_from_directory, session, url_for
 
 
 APP_DIR = Path(__file__).resolve().parent
 ROOT_DIR = APP_DIR.parent
-COURSE_MATERIAL_ROOT = ROOT_DIR / "4186" / "4186"
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
@@ -48,6 +52,9 @@ RAW_CHAT_TITLE_PREFIXES = (
     "can you", "tell me", "compare", "introduce", "briefly explain",
 )
 USERNAME_RE = re.compile(r"^[A-Za-z0-9_.-]{2,40}$")
+PDF_COMPATIBLE_SOURCE_SUFFIXES = {".pdf"}
+OFFICE_CONVERTIBLE_SUFFIXES = {".ppt", ".pptx", ".doc", ".docx"}
+MATERIAL_CACHE_DIR = APP_DIR / "data" / "material_cache"
 
 
 def clean_account_name(value: Optional[str]) -> str:
@@ -115,6 +122,269 @@ def should_refresh_chat_title(
     if lowered.startswith(RAW_CHAT_TITLE_PREFIXES):
         return True
     return False
+
+
+def normalize_material_relative_path(filename: str) -> Path:
+    cleaned = str(filename or "").replace("\\", "/").strip()
+    parts = [part for part in Path(cleaned).parts if part not in {"", ".", ".."}]
+    if not parts:
+        raise ValueError("Missing material path.")
+    return Path(*parts)
+
+
+def course_material_root_candidates() -> List[Path]:
+    candidates: List[Path] = []
+    env_root = os.getenv("COURSE4186_MATERIAL_ROOT", "").strip()
+    if env_root:
+        candidates.append(Path(env_root))
+    candidates.extend(
+        [
+            ROOT_DIR / "4186" / "4186",
+            ROOT_DIR / "course4186_materials",
+            APP_DIR / "materials",
+        ]
+    )
+    resolved: List[Path] = []
+    seen: set[str] = set()
+    for candidate in candidates:
+        key = str(candidate.resolve()) if candidate.exists() else str(candidate)
+        if key in seen:
+            continue
+        seen.add(key)
+        resolved.append(candidate)
+    return resolved
+
+
+@lru_cache(maxsize=512)
+def locate_course_material(filename: str) -> Optional[Path]:
+    try:
+        relative_path = normalize_material_relative_path(filename)
+    except ValueError:
+        return None
+
+    for root in course_material_root_candidates():
+        candidate = root / relative_path
+        if candidate.exists() and candidate.is_file():
+            return candidate
+
+    target_name = relative_path.name.lower()
+    suffix = "/".join(part.lower() for part in relative_path.parts[-2:])
+    for root in course_material_root_candidates():
+        if not root.exists():
+            continue
+        try:
+            matches = root.rglob(relative_path.name)
+        except Exception:
+            continue
+        for candidate in matches:
+            if not candidate.is_file():
+                continue
+            if candidate.name.lower() != target_name:
+                continue
+            try:
+                relative_candidate = candidate.relative_to(root).as_posix().lower()
+            except Exception:
+                relative_candidate = candidate.as_posix().lower()
+            if suffix and relative_candidate.endswith(suffix):
+                return candidate
+        for candidate in root.rglob("*"):
+            if not candidate.is_file():
+                continue
+            if candidate.name.lower() == target_name:
+                return candidate
+    return None
+
+
+def _material_params(item: Dict[str, Any]) -> Dict[str, Any]:
+    params: Dict[str, Any] = {"source": str(item.get("source") or "").replace("\\", "/")}
+    if item.get("unit_type"):
+        params["unit_type"] = item.get("unit_type")
+    if item.get("unit_index") not in (None, ""):
+        params["unit_index"] = item.get("unit_index")
+    if item.get("chunk_index") not in (None, ""):
+        params["chunk_index"] = item.get("chunk_index")
+    return params
+
+
+def build_material_reference_url(item: Dict[str, Any]) -> str:
+    return url_for("course4186_material_reference", **_material_params(item))
+
+
+def build_material_open_url(item: Dict[str, Any]) -> str:
+    return url_for("course4186_material_open", **_material_params(item))
+
+
+def material_cache_dir() -> Path:
+    MATERIAL_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    return MATERIAL_CACHE_DIR
+
+
+def _material_stem_key(stem: str) -> str:
+    cleaned = re.sub(r"\(\d+\)", " ", str(stem or "").lower())
+    cleaned = re.sub(r"[^a-z0-9]+", " ", cleaned)
+    return " ".join(cleaned.split())
+
+
+def locate_pdf_counterpart(source_path: Path) -> Optional[Path]:
+    suffix = source_path.suffix.lower()
+    if suffix == ".pdf" and source_path.exists():
+        return source_path
+
+    exact = source_path.with_suffix(".pdf")
+    if exact.exists():
+        return exact
+
+    if not source_path.parent.exists():
+        return None
+
+    source_key = _material_stem_key(source_path.stem)
+    candidates = sorted(source_path.parent.glob("*.pdf"))
+
+    for candidate in candidates:
+        candidate_key = _material_stem_key(candidate.stem)
+        if source_key and candidate_key == source_key:
+            return candidate
+    return None
+
+
+def locate_canonical_pdf_for_source_name(filename: str) -> Optional[Path]:
+    try:
+        relative_path = normalize_material_relative_path(filename)
+    except ValueError:
+        return None
+
+    source_key = _material_stem_key(relative_path.stem)
+    if not source_key:
+        return None
+
+    for root in course_material_root_candidates():
+        candidate_dir = root / relative_path.parent
+        if not candidate_dir.exists() or not candidate_dir.is_dir():
+            continue
+        for candidate in sorted(candidate_dir.glob("*.pdf")):
+            if _material_stem_key(candidate.stem) == source_key:
+                return candidate
+    return None
+
+
+@lru_cache(maxsize=1)
+def office_pdf_converter() -> Optional[str]:
+    for candidate in ("soffice", "libreoffice"):
+        resolved = shutil.which(candidate)
+        if resolved:
+            return resolved
+    windows_candidates = [
+        Path(r"C:\Program Files\LibreOffice\program\soffice.exe"),
+        Path(r"C:\Program Files (x86)\LibreOffice\program\soffice.exe"),
+    ]
+    for candidate in windows_candidates:
+        if candidate.exists():
+            return str(candidate)
+    return None
+
+
+def convert_office_document_to_pdf(source_path: Path) -> Optional[Path]:
+    if source_path.suffix.lower() not in OFFICE_CONVERTIBLE_SUFFIXES:
+        return None
+    converter = office_pdf_converter()
+    if not converter:
+        return None
+
+    stat = source_path.stat()
+    cache_key = hashlib.sha1(
+        f"{source_path.resolve()}|{stat.st_size}|{stat.st_mtime_ns}".encode("utf-8")
+    ).hexdigest()[:20]
+    target_path = material_cache_dir() / f"{cache_key}.pdf"
+    if target_path.exists():
+        return target_path
+
+    with tempfile.TemporaryDirectory(dir=str(material_cache_dir())) as temp_dir:
+        temp_path = Path(temp_dir)
+        command = [
+            converter,
+            "--headless",
+            "--convert-to",
+            "pdf",
+            "--outdir",
+            str(temp_path),
+            str(source_path),
+        ]
+        try:
+            subprocess.run(command, check=True, capture_output=True, text=True, timeout=180)
+        except Exception:
+            return None
+        produced = sorted(temp_path.glob("*.pdf"))
+        if not produced:
+            return None
+        produced[0].replace(target_path)
+    return target_path if target_path.exists() else None
+
+
+def _pdf_fragment(unit_type: Optional[str], unit_index: Optional[int], target_path: Path) -> str:
+    if target_path.suffix.lower() != ".pdf":
+        return ""
+    try:
+        page_number = int(unit_index or 0)
+    except Exception:
+        page_number = 0
+    if page_number <= 0:
+        return ""
+    return f"#page={page_number}"
+
+
+def resolve_material_open_target(
+    source: str,
+    *,
+    unit_type: Optional[str] = None,
+    unit_index: Optional[int] = None,
+) -> Optional[Dict[str, Any]]:
+    resolved = locate_course_material(source)
+    if not resolved and Path(str(source or "")).suffix.lower() in OFFICE_CONVERTIBLE_SUFFIXES:
+        resolved = locate_canonical_pdf_for_source_name(source)
+    if not resolved:
+        return None
+
+    preferred = resolved
+    label = "Open File"
+    converted = False
+
+    if resolved.suffix.lower() in PDF_COMPATIBLE_SOURCE_SUFFIXES:
+        label = "Open PDF"
+    elif resolved.suffix.lower() in OFFICE_CONVERTIBLE_SUFFIXES:
+        pdf_counterpart = locate_pdf_counterpart(resolved)
+        if pdf_counterpart:
+            preferred = pdf_counterpart
+            label = "Open PDF"
+        else:
+            converted_pdf = convert_office_document_to_pdf(resolved)
+            if converted_pdf:
+                preferred = converted_pdf
+                label = "Open Converted PDF"
+                converted = True
+            else:
+                label = "Open Original File"
+
+    fragment = _pdf_fragment(unit_type, unit_index, preferred)
+    if converted:
+        base_url = url_for("course4186_cached_material_asset", filename=preferred.name)
+    else:
+        try:
+            for root in course_material_root_candidates():
+                if root.exists():
+                    relative_path = preferred.relative_to(root)
+                    base_url = url_for("course4186_material_asset", filename=relative_path.as_posix())
+                    break
+            else:
+                base_url = url_for("course4186_material_asset", filename=source.replace("\\", "/"))
+        except Exception:
+            base_url = url_for("course4186_material_asset", filename=source.replace("\\", "/"))
+
+    return {
+        "path": preferred,
+        "url": f"{base_url}{fragment}",
+        "label": label,
+        "converted": converted,
+    }
 
 
 def create_app() -> Flask:
@@ -387,7 +657,68 @@ def create_app() -> Flask:
 
     @app.get("/course4186/materials/<path:filename>")
     def course4186_material_asset(filename: str) -> Any:
-        return send_from_directory(COURSE_MATERIAL_ROOT, filename)
+        resolved = locate_course_material(filename)
+        if not resolved:
+            abort(404)
+        return send_file(resolved, conditional=True)
+
+    @app.get("/course4186/materials-cache/<path:filename>")
+    def course4186_cached_material_asset(filename: str) -> Any:
+        safe_name = Path(filename).name
+        target = material_cache_dir() / safe_name
+        if not target.exists() or not target.is_file():
+            abort(404)
+        return send_file(target, conditional=True)
+
+    @app.get("/course4186/materials/open")
+    def course4186_material_open() -> Any:
+        source = (request.args.get("source") or "").strip()
+        unit_type = (request.args.get("unit_type") or "").strip()
+        try:
+            unit_index = int(request.args.get("unit_index", "0") or 0)
+        except ValueError:
+            unit_index = 0
+        target = resolve_material_open_target(source, unit_type=unit_type, unit_index=unit_index)
+        if target:
+            return redirect(target["url"])
+        return redirect(url_for("course4186_material_reference", **_material_params(request.args.to_dict())))
+
+    @app.get("/course4186/reference")
+    def course4186_material_reference() -> Any:
+        source = (request.args.get("source") or "").strip()
+        unit_type = (request.args.get("unit_type") or "").strip()
+        try:
+            unit_index = int(request.args.get("unit_index", "0") or 0)
+        except ValueError:
+            unit_index = 0
+        try:
+            chunk_index = int(request.args.get("chunk_index", "0") or 0)
+        except ValueError:
+            chunk_index = 0
+        reference = kb.reference_context(
+            source,
+            unit_type=unit_type,
+            unit_index=unit_index,
+            chunk_index=chunk_index,
+        )
+        if not reference:
+            abort(404)
+        open_material_url = ""
+        open_material_label = ""
+        target = resolve_material_open_target(
+            reference["source"],
+            unit_type=reference.get("unit_type"),
+            unit_index=reference.get("unit_index"),
+        )
+        if target:
+            open_material_url = target["url"]
+            open_material_label = target["label"]
+        return render_template(
+            "source_reference_4186.html",
+            reference=reference,
+            open_material_url=open_material_url,
+            open_material_label=open_material_label,
+        )
 
     @app.get("/course4186/artifacts/<path:filename>")
     def course4186_artifact_asset(filename: str) -> Any:
@@ -419,7 +750,11 @@ def create_app() -> Flask:
         for item in answer["citations"]:
             normalized_source = str(item.get("source") or "").replace("\\", "/")
             enriched = dict(item)
-            enriched["material_url"] = url_for("course4186_material_asset", filename=normalized_source)
+            enriched.setdefault("display_source", Path(normalized_source).name or normalized_source)
+            enriched["material_url"] = build_material_open_url(enriched)
+            enriched["reference_url"] = build_material_reference_url(enriched)
+            if locate_course_material(normalized_source):
+                enriched["raw_material_url"] = url_for("course4186_material_asset", filename=normalized_source)
             citations.append(enriched)
         session_data = chat_store.get_or_create_session(user_id, session_id=session_id)
         generated_title = kb.suggest_session_title(message, answer["answer"])
@@ -595,7 +930,11 @@ def grade_question(question: Dict[str, Any], kp: Dict[str, Any], user_answer: st
         source = str(ref.get("source") or "").replace("\\", "/")
         enriched = dict(ref)
         if source:
-            enriched["material_url"] = url_for("course4186_material_asset", filename=source)
+            enriched.setdefault("display_source", Path(source).name or source)
+            enriched["material_url"] = build_material_open_url(enriched)
+            enriched["reference_url"] = build_material_reference_url(enriched)
+            if locate_course_material(source):
+                enriched["raw_material_url"] = url_for("course4186_material_asset", filename=source)
         review_refs.append(enriched)
 
     if not user_answer:

@@ -469,7 +469,7 @@
     <div style="display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:14px;">
         <div>
             <h3 class="section-title" style="margin-bottom:4px;">Recommended Next Questions</h3>
-            <div class="muted">These are fresh follow-up questions chosen from the current bank based on the topics that still need reinforcement.</div>
+            <div class="muted">These follow-up questions mix fixed bank items with grounded variants generated from the course materials for the topics that still need reinforcement.</div>
         </div>
         <a class="btn alt" href="{{ url_for('quiz_dashboard_4186') }}">Open Quiz Library</a>
     </div>
@@ -481,6 +481,9 @@
             <div class="meta-row">
                 <span class="pill-soft">{{ item.kp_name }}</span>
                 <span class="pill-soft">Focus: {{ item.focus_topic }}</span>
+                {% if item.generated %}
+                <span class="pill-soft">Variant</span>
+                {% endif %}
             </div>
             <p>{{ item.reason }}</p>
             <h4>{{ item.question }}</h4>

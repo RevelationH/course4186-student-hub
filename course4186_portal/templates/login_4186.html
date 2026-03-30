@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Course 4186 Student Hub</title>
+    <title>{% if form_mode == 'register' %}Register{% else %}Login{% endif %} | Course 4186 Student Hub</title>
     <style>
         :root{
             --app-bg:#f7f7f8;

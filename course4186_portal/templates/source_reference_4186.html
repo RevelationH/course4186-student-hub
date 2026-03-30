@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Source Reference{% endblock %}
+{% block extra_css %}
+.ref-grid{display:grid;gap:18px}
+.ref-card{padding:20px 22px;border-radius:22px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow)}
+.ref-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.ref-pill{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);font-size:13px;color:var(--muted)}
+.ref-body{display:grid;gap:14px}
+.ref-block{padding:16px 18px;border-radius:18px;background:var(--surface-2);border:1px solid var(--line)}
+.ref-block h3{margin:0 0 8px 0;font-size:14px}
+.ref-block p{margin:0;line-height:1.7;color:var(--ink)}
+.ref-chunks{display:grid;gap:10px}
+.ref-chunk{padding:14px 16px;border-radius:16px;background:#fff;border:1px solid var(--line);line-height:1.7}
+.ref-actions{display:flex;gap:12px;flex-wrap:wrap}
+.ref-btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:14px;border:1px solid var(--line);background:#fff;text-decoration:none;font-weight:700}
+.ref-btn:hover{border-color:var(--line-strong)}
+.ref-btn.primary{background:var(--brand-soft);border-color:rgba(16,163,127,.28);color:var(--brand-strong)}
+{% endblock %}
+{% block content %}
+<section class="hero">
+    <h2>{{ reference.section }}</h2>
+    <p>This page shows the indexed course section used by the assistant, with its lecture source and matched excerpt.</p>
+    <div class="ref-meta">
+        <span class="ref-pill">{{ reference.display_source }}</span>
+        <span class="ref-pill">{{ reference.location }}</span>
+        {% if reference.week %}<span class="ref-pill">{{ reference.week }}</span>{% endif %}
+    </div>
+</section>
+
+<section class="ref-grid">
+    <article class="ref-card ref-body">
+        <div class="ref-actions">
+            {% if open_material_url %}
+            <a class="ref-btn primary" href="{{ open_material_url }}" target="_blank" rel="noreferrer">{{ open_material_label or 'Open Lecture File' }}</a>
+            {% endif %}
+            <a class="ref-btn" href="{{ url_for('chatapi_4186') }}">Back to Chat</a>
+        </div>
+
+        <div class="ref-block">
+            <h3>Matched Source</h3>
+            <p>{{ reference.display_source }} | {{ reference.location }}</p>
+        </div>
+
+        <div class="ref-block">
+            <h3>Indexed Excerpt</h3>
+            <p>{{ reference.excerpt }}</p>
+        </div>
+
+        {% if reference.chunks %}
+        <div class="ref-block">
+            <h3>Section Chunks</h3>
+            <div class="ref-chunks">
+                {% for item in reference.chunks %}
+                <div class="ref-chunk">{{ item.text }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if not open_material_url %}
+        <div class="ref-block">
+            <h3>Original File Status</h3>
+            <p>The indexed section is available, but no browser-openable lecture file could be prepared in this deployment bundle. You can still review the matched excerpt on this page.</p>
+        </div>
+        {% endif %}
+    </article>
+</section>
+{% endblock %}

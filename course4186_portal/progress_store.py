@@ -42,6 +42,11 @@ class ProgressStore:
                     "account_name": clean_account or clean_display or default_name,
                     "created_at": self._now_iso(),
                     "attempts": [],
+                    "generated_followups": {
+                        "cache_key": "",
+                        "created_at": "",
+                        "items": [],
+                    },
                 }
                 self._save(payload)
             else:
@@ -59,6 +64,13 @@ class ProgressStore:
                     changed = True
                 elif clean_display:
                     user["display_name"] = clean_display
+                    changed = True
+                if not isinstance(user.get("generated_followups"), dict):
+                    user["generated_followups"] = {
+                        "cache_key": "",
+                        "created_at": "",
+                        "items": [],
+                    }
                     changed = True
                 if changed:
                     self._save(payload)
@@ -96,6 +108,11 @@ class ProgressStore:
                     "account_name": f"Student-{user_id[:8]}",
                     "created_at": self._now_iso(),
                     "attempts": [],
+                    "generated_followups": {
+                        "cache_key": "",
+                        "created_at": "",
+                        "items": [],
+                    },
                 },
             )
             attempts = user.setdefault("attempts", [])
@@ -114,6 +131,43 @@ class ProgressStore:
                         "is_correct": bool(result.get("is_correct")),
                     }
                 )
+            user["generated_followups"] = {
+                "cache_key": "",
+                "created_at": now,
+                "items": [],
+            }
+            self._save(payload)
+
+    def get_generated_followups(self, user_id: str, cache_key: str) -> List[Dict[str, Any]]:
+        user = self.get_user(user_id)
+        payload = user.get("generated_followups") or {}
+        if str(payload.get("cache_key") or "") != str(cache_key or ""):
+            return []
+        return [dict(item) for item in payload.get("items", []) if isinstance(item, dict)]
+
+    def set_generated_followups(self, user_id: str, cache_key: str, items: List[Dict[str, Any]]) -> None:
+        with self._lock:
+            payload = self._load()
+            users = payload.setdefault("users", {})
+            user = users.setdefault(
+                user_id,
+                {
+                    "display_name": f"Student-{user_id[:8]}",
+                    "account_name": f"Student-{user_id[:8]}",
+                    "created_at": self._now_iso(),
+                    "attempts": [],
+                    "generated_followups": {
+                        "cache_key": "",
+                        "created_at": "",
+                        "items": [],
+                    },
+                },
+            )
+            user["generated_followups"] = {
+                "cache_key": str(cache_key or ""),
+                "created_at": self._now_iso(),
+                "items": [dict(item) for item in items if isinstance(item, dict)],
+            }
             self._save(payload)
 
     def summary(self, user_id: str) -> Dict[str, Any]:

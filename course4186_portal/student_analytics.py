@@ -2,11 +2,13 @@ from __future__ import annotations
 
 from collections import defaultdict
 from datetime import datetime, timezone
+import hashlib
+import json
 from typing import Any, Dict, Iterable, List, Sequence
 
 from flask import url_for
 
-from course4186_portal.kb_service import STOPWORDS, tokenize
+from course4186_portal.kb_service import STOPWORDS, parse_options, tokenize
 
 RELATED_KP_HINTS = {
     "kp-computer-vision-foundations": [
@@ -92,7 +94,7 @@ def build_learning_report_context(kb: Any, store: Any, user_id: str, follow_up_l
     strength_points = _build_strength_points(state)
     review_queue = _build_review_queue(state)
     recommendations = _build_recommendations(state, weak_points, strength_points)
-    follow_up_questions = _build_follow_up_questions(kb, state, weak_points, limit=follow_up_limit)
+    follow_up_questions = _build_follow_up_questions(kb, store, user_id, state, weak_points, limit=follow_up_limit)
 
     return {
         "summary": state["summary"],
@@ -155,6 +157,7 @@ def _filter_current_attempts(
         row["question_type"] = question.get("question_type", attempt.get("question_type"))
         row["submitted_answer"] = str(attempt.get("submitted_answer") or "").strip()
         row["reference_answer"] = question.get("correct_option") or attempt.get("reference_answer") or ""
+        row["parsed_options"] = list(question.get("parsed_options") or [])
         row["is_correct"] = bool(attempt.get("is_correct"))
         row["explanation"] = question.get("explanation") or ""
         row["review_refs"] = _decorate_review_refs(question.get("review_refs") or [])
@@ -342,10 +345,15 @@ def _build_recommendations(
 
 def _build_follow_up_questions(
     kb: Any,
+    store: Any,
+    user_id: str,
     state: Dict[str, Any],
     weak_points: Sequence[Dict[str, Any]],
     limit: int,
 ) -> List[Dict[str, Any]]:
+    if limit <= 0:
+        return []
+
     answered_ids = {str(item.get("question_id") or "") for item in state["latest_attempts"]}
     used_ids: set[str] = set()
     selected: List[Dict[str, Any]] = []
@@ -354,18 +362,38 @@ def _build_follow_up_questions(
     if not target_points:
         target_points = [row for row in state["kp_stats"] if row["answered"] == 0][:2]
 
+    variant_budget = _follow_up_variant_budget(kb, weak_points, limit)
+    fixed_budget = max(limit - variant_budget, 0)
+
     for point in target_points:
+        if len(selected) >= fixed_budget:
+            break
         selected.extend(
             _pick_questions_from_kp(
                 kb=kb,
                 kp_id=point["kp_id"],
                 answered_ids=answered_ids,
                 used_ids=used_ids,
-                limit=1,
+                limit=max(0, fixed_budget - len(selected)),
                 reason=f"Recommended because {point['kp_name']} is currently a review priority.",
                 focus_topic=point["kp_name"],
             )
         )
+        if len(selected) >= fixed_budget:
+            break
+
+    if variant_budget > 0:
+        variants = _build_llm_follow_up_questions(
+            kb=kb,
+            store=store,
+            user_id=user_id,
+            state=state,
+            weak_points=weak_points,
+            answered_ids=answered_ids,
+            used_ids=used_ids,
+            limit=min(variant_budget, limit - len(selected)),
+        )
+        selected.extend(variants)
         if len(selected) >= limit:
             return selected[:limit]
 
@@ -401,7 +429,193 @@ def _build_follow_up_questions(
             if len(selected) >= limit:
                 return selected[:limit]
 
+    weak_kp_ids = {str(item.get("kp_id") or "") for item in target_points}
+    retry_candidates = [
+        attempt
+        for attempt in reversed(state["latest_attempts"])
+        if not attempt.get("is_correct") and str(attempt.get("kp_id") or "") in weak_kp_ids
+    ]
+    for attempt in retry_candidates:
+        question_id = str(attempt.get("question_id") or "")
+        if not question_id or question_id in used_ids:
+            continue
+        used_ids.add(question_id)
+        selected.append(
+            _attempt_to_follow_up_item(
+                attempt,
+                reason=f"Recommended for a targeted retry because {attempt.get('kp_name') or 'this topic'} is still causing mistakes.",
+                focus_topic=attempt.get("kp_name") or "Targeted Review",
+            )
+        )
+        if len(selected) >= limit:
+            return selected[:limit]
+
     return selected[:limit]
+
+
+def _follow_up_variant_budget(kb: Any, weak_points: Sequence[Dict[str, Any]], limit: int) -> int:
+    if limit <= 1 or not weak_points or not getattr(kb, "llm_enabled", False):
+        return 0
+    if limit >= 4 and len(weak_points) >= 2:
+        return 2
+    return 1
+
+
+def _build_llm_follow_up_questions(
+    kb: Any,
+    store: Any,
+    user_id: str,
+    state: Dict[str, Any],
+    weak_points: Sequence[Dict[str, Any]],
+    answered_ids: set[str],
+    used_ids: set[str],
+    limit: int,
+) -> List[Dict[str, Any]]:
+    if limit <= 0 or not weak_points or not getattr(kb, "llm_enabled", False):
+        return []
+
+    cache_key = _follow_up_variant_cache_key(state, weak_points, limit)
+    cached_rows = store.get_generated_followups(user_id, cache_key) if hasattr(store, "get_generated_followups") else []
+    if cached_rows:
+        rehydrated = _rehydrate_generated_follow_up_items(cached_rows)
+        selected: List[Dict[str, Any]] = []
+        for item in rehydrated:
+            question_id = str(item.get("question_id") or "")
+            if not question_id or question_id in used_ids or question_id in answered_ids:
+                continue
+            used_ids.add(question_id)
+            selected.append(item)
+            if len(selected) >= limit:
+                return selected[:limit]
+
+    rows_by_kp: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
+    for attempt in state["latest_attempts"]:
+        if not attempt.get("is_correct"):
+            rows_by_kp[str(attempt.get("kp_id") or "")].append(attempt)
+
+    generated_rows: List[Dict[str, Any]] = []
+    weak_targets = list(weak_points)[: max(limit, 2)]
+    for point in weak_targets:
+        if len(generated_rows) >= limit:
+            break
+        kp_id = str(point.get("kp_id") or "")
+        if not kp_id:
+            continue
+        generated = kb.generate_follow_up_variants(
+            kp_id,
+            weak_attempts=rows_by_kp.get(kp_id, []),
+            existing_questions=kb.related_questions(kp_id),
+            question_count=1,
+        )
+        for item in generated:
+            built = _build_generated_follow_up_item(
+                item=item,
+                kp_name=point.get("kp_name") or point.get("name") or "Targeted Review",
+                unseen_count=_remaining_unseen_question_count(kb, kp_id, answered_ids),
+            )
+            if not built:
+                continue
+            generated_rows.append(built)
+            if len(generated_rows) >= limit:
+                break
+
+    if generated_rows and hasattr(store, "set_generated_followups"):
+        store.set_generated_followups(user_id, cache_key, generated_rows)
+
+    selected: List[Dict[str, Any]] = []
+    for item in _rehydrate_generated_follow_up_items(generated_rows):
+        question_id = str(item.get("question_id") or "")
+        if not question_id or question_id in used_ids or question_id in answered_ids:
+            continue
+        used_ids.add(question_id)
+        selected.append(item)
+        if len(selected) >= limit:
+            break
+    return selected[:limit]
+
+
+def _follow_up_variant_cache_key(
+    state: Dict[str, Any],
+    weak_points: Sequence[Dict[str, Any]],
+    limit: int,
+) -> str:
+    payload = {
+        "limit": int(limit),
+        "weak_points": [
+            {
+                "kp_id": row.get("kp_id"),
+                "wrong": row.get("wrong"),
+                "accuracy": row.get("accuracy"),
+                "answered": row.get("answered"),
+            }
+            for row in weak_points[:4]
+        ],
+        "latest_attempts": [
+            {
+                "question_id": item.get("question_id"),
+                "kp_id": item.get("kp_id"),
+                "timestamp": item.get("timestamp"),
+                "is_correct": bool(item.get("is_correct")),
+            }
+            for item in state["latest_attempts"]
+        ],
+    }
+    digest = hashlib.sha1(json.dumps(payload, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
+    return f"llm-followups-{digest[:16]}"
+
+
+def _build_generated_follow_up_item(
+    item: Dict[str, Any],
+    *,
+    kp_name: str,
+    unseen_count: int,
+) -> Dict[str, Any] | None:
+    question_id = str(item.get("question_id") or "").strip()
+    if not question_id:
+        return None
+    reason = (
+        f"Recommended as a fresh variant for {kp_name} so you can test the same idea with a new exam-style prompt."
+        if unseen_count > 0 else
+        f"Recommended as a fresh variant because you have already worked through the current fixed questions in {kp_name}."
+    )
+    return {
+        "question_id": question_id,
+        "kp_id": item.get("kp_id"),
+        "kp_name": item.get("kp_name") or kp_name,
+        "question": item.get("question"),
+        "parsed_options": [dict(option) for option in item.get("parsed_options") or []],
+        "options": list(item.get("options") or []),
+        "reference_answer": item.get("reference_answer") or _format_reference_answer(item),
+        "image_path": item.get("image_path"),
+        "image_caption": item.get("image_caption"),
+        "explanation": item.get("explanation") or "",
+        "review_refs": list(item.get("review_refs") or []),
+        "reason": reason,
+        "focus_topic": kp_name,
+        "generated": True,
+    }
+
+
+def _rehydrate_generated_follow_up_items(rows: Sequence[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    hydrated: List[Dict[str, Any]] = []
+    for row in rows:
+        item = dict(row)
+        if not item.get("parsed_options") and item.get("options"):
+            item["parsed_options"] = parse_options(item.get("options") or [])
+        else:
+            item["parsed_options"] = [dict(option) for option in item.get("parsed_options") or []]
+        item["review_refs"] = _decorate_review_refs(item.get("review_refs") or [])
+        hydrated.append(item)
+    return hydrated
+
+
+def _remaining_unseen_question_count(kb: Any, kp_id: str, answered_ids: set[str]) -> int:
+    total = 0
+    for question in kb.related_questions(kp_id):
+        question_id = str(question.get("question_id") or "")
+        if question_id and question_id not in answered_ids:
+            total += 1
+    return total
 
 
 def _pick_questions_from_kp(
@@ -413,6 +627,8 @@ def _pick_questions_from_kp(
     reason: str,
     focus_topic: str,
 ) -> List[Dict[str, Any]]:
+    if limit <= 0:
+        return []
     rows: List[Dict[str, Any]] = []
     questions = list(kb.related_questions(kp_id))
     questions.sort(key=lambda item: str(item.get("question_id") or ""))
@@ -440,6 +656,23 @@ def _pick_questions_from_kp(
         if len(rows) >= limit:
             break
     return rows
+
+
+def _attempt_to_follow_up_item(attempt: Dict[str, Any], reason: str, focus_topic: str) -> Dict[str, Any]:
+    return {
+        "question_id": attempt.get("question_id"),
+        "kp_id": attempt.get("kp_id"),
+        "kp_name": attempt.get("kp_name"),
+        "question": attempt.get("question"),
+        "parsed_options": list(attempt.get("parsed_options") or []),
+        "reference_answer": _format_reference_answer(attempt),
+        "image_path": attempt.get("image_path"),
+        "image_caption": attempt.get("image_caption"),
+        "explanation": attempt.get("explanation") or "",
+        "review_refs": list(attempt.get("review_refs") or []),
+        "reason": reason,
+        "focus_topic": focus_topic,
+    }
 
 
 def _related_kp_ids(kb: Any, kp_id: str) -> List[str]:
@@ -545,6 +778,14 @@ def _decorate_review_refs(review_refs: Sequence[Dict[str, Any]]) -> List[Dict[st
         item = dict(ref)
         source = str(item.get("source") or "").replace("\\", "/")
         if source:
-            item["material_url"] = url_for("course4186_material_asset", filename=source)
+            params = {"source": source}
+            if item.get("unit_type"):
+                params["unit_type"] = item.get("unit_type")
+            if item.get("unit_index") not in (None, ""):
+                params["unit_index"] = item.get("unit_index")
+            if item.get("chunk_index") not in (None, ""):
+                params["chunk_index"] = item.get("chunk_index")
+            item["material_url"] = url_for("course4186_material_open", **params)
+            item["reference_url"] = url_for("course4186_material_reference", **params)
         rows.append(item)
     return rows
