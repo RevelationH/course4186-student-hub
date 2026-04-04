@@ -88,8 +88,8 @@ QUESTION_BLUEPRINTS = {
             "review_terms": ["convolution", "cross-correlation", "kernel flipped"],
         },
         {
-            "prompt": "In the figure, the right lower result keeps the thin grass strands slightly clearer than the left lower result. What property of Gaussian smoothing explains that difference?",
-            "correct": "Gaussian smoothing gives more weight to nearby pixels, so it reduces noise without flattening local structure as uniformly as a mean filter.",
+            "prompt": "The Gaussian-filtered result preserves the thin grass strands more clearly than the mean-filtered result. Why does that happen?",
+            "correct": "Gaussian smoothing weights nearby pixels more heavily, so it suppresses noise while preserving local structure better than uniform averaging.",
             "distractors": [
                 "Gaussian smoothing flips the kernel, which automatically sharpens every edge in the image.",
                 "Gaussian smoothing ignores neighboring pixels and keeps only the center pixel value.",
@@ -231,14 +231,14 @@ QUESTION_BLUEPRINTS = {
     ],
     "Texture analysis": [
         {
-            "prompt": "What type of visual signal is texture analysis designed to capture?",
-            "correct": "Repeated local appearance patterns such as grass, fabric, or brick-like structure.",
+            "prompt": "A region contains many small repeated intensity changes but no single dominant contour. What visual cue is most informative for describing it?",
+            "correct": "Repeated local appearance patterns, that is, texture over a region.",
             "distractors": [
                 "Exact camera intrinsic parameters.",
                 "The optical center of the imaging system.",
                 "Only the strongest single edge in the whole image.",
             ],
-            "explanation": "Texture analysis focuses on repeated local structure rather than isolated geometric primitives.",
+            "explanation": "Texture analysis focuses on repeated local structure over an area rather than one isolated edge or corner.",
         },
         {
             "prompt": "Why can texture be useful for recognition?",
@@ -251,8 +251,8 @@ QUESTION_BLUEPRINTS = {
             "explanation": "Texture cues help distinguish surfaces and categories when local appearance patterns differ.",
         },
         {
-            "prompt": "Suppose object shape is unreliable, but surface appearance differs between grass, leaves, and brick. Which cue should a recognition system emphasize?",
-            "correct": "Repeated local surface patterns such as texture statistics over a region.",
+            "prompt": "Two surfaces have similar outlines, but one is covered with fine repeated leaf-like patterns while the other has brick-like repetition. Which cue should a recognition system emphasize?",
+            "correct": "Regional texture statistics, because the main difference lies in repeated local patterns rather than shape alone.",
             "distractors": [
                 "Estimating the baseline between two calibrated cameras from one point.",
                 "Choosing a focal length to widen the field of view.",
@@ -638,6 +638,9 @@ QUESTION_BLUEPRINTS = {
                 "A stereo baseline from a calibrated rig.",
             ],
             "explanation": "The course alignment algorithm computes features, matches them, and then estimates a homography from those matches.",
+            "review_terms": ["image alignment algorithm", "homography", "matches between images", "compute the transform"],
+            "review_source": "Week8\\Lecture7-2 (2).pdf",
+            "review_page": 9,
         },
         {
             "prompt": "Why is RANSAC used before the final least-squares fit in image alignment?",
@@ -648,6 +651,9 @@ QUESTION_BLUEPRINTS = {
                 "To replace the transform with semantic labels.",
             ],
             "explanation": "RANSAC is used to reject mismatches so the final transform is estimated from geometrically consistent correspondences.",
+            "review_terms": ["RANSAC", "inliers", "outlier matches", "least-squares fit", "image alignment algorithm"],
+            "review_source": "Week8\\Lecture7-2 (2).pdf",
+            "review_page": 22,
         },
         {
             "prompt": "In inverse warping, where does each output pixel g(x', y') sample its value from?",
@@ -658,6 +664,9 @@ QUESTION_BLUEPRINTS = {
                 "From the largest SIFT bin only.",
             ],
             "explanation": "Inverse warping fills each output pixel by mapping backward through the inverse transform into the source image.",
+            "review_terms": ["inverse warping", "T^-1", "g(x', y')", "source image", "warp"],
+            "review_source": "Week7\\Lecture7-1.pdf",
+            "review_page": 7,
         },
         {
             "prompt": "After warping one image onto another, corresponding structures overlap closely. What does that indicate?",
@@ -668,6 +677,9 @@ QUESTION_BLUEPRINTS = {
                 "Optical flow is computed for every video frame.",
             ],
             "explanation": "Image alignment is successful when the warped source and target image content line up well.",
+            "review_terms": ["image alignment", "warped image", "panorama stitching", "aligned result", "overlap"],
+            "review_source": "Week5\\lecture5-1.pdf",
+            "review_page": 7,
         },
     ],
     "Camera model and projection": [

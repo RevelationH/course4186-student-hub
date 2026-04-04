@@ -33,6 +33,11 @@ except Exception:
     OpenAI = None
 
 try:
+    from ftfy import fix_text as ftfy_fix_text
+except Exception:
+    ftfy_fix_text = None
+
+try:
     from langchain_core.documents import Document
     from langchain_text_splitters import RecursiveCharacterTextSplitter
     from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -197,10 +202,30 @@ def emit_output(text: str) -> None:
     sys.stdout.buffer.write((text + "\n").encode("utf-8", errors="replace"))
 
 
+def repair_text_encoding(text: str) -> str:
+    repaired = str(text or "")
+    if not repaired:
+        return ""
+    if ftfy_fix_text is not None:
+        try:
+            repaired = ftfy_fix_text(repaired)
+        except Exception:
+            pass
+    return repaired
+
+
+def strip_trailing_copy_markers(text: str) -> str:
+    return re.sub(r"(?:\s*\(\d+\))+$", "", str(text or "")).strip()
+
+
 def normalize_text(text: str) -> str:
     lines: List[str] = []
-    for raw_line in text.replace("\x00", " ").splitlines():
-        line = WS_RE.sub(" ", raw_line).strip()
+    repaired = repair_text_encoding(text).replace("\x00", " ")
+    for raw_line in repaired.splitlines():
+        line = raw_line
+        for source, target in DISPLAY_REPLACEMENTS.items():
+            line = line.replace(source, target)
+        line = WS_RE.sub(" ", line).strip()
         if not line:
             continue
         if any(pattern.search(line) for pattern in NOISE_PATTERNS):
@@ -276,6 +301,12 @@ DISPLAY_REPLACEMENTS = {
     "\u201c": '"',
     "\u201d": '"',
     "\u2032": "'",
+    "\u00d7": "x",
+    "\u03bb": "lambda",
+    "\u00a0": " ",
+    "\uf06c": "lambda",
+    "\uf0b7": "-",
+    "\ufffd": "",
     "\u0ddc": "",
     "\u0ddd": "",
     "\U0001d465": "x",
@@ -283,11 +314,47 @@ DISPLAY_REPLACEMENTS = {
 
 
 def clean_display_text(text: str) -> str:
-    cleaned = str(text or "")
+    cleaned = repair_text_encoding(text)
     for source, target in DISPLAY_REPLACEMENTS.items():
         cleaned = cleaned.replace(source, target)
     cleaned = re.sub(r"\s+", " ", cleaned).strip()
     return cleaned
+
+
+def canonical_display_source_name(relative_path: str) -> str:
+    cleaned = clean_display_text(relative_path).replace("\\", "/")
+    name = PurePosixPath(cleaned).name or cleaned
+    stem = strip_trailing_copy_markers(PurePosixPath(name).stem)
+    suffix = PurePosixPath(name).suffix.lower()
+    if suffix in {".ppt", ".pptx", ".doc", ".docx"}:
+        suffix = ".pdf"
+    return f"{stem}{suffix}" if stem and suffix else (stem or name)
+
+
+def display_unit_type(display_source: str, unit_type: str) -> str:
+    suffix = PurePosixPath(clean_display_text(display_source or "")).suffix.lower()
+    normalized_unit_type = str(unit_type or "").lower()
+    if suffix == ".pdf" and normalized_unit_type == "slide":
+        return "page"
+    return normalized_unit_type
+
+
+def source_unit_family_key(relative_path: str, unit_type: str, unit_index: Any) -> Tuple[str, str, int]:
+    try:
+        normalized_index = int(unit_index or 0)
+    except Exception:
+        normalized_index = 0
+    path = clean_display_text(relative_path).replace("\\", "/")
+    parent = str(PurePosixPath(path).parent)
+    stem = strip_trailing_copy_markers(PurePosixPath(path).stem).lower()
+    return (f"{parent}/{stem}".strip("/"), str(unit_type or "").lower(), normalized_index)
+
+
+def source_family_key(relative_path: str) -> str:
+    path = clean_display_text(relative_path).replace("\\", "/")
+    parent = str(PurePosixPath(path).parent)
+    stem = strip_trailing_copy_markers(PurePosixPath(path).stem).lower()
+    return f"{parent}/{stem}".strip("/")
 
 
 def format_source_location(source_type: str, unit_type: str, unit_index: Any) -> str:
@@ -304,6 +371,19 @@ def format_source_location(source_type: str, unit_type: str, unit_index: Any) ->
     if unit_kind == "document" or source_kind == "docx":
         return f"document {index}" if index > 1 else "document"
     return f"section {index}" if index > 0 else "section"
+
+
+def display_source_location(
+    relative_path: str,
+    source_type: str,
+    unit_type: str,
+    unit_index: Any,
+    display_source: str = "",
+) -> str:
+    resolved_display_source = canonical_display_source_name(display_source or relative_path)
+    resolved_unit_type = display_unit_type(resolved_display_source, unit_type)
+    resolved_source_type = "pdf" if resolved_unit_type == "page" else source_type
+    return format_source_location(resolved_source_type, resolved_unit_type, unit_index)
 
 
 def sort_slide_name(name: str) -> Tuple[int, str]:
@@ -655,10 +735,10 @@ COURSE_TAXONOMY: List[Dict[str, Any]] = [
             "goal of computer vision",
             "what is computer vision",
             "why is computer vision difficult",
-            "viewpoint variation",
-            "illumination",
-            "background clutter",
-            "occlusion",
+            "viewpoint variation in vision",
+            "background clutter in vision",
+            "occlusion in vision",
+            "high-level understanding from images",
         ],
     },
     {
@@ -978,26 +1058,37 @@ def build_knowledge_points(chunk_records: Sequence[ChunkRecord]) -> List[Knowled
         scored.sort(key=lambda pair: support_sort_key(pair[0], pair[1]))
         selected: List[ChunkRecord] = []
         seen_chunk_ids: set[str] = set()
+        seen_units: set[Tuple[str, str, int]] = set()
+
+        def try_add(chunk: ChunkRecord) -> bool:
+            unit_key = source_unit_family_key(chunk.relative_path, chunk.unit_type, chunk.unit_index)
+            if chunk.chunk_id in seen_chunk_ids or unit_key in seen_units:
+                return False
+            selected.append(chunk)
+            seen_chunk_ids.add(chunk.chunk_id)
+            seen_units.add(unit_key)
+            return True
 
         for keyword in entry["keywords"]:
             candidate = best_by_keyword.get(keyword)
             if candidate is None:
                 continue
             chunk = candidate[1]
-            if chunk.chunk_id in seen_chunk_ids:
-                continue
-            selected.append(chunk)
-            seen_chunk_ids.add(chunk.chunk_id)
+            try_add(chunk)
             if len(selected) >= 10:
                 break
 
         for score, chunk, _matched_keywords in scored:
             if len(selected) >= 10:
                 break
-            if chunk.chunk_id in seen_chunk_ids:
+            if is_low_priority_review_source(str(chunk.relative_path), str(chunk.source_type)):
                 continue
-            selected.append(chunk)
-            seen_chunk_ids.add(chunk.chunk_id)
+            try_add(chunk)
+
+        for score, chunk, _matched_keywords in scored:
+            if len(selected) >= 10:
+                break
+            try_add(chunk)
 
         knowledge_points.append(
             KnowledgePoint(
@@ -1348,8 +1439,41 @@ def build_review_refs(
     explanation: str,
     support_chunks: Sequence[ChunkRecord],
     review_terms: Optional[Sequence[str]] = None,
+    preferred_chunks: Optional[Sequence[ChunkRecord]] = None,
     max_refs: int = 2,
 ) -> List[Dict[str, Any]]:
+    def ref_key(ref: Dict[str, Any]) -> Tuple[str, str, int]:
+        try:
+            unit_index = int(ref.get("unit_index", 0) or 0)
+        except Exception:
+            unit_index = 0
+        display_source = canonical_display_source_name(str(ref.get("display_source") or ref.get("source") or ""))
+        resolved_unit_type = display_unit_type(display_source, str(ref.get("unit_type") or ""))
+        return (
+            normalized_relative_path(display_source),
+            resolved_unit_type,
+            unit_index,
+        )
+
+    def chunk_to_ref(chunk: ChunkRecord) -> Dict[str, Any]:
+        source_path = str(chunk.relative_path).replace("\\", "/")
+        display_source = canonical_display_source_name(source_path)
+        resolved_unit_type = display_unit_type(display_source, chunk.unit_type)
+        return {
+            "source": str(chunk.relative_path),
+            "display_source": display_source,
+            "location": display_source_location(
+                relative_path=source_path,
+                source_type=chunk.source_type,
+                unit_type=chunk.unit_type,
+                unit_index=chunk.unit_index,
+                display_source=display_source,
+            ),
+            "section": section_label_for_chunk(chunk),
+            "unit_type": resolved_unit_type,
+            "unit_index": chunk.unit_index,
+        }
+
     ranked = rank_review_chunks(
         prompt=prompt,
         correct_text=correct_text,
@@ -1382,19 +1506,108 @@ def build_review_refs(
         preferred_ranked = viable_ranked
 
     refs: List[Dict[str, Any]] = []
+    seen_ref_keys: set[Tuple[str, str, int]] = set()
+
+    prioritized_chunks = sorted(
+        list(preferred_chunks or []),
+        key=lambda chunk: (
+            0 if str(chunk.source_type).lower() == "pdf" else 1,
+            SOURCE_TYPE_PRIORITY.get(str(chunk.source_type).lower(), 3),
+            str(chunk.relative_path),
+            int(chunk.unit_index or 0),
+            int(chunk.chunk_index or 0),
+        ),
+    )
+    for chunk in prioritized_chunks:
+        ref = chunk_to_ref(chunk)
+        key = ref_key(ref)
+        if key in seen_ref_keys:
+            continue
+        refs.append(ref)
+        seen_ref_keys.add(key)
+        if len(refs) >= max_refs:
+            return refs
+
     for score, chunk in preferred_ranked:
-        source_path = str(chunk.relative_path).replace("\\", "/")
-        refs.append(
-            {
-                "source": str(chunk.relative_path),
-                "display_source": PurePosixPath(source_path).name,
-                "location": format_source_location(chunk.source_type, chunk.unit_type, chunk.unit_index),
-                "section": section_label_for_chunk(chunk),
-            }
-        )
+        ref = chunk_to_ref(chunk)
+        key = ref_key(ref)
+        if key in seen_ref_keys:
+            continue
+        refs.append(ref)
+        seen_ref_keys.add(key)
         if len(refs) >= max_refs:
             break
     return refs
+
+
+def review_chunks_for_image(
+    image_record: SlideImageRecord,
+    support_chunks: Sequence[ChunkRecord],
+) -> List[ChunkRecord]:
+    image_family = source_family_key(str(image_record.relative_path))
+    try:
+        slide_index = int(image_record.slide_index)
+    except (TypeError, ValueError):
+        return []
+
+    matches = [
+        chunk
+        for chunk in support_chunks
+        if source_family_key(str(chunk.relative_path)) == image_family
+        and int(chunk.unit_index or 0) == slide_index
+    ]
+    matches.sort(
+        key=lambda chunk: (
+            0 if str(chunk.source_type).lower() == "pdf" else 1,
+            SOURCE_TYPE_PRIORITY.get(str(chunk.source_type).lower(), 3),
+            str(chunk.relative_path),
+            int(chunk.chunk_index or 0),
+        )
+    )
+    return matches
+
+
+def review_chunks_for_reference(
+    source_path: Optional[str],
+    unit_index: Any,
+    support_chunks: Sequence[ChunkRecord],
+) -> List[ChunkRecord]:
+    if not source_path:
+        return []
+    try:
+        normalized_index = int(unit_index or 0)
+    except (TypeError, ValueError):
+        return []
+    target_family = source_family_key(str(source_path))
+    matches = [
+        chunk
+        for chunk in support_chunks
+        if source_family_key(str(chunk.relative_path)) == target_family
+        and int(chunk.unit_index or 0) == normalized_index
+    ]
+    matches.sort(
+        key=lambda chunk: (
+            0 if str(chunk.source_type).lower() == "pdf" else 1,
+            SOURCE_TYPE_PRIORITY.get(str(chunk.source_type).lower(), 3),
+            str(chunk.relative_path),
+            int(chunk.chunk_index or 0),
+        )
+    )
+    return matches
+
+
+def image_caption_for_question(
+    image_record: SlideImageRecord,
+    review_refs: Sequence[Dict[str, Any]],
+) -> str:
+    if review_refs:
+        primary = review_refs[0]
+        return clean_display_text(
+            f"Lecture figure from {primary.get('display_source') or canonical_display_source_name(image_record.relative_path)} {primary.get('location') or f'page {image_record.slide_index}'}"
+        )
+    return clean_display_text(
+        f"Lecture figure from {canonical_display_source_name(image_record.relative_path)} page {image_record.slide_index}"
+    )
 
 
 def build_mcq_question(
@@ -1410,8 +1623,23 @@ def build_mcq_question(
     image_path: Optional[str] = None,
     image_caption: Optional[str] = None,
     review_terms: Optional[Sequence[str]] = None,
+    review_refs_override: Optional[Sequence[Dict[str, Any]]] = None,
 ) -> QuestionRecord:
     options, correct_option = build_option_lines(correct_text, distractors, question_id)
+    review_refs = [
+        dict(item)
+        for item in (
+            review_refs_override
+            if review_refs_override is not None
+            else build_review_refs(
+                prompt,
+                correct_text,
+                explanation,
+                review_chunks,
+                review_terms=review_terms,
+            )
+        )
+    ]
     return QuestionRecord(
         question_id=question_id,
         kp_id=kp.kp_id,
@@ -1424,7 +1652,7 @@ def build_mcq_question(
         correct_option=correct_option,
         source_chunk_ids=list(source_chunk_ids),
         source_files=list(source_files),
-        review_refs=build_review_refs(prompt, correct_text, explanation, review_chunks, review_terms=review_terms),
+        review_refs=review_refs,
         image_path=image_path,
         image_caption=clean_display_text(image_caption) if image_caption else None,
     )
@@ -1499,6 +1727,7 @@ def fallback_questions_for_kp(
     kp: KnowledgePoint,
     support_chunks: Sequence[ChunkRecord],
     review_chunks: Sequence[ChunkRecord],
+    all_chunk_records: Sequence[ChunkRecord],
     all_kps: Sequence[KnowledgePoint],
     slide_images_by_doc_id: Dict[str, List[SlideImageRecord]],
     slide_images_by_source: Dict[Tuple[str, int], SlideImageRecord],
@@ -1525,6 +1754,35 @@ def fallback_questions_for_kp(
                 review_terms=spec.get("review_terms"),
             )
         use_image = bool(spec.get("use_image")) and selected_image is not None
+        explicit_review_chunks = review_chunks_for_reference(
+            spec.get("review_source"),
+            spec.get("review_page"),
+            all_chunk_records,
+        )
+        explicit_review_refs: Optional[List[Dict[str, Any]]] = None
+        if explicit_review_chunks:
+            explicit_review_refs = build_review_refs(
+                str(spec.get("prompt", "")).strip(),
+                str(spec.get("correct", "")).strip(),
+                str(spec.get("explanation", "")).strip(),
+                explicit_review_chunks,
+                review_terms=spec.get("review_terms"),
+                preferred_chunks=explicit_review_chunks,
+            )
+        image_review_refs: Optional[List[Dict[str, Any]]] = None
+        image_caption: Optional[str] = None
+        if use_image and selected_image is not None:
+            anchored_chunks = review_chunks_for_image(selected_image, review_chunks)
+            image_review_refs = build_review_refs(
+                str(spec.get("prompt", "")).strip(),
+                str(spec.get("correct", "")).strip(),
+                str(spec.get("explanation", "")).strip(),
+                review_chunks,
+                review_terms=spec.get("review_terms"),
+                preferred_chunks=anchored_chunks,
+            )
+            image_caption = image_caption_for_question(selected_image, image_review_refs)
+        review_refs_override = explicit_review_refs if explicit_review_refs is not None else image_review_refs
         questions.append(
             build_mcq_question(
                 question_id=f"{kp.kp_id}-q{index}",
@@ -1537,8 +1795,9 @@ def fallback_questions_for_kp(
                 source_chunk_ids=source_chunk_ids,
                 source_files=source_files,
                 image_path=selected_image.image_path if use_image else None,
-                image_caption=selected_image.image_caption if use_image else None,
+                image_caption=image_caption if use_image else None,
                 review_terms=spec.get("review_terms"),
+                review_refs_override=review_refs_override,
             )
         )
 
@@ -1754,6 +2013,7 @@ def generate_questions(
             kp,
             support_chunks,
             review_chunks,
+            chunk_records,
             knowledge_points,
             slide_images_by_doc_id,
             slide_images_by_source,

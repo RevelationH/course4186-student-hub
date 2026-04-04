@@ -234,15 +234,6 @@
     "size_bytes": 335318
   },
   {
-    "doc_id": "raw-152a0e19701c",
-    "relative_path": "Week4\\lecture4.pptx",
-    "slide_index": 16,
-    "image_path": "images/week4-lecture4/slide-016-486f3441ea82.jpeg",
-    "image_caption": "Lecture figure from Week4/lecture4.pptx slide 16",
-    "image_name": "image23.jpeg",
-    "size_bytes": 335318
-  },
-  {
     "doc_id": "raw-809de29224b6",
     "relative_path": "Week4\\lecture4.pptx",
     "slide_index": 26,
@@ -304,15 +295,6 @@
     "image_caption": "Lecture figure from Week5/lecture5-1 (5).pptx slide 2",
     "image_name": "image1.jpeg",
     "size_bytes": 575815
-  },
-  {
-    "doc_id": "raw-805d4748af79",
-    "relative_path": "Week5\\lecture5-1 (5).pptx",
-    "slide_index": 7,
-    "image_path": "images/week5-lecture5-1-5/slide-007-e430546994ba.jpeg",
-    "image_caption": "Lecture figure from Week5/lecture5-1 (5).pptx slide 7",
-    "image_name": "image9.jpeg",
-    "size_bytes": 66820
   },
   {
     "doc_id": "raw-ed9414e59494",
@@ -414,6 +396,15 @@
     "size_bytes": 23185
   },
   {
+    "doc_id": "raw-3115c35cd017",
+    "relative_path": "Week6\\lecture6-1.pptx",
+    "slide_index": 10,
+    "image_path": "images/week6-lecture6-1/slide-010-ec6ee9a91660.png",
+    "image_caption": "Lecture figure from Week6/lecture6-1.pptx slide 10",
+    "image_name": "image17.png",
+    "size_bytes": 69887
+  },
+  {
     "doc_id": "raw-5e092e683123",
     "relative_path": "Week7\\LLM_Deepseek.pptx",
     "slide_index": 2,
@@ -439,24 +430,6 @@
     "image_caption": "Lecture figure from Week7/LLM_Deepseek.pptx slide 4",
     "image_name": "image7.png",
     "size_bytes": 228032
-  },
-  {
-    "doc_id": "raw-784c43c7220e",
-    "relative_path": "Week7\\LLM_Deepseek.pptx",
-    "slide_index": 5,
-    "image_path": "images/week7-llm-deepseek/slide-005-b121caa03972.png",
-    "image_caption": "Lecture figure from Week7/LLM_Deepseek.pptx slide 5",
-    "image_name": "image8.png",
-    "size_bytes": 577817
-  },
-  {
-    "doc_id": "raw-25c43762ed31",
-    "relative_path": "Week7\\LLM_Deepseek.pptx",
-    "slide_index": 6,
-    "image_path": "images/week7-llm-deepseek/slide-006-1f4d425a003b.png",
-    "image_caption": "Lecture figure from Week7/LLM_Deepseek.pptx slide 6",
-    "image_name": "image12.png",
-    "size_bytes": 252491
   },
   {
     "doc_id": "raw-3d2202e18b91",
@@ -565,15 +538,6 @@
     "image_caption": "Lecture figure from Week9/lecture9 (1) (5).pptx slide 2",
     "image_name": "image3.png",
     "size_bytes": 296218
-  },
-  {
-    "doc_id": "raw-ff5493a62156",
-    "relative_path": "Week9\\lecture9 (1) (5).pptx",
-    "slide_index": 8,
-    "image_path": "images/week9-lecture9-1-5/slide-008-1404279862ff.png",
-    "image_caption": "Lecture figure from Week9/lecture9 (1) (5).pptx slide 8",
-    "image_name": "image6.png",
-    "size_bytes": 19578
   },
   {
     "doc_id": "raw-8310628c1aca",

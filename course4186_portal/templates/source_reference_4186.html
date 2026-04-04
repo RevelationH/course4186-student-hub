@@ -19,7 +19,7 @@
 {% block content %}
 <section class="hero">
     <h2>{{ reference.section }}</h2>
-    <p>This page shows the indexed course section used by the assistant, with its lecture source and matched excerpt.</p>
+    <p>This page shows the lecture section linked to the answer, together with the matched excerpt for review.</p>
     <div class="ref-meta">
         <span class="ref-pill">{{ reference.display_source }}</span>
         <span class="ref-pill">{{ reference.location }}</span>
@@ -37,18 +37,18 @@
         </div>
 
         <div class="ref-block">
-            <h3>Matched Source</h3>
+            <h3>Lecture Source</h3>
             <p>{{ reference.display_source }} | {{ reference.location }}</p>
         </div>
 
         <div class="ref-block">
-            <h3>Indexed Excerpt</h3>
+            <h3>Lecture Excerpt</h3>
             <p>{{ reference.excerpt }}</p>
         </div>
 
         {% if reference.chunks %}
         <div class="ref-block">
-            <h3>Section Chunks</h3>
+            <h3>Related Excerpt Blocks</h3>
             <div class="ref-chunks">
                 {% for item in reference.chunks %}
                 <div class="ref-chunk">{{ item.text }}</div>
@@ -59,8 +59,8 @@
 
         {% if not open_material_url %}
         <div class="ref-block">
-            <h3>Original File Status</h3>
-            <p>The indexed section is available, but no browser-openable lecture file could be prepared in this deployment bundle. You can still review the matched excerpt on this page.</p>
+            <h3>Lecture File Availability</h3>
+            <p>The linked excerpt is available here, but the lecture file itself is not available for direct opening on this site.</p>
         </div>
         {% endif %}
     </article>

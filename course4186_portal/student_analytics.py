@@ -4,6 +4,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 import hashlib
 import json
+import re
 from typing import Any, Dict, Iterable, List, Sequence
 
 from flask import url_for
@@ -63,6 +64,68 @@ RELATED_KP_HINTS = {
         "kp-sift-and-scale-invariant-features",
     ],
 }
+STARTER_KP_PRIORITY = [
+    "kp-computer-vision-foundations",
+    "kp-image-filtering-and-convolution",
+    "kp-edge-detection",
+    "kp-image-resampling",
+    "kp-texture-analysis",
+    "kp-image-segmentation",
+    "kp-harris-corners-and-local-features",
+    "kp-sift-and-scale-invariant-features",
+    "kp-bag-of-words-image-retrieval",
+    "kp-geometric-transformations",
+    "kp-image-alignment",
+    "kp-camera-model-and-projection",
+    "kp-stereo-vision-and-depth",
+    "kp-epipolar-geometry",
+    "kp-optical-flow",
+]
+OFFICE_SOURCE_SUFFIXES = {".ppt", ".pptx", ".doc", ".docx"}
+
+
+def _student_source_label(source: Any, display_source: Any = "") -> str:
+    candidate = str(display_source or source or "").replace("\\", "/").strip()
+    if not candidate:
+        return "lecture material"
+    name = candidate.split("/")[-1]
+    stem, suffix = re.sub(r"(?:\s*\(\d+\))+$", "", name.rsplit(".", 1)[0]).strip(), ""
+    if "." in name:
+        suffix = "." + name.rsplit(".", 1)[1].lower()
+    if suffix in OFFICE_SOURCE_SUFFIXES:
+        suffix = ".pdf"
+    return f"{stem}{suffix}" if stem and suffix else (stem or name)
+
+
+def _student_location_label(
+    display_source: str,
+    unit_type: Any,
+    unit_index: Any,
+    raw_location: Any = "",
+) -> str:
+    location = str(raw_location or "").strip()
+    normalized_unit_type = str(unit_type or "").lower()
+    suffix = ""
+    if "." in display_source:
+        suffix = "." + display_source.rsplit(".", 1)[1].lower()
+
+    if suffix == ".pdf" and normalized_unit_type == "slide":
+        normalized_unit_type = "page"
+
+    if location:
+        if suffix == ".pdf" and location.lower().startswith("slide"):
+            return re.sub(r"(?i)^slide\b", "page", location).strip()
+        return location
+
+    try:
+        index = int(unit_index or 0)
+    except Exception:
+        index = 0
+    if normalized_unit_type == "page":
+        return f"page {index}" if index > 0 else "page"
+    if normalized_unit_type == "slide":
+        return f"slide {index}" if index > 0 else "slide"
+    return location
 
 
 def build_dashboard_context(kb: Any, store: Any, user_id: str) -> Dict[str, Any]:
@@ -197,16 +260,16 @@ def _build_summary(
     overall_accuracy = round((correct / answered) * 100, 1) if answered else 0.0
 
     if len(all_attempts) < 3:
-        trend_label = "Building history"
-        trend_note = "Complete a few more sets to unlock a stronger trend signal."
+        trend_label = "Early stage"
+        trend_note = "Answer a few more questions to make the trend more reliable."
     elif recent_accuracy >= overall_accuracy + 10:
         trend_label = "Improving"
         trend_note = "Your recent answers are stronger than your overall average."
     elif recent_accuracy <= overall_accuracy - 10:
-        trend_label = "Needs attention"
-        trend_note = "Recent answers have dipped below your overall level."
+        trend_label = "Needs review"
+        trend_note = "Recent answers are below your overall level, so a short review is recommended."
     else:
-        trend_label = "Steady"
+        trend_label = "Stable"
         trend_note = "Recent performance is close to your overall level."
 
     return {
@@ -315,32 +378,67 @@ def _build_recommendations(
     if weak_points:
         primary = weak_points[0]
         recommendations.append(
-            f"Start with {primary['kp_name']}. Your current accuracy there is {primary['accuracy']}%, so it is the fastest place to gain marks."
+            f"Start with {primary['kp_name']}. Accuracy there is currently {primary['accuracy']}%, so it is the clearest place to improve next."
         )
         if primary.get("review_refs"):
             recommendations.append(
-                f"Review { _format_ref_brief(primary['review_refs'][0]) } first, then retry that topic before moving on."
+                f"Review { _format_ref_brief(primary['review_refs'][0]) } first, then redo a few questions on that topic."
             )
 
     if len(weak_points) > 1:
         secondary = weak_points[1]
         recommendations.append(
-            f"Use a short second review block for {secondary['kp_name']}. The remaining mistakes there suggest the topic is still unstable under exam-style questions."
+            f"Set aside a short second review for {secondary['kp_name']}. Recent mistakes suggest that the main idea is not yet stable under quiz conditions."
         )
 
     if strength_points:
         strongest = strength_points[0]
         recommendations.append(
-            f"Keep {strongest['kp_name']} warm rather than over-studying it. It is already one of your strongest areas at {strongest['accuracy']}%."
+            f"Keep {strongest['kp_name']} active with occasional review. It is already one of your stronger areas at {strongest['accuracy']}%."
         )
 
     if not recommendations:
         recommendations.append(
-            "You do not have enough current quiz data yet. Start with one foundational set and come back after a few submissions."
+            "You are still at the starting stage. Begin with the recommended foundation questions below, then come back after a short practice round for a more precise report."
         )
 
     recommendations.append(state["summary"]["trend_note"])
     return recommendations[:5]
+
+
+def _starter_target_points(
+    kb: Any,
+    state: Dict[str, Any],
+    *,
+    limit: int,
+) -> List[Dict[str, Any]]:
+    kp_rows = list(state["kp_stats"])
+    kp_by_id = {str(row.get("kp_id") or ""): row for row in kp_rows}
+    selected: List[Dict[str, Any]] = []
+    seen_ids: set[str] = set()
+
+    for kp_id in STARTER_KP_PRIORITY:
+        row = kp_by_id.get(kp_id)
+        if not row or row.get("answered", 0) > 0:
+            continue
+        selected.append(row)
+        seen_ids.add(kp_id)
+        if len(selected) >= limit:
+            return selected[:limit]
+
+    fallback_rows = [
+        row for row in kp_rows
+        if row.get("answered", 0) == 0 and str(row.get("kp_id") or "") not in seen_ids
+    ]
+    fallback_rows.sort(
+        key=lambda row: (
+            _first_week_number(row.get("weeks", [])) if _first_week_number(row.get("weeks", [])) is not None else 999,
+            STARTER_KP_PRIORITY.index(row["kp_id"]) if row.get("kp_id") in STARTER_KP_PRIORITY else len(STARTER_KP_PRIORITY),
+            row.get("kp_name") or "",
+        )
+    )
+    selected.extend(fallback_rows[: max(0, limit - len(selected))])
+    return selected[:limit]
 
 
 def _build_follow_up_questions(
@@ -360,26 +458,34 @@ def _build_follow_up_questions(
 
     target_points = list(weak_points)
     if not target_points:
-        target_points = [row for row in state["kp_stats"] if row["answered"] == 0][:2]
+        target_points = _starter_target_points(kb, state, limit=max(limit, 4))
 
-    variant_budget = _follow_up_variant_budget(kb, weak_points, limit)
+    variant_budget = _follow_up_variant_budget(kb, weak_points, limit) if weak_points else 0
     fixed_budget = max(limit - variant_budget, 0)
 
-    for point in target_points:
-        if len(selected) >= fixed_budget:
-            break
-        selected.extend(
-            _pick_questions_from_kp(
+    while len(selected) < fixed_budget and target_points:
+        round_added = False
+        for point in target_points:
+            if len(selected) >= fixed_budget:
+                break
+            point_reason = (
+                f"Recommended next because recent results suggest that {point['kp_name']} still needs consolidation."
+                if weak_points else
+                f"Recommended next because {point['kp_name']} is one of the early foundation topics for the course."
+            )
+            picked = _pick_questions_from_kp(
                 kb=kb,
                 kp_id=point["kp_id"],
                 answered_ids=answered_ids,
                 used_ids=used_ids,
-                limit=max(0, fixed_budget - len(selected)),
-                reason=f"Recommended because {point['kp_name']} is currently a review priority.",
+                limit=1,
+                reason=point_reason,
                 focus_topic=point["kp_name"],
             )
-        )
-        if len(selected) >= fixed_budget:
+            if picked:
+                selected.extend(picked)
+                round_added = True
+        if not round_added:
             break
 
     if variant_budget > 0:
@@ -397,38 +503,6 @@ def _build_follow_up_questions(
         if len(selected) >= limit:
             return selected[:limit]
 
-    for point in target_points:
-        for related_kp_id in _related_kp_ids(kb, point["kp_id"]):
-            selected.extend(
-                _pick_questions_from_kp(
-                    kb=kb,
-                    kp_id=related_kp_id,
-                    answered_ids=answered_ids,
-                    used_ids=used_ids,
-                    limit=1,
-                    reason=f"Recommended as a follow-up to {point['kp_name']} because it builds on similar ideas.",
-                    focus_topic=point["kp_name"],
-                )
-            )
-            if len(selected) >= limit:
-                return selected[:limit]
-
-    for row in state["kp_stats"]:
-        if row["answered"] == 0:
-            selected.extend(
-                _pick_questions_from_kp(
-                    kb=kb,
-                    kp_id=row["kp_id"],
-                    answered_ids=answered_ids,
-                    used_ids=used_ids,
-                    limit=1,
-                    reason="Recommended to broaden your coverage across the current full-course content.",
-                    focus_topic=row["kp_name"],
-                )
-            )
-            if len(selected) >= limit:
-                return selected[:limit]
-
     weak_kp_ids = {str(item.get("kp_id") or "") for item in target_points}
     retry_candidates = [
         attempt
@@ -443,8 +517,49 @@ def _build_follow_up_questions(
         selected.append(
             _attempt_to_follow_up_item(
                 attempt,
-                reason=f"Recommended for a targeted retry because {attempt.get('kp_name') or 'this topic'} is still causing mistakes.",
+                reason=f"Recommended because you previously missed a related question in {attempt.get('kp_name') or 'this topic'}.",
                 focus_topic=attempt.get("kp_name") or "Targeted Review",
+            )
+        )
+        if len(selected) >= limit:
+            return selected[:limit]
+
+    if weak_points:
+        for point in target_points:
+            for related_kp_id in _related_kp_ids(kb, point["kp_id"]):
+                selected.extend(
+                    _pick_questions_from_kp(
+                        kb=kb,
+                        kp_id=related_kp_id,
+                        answered_ids=answered_ids,
+                        used_ids=used_ids,
+                        limit=1,
+                        reason=f"Recommended next because it builds directly on the same ideas as {point['kp_name']}.",
+                        focus_topic=point["kp_name"],
+                    )
+                )
+                if len(selected) >= limit:
+                    return selected[:limit]
+
+    fallback_points = (
+        _starter_target_points(kb, state, limit=max(limit + 2, 6))
+        if not weak_points else
+        [row for row in state["kp_stats"] if row["answered"] == 0]
+    )
+    for row in fallback_points:
+        selected.extend(
+            _pick_questions_from_kp(
+                kb=kb,
+                kp_id=row["kp_id"],
+                answered_ids=answered_ids,
+                used_ids=used_ids,
+                limit=1,
+                reason=(
+                    "Recommended next to build a stronger foundation across the earlier course topics."
+                    if not weak_points else
+                    "Recommended next to broaden your coverage across the course."
+                ),
+                focus_topic=row["kp_name"],
             )
         )
         if len(selected) >= limit:
@@ -540,6 +655,7 @@ def _follow_up_variant_cache_key(
     limit: int,
 ) -> str:
     payload = {
+        "generator_version": 3,
         "limit": int(limit),
         "weak_points": [
             {
@@ -574,14 +690,15 @@ def _build_generated_follow_up_item(
     if not question_id:
         return None
     reason = (
-        f"Recommended as a fresh variant for {kp_name} so you can test the same idea with a new exam-style prompt."
+        f"Recommended to check the same idea from {kp_name} in a new question setting."
         if unseen_count > 0 else
-        f"Recommended as a fresh variant because you have already worked through the current fixed questions in {kp_name}."
+        f"Recommended because you have already completed the core questions in {kp_name} and should now test the idea in a new setting."
     )
     return {
         "question_id": question_id,
         "kp_id": item.get("kp_id"),
         "kp_name": item.get("kp_name") or kp_name,
+        "question_type": item.get("question_type") or "multiple_choice",
         "question": item.get("question"),
         "parsed_options": [dict(option) for option in item.get("parsed_options") or []],
         "options": list(item.get("options") or []),
@@ -642,6 +759,7 @@ def _pick_questions_from_kp(
                 "question_id": question_id,
                 "kp_id": question.get("kp_id"),
                 "kp_name": question.get("kp_name"),
+                "question_type": question.get("question_type") or "multiple_choice",
                 "question": question.get("question"),
                 "parsed_options": list(question.get("parsed_options") or []),
                 "reference_answer": _format_reference_answer(question),
@@ -651,6 +769,7 @@ def _pick_questions_from_kp(
                 "review_refs": _decorate_review_refs(question.get("review_refs") or []),
                 "reason": reason,
                 "focus_topic": focus_topic,
+                "generated": False,
             }
         )
         if len(rows) >= limit:
@@ -663,6 +782,7 @@ def _attempt_to_follow_up_item(attempt: Dict[str, Any], reason: str, focus_topic
         "question_id": attempt.get("question_id"),
         "kp_id": attempt.get("kp_id"),
         "kp_name": attempt.get("kp_name"),
+        "question_type": attempt.get("question_type") or "multiple_choice",
         "question": attempt.get("question"),
         "parsed_options": list(attempt.get("parsed_options") or []),
         "reference_answer": _format_reference_answer(attempt),
@@ -672,6 +792,7 @@ def _attempt_to_follow_up_item(attempt: Dict[str, Any], reason: str, focus_topic
         "review_refs": list(attempt.get("review_refs") or []),
         "reason": reason,
         "focus_topic": focus_topic,
+        "generated": False,
     }
 
 
@@ -756,7 +877,7 @@ def _format_timestamp(raw_value: Any) -> str:
 
 
 def _format_ref_brief(ref: Dict[str, Any]) -> str:
-    display_source = str(ref.get("display_source") or ref.get("source") or "lecture material").replace("\\", "/")
+    display_source = _student_source_label(ref.get("source"), ref.get("display_source"))
     location = str(ref.get("location") or "").strip()
     if location:
         return f"{display_source} {location}"
@@ -778,6 +899,16 @@ def _decorate_review_refs(review_refs: Sequence[Dict[str, Any]]) -> List[Dict[st
         item = dict(ref)
         source = str(item.get("source") or "").replace("\\", "/")
         if source:
+            display_source = _student_source_label(source, item.get("display_source"))
+            item["display_source"] = display_source
+            item["location"] = _student_location_label(
+                display_source,
+                item.get("unit_type"),
+                item.get("unit_index"),
+                item.get("location"),
+            )
+            if display_source.lower().endswith(".pdf") and str(item.get("unit_type") or "").lower() == "slide":
+                item["unit_type"] = "page"
             params = {"source": source}
             if item.get("unit_type"):
                 params["unit_type"] = item.get("unit_type")

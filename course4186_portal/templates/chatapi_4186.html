@@ -285,17 +285,228 @@
     padding:14px 16px;
     border-radius:20px;
     border:1px solid var(--line);
-    line-height:1.72;
+    line-height:1.75;
     white-space:pre-wrap;
     word-break:break-word;
 }
 .msg.bot .bubble{
-    background:#f9fafb;
+    background:#ffffff;
+    border-color:#ececf1;
+    white-space:normal;
 }
 .msg.me .bubble{
-    background:#111827;
-    color:#fff;
-    border-color:#111827;
+    background:#ffffff;
+    color:var(--ink);
+    border-color:#ececf1;
+}
+.bubble.plain-text{
+    white-space:pre-wrap;
+}
+.bubble.user-plain{
+    white-space:pre-wrap;
+}
+.bubble > *:first-child{
+    margin-top:0;
+}
+.bubble > *:last-child{
+    margin-bottom:0;
+}
+.bubble p{
+    margin:0 0 14px;
+}
+.bubble h1,
+.bubble h2,
+.bubble h3{
+    margin:2px 0 14px;
+    line-height:1.4;
+    font-weight:750;
+    letter-spacing:-0.01em;
+}
+.bubble h1{font-size:23px}
+.bubble h2{font-size:20px}
+.bubble h3{font-size:17px}
+.bubble ul,
+.bubble ol{
+    margin:0 0 14px 22px;
+    padding:0;
+}
+.bubble li{
+    margin:0 0 7px;
+}
+.bubble strong{
+    font-weight:700;
+}
+.bubble em{
+    font-style:italic;
+}
+.bubble blockquote{
+    margin:0 0 14px;
+    padding:4px 0 4px 14px;
+    border-left:3px solid #d1d5db;
+    color:#4b5563;
+    background:transparent;
+}
+.bubble a{
+    color:#2563eb;
+    text-decoration:none;
+    border-bottom:1px solid rgba(37,99,235,.2);
+}
+.bubble a:hover{
+    color:#1d4ed8;
+    border-bottom-color:rgba(37,99,235,.4);
+}
+.bubble code{
+    display:inline;
+    padding:2px 6px;
+    border-radius:7px;
+    background:#f4f4f5;
+    color:#111827;
+    border:1px solid #e4e4e7;
+    font-size:.95em;
+    font-family:"SFMono-Regular","Cascadia Code","Consolas","Liberation Mono",monospace;
+}
+.code-block{
+    margin:2px 0 14px;
+    border:1px solid #27272a;
+    border-radius:18px;
+    overflow:hidden;
+    background:#111111;
+    box-shadow:0 8px 24px rgba(15,23,42,.12);
+}
+.code-block-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    padding:10px 14px;
+    background:#111111;
+    color:#d4d4d8;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.02em;
+    text-transform:none;
+}
+.code-block-lang{
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.code-copy{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:84px;
+    padding:6px 10px;
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:10px;
+    background:#18181b;
+    color:#f4f4f5;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:700;
+    line-height:1;
+    transition:background-color .16s ease, border-color .16s ease, color .16s ease;
+}
+.code-copy:hover{
+    background:#27272a;
+    border-color:rgba(255,255,255,.22);
+}
+.code-block pre{
+    margin:0;
+    padding:16px 18px;
+    overflow:auto;
+    background:#111111;
+    color:#f5f5f5;
+    white-space:pre;
+    line-height:1.65;
+    font-size:13.5px;
+}
+.code-block pre code{
+    display:block;
+    padding:0;
+    background:transparent;
+    border:none;
+    color:inherit;
+    border-radius:0;
+    font-size:inherit;
+}
+.bubble hr{
+    margin:18px 0;
+    border:none;
+    border-top:1px solid #e5e7eb;
+}
+.bubble table{
+    width:100%;
+    margin:2px 0 14px;
+    border-collapse:separate;
+    border-spacing:0;
+    overflow:hidden;
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    font-size:14px;
+}
+.bubble thead th{
+    background:#f9fafb;
+    font-weight:700;
+    color:#111827;
+}
+.bubble th,
+.bubble td{
+    padding:10px 12px;
+    text-align:left;
+    vertical-align:top;
+    border-bottom:1px solid #e5e7eb;
+}
+.bubble tr:last-child td{
+    border-bottom:none;
+}
+.course-source-line{
+    display:grid;
+    gap:8px;
+    margin:14px 0 0;
+    padding:12px 0 0;
+    border-radius:16px;
+    border:none;
+    border-top:1px solid #ececf1;
+    background:transparent;
+    color:#374151;
+    font-size:12.5px;
+    line-height:1.6;
+}
+.course-source-label{
+    display:inline-flex;
+    align-items:center;
+    width:max-content;
+    padding:0;
+    border-radius:0;
+    background:transparent;
+    color:#6b7280;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.02em;
+    text-transform:none;
+}
+.course-source-prefix{
+    color:#4b5563;
+}
+.course-source-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+.course-source-item{
+    margin:0;
+    padding:5px 10px;
+    border-radius:999px;
+    border:1px solid #e5e7eb;
+    background:#fafafa;
+    color:#374151;
+    font-weight:600;
 }
 .bubble.thinking-bubble{
     display:inline-flex;
@@ -354,14 +565,19 @@
 .source-pill{
     display:inline-flex;
     align-items:center;
-    padding:4px 10px;
+    padding:6px 11px;
     border-radius:999px;
-    border:1px solid var(--line);
-    background:#f3f4f6;
-    color:#4b5563;
+    border:1px solid #d1d5db;
+    background:#ffffff;
+    color:#374151;
     font-size:12px;
     line-height:1.3;
     text-decoration:none;
+    font-weight:600;
+}
+.source-pill:hover{
+    border-color:#9ca3af;
+    background:#f9fafb;
 }
 .input-wrap{
     padding:14px 16px 16px;
@@ -466,12 +682,14 @@
 </section>
 {% endblock %}
 {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
 <script>
 const historyState = [];
 let currentSessionId = '';
 let sessionListState = [];
 const userAvatarText = {{ ((course4186_profile.account_name or course4186_profile.display_name)[:2]|upper)|tojson }} || 'ME';
-const starterAssistantText = `Welcome students to the 4186 learning system.
+const starterAssistantText = `Welcome to Course 4186.
 
 You can ask questions such as:
 - What is epipolar geometry used for?
@@ -515,17 +733,23 @@ function clearChatLog() {
     document.getElementById('chat-log').innerHTML = '';
 }
 
+function normalizeMessageRole(role) {
+    const normalized = String(role || '').trim().toLowerCase();
+    return normalized === 'assistant' ? 'assistant' : 'user';
+}
+
 function createMessageRow(role) {
+    const resolvedRole = normalizeMessageRole(role);
     const log = document.getElementById('chat-log');
     const row = document.createElement('div');
-    row.className = `msg ${role === 'user' ? 'me' : 'bot'}`;
+    row.className = `msg ${resolvedRole === 'user' ? 'me' : 'bot'}`;
     row.innerHTML = `
-        ${role === 'user' ? '' : '<div class="avatar">AI</div>'}
+        ${resolvedRole === 'user' ? '' : '<div class="avatar">AI</div>'}
         <div class="bubble-wrap">
             <div class="bubble"></div>
             <div class="msg-sources"></div>
         </div>
-        ${role === 'user' ? `<div class="avatar">${userAvatarText}</div>` : ''}
+        ${resolvedRole === 'user' ? `<div class="avatar">${userAvatarText}</div>` : ''}
     `;
     log.appendChild(row);
     scrollChatToBottom();
@@ -533,9 +757,10 @@ function createMessageRow(role) {
 }
 
 function appendMessage(role, text, citations = []) {
-    const row = createMessageRow(role);
-    row.querySelector('.bubble').textContent = text;
-    renderInlineSources(row, citations);
+    const resolvedRole = normalizeMessageRole(role);
+    const row = createMessageRow(resolvedRole);
+    renderBubbleContent(row.querySelector('.bubble'), resolvedRole, text);
+    renderInlineSources(row, resolvedRole === 'assistant' ? citations : []);
     return row;
 }
 
@@ -570,7 +795,7 @@ function typeWriter(element, text) {
         const step = content.length > 900 ? 5 : content.length > 480 ? 4 : content.length > 220 ? 3 : 2;
         let index = 0;
         element.textContent = '';
-        element.classList.add('typing');
+        element.classList.add('typing', 'plain-text');
 
         function pump() {
             index = Math.min(content.length, index + step);
@@ -581,6 +806,8 @@ function typeWriter(element, text) {
                 return;
             }
             element.classList.remove('typing');
+            element.classList.remove('plain-text');
+            renderBubbleContent(element, 'assistant', content);
             resolve();
         }
 
@@ -602,11 +829,11 @@ function renderInlineSources(row, citations) {
     box.innerHTML = '';
     (citations || []).slice(0, 4).forEach(item => {
         const chip = document.createElement(item.material_url ? 'a' : 'div');
-        const location = item.location || `chunk ${item.chunk_index}`;
-        const sourceName = String(item.source || 'Course material').split(/[/\\\\]/).pop();
+        const location = formatChatSourceLocation(item.location || `chunk ${item.chunk_index}`);
+        const sourceName = formatChatSourceName(item.display_source || String(item.source || 'Course material').split(/[/\\\\]/).pop());
         chip.className = 'source-pill';
-        chip.textContent = `${sourceName} | ${location}`;
-        chip.title = `${item.source || sourceName} | ${location}${item.snippet ? `\n${item.snippet}` : ''}`;
+        chip.textContent = location ? `${sourceName} - ${location}` : sourceName;
+        chip.title = `${sourceName}${location ? ` | ${location}` : ''}${item.section ? ` | ${item.section}` : ''}${item.snippet ? `\n${item.snippet}` : ''}`;
         if (item.material_url) {
             chip.href = item.material_url;
             chip.target = '_blank';
@@ -688,6 +915,251 @@ function escapeHtml(text) {
         .replaceAll("'", '&#39;');
 }
 
+function formatChatSourceName(value) {
+    let name = String(value || '').split(/[/\\\\]/).pop().trim();
+    if (!name) return 'Course material';
+    name = name.replace(/\.[^.]+$/, '');
+    name = name.replace(/(?:\s*\(\d+\))+$/g, '');
+    name = name.replace(/_/g, ' ');
+    name = name.replace(/([A-Za-z])(\d)/g, '$1 $2');
+    name = name.replace(/(\d)([A-Za-z])/g, '$1 $2');
+    name = name.replace(/\s+/g, ' ').trim();
+    return name || 'Course material';
+}
+
+function formatChatSourceLocation(value) {
+    const location = String(value || '').replace(/\s+/g, ' ').trim();
+    if (!location) return '';
+    return location.replace(/^slide\b/i, 'page');
+}
+
+function formatChatSourceReference(sourceName, location) {
+    const prettyName = formatChatSourceName(sourceName);
+    const prettyLocation = formatChatSourceLocation(location);
+    return prettyLocation ? `${prettyName}, ${prettyLocation}` : prettyName;
+}
+
+function humanizeCourseReferences(text) {
+    return String(text || '')
+        .replace(/([A-Za-z][A-Za-z0-9 _-]*?)\.pdf\s*\(\s*(page|slide|section|document)\s*([0-9]+)\s*\)/gi, (_match, sourceName, unitType, unitIndex) => {
+            return formatChatSourceReference(`${sourceName}.pdf`, `${unitType} ${unitIndex}`);
+        })
+        .replace(/([A-Za-z][A-Za-z0-9 _-]*?)\.pdf\b/gi, (_match, sourceName) => formatChatSourceName(`${sourceName}.pdf`));
+}
+
+function normalizeListFormatting(text) {
+    const normalized = String(text ?? '').replace(/\r\n/g, '\n');
+    const lines = normalized.split('\n');
+    const out = [];
+
+    for (let i = 0; i < lines.length; i += 1) {
+        const line = lines[i];
+        const orderedMatch = line.match(/^(\s*)(\d+)\.\s*$/);
+        const unorderedMatch = line.match(/^(\s*)([-*+])\s*$/);
+
+        if (orderedMatch || unorderedMatch) {
+            const marker = orderedMatch ? `${orderedMatch[1]}${orderedMatch[2]}.` : `${unorderedMatch[1]}${unorderedMatch[2]}`;
+            let j = i + 1;
+            let nextContent = '';
+
+            while (j < lines.length) {
+                const candidate = lines[j];
+                if (!candidate.trim()) {
+                    j += 1;
+                    continue;
+                }
+                if (/^\s*\d+\.\s*$/.test(candidate) || /^\s*[-*+]\s*$/.test(candidate)) {
+                    break;
+                }
+                nextContent = candidate.trim();
+                j += 1;
+                break;
+            }
+
+            if (nextContent) {
+                out.push(`${marker} ${nextContent}`);
+                i = j - 1;
+                continue;
+            }
+        }
+
+        out.push(line);
+    }
+
+    return out.join('\n');
+}
+
+function normalizeLooseCodeBlocks(text) {
+    let normalized = String(text || '').replace(/\r\n/g, '\n');
+    const patterns = [
+        /``([a-zA-Z0-9_+-]+)\s+([\s\S]*?)\s`(?=\s*(?:This|That|These|The|Here|In this|In practice|Note|You can|To apply|Course source:|$))/g,
+        /``\s*([\s\S]*?)\s`(?=\s*(?:This|That|These|The|Here|In this|In practice|Note|You can|To apply|Course source:|$))/g,
+    ];
+
+    normalized = normalized.replace(patterns[0], (_match, language, code) => `\n\n\`\`\`${language}\n${String(code || '').trim()}\n\`\`\`\n\n`);
+    normalized = normalized.replace(patterns[1], (_match, code) => `\n\n\`\`\`\n${String(code || '').trim()}\n\`\`\`\n\n`);
+    return normalized;
+}
+
+function buildCourseSourceCardHtml(sourceText) {
+    const refs = humanizeCourseReferences(String(sourceText || '').replace(/^Course source:\s*/i, '').trim())
+        .replace(/\.$/, '')
+        .split(/\s*;\s*/)
+        .map(item => item.trim())
+        .filter(Boolean);
+    const listHtml = refs.length
+        ? `<ul class="course-source-list">${refs.map(item => `<li class="course-source-item">${escapeHtml(item)}</li>`).join('')}</ul>`
+        : '';
+    return `
+        <div class="course-source-line">
+            <span class="course-source-label">Lecture reference</span>
+            <div class="course-source-prefix">Review in the lecture materials:</div>
+            ${listHtml}
+        </div>
+    `;
+}
+
+function extractCourseSourceBlocks(text) {
+    const segments = String(text || '').split(/\n{2,}/);
+    const placeholders = [];
+    const rebuilt = segments.map(segment => {
+        const trimmed = segment.trim();
+        if (!/^Course source:/i.test(trimmed)) {
+            return segment;
+        }
+        const token = `@@COURSE_SOURCE_${placeholders.length}@@`;
+        placeholders.push(buildCourseSourceCardHtml(trimmed));
+        return token;
+    });
+    return {
+        markdown: rebuilt.join('\n\n'),
+        placeholders,
+    };
+}
+
+function upgradeRenderedMarkdown(html, placeholders) {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = html;
+
+    wrapper.querySelectorAll('a').forEach(link => {
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noreferrer');
+    });
+
+    wrapper.querySelectorAll('p').forEach(node => {
+        const tokenMatch = (node.textContent || '').trim().match(/^@@COURSE_SOURCE_(\d+)@@$/);
+        if (!tokenMatch) return;
+        const replacement = document.createElement('div');
+        replacement.innerHTML = placeholders[Number(tokenMatch[1])] || '';
+        node.replaceWith(...replacement.childNodes);
+    });
+
+    wrapper.querySelectorAll('pre > code').forEach(codeNode => {
+        const pre = codeNode.parentElement;
+        if (!pre || pre.parentElement?.classList.contains('code-block')) return;
+
+        const langClass = Array.from(codeNode.classList).find(className => className.startsWith('language-')) || '';
+        const languageLabel = langClass ? langClass.replace(/^language-/, '') : 'Code';
+        const block = document.createElement('div');
+        block.className = 'code-block';
+
+        const head = document.createElement('div');
+        head.className = 'code-block-head';
+
+        const lang = document.createElement('span');
+        lang.className = 'code-block-lang';
+        lang.textContent = languageLabel;
+
+        const button = document.createElement('button');
+        button.className = 'code-copy';
+        button.type = 'button';
+        button.textContent = 'Copy code';
+
+        head.appendChild(lang);
+        head.appendChild(button);
+        block.appendChild(head);
+        block.appendChild(pre.cloneNode(true));
+        pre.replaceWith(block);
+    });
+
+    return wrapper.innerHTML;
+}
+
+function renderInlineMarkdown(text) {
+    return humanizeCourseReferences(String(text || ''))
+        .split(/(`[^`\n]+`)/g)
+        .map(part => {
+            if (/^`[^`\n]+`$/.test(part)) {
+                return `<code>${escapeHtml(part.slice(1, -1))}</code>`;
+            }
+            let html = escapeHtml(part);
+            html = html.replace(
+                /\[([^\]]+)\]\(((?:https?:\/\/|\/|#)[^)]+)\)/g,
+                '<a href="$2" target="_blank" rel="noreferrer">$1</a>'
+            );
+            html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+            return html;
+        })
+        .join('');
+}
+
+function renderCodeBlock(code, language = '') {
+    const languageLabel = escapeHtml((language || '').trim() || 'Code');
+    const normalizedCode = String(code || '').replace(/\n+$/, '');
+    return `
+        <div class="code-block">
+            <div class="code-block-head">
+                <span class="code-block-lang">${languageLabel}</span>
+                <button class="code-copy" type="button">Copy code</button>
+            </div>
+            <pre><code>${escapeHtml(normalizedCode)}</code></pre>
+        </div>
+    `;
+}
+
+function renderMarkdownTable(lines) {
+    const splitRow = line => line
+        .trim()
+        .replace(/^\|/, '')
+        .replace(/\|$/, '')
+        .split('|')
+        .map(cell => cell.trim());
+    const headerCells = splitRow(lines[0]);
+    const bodyRows = lines.slice(2).map(splitRow).filter(row => row.length);
+    const headerHtml = `<tr>${headerCells.map(cell => `<th>${renderInlineMarkdown(cell)}</th>`).join('')}</tr>`;
+    const bodyHtml = bodyRows
+        .map(row => `<tr>${headerCells.map((_, index) => `<td>${renderInlineMarkdown(row[index] || '')}</td>`).join('')}</tr>`)
+        .join('');
+    return `<table><thead>${headerHtml}</thead><tbody>${bodyHtml}</tbody></table>`;
+}
+
+function renderMarkdown(text) {
+    if (!text) return '';
+    const normalized = normalizeLooseCodeBlocks(normalizeListFormatting(humanizeCourseReferences(String(text || ''))));
+    const extracted = extractCourseSourceBlocks(normalized);
+    const rawHtml = window.marked
+        ? window.marked.parse(extracted.markdown, { gfm: true, breaks: true })
+        : `<p>${escapeHtml(extracted.markdown).replace(/\n/g, '<br>')}</p>`;
+    const safeHtml = window.DOMPurify
+        ? window.DOMPurify.sanitize(rawHtml)
+        : rawHtml;
+    return upgradeRenderedMarkdown(safeHtml, extracted.placeholders);
+}
+
+function renderBubbleContent(element, role, text) {
+    const resolvedRole = normalizeMessageRole(role);
+    const content = String(text || '');
+    element.classList.remove('user-plain', 'assistant-markdown');
+    if (resolvedRole === 'assistant') {
+        element.classList.add('assistant-markdown');
+        element.innerHTML = renderMarkdown(content);
+        return;
+    }
+    element.classList.add('plain-text', 'user-plain');
+    element.replaceChildren(document.createTextNode(content));
+}
+
 async function refreshSessions() {
     const response = await fetch('{{ url_for("api_chat_sessions_4186") }}');
     const payload = await response.json();
@@ -717,7 +1189,7 @@ function renderConversationMessages(messages, sessionData) {
     setChatHeader(
         sessionData.title || 'Course Conversation',
         'Conversation history is loaded from your saved Course 4186 session.',
-        'Saved to Firebase'
+        'Saved automatically'
     );
 }
 
@@ -756,6 +1228,23 @@ async function deleteConversation(sessionId) {
         startDraftConversation();
     }
     await refreshSessions();
+}
+
+async function handleCodeCopy(button) {
+    const block = button.closest('.code-block');
+    const codeNode = block ? block.querySelector('pre code') : null;
+    const codeText = codeNode ? codeNode.textContent || '' : '';
+    if (!codeText) return;
+    const originalLabel = button.textContent;
+    try {
+        await navigator.clipboard.writeText(codeText);
+        button.textContent = 'Copied';
+    } catch (_error) {
+        button.textContent = 'Copy failed';
+    }
+    window.setTimeout(() => {
+        button.textContent = originalLabel;
+    }, 1400);
 }
 
 async function initializeChatPage() {
@@ -802,7 +1291,7 @@ async function sendMessage() {
             setChatHeader(
                 payload.session.title || 'Course Conversation',
                 'Conversation history is loaded from your saved Course 4186 session.',
-                'Saved to Firebase'
+                'Saved automatically'
             );
             await refreshSessions();
         }
@@ -825,6 +1314,11 @@ document.getElementById('chat-input').addEventListener('keydown', event => {
         event.preventDefault();
         sendMessage();
     }
+});
+document.addEventListener('click', event => {
+    const copyButton = event.target.closest('.code-copy');
+    if (!copyButton) return;
+    handleCodeCopy(copyButton);
 });
 
 resizeComposer();

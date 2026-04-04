@@ -37,7 +37,7 @@
 {% block content %}
 <section class="hero">
     <h2>Quiz Dashboard</h2>
-    <p>Welcome students to targeted practice by knowledge point. Each card shows your current progress, accuracy, and related teaching week.</p>
+    <p>Choose a topic, review your progress, and open a quiz set linked to the relevant teaching weeks.</p>
 </section>
 
 <section class="card">
@@ -52,8 +52,8 @@
 <section class="card">
     <div class="toolbar" style="margin-bottom:16px;">
         <div>
-            <h3 class="section-title" style="margin-bottom:4px;">Knowledge Point Library</h3>
-            <div class="muted">Search by topic, teaching week, or description and then enter practice.</div>
+            <h3 class="section-title" style="margin-bottom:4px;">Topic Library</h3>
+            <div class="muted">Search by topic, teaching week, or description and then open a quiz set.</div>
         </div>
         <input id="kp-search" placeholder="Search by topic, week, or description">
     </div>
@@ -79,8 +79,8 @@
             </div>
             <div class="progressbar"><span style="width: {{ kp.accuracy if kp.answered else 0 }}%;"></span></div>
             <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
-                <div class="muted">ID: <code>{{ kp.kp_id }}</code></div>
-                <a class="btn" href="{{ url_for('quiz_practice_4186', kp_id=kp.kp_id) }}">Start Practice</a>
+                <div class="muted">{{ kp.question_count }} questions available</div>
+                <a class="btn" href="{{ url_for('quiz_practice_4186', kp_id=kp.kp_id) }}">Open Quiz</a>
             </div>
         </article>
         {% endfor %}

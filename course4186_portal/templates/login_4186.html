@@ -296,7 +296,7 @@
                 <div class="brand-badge">4186</div>
                 <div>
                     <h1>Course 4186 Student Hub</h1>
-                    <p>Welcome students to the 4186 learning system for course Q&amp;A, quiz practice, and learning report review.</p>
+                    <p>Lecture Q&amp;A, topic-based quiz practice, and personalised learning review for Course 4186.</p>
                 </div>
             </div>
 
@@ -325,7 +325,7 @@
             <div class="form-card">
                 <div class="eyebrow">{% if form_mode == 'register' %}Student Registration{% else %}Student Login{% endif %}</div>
                 <h2>{% if form_mode == 'register' %}Create your account{% else %}Welcome back{% endif %}</h2>
-                <p>{% if form_mode == 'register' %}Create a student account to enter the course learning system and save your progress.{% else %}Enter your course account and password to continue learning.{% endif %}</p>
+                <p>{% if form_mode == 'register' %}Create a student account to enter Course 4186 and keep your progress in one place.{% else %}Enter your course account and password to continue with chat, quiz practice, and report review.{% endif %}</p>
 
                 <div class="mode-switch">
                     <a class="mode-link {% if form_mode == 'login' %}active{% endif %}" href="{{ login_url }}?next={{ next_path|urlencode }}">Sign In</a>
@@ -369,9 +369,9 @@
 
                 <div class="helper">
                     {% if form_mode == 'register' %}
-                    Your account name will also be used to store your chat history, quiz attempts, and learning progress.
+                    Your account name will also be used to save your chat history, quiz attempts, and learning progress.
                     {% else %}
-                    After login, the system stores your quiz progress and attempts under your own username.
+                    After login, your chat history, quiz progress, and learning report updates are saved under your own username.
                     {% endif %}
                 </div>
             </div>

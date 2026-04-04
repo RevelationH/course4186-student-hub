@@ -225,6 +225,34 @@ def _material_stem_key(stem: str) -> str:
     return " ".join(cleaned.split())
 
 
+@lru_cache(maxsize=1024)
+def canonical_material_display_name(filename: str) -> str:
+    cleaned = str(filename or "").replace("\\", "/").strip()
+    if not cleaned:
+        return "Course material"
+    canonical_pdf = locate_canonical_pdf_for_source_name(cleaned)
+    if canonical_pdf:
+        return canonical_pdf.name
+    source_name = Path(cleaned).name or cleaned
+    stem = re.sub(r"(?:\s*\(\d+\))+$", "", Path(source_name).stem).strip()
+    suffix = Path(source_name).suffix.lower()
+    if suffix in OFFICE_CONVERTIBLE_SUFFIXES:
+        suffix = ".pdf"
+    return f"{stem}{suffix}" if stem and suffix else (stem or source_name)
+
+
+def enrich_material_reference(item: Dict[str, Any]) -> Dict[str, Any]:
+    enriched = dict(item)
+    source = str(enriched.get("source") or "").replace("\\", "/")
+    if source:
+        enriched["display_source"] = canonical_material_display_name(source)
+        enriched["material_url"] = build_material_open_url(enriched)
+        enriched["reference_url"] = build_material_reference_url(enriched)
+        if locate_course_material(source):
+            enriched["raw_material_url"] = url_for("course4186_material_asset", filename=source)
+    return enriched
+
+
 def locate_pdf_counterpart(source_path: Path) -> Optional[Path]:
     suffix = source_path.suffix.lower()
     if suffix == ".pdf" and source_path.exists():
@@ -394,7 +422,7 @@ def create_app() -> Flask:
     app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 
     kb = Course4186KnowledgeBase()
-    store = ProgressStore(APP_DIR / "data" / "progress.json")
+    store = ProgressStore(data_path=APP_DIR / "data" / "progress.json")
     chat_store = ChatSessionStore()
 
     app.config["kb"] = kb
@@ -703,6 +731,7 @@ def create_app() -> Flask:
         )
         if not reference:
             abort(404)
+        reference = enrich_material_reference(reference)
         open_material_url = ""
         open_material_label = ""
         target = resolve_material_open_target(
@@ -748,14 +777,7 @@ def create_app() -> Flask:
         answer = kb.answer(message, history=history, top_k=5)
         citations = []
         for item in answer["citations"]:
-            normalized_source = str(item.get("source") or "").replace("\\", "/")
-            enriched = dict(item)
-            enriched.setdefault("display_source", Path(normalized_source).name or normalized_source)
-            enriched["material_url"] = build_material_open_url(enriched)
-            enriched["reference_url"] = build_material_reference_url(enriched)
-            if locate_course_material(normalized_source):
-                enriched["raw_material_url"] = url_for("course4186_material_asset", filename=normalized_source)
-            citations.append(enriched)
+            citations.append(enrich_material_reference(item))
         session_data = chat_store.get_or_create_session(user_id, session_id=session_id)
         generated_title = kb.suggest_session_title(message, answer["answer"])
         session_data = chat_store.append_exchange(
@@ -848,7 +870,7 @@ def create_app() -> Flask:
         questions = kp.get("questions", [])
         results_map: Dict[str, Dict[str, Any]] = {}
         summary = None
-        practice_note = "This practice set uses lecture-based multiple-choice questions. Submit your answers to see the explanation and the recommended slides or pages for review."
+        practice_note = "Answer the questions below. After submission, you will see the correct answer, a short explanation, and the lecture pages to review."
 
         if request.method == "POST":
             submission_rows: List[Dict[str, Any]] = []
@@ -901,6 +923,12 @@ def create_app() -> Flask:
             **report_context,
         )
 
+    @app.get("/learning_report_4186")
+    @app.get("/learning_report_4186.html")
+    @app.get("/report_4186")
+    def learning_report_4186_alias() -> Any:
+        return redirect(url_for("quiz_analysis_4186"))
+
     return app
 
 
@@ -927,15 +955,7 @@ def grade_question(question: Dict[str, Any], kp: Dict[str, Any], user_answer: st
     option_lookup = {option["label"]: option["text"] for option in parsed_options if option.get("label")}
     review_refs = []
     for ref in question.get("review_refs") or []:
-        source = str(ref.get("source") or "").replace("\\", "/")
-        enriched = dict(ref)
-        if source:
-            enriched.setdefault("display_source", Path(source).name or source)
-            enriched["material_url"] = build_material_open_url(enriched)
-            enriched["reference_url"] = build_material_reference_url(enriched)
-            if locate_course_material(source):
-                enriched["raw_material_url"] = url_for("course4186_material_asset", filename=source)
-        review_refs.append(enriched)
+        review_refs.append(enrich_material_reference(ref))
 
     if not user_answer:
         reference = f"{correct_label}. {option_lookup.get(correct_label, question.get('answer', ''))}" if (correct_label := (question.get("correct_option") or "").upper().strip()) else question.get("answer", "")

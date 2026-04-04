@@ -271,9 +271,9 @@
 {% endblock %}
 {% block content %}
 <section class="hero">
-    <div class="report-note">Full-course practice data</div>
+    <div class="report-note">Course progress summary</div>
     <h2 style="margin-top:14px;">Learning Report</h2>
-    <p>This report reviews your current quiz history, highlights stronger and weaker knowledge points, and recommends the next questions to study. All statistics below use the current full-course question bank.</p>
+    <p>This report summarizes your quiz history, highlights stronger and weaker topics, and suggests the next questions to review.</p>
 </section>
 
 <section class="card">
@@ -286,7 +286,7 @@
         <div class="stat">
             <span class="muted">Answered</span>
             <b>{{ summary.answered }}</b>
-            <small>Latest recorded answers across the current question bank</small>
+            <small>Latest recorded answers across the course quiz sets</small>
         </div>
         <div class="stat">
             <span class="muted">Accuracy</span>
@@ -325,7 +325,7 @@
                 </article>
                 {% endfor %}
             {% else %}
-                <div class="empty">No strong area is visible yet. Once you complete more quiz sets, this section will show the knowledge points that are becoming stable.</div>
+                <div class="empty">No clear strength is visible yet. Once you complete more quiz sets, this section will show the topics that are becoming stable.</div>
             {% endif %}
         </div>
     </section>
@@ -360,7 +360,7 @@
                 </article>
                 {% endfor %}
             {% else %}
-                <div class="empty">No unresolved weak area is currently visible in the active course quiz bank. Continue practicing to keep your stronger topics stable.</div>
+                <div class="empty">No unresolved weak area is currently visible. Continue practicing to keep your stronger topics stable.</div>
             {% endif %}
         </div>
     </section>
@@ -439,7 +439,7 @@
                 </article>
                 {% endfor %}
             {% else %}
-                <div class="empty">There are no unresolved questions in your current course record.</div>
+                <div class="empty">There are no unresolved questions in your current record.</div>
             {% endif %}
         </div>
     </section>
@@ -459,7 +459,7 @@
                 </article>
                 {% endfor %}
             {% else %}
-                <div class="empty">No quiz activity has been recorded yet.</div>
+                <div class="empty">You have not completed any quiz questions yet.</div>
             {% endif %}
         </div>
     </section>
@@ -469,9 +469,9 @@
     <div style="display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:14px;">
         <div>
             <h3 class="section-title" style="margin-bottom:4px;">Recommended Next Questions</h3>
-            <div class="muted">These follow-up questions mix fixed bank items with grounded variants generated from the course materials for the topics that still need reinforcement.</div>
+            <div class="muted">These questions are selected to reinforce the topics where your recent answers suggest the most uncertainty.</div>
         </div>
-        <a class="btn alt" href="{{ url_for('quiz_dashboard_4186') }}">Open Quiz Library</a>
+        <a class="btn alt" href="{{ url_for('quiz_dashboard_4186') }}">Open Quiz</a>
     </div>
 
     {% if follow_up_questions %}
@@ -480,10 +480,6 @@
         <article class="follow-card">
             <div class="meta-row">
                 <span class="pill-soft">{{ item.kp_name }}</span>
-                <span class="pill-soft">Focus: {{ item.focus_topic }}</span>
-                {% if item.generated %}
-                <span class="pill-soft">Variant</span>
-                {% endif %}
             </div>
             <p>{{ item.reason }}</p>
             <h4>{{ item.question }}</h4>
@@ -504,7 +500,7 @@
             </div>
 
             <details class="answer-toggle">
-                <summary>Check explanation and review source</summary>
+                <summary>Show answer and review source</summary>
                 <div class="answer-body">
                     <div><strong>Suggested answer:</strong> {{ item.reference_answer }}</div>
                     {% if item.explanation %}
@@ -522,12 +518,12 @@
                 </div>
             </details>
 
-            <a class="btn" href="{{ url_for('quiz_practice_4186', kp_id=item.kp_id) }}">Open Full Practice</a>
+            <a class="btn" href="{{ url_for('quiz_practice_4186', kp_id=item.kp_id) }}">Open Topic Quiz</a>
         </article>
         {% endfor %}
     </div>
     {% else %}
-    <div class="empty">No additional follow-up questions are available yet. Once more quiz data is recorded, this section will suggest new practice automatically.</div>
+    <div class="empty">No additional follow-up questions are available yet. Once more quiz data is recorded, this section will suggest new questions automatically.</div>
     {% endif %}
 </section>
 {% endblock %}

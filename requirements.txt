@@ -58,5 +58,6 @@ dotenv
 argparse
 sentence-transformers
 faiss-cpu
+ftfy
 
 langchain-deepseek

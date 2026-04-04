@@ -15,14 +15,14 @@
     ],
     "correct_option": "C",
     "source_chunk_ids": [
-      "chunk-1039f9e18b2e",
       "chunk-5749a66dfc82",
-      "chunk-8619055a4c73",
-      "chunk-bee11c80729e",
-      "chunk-501143daf540",
+      "chunk-1039f9e18b2e",
       "chunk-b20dccb0397a",
       "chunk-abd75ebf4271",
-      "chunk-02999c2f8759"
+      "chunk-8619055a4c73",
+      "chunk-02999c2f8759",
+      "chunk-56202e0b87cf",
+      "chunk-bb947d1b34b7"
     ],
     "source_files": [
       "Week1\\Lecture1-1 (7).pptx",
@@ -31,15 +31,11 @@
     "review_refs": [
       {
         "source": "Week1\\Lecture1-1 (7).pptx",
-        "display_source": "Lecture1-1 (7).pptx",
-        "location": "slide 5",
-        "section": "The goal of computer vision Computers can gain some high-level understanding from digital images/videos - wikipedia"
-      },
-      {
-        "source": "Week1\\Lecture1-1.pdf",
         "display_source": "Lecture1-1.pdf",
         "location": "page 5",
-        "section": "The goal of computer vision"
+        "section": "The goal of computer vision Computers can gain some high-level understanding from digital images/videos - wikipedia",
+        "unit_type": "page",
+        "unit_index": 5
       }
     ],
     "image_path": null,
@@ -61,14 +57,14 @@
     ],
     "correct_option": "D",
     "source_chunk_ids": [
-      "chunk-1039f9e18b2e",
       "chunk-5749a66dfc82",
-      "chunk-8619055a4c73",
-      "chunk-bee11c80729e",
-      "chunk-501143daf540",
+      "chunk-1039f9e18b2e",
       "chunk-b20dccb0397a",
       "chunk-abd75ebf4271",
-      "chunk-02999c2f8759"
+      "chunk-8619055a4c73",
+      "chunk-02999c2f8759",
+      "chunk-56202e0b87cf",
+      "chunk-bb947d1b34b7"
     ],
     "source_files": [
       "Week1\\Lecture1-1 (7).pptx",
@@ -77,15 +73,19 @@
     "review_refs": [
       {
         "source": "Week1\\Lecture1-1 (7).pptx",
-        "display_source": "Lecture1-1 (7).pptx",
-        "location": "slide 26",
-        "section": "Why is computer vision difficult? Intra-class variation Background clutter Motion (Source: S. Lazebnik) Occlusion"
-      },
-      {
-        "source": "Week1\\Lecture1-1.pdf",
         "display_source": "Lecture1-1.pdf",
         "location": "page 26",
-        "section": "Why is computer vision difficult?"
+        "section": "Why is computer vision difficult? Intra-class variation Background clutter Motion (Source: S. Lazebnik) Occlusion",
+        "unit_type": "page",
+        "unit_index": 26
+      },
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1.pdf",
+        "location": "page 25",
+        "section": "Why is computer vision difficult? Viewpoint variation Illumination Scale",
+        "unit_type": "page",
+        "unit_index": 25
       }
     ],
     "image_path": null,
@@ -107,14 +107,14 @@
     ],
     "correct_option": "C",
     "source_chunk_ids": [
-      "chunk-1039f9e18b2e",
       "chunk-5749a66dfc82",
-      "chunk-8619055a4c73",
-      "chunk-bee11c80729e",
-      "chunk-501143daf540",
+      "chunk-1039f9e18b2e",
       "chunk-b20dccb0397a",
       "chunk-abd75ebf4271",
-      "chunk-02999c2f8759"
+      "chunk-8619055a4c73",
+      "chunk-02999c2f8759",
+      "chunk-56202e0b87cf",
+      "chunk-bb947d1b34b7"
     ],
     "source_files": [
       "Week1\\Lecture1-1 (7).pptx",
@@ -123,15 +123,19 @@
     "review_refs": [
       {
         "source": "Week1\\Lecture1-1 (7).pptx",
-        "display_source": "Lecture1-1 (7).pptx",
-        "location": "slide 5",
-        "section": "The goal of computer vision Computers can gain some high-level understanding from digital images/videos - wikipedia"
+        "display_source": "Lecture1-1.pdf",
+        "location": "page 5",
+        "section": "The goal of computer vision Computers can gain some high-level understanding from digital images/videos - wikipedia",
+        "unit_type": "page",
+        "unit_index": 5
       },
       {
         "source": "Week1\\Lecture1-1.pdf",
         "display_source": "Lecture1-1.pdf",
-        "location": "page 5",
-        "section": "The goal of computer vision"
+        "location": "page 9",
+        "section": "The goal of computer vision",
+        "unit_type": "page",
+        "unit_index": 9
       }
     ],
     "image_path": null,
@@ -153,14 +157,14 @@
     ],
     "correct_option": "B",
     "source_chunk_ids": [
-      "chunk-1039f9e18b2e",
       "chunk-5749a66dfc82",
-      "chunk-8619055a4c73",
-      "chunk-bee11c80729e",
-      "chunk-501143daf540",
+      "chunk-1039f9e18b2e",
       "chunk-b20dccb0397a",
       "chunk-abd75ebf4271",
-      "chunk-02999c2f8759"
+      "chunk-8619055a4c73",
+      "chunk-02999c2f8759",
+      "chunk-56202e0b87cf",
+      "chunk-bb947d1b34b7"
     ],
     "source_files": [
       "Week1\\Lecture1-1 (7).pptx",
@@ -169,15 +173,19 @@
     "review_refs": [
       {
         "source": "Week1\\Lecture1-1 (7).pptx",
-        "display_source": "Lecture1-1 (7).pptx",
-        "location": "slide 5",
-        "section": "The goal of computer vision Computers can gain some high-level understanding from digital images/videos - wikipedia"
-      },
-      {
-        "source": "Week1\\Lecture1-1.pdf",
         "display_source": "Lecture1-1.pdf",
         "location": "page 5",
-        "section": "The goal of computer vision"
+        "section": "The goal of computer vision Computers can gain some high-level understanding from digital images/videos - wikipedia",
+        "unit_type": "page",
+        "unit_index": 5
+      },
+      {
+        "source": "Week1\\Lecture1-1 (7).pptx",
+        "display_source": "Lecture1-1.pdf",
+        "location": "page 3",
+        "section": "Every image tells a story \"A picture is worth a thousand words\" Goal of computer vision: perceive the \"stor...",
+        "unit_type": "page",
+        "unit_index": 3
       }
     ],
     "image_path": null,
@@ -199,14 +207,14 @@
     ],
     "correct_option": "C",
     "source_chunk_ids": [
-      "chunk-1039f9e18b2e",
       "chunk-5749a66dfc82",
-      "chunk-8619055a4c73",
-      "chunk-bee11c80729e",
-      "chunk-501143daf540",
+      "chunk-1039f9e18b2e",
       "chunk-b20dccb0397a",
       "chunk-abd75ebf4271",
-      "chunk-02999c2f8759"
+      "chunk-8619055a4c73",
+      "chunk-02999c2f8759",
+      "chunk-56202e0b87cf",
+      "chunk-bb947d1b34b7"
     ],
     "source_files": [
       "Week1\\Lecture1-1 (7).pptx",
@@ -217,13 +225,17 @@
         "source": "Week1\\Lecture1-1.pdf",
         "display_source": "Lecture1-1.pdf",
         "location": "page 27",
-        "section": "Scope Robotics Neuroscience Graphics Computational Photography Machine Learning Medical Imaging Human Compu..."
+        "section": "Scope Robotics Neuroscience Graphics Computational Photography Machine Learning Medical Imaging Human Compu...",
+        "unit_type": "page",
+        "unit_index": 27
       },
       {
         "source": "Week1\\Lecture1-1 (7).pptx",
-        "display_source": "Lecture1-1 (7).pptx",
-        "location": "slide 27",
-        "section": "Scope Robotics Neuroscience Graphics Computational Photography Machine Learning Medical Imaging Human Compu..."
+        "display_source": "Lecture1-1.pdf",
+        "location": "page 10",
+        "section": "Why study computer vision? Billions of images/videos captured per day Huge number of useful applications",
+        "unit_type": "page",
+        "unit_index": 10
       }
     ],
     "image_path": null,
@@ -249,8 +261,8 @@
       "chunk-8af1d1050c19",
       "chunk-3d54c09b038b",
       "chunk-97910ba4ced2",
+      "chunk-0500ca894f79",
       "chunk-862ff07ad259",
-      "chunk-3dd745e980a4",
       "chunk-fa2e9460bd16",
       "chunk-45b47081ef81"
     ],
@@ -258,20 +270,24 @@
       "Week12\\Revision.pdf",
       "Week1\\Lecture1-2 (10).pptx",
       "Week1\\Lecture1-2.pdf",
-      "Week2\\revision_w1.pdf"
+      "Week2\\all.pdf"
     ],
     "review_refs": [
       {
         "source": "Week1\\Lecture1-2.pdf",
         "display_source": "Lecture1-2.pdf",
         "location": "page 12",
-        "section": "Linear filtering"
+        "section": "Linear filtering",
+        "unit_type": "page",
+        "unit_index": 12
       },
       {
-        "source": "Week1\\Lecture1-2 (10).pptx",
-        "display_source": "Lecture1-2 (10).pptx",
-        "location": "slide 12",
-        "section": "Linear filtering One simple version of filtering: linear filtering (cross-correlation, convolution) Replace..."
+        "source": "Week2\\all.pdf",
+        "display_source": "all.pdf",
+        "location": "page 3",
+        "section": "Linear filtering",
+        "unit_type": "page",
+        "unit_index": 3
       }
     ],
     "image_path": null,
@@ -297,8 +313,8 @@
       "chunk-8af1d1050c19",
       "chunk-3d54c09b038b",
       "chunk-97910ba4ced2",
+      "chunk-0500ca894f79",
       "chunk-862ff07ad259",
-      "chunk-3dd745e980a4",
       "chunk-fa2e9460bd16",
       "chunk-45b47081ef81"
     ],
@@ -306,20 +322,24 @@
       "Week12\\Revision.pdf",
       "Week1\\Lecture1-2 (10).pptx",
       "Week1\\Lecture1-2.pdf",
-      "Week2\\revision_w1.pdf"
+      "Week2\\all.pdf"
     ],
     "review_refs": [
       {
         "source": "Week1\\Lecture1-2.pdf",
         "display_source": "Lecture1-2.pdf",
         "location": "page 12",
-        "section": "Linear filtering"
+        "section": "Linear filtering",
+        "unit_type": "page",
+        "unit_index": 12
       },
       {
-        "source": "Week1\\Lecture1-2 (10).pptx",
-        "display_source": "Lecture1-2 (10).pptx",
-        "location": "slide 12",
-        "section": "Linear filtering One simple version of filtering: linear filtering (cross-correlation, convolution) Replace..."
+        "source": "Week2\\all.pdf",
+        "display_source": "all.pdf",
+        "location": "page 3",
+        "section": "Linear filtering",
+        "unit_type": "page",
+        "unit_index": 3
       }
     ],
     "image_path": null,
@@ -345,8 +365,8 @@
       "chunk-8af1d1050c19",
       "chunk-3d54c09b038b",
       "chunk-97910ba4ced2",
+      "chunk-0500ca894f79",
       "chunk-862ff07ad259",
-      "chunk-3dd745e980a4",
       "chunk-fa2e9460bd16",
       "chunk-45b47081ef81"
     ],
@@ -354,20 +374,24 @@
       "Week12\\Revision.pdf",
       "Week1\\Lecture1-2 (10).pptx",
       "Week1\\Lecture1-2.pdf",
-      "Week2\\revision_w1.pdf"
+      "Week2\\all.pdf"
     ],
     "review_refs": [
       {
         "source": "Week1\\Lecture1-2 (10).pptx",
-        "display_source": "Lecture1-2 (10).pptx",
-        "location": "slide 14",
-        "section": "Convolution Same as cross-correlation, except that the kernel is \"flipped\" (horizontally and vertically) Th..."
-      },
-      {
-        "source": "Week1\\Lecture1-2.pdf",
         "display_source": "Lecture1-2.pdf",
         "location": "page 14",
-        "section": "Convolution"
+        "section": "Convolution Same as cross-correlation, except that the kernel is \"flipped\" (horizontally and vertically) Th...",
+        "unit_type": "page",
+        "unit_index": 14
+      },
+      {
+        "source": "Week1\\Lecture1-2 (10).pptx",
+        "display_source": "Lecture1-2.pdf",
+        "location": "page 12",
+        "section": "Linear filtering One simple version of filtering: linear filtering (cross-correlation, convolution) Replace...",
+        "unit_type": "page",
+        "unit_index": 12
       }
     ],
     "image_path": null,
@@ -378,12 +402,12 @@
     "kp_id": "kp-image-filtering-and-convolution",
     "kp_name": "Image filtering and convolution",
     "question_type": "multiple_choice",
-    "question": "In the figure, the right lower result keeps the thin grass strands slightly clearer than the left lower result. What property of Gaussian smoothing explains that difference?",
-    "answer": "Gaussian smoothing gives more weight to nearby pixels, so it reduces noise without flattening local structure as uniformly as a mean filter.",
+    "question": "The Gaussian-filtered result preserves the thin grass strands more clearly than the mean-filtered result. Why does that happen?",
+    "answer": "Gaussian smoothing weights nearby pixels more heavily, so it suppresses noise while preserving local structure better than uniform averaging.",
     "explanation": "The comparison is meant to show that Gaussian weighting still smooths noise, but its center-weighted averaging usually preserves fine local structure better than a uniform mean filter.",
     "options": [
       "A. Gaussian smoothing flips the kernel, which automatically sharpens every edge in the image.",
-      "B. Gaussian smoothing gives more weight to nearby pixels, so it reduces noise without flattening local structure as uniformly as a mean filter.",
+      "B. Gaussian smoothing weights nearby pixels more heavily, so it suppresses noise while preserving local structure better than uniform averaging.",
       "C. Gaussian smoothing changes the camera focal length so the strands appear sharper.",
       "D. Gaussian smoothing ignores neighboring pixels and keeps only the center pixel value."
     ],
@@ -393,8 +417,8 @@
       "chunk-8af1d1050c19",
       "chunk-3d54c09b038b",
       "chunk-97910ba4ced2",
+      "chunk-0500ca894f79",
       "chunk-862ff07ad259",
-      "chunk-3dd745e980a4",
       "chunk-fa2e9460bd16",
       "chunk-45b47081ef81"
     ],
@@ -402,24 +426,28 @@
       "Week12\\Revision.pdf",
       "Week1\\Lecture1-2 (10).pptx",
       "Week1\\Lecture1-2.pdf",
-      "Week2\\revision_w1.pdf"
+      "Week2\\all.pdf"
     ],
     "review_refs": [
-      {
-        "source": "Week1\\Lecture1-2 (10).pptx",
-        "display_source": "Lecture1-2 (10).pptx",
-        "location": "slide 30",
-        "section": "Mean vs. Gaussian filtering Mean filter may garble high-frequency signal"
-      },
       {
         "source": "Week1\\Lecture1-2.pdf",
         "display_source": "Lecture1-2.pdf",
         "location": "page 30",
-        "section": "Mean vs. Gaussian filtering"
+        "section": "Mean vs. Gaussian filtering",
+        "unit_type": "page",
+        "unit_index": 30
+      },
+      {
+        "source": "Week1\\Lecture1-2.pdf",
+        "display_source": "Lecture1-2.pdf",
+        "location": "page 31",
+        "section": "Gaussian filter",
+        "unit_type": "page",
+        "unit_index": 31
       }
     ],
     "image_path": "images/week1-lecture1-2-10/slide-030-a58b2a0bc463.png",
-    "image_caption": "Lecture figure from Week1/Lecture1-2 (10).pptx slide 30"
+    "image_caption": "Lecture figure from Lecture1-2.pdf page 30"
   },
   {
     "question_id": "kp-image-filtering-and-convolution-q5",
@@ -441,8 +469,8 @@
       "chunk-8af1d1050c19",
       "chunk-3d54c09b038b",
       "chunk-97910ba4ced2",
+      "chunk-0500ca894f79",
       "chunk-862ff07ad259",
-      "chunk-3dd745e980a4",
       "chunk-fa2e9460bd16",
       "chunk-45b47081ef81"
     ],
@@ -450,20 +478,24 @@
       "Week12\\Revision.pdf",
       "Week1\\Lecture1-2 (10).pptx",
       "Week1\\Lecture1-2.pdf",
-      "Week2\\revision_w1.pdf"
+      "Week2\\all.pdf"
     ],
     "review_refs": [
       {
         "source": "Week1\\Lecture1-2.pdf",
         "display_source": "Lecture1-2.pdf",
         "location": "page 12",
-        "section": "Linear filtering"
+        "section": "Linear filtering",
+        "unit_type": "page",
+        "unit_index": 12
       },
       {
-        "source": "Week1\\Lecture1-2 (10).pptx",
-        "display_source": "Lecture1-2 (10).pptx",
-        "location": "slide 12",
-        "section": "Linear filtering One simple version of filtering: linear filtering (cross-correlation, convolution) Replace..."
+        "source": "Week2\\all.pdf",
+        "display_source": "all.pdf",
+        "location": "page 3",
+        "section": "Linear filtering",
+        "unit_type": "page",
+        "unit_index": 3
       }
     ],
     "image_path": null,
@@ -486,30 +518,35 @@
     "correct_option": "D",
     "source_chunk_ids": [
       "chunk-d92e7f2faf93",
+      "chunk-da8004b09ad0",
       "chunk-70a0696356ac",
       "chunk-f8bbb46e6881",
       "chunk-bfa2ed8cfb64",
       "chunk-faf10000c0bb",
       "chunk-26264ce1e8b0",
-      "chunk-ecd975cbd63c",
-      "chunk-eb9bf04742c3"
+      "chunk-ecd975cbd63c"
     ],
     "source_files": [
+      "Week2\\Edge.pdf",
       "Week2\\Edge.pptx",
       "Week2\\Lecture2-1.pdf"
     ],
     "review_refs": [
       {
         "source": "Week2\\Edge.pptx",
-        "display_source": "Edge.pptx",
-        "location": "slide 2",
-        "section": "Edge detection Goal: Identify visual changes (discontinuities) in an image. Intuitively, semantic informati..."
+        "display_source": "Edge.pdf",
+        "location": "page 2",
+        "section": "Edge detection Goal: Identify visual changes (discontinuities) in an image. Intuitively, semantic informati...",
+        "unit_type": "page",
+        "unit_index": 2
       },
       {
         "source": "Week2\\Lecture2-1.pdf",
         "display_source": "Lecture2-1.pdf",
         "location": "page 2",
-        "section": "Edge detection"
+        "section": "Edge detection",
+        "unit_type": "page",
+        "unit_index": 2
       }
     ],
     "image_path": null,
@@ -532,30 +569,35 @@
     "correct_option": "B",
     "source_chunk_ids": [
       "chunk-d92e7f2faf93",
+      "chunk-da8004b09ad0",
       "chunk-70a0696356ac",
       "chunk-f8bbb46e6881",
       "chunk-bfa2ed8cfb64",
       "chunk-faf10000c0bb",
       "chunk-26264ce1e8b0",
-      "chunk-ecd975cbd63c",
-      "chunk-eb9bf04742c3"
+      "chunk-ecd975cbd63c"
     ],
     "source_files": [
+      "Week2\\Edge.pdf",
       "Week2\\Edge.pptx",
       "Week2\\Lecture2-1.pdf"
     ],
     "review_refs": [
       {
         "source": "Week2\\Edge.pptx",
-        "display_source": "Edge.pptx",
-        "location": "slide 1",
-        "section": "Edge detection Convert a 2D image into a set of curves Extracts salient features of the scene More compact than pixels"
+        "display_source": "Edge.pdf",
+        "location": "page 1",
+        "section": "Edge detection Convert a 2D image into a set of curves Extracts salient features of the scene More compact than pixels",
+        "unit_type": "page",
+        "unit_index": 1
       },
       {
         "source": "Week2\\Edge.pptx",
-        "display_source": "Edge.pptx",
-        "location": "slide 13",
-        "section": "Effects of noise Where is the edge? Source: S. Seitz Noisy input image"
+        "display_source": "Edge.pdf",
+        "location": "page 13",
+        "section": "Effects of noise Where is the edge? Source: S. Seitz Noisy input image",
+        "unit_type": "page",
+        "unit_index": 13
       }
     ],
     "image_path": null,
@@ -578,30 +620,35 @@
     "correct_option": "D",
     "source_chunk_ids": [
       "chunk-d92e7f2faf93",
+      "chunk-da8004b09ad0",
       "chunk-70a0696356ac",
       "chunk-f8bbb46e6881",
       "chunk-bfa2ed8cfb64",
       "chunk-faf10000c0bb",
       "chunk-26264ce1e8b0",
-      "chunk-ecd975cbd63c",
-      "chunk-eb9bf04742c3"
+      "chunk-ecd975cbd63c"
     ],
     "source_files": [
+      "Week2\\Edge.pdf",
       "Week2\\Edge.pptx",
       "Week2\\Lecture2-1.pdf"
     ],
     "review_refs": [
       {
         "source": "Week2\\Edge.pptx",
-        "display_source": "Edge.pptx",
-        "location": "slide 9",
-        "section": "Characterizing edges An edge is a place of rapid change in the image intensity function image intensity fun..."
+        "display_source": "Edge.pdf",
+        "location": "page 9",
+        "section": "Characterizing edges An edge is a place of rapid change in the image intensity function image intensity fun...",
+        "unit_type": "page",
+        "unit_index": 9
       },
       {
-        "source": "Week2\\Edge.pptx",
-        "display_source": "Edge.pptx",
-        "location": "slide 25",
-        "section": "thresholding Finding edges where is the edge?"
+        "source": "Week2\\Edge.pdf",
+        "display_source": "Edge.pdf",
+        "location": "page 11",
+        "section": "The gradient points in the direction of most rapid increase in intensity",
+        "unit_type": "page",
+        "unit_index": 11
       }
     ],
     "image_path": null,
@@ -624,30 +671,35 @@
     "correct_option": "B",
     "source_chunk_ids": [
       "chunk-d92e7f2faf93",
+      "chunk-da8004b09ad0",
       "chunk-70a0696356ac",
       "chunk-f8bbb46e6881",
       "chunk-bfa2ed8cfb64",
       "chunk-faf10000c0bb",
       "chunk-26264ce1e8b0",
-      "chunk-ecd975cbd63c",
-      "chunk-eb9bf04742c3"
+      "chunk-ecd975cbd63c"
     ],
     "source_files": [
+      "Week2\\Edge.pdf",
       "Week2\\Edge.pptx",
       "Week2\\Lecture2-1.pdf"
     ],
     "review_refs": [
       {
         "source": "Week2\\Edge.pptx",
-        "display_source": "Edge.pptx",
-        "location": "slide 1",
-        "section": "Edge detection Convert a 2D image into a set of curves Extracts salient features of the scene More compact than pixels"
+        "display_source": "Edge.pdf",
+        "location": "page 1",
+        "section": "Edge detection Convert a 2D image into a set of curves Extracts salient features of the scene More compact than pixels",
+        "unit_type": "page",
+        "unit_index": 1
       },
       {
         "source": "Week2\\Edge.pptx",
-        "display_source": "Edge.pptx",
-        "location": "slide 2",
-        "section": "Edge detection Goal: Identify visual changes (discontinuities) in an image. Intuitively, semantic informati..."
+        "display_source": "Edge.pdf",
+        "location": "page 2",
+        "section": "Edge detection Goal: Identify visual changes (discontinuities) in an image. Intuitively, semantic informati...",
+        "unit_type": "page",
+        "unit_index": 2
       }
     ],
     "image_path": null,
@@ -670,34 +722,39 @@
     "correct_option": "B",
     "source_chunk_ids": [
       "chunk-d92e7f2faf93",
+      "chunk-da8004b09ad0",
       "chunk-70a0696356ac",
       "chunk-f8bbb46e6881",
       "chunk-bfa2ed8cfb64",
       "chunk-faf10000c0bb",
       "chunk-26264ce1e8b0",
-      "chunk-ecd975cbd63c",
-      "chunk-eb9bf04742c3"
+      "chunk-ecd975cbd63c"
     ],
     "source_files": [
+      "Week2\\Edge.pdf",
       "Week2\\Edge.pptx",
       "Week2\\Lecture2-1.pdf"
     ],
     "review_refs": [
       {
-        "source": "Week2\\Edge.pptx",
-        "display_source": "Edge.pptx",
-        "location": "slide 2",
-        "section": "Edge detection Goal: Identify visual changes (discontinuities) in an image. Intuitively, semantic informati..."
+        "source": "Week2\\Edge.pdf",
+        "display_source": "Edge.pdf",
+        "location": "page 2",
+        "section": "Edge detection",
+        "unit_type": "page",
+        "unit_index": 2
       },
       {
         "source": "Week2\\Lecture2-1.pdf",
         "display_source": "Lecture2-1.pdf",
         "location": "page 2",
-        "section": "Edge detection"
+        "section": "Edge detection",
+        "unit_type": "page",
+        "unit_index": 2
       }
     ],
     "image_path": "images/week2-edge/slide-002-0ba5ae211981.png",
-    "image_caption": "Lecture figure from Week2/Edge.pptx slide 2"
+    "image_caption": "Lecture figure from Edge.pdf page 2"
   },
   {
     "question_id": "kp-image-resampling-q1",
@@ -720,28 +777,32 @@
       "chunk-5b645983b7ee",
       "chunk-41356a9265fb",
       "chunk-c88bd7bb5936",
-      "chunk-20759439093f",
-      "chunk-d51997e53e7e",
+      "chunk-db4a637c3ed8",
+      "chunk-b03f1272268c",
       "chunk-bd7f80cf87d4"
     ],
     "source_files": [
-      "Week11\\Lecture11.pdf",
-      "Week12\\Revision.pdf",
+      "Week11\\Lecture-opticalflow1.pdf",
       "Week2\\Lecture2-2.pdf",
+      "Week2\\sampling.pdf",
       "Week2\\sampling.pptx"
     ],
     "review_refs": [
       {
-        "source": "Week11\\Lecture11.pdf",
-        "display_source": "Lecture11.pdf",
+        "source": "Week11\\Lecture-opticalflow1.pdf",
+        "display_source": "Lecture-opticalflow1.pdf",
         "location": "page 34",
-        "section": "nearest match is correct (no aliasing)nearest match is incorrect (aliasing)To overcome aliasing"
+        "section": "Optical Flow: Aliasing",
+        "unit_type": "page",
+        "unit_index": 34
       },
       {
         "source": "Week2\\sampling.pptx",
-        "display_source": "sampling.pptx",
-        "location": "slide 2",
-        "section": "Image Scaling This image is too big to fit on the screen. How can we generate a half-sized version? Source: S. Seitz"
+        "display_source": "sampling.pdf",
+        "location": "page 2",
+        "section": "Image Scaling This image is too big to fit on the screen. How can we generate a half-sized version? Source: S. Seitz",
+        "unit_type": "page",
+        "unit_index": 2
       }
     ],
     "image_path": null,
@@ -768,14 +829,14 @@
       "chunk-5b645983b7ee",
       "chunk-41356a9265fb",
       "chunk-c88bd7bb5936",
-      "chunk-20759439093f",
-      "chunk-d51997e53e7e",
+      "chunk-db4a637c3ed8",
+      "chunk-b03f1272268c",
       "chunk-bd7f80cf87d4"
     ],
     "source_files": [
-      "Week11\\Lecture11.pdf",
-      "Week12\\Revision.pdf",
+      "Week11\\Lecture-opticalflow1.pdf",
       "Week2\\Lecture2-2.pdf",
+      "Week2\\sampling.pdf",
       "Week2\\sampling.pptx"
     ],
     "review_refs": [
@@ -783,13 +844,17 @@
         "source": "Week2\\Lecture2-2.pdf",
         "display_source": "Lecture2-2.pdf",
         "location": "page 9",
-        "section": "Upsampling"
+        "section": "Upsampling",
+        "unit_type": "page",
+        "unit_index": 9
       },
       {
-        "source": "Week2\\sampling.pptx",
-        "display_source": "sampling.pptx",
-        "location": "slide 9",
-        "section": "Upsampling This image is too small for this screen: How can we make it 10 times as big? Simplest approach: ..."
+        "source": "Week2\\sampling.pdf",
+        "display_source": "sampling.pdf",
+        "location": "page 9",
+        "section": "Upsampling",
+        "unit_type": "page",
+        "unit_index": 9
       }
     ],
     "image_path": null,
@@ -816,14 +881,14 @@
       "chunk-5b645983b7ee",
       "chunk-41356a9265fb",
       "chunk-c88bd7bb5936",
-      "chunk-20759439093f",
-      "chunk-d51997e53e7e",
+      "chunk-db4a637c3ed8",
+      "chunk-b03f1272268c",
       "chunk-bd7f80cf87d4"
     ],
     "source_files": [
-      "Week11\\Lecture11.pdf",
-      "Week12\\Revision.pdf",
+      "Week11\\Lecture-opticalflow1.pdf",
       "Week2\\Lecture2-2.pdf",
+      "Week2\\sampling.pdf",
       "Week2\\sampling.pptx"
     ],
     "review_refs": [
@@ -831,13 +896,17 @@
         "source": "Week2\\Lecture2-2.pdf",
         "display_source": "Lecture2-2.pdf",
         "location": "page 9",
-        "section": "Upsampling"
+        "section": "Upsampling",
+        "unit_type": "page",
+        "unit_index": 9
       },
       {
-        "source": "Week2\\sampling.pptx",
-        "display_source": "sampling.pptx",
-        "location": "slide 9",
-        "section": "Upsampling This image is too small for this screen: How can we make it 10 times as big? Simplest approach: ..."
+        "source": "Week2\\sampling.pdf",
+        "display_source": "sampling.pdf",
+        "location": "page 9",
+        "section": "Upsampling",
+        "unit_type": "page",
+        "unit_index": 9
       }
     ],
     "image_path": null,
@@ -864,28 +933,32 @@
       "chunk-5b645983b7ee",
       "chunk-41356a9265fb",
       "chunk-c88bd7bb5936",
-      "chunk-20759439093f",
-      "chunk-d51997e53e7e",
+      "chunk-db4a637c3ed8",
+      "chunk-b03f1272268c",
       "chunk-bd7f80cf87d4"
     ],
     "source_files": [
-      "Week11\\Lecture11.pdf",
-      "Week12\\Revision.pdf",
+      "Week11\\Lecture-opticalflow1.pdf",
       "Week2\\Lecture2-2.pdf",
+      "Week2\\sampling.pdf",
       "Week2\\sampling.pptx"
     ],
     "review_refs": [
       {
         "source": "Week2\\sampling.pptx",
-        "display_source": "sampling.pptx",
-        "location": "slide 1",
-        "section": "Image Resampling"
+        "display_source": "sampling.pdf",
+        "location": "page 1",
+        "section": "Image Resampling",
+        "unit_type": "page",
+        "unit_index": 1
       },
       {
-        "source": "Week2\\sampling.pptx",
-        "display_source": "sampling.pptx",
-        "location": "slide 9",
-        "section": "Upsampling This image is too small for this screen: How can we make it 10 times as big? Simplest approach: ..."
+        "source": "Week2\\Lecture2-2.pdf",
+        "display_source": "Lecture2-2.pdf",
+        "location": "page 1",
+        "section": "Image Resampling",
+        "unit_type": "page",
+        "unit_index": 1
       }
     ],
     "image_path": null,
@@ -912,28 +985,32 @@
       "chunk-5b645983b7ee",
       "chunk-41356a9265fb",
       "chunk-c88bd7bb5936",
-      "chunk-20759439093f",
-      "chunk-d51997e53e7e",
+      "chunk-db4a637c3ed8",
+      "chunk-b03f1272268c",
       "chunk-bd7f80cf87d4"
     ],
     "source_files": [
-      "Week11\\Lecture11.pdf",
-      "Week12\\Revision.pdf",
+      "Week11\\Lecture-opticalflow1.pdf",
       "Week2\\Lecture2-2.pdf",
+      "Week2\\sampling.pdf",
       "Week2\\sampling.pptx"
     ],
     "review_refs": [
       {
         "source": "Week2\\sampling.pptx",
-        "display_source": "sampling.pptx",
-        "location": "slide 1",
-        "section": "Image Resampling"
+        "display_source": "sampling.pdf",
+        "location": "page 1",
+        "section": "Image Resampling",
+        "unit_type": "page",
+        "unit_index": 1
       },
       {
-        "source": "Week11\\Lecture11.pdf",
-        "display_source": "Lecture11.pdf",
+        "source": "Week11\\Lecture-opticalflow1.pdf",
+        "display_source": "Lecture-opticalflow1.pdf",
         "location": "page 34",
-        "section": "nearest match is correct (no aliasing)nearest match is incorrect (aliasing)To overcome aliasing"
+        "section": "Optical Flow: Aliasing",
+        "unit_type": "page",
+        "unit_index": 34
       }
     ],
     "image_path": null,
@@ -944,14 +1021,14 @@
     "kp_id": "kp-texture-analysis",
     "kp_name": "Texture analysis",
     "question_type": "multiple_choice",
-    "question": "What type of visual signal is texture analysis designed to capture?",
-    "answer": "Repeated local appearance patterns such as grass, fabric, or brick-like structure.",
-    "explanation": "Texture analysis focuses on repeated local structure rather than isolated geometric primitives.",
+    "question": "A region contains many small repeated intensity changes but no single dominant contour. What visual cue is most informative for describing it?",
+    "answer": "Repeated local appearance patterns, that is, texture over a region.",
+    "explanation": "Texture analysis focuses on repeated local structure over an area rather than one isolated edge or corner.",
     "options": [
       "A. Only the strongest single edge in the whole image.",
       "B. Exact camera intrinsic parameters.",
       "C. The optical center of the imaging system.",
-      "D. Repeated local appearance patterns such as grass, fabric, or brick-like structure."
+      "D. Repeated local appearance patterns, that is, texture over a region."
     ],
     "correct_option": "D",
     "source_chunk_ids": [
@@ -973,14 +1050,18 @@
       {
         "source": "Week3\\Lecture3-1.pdf",
         "display_source": "Lecture3-1.pdf",
-        "location": "page 4",
-        "section": "Local Binary PatternMeasure"
+        "location": "page 3",
+        "section": "Two Edge-based Texture Measures1. edgeness per unit area",
+        "unit_type": "page",
+        "unit_index": 3
       },
       {
         "source": "Week3\\Lecture3-1 (1).pptx",
-        "display_source": "Lecture3-1 (1).pptx",
-        "location": "slide 1",
-        "section": "Natural Textures grass leaves What/ w here are the textures? How to describe the textures? 1"
+        "display_source": "Lecture3-1.pdf",
+        "location": "page 2",
+        "section": "Some Simple Statistical Texture Measures 1. Edge Density and Direction Use an edge detector as the first st...",
+        "unit_type": "page",
+        "unit_index": 2
       }
     ],
     "image_path": null,
@@ -1021,13 +1102,17 @@
         "source": "Week2\\Lecture2-3.pdf",
         "display_source": "Lecture2-3.pdf",
         "location": "page 4",
-        "section": "Color histograms can represent"
+        "section": "Color histograms can represent",
+        "unit_type": "page",
+        "unit_index": 4
       },
       {
         "source": "Week3\\Lecture3-1.pdf",
         "display_source": "Lecture3-1.pdf",
         "location": "page 4",
-        "section": "Local Binary PatternMeasure"
+        "section": "Local Binary PatternMeasure",
+        "unit_type": "page",
+        "unit_index": 4
       }
     ],
     "image_path": null,
@@ -1038,12 +1123,12 @@
     "kp_id": "kp-texture-analysis",
     "kp_name": "Texture analysis",
     "question_type": "multiple_choice",
-    "question": "Suppose object shape is unreliable, but surface appearance differs between grass, leaves, and brick. Which cue should a recognition system emphasize?",
-    "answer": "Repeated local surface patterns such as texture statistics over a region.",
+    "question": "Two surfaces have similar outlines, but one is covered with fine repeated leaf-like patterns while the other has brick-like repetition. Which cue should a recognition system emphasize?",
+    "answer": "Regional texture statistics, because the main difference lies in repeated local patterns rather than shape alone.",
     "explanation": "Texture analysis is about repeated appearance patterns, not camera geometry.",
     "options": [
       "A. Estimating the baseline between two calibrated cameras from one point.",
-      "B. Repeated local surface patterns such as texture statistics over a region.",
+      "B. Regional texture statistics, because the main difference lies in repeated local patterns rather than shape alone.",
       "C. Choosing a focal length to widen the field of view.",
       "D. Projecting a 3D point through a pinhole model."
     ],
@@ -1065,16 +1150,20 @@
     ],
     "review_refs": [
       {
-        "source": "Week3\\Lecture3-1 (1).pptx",
-        "display_source": "Lecture3-1 (1).pptx",
-        "location": "slide 1",
-        "section": "Natural Textures grass leaves What/ w here are the textures? How to describe the textures? 1"
+        "source": "Week3\\Lecture3-1.pdf",
+        "display_source": "Lecture3-1.pdf",
+        "location": "page 3",
+        "section": "Two Edge-based Texture Measures1. edgeness per unit area",
+        "unit_type": "page",
+        "unit_index": 3
       },
       {
         "source": "Week3\\Lecture3-1 (1).pptx",
-        "display_source": "Lecture3-1 (1).pptx",
-        "location": "slide 8",
-        "section": "But how do you choose d? This is actually a critical question with all the statistical texture methods. Are..."
+        "display_source": "Lecture3-1.pdf",
+        "location": "page 8",
+        "section": "But how do you choose d? This is actually a critical question with all the statistical texture methods. Are...",
+        "unit_type": "page",
+        "unit_index": 8
       }
     ],
     "image_path": null,
@@ -1115,13 +1204,17 @@
         "source": "Week3\\Lecture3-1.pdf",
         "display_source": "Lecture3-1.pdf",
         "location": "page 5",
-        "section": "Local Binary Pattern (LBP)𝐿 𝐵 𝑃 𝑝 , 𝑟 ( 𝑁 𝑐 ) = , 𝑔"
+        "section": "Local Binary Pattern (LBP)𝐿𝐵𝑃𝑝,𝑟(𝑁𝑐)= , 𝑔",
+        "unit_type": "page",
+        "unit_index": 5
       },
       {
         "source": "Week3\\Lecture3-1 (1).pptx",
-        "display_source": "Lecture3-1 (1).pptx",
-        "location": "slide 2",
-        "section": "Some Simple Statistical Texture Measures 1. Edge Density and Direction Use an edge detector as the first st..."
+        "display_source": "Lecture3-1.pdf",
+        "location": "page 2",
+        "section": "Some Simple Statistical Texture Measures 1. Edge Density and Direction Use an edge detector as the first st...",
+        "unit_type": "page",
+        "unit_index": 2
       }
     ],
     "image_path": null,
@@ -1159,20 +1252,24 @@
     ],
     "review_refs": [
       {
-        "source": "Week3\\Lecture3-1 (1).pptx",
-        "display_source": "Lecture3-1 (1).pptx",
-        "location": "slide 1",
-        "section": "Natural Textures grass leaves What/ w here are the textures? How to describe the textures? 1"
+        "source": "Week3\\Lecture3-1.pdf",
+        "display_source": "Lecture3-1.pdf",
+        "location": "page 1",
+        "section": "Natural Textures",
+        "unit_type": "page",
+        "unit_index": 1
       },
       {
         "source": "Week3\\Lecture3-1.pdf",
         "display_source": "Lecture3-1.pdf",
         "location": "page 4",
-        "section": "Local Binary PatternMeasure"
+        "section": "Local Binary PatternMeasure",
+        "unit_type": "page",
+        "unit_index": 4
       }
     ],
     "image_path": "images/week3-lecture3-1-1/slide-001-4f992ec27007.png",
-    "image_caption": "Lecture figure from Week3/Lecture3-1 (1).pptx slide 1"
+    "image_caption": "Lecture figure from Lecture3-1.pdf page 1"
   },
   {
     "question_id": "kp-convolutional-neural-networks-q1",
@@ -1210,13 +1307,17 @@
         "source": "Week4\\lecture4.pdf",
         "display_source": "lecture4.pdf",
         "location": "page 23",
-        "section": "Transpose Convolution: 1DExample"
+        "section": "Transpose Convolution: 1DExample",
+        "unit_type": "page",
+        "unit_index": 23
       },
       {
         "source": "Week3\\Lecture3_2 (1).pptx",
-        "display_source": "Lecture3_2 (1).pptx",
-        "location": "slide 19",
-        "section": "Filter = 'local' perceptron. Also called kernel."
+        "display_source": "Lecture3_2.pdf",
+        "location": "page 19",
+        "section": "Filter = 'local' perceptron. Also called kernel.",
+        "unit_type": "page",
+        "unit_index": 19
       }
     ],
     "image_path": null,
@@ -1258,13 +1359,17 @@
         "source": "Week4\\lecture4.pdf",
         "display_source": "lecture4.pdf",
         "location": "page 19",
-        "section": "… Rest of the network"
+        "section": "… Rest of the network",
+        "unit_type": "page",
+        "unit_index": 19
       },
       {
         "source": "Week3\\Lecture3_2 (1).pptx",
-        "display_source": "Lecture3_2 (1).pptx",
-        "location": "slide 1",
-        "section": "Convolutional Neural Network W hich is the dog?"
+        "display_source": "Lecture3_2.pdf",
+        "location": "page 1",
+        "section": "Convolutional Neural Network W hich is the dog?",
+        "unit_type": "page",
+        "unit_index": 1
       }
     ],
     "image_path": null,
@@ -1304,15 +1409,19 @@
     "review_refs": [
       {
         "source": "Week3\\Lecture3_2 (1).pptx",
-        "display_source": "Lecture3_2 (1).pptx",
-        "location": "slide 2",
-        "section": "Given a feature representation for images, how do we learn a model for distinguishing features from differe..."
+        "display_source": "Lecture3_2.pdf",
+        "location": "page 2",
+        "section": "Given a feature representation for images, how do we learn a model for distinguishing features from differe...",
+        "unit_type": "page",
+        "unit_index": 2
       },
       {
         "source": "Week3\\Lecture3_2 (1).pptx",
-        "display_source": "Lecture3_2 (1).pptx",
-        "location": "slide 11",
-        "section": "Composition Attempt to represent complex functions as compositions of smaller functions. Outputs from one p..."
+        "display_source": "Lecture3_2.pdf",
+        "location": "page 11",
+        "section": "Composition Attempt to represent complex functions as compositions of smaller functions. Outputs from one p...",
+        "unit_type": "page",
+        "unit_index": 11
       }
     ],
     "image_path": null,
@@ -1352,15 +1461,19 @@
     "review_refs": [
       {
         "source": "Week3\\Lecture3_2 (1).pptx",
-        "display_source": "Lecture3_2 (1).pptx",
-        "location": "slide 2",
-        "section": "Given a feature representation for images, how do we learn a model for distinguishing features from differe..."
+        "display_source": "Lecture3_2.pdf",
+        "location": "page 2",
+        "section": "Given a feature representation for images, how do we learn a model for distinguishing features from differe...",
+        "unit_type": "page",
+        "unit_index": 2
       },
       {
         "source": "Week3\\Lecture3_2 (1).pptx",
-        "display_source": "Lecture3_2 (1).pptx",
-        "location": "slide 3",
-        "section": "Classification Assign input vector to one of two or more classes Input space divided into decision regions ..."
+        "display_source": "Lecture3_2.pdf",
+        "location": "page 3",
+        "section": "Classification Assign input vector to one of two or more classes Input space divided into decision regions ...",
+        "unit_type": "page",
+        "unit_index": 3
       }
     ],
     "image_path": null,
@@ -1400,15 +1513,19 @@
     "review_refs": [
       {
         "source": "Week3\\Lecture3_2 (1).pptx",
-        "display_source": "Lecture3_2 (1).pptx",
-        "location": "slide 9",
-        "section": "Neural Networks - multiclass Add more perceptrons Binary output Binary output Binary output"
+        "display_source": "Lecture3_2.pdf",
+        "location": "page 9",
+        "section": "Neural Networks - multiclass Add more perceptrons Binary output Binary output Binary output",
+        "unit_type": "page",
+        "unit_index": 9
       },
       {
         "source": "Week3\\Lecture3_2 (1).pptx",
-        "display_source": "Lecture3_2 (1).pptx",
-        "location": "slide 16",
-        "section": "Images as input to neural networks"
+        "display_source": "Lecture3_2.pdf",
+        "location": "page 16",
+        "section": "Images as input to neural networks",
+        "unit_type": "page",
+        "unit_index": 16
       }
     ],
     "image_path": null,
@@ -1448,18 +1565,22 @@
       {
         "source": "Week4\\lecture4.pdf",
         "display_source": "lecture4.pdf",
-        "location": "page 40",
-        "section": "-For Pascal VOC:-7x7 grid-2 bounding boxes / cell-20 classes-7 x 7 x (2 x 5 + 20) = 7 x 7 x 30 tensor = 1470 outputs"
+        "location": "page 13",
+        "section": "Fei-Fei Li & Justin Johnson & SerenaYeung Lecture 11- 13",
+        "unit_type": "page",
+        "unit_index": 13
       },
       {
-        "source": "Week4\\lecture4.pptx",
-        "display_source": "lecture4.pptx",
-        "location": "slide 40",
-        "section": "This parameterization fixes the output size Each cell predicts: For each bounding box: 4 coordinates (x, y,..."
+        "source": "Week4\\lecture4.pdf",
+        "display_source": "lecture4.pdf",
+        "location": "page 40",
+        "section": "For Pascal VOC:-7x7 grid-2 bounding boxes / cell-20 classes-7 x 7 x (2 x 5 + 20) = 7 x 7 x 30 tensor = 1470 outputs",
+        "unit_type": "page",
+        "unit_index": 40
       }
     ],
     "image_path": "images/week4-lecture4/slide-013-8b3bdfeb1124.png",
-    "image_caption": "Lecture figure from Week4/lecture4.pptx slide 13"
+    "image_caption": "Lecture figure from lecture4.pdf page 13"
   },
   {
     "question_id": "kp-image-segmentation-q2",
@@ -1494,15 +1615,19 @@
     "review_refs": [
       {
         "source": "Week4\\lecture4.pptx",
-        "display_source": "lecture4.pptx",
-        "location": "slide 31",
-        "section": "Region Proposals Fei-Fei Li & Justin Johnson & Serena Yeung Lecture 11 - 31 Find image regions that are lik..."
-      },
-      {
-        "source": "Week4\\lecture4.pdf",
         "display_source": "lecture4.pdf",
         "location": "page 31",
-        "section": "RegionProposals"
+        "section": "Region Proposals Fei-Fei Li & Justin Johnson & Serena Yeung Lecture 11 - 31 Find image regions that are lik...",
+        "unit_type": "page",
+        "unit_index": 31
+      },
+      {
+        "source": "Week4\\lecture4.pptx",
+        "display_source": "lecture4.pdf",
+        "location": "page 11",
+        "section": "intensity pixel count input image black pixels gray pixels white pixels These intensities define the three ...",
+        "unit_type": "page",
+        "unit_index": 11
       }
     ],
     "image_path": null,
@@ -1541,15 +1666,19 @@
     "review_refs": [
       {
         "source": "Week4\\lecture4.pptx",
-        "display_source": "lecture4.pptx",
-        "location": "slide 31",
-        "section": "Region Proposals Fei-Fei Li & Justin Johnson & Serena Yeung Lecture 11 - 31 Find image regions that are lik..."
+        "display_source": "lecture4.pdf",
+        "location": "page 31",
+        "section": "Region Proposals Fei-Fei Li & Justin Johnson & Serena Yeung Lecture 11 - 31 Find image regions that are lik...",
+        "unit_type": "page",
+        "unit_index": 31
       },
       {
         "source": "Week4\\lecture4.pptx",
-        "display_source": "lecture4.pptx",
-        "location": "slide 41",
-        "section": "Split the image into a grid Redmon et al., \"You Only Look Once: Unified, Real-Time Object Detection\", CVPR 2016"
+        "display_source": "lecture4.pdf",
+        "location": "page 41",
+        "section": "Split the image into a grid Redmon et al., \"You Only Look Once: Unified, Real-Time Object Detection\", CVPR 2016",
+        "unit_type": "page",
+        "unit_index": 41
       }
     ],
     "image_path": null,
@@ -1588,9 +1717,11 @@
     "review_refs": [
       {
         "source": "Week4\\lecture4.pptx",
-        "display_source": "lecture4.pptx",
-        "location": "slide 14",
-        "section": "Fei-Fei Li & Justin Johnson & Serena Yeung Lecture 11 - 14 Sky Cow Grass Trees Label each pixel in the imag..."
+        "display_source": "lecture4.pdf",
+        "location": "page 14",
+        "section": "Fei-Fei Li & Justin Johnson & Serena Yeung Lecture 11 - 14 Sky Cow Grass Trees Label each pixel in the imag...",
+        "unit_type": "page",
+        "unit_index": 14
       }
     ],
     "image_path": null,
@@ -1629,15 +1760,19 @@
     "review_refs": [
       {
         "source": "Week4\\lecture4.pptx",
-        "display_source": "lecture4.pptx",
-        "location": "slide 7",
-        "section": "From images to objects What defines an object? Subjective problem, but has been well-studied"
+        "display_source": "lecture4.pdf",
+        "location": "page 7",
+        "section": "From images to objects What defines an object? Subjective problem, but has been well-studied",
+        "unit_type": "page",
+        "unit_index": 7
       },
       {
         "source": "Week4\\lecture4.pptx",
-        "display_source": "lecture4.pptx",
-        "location": "slide 31",
-        "section": "Region Proposals Fei-Fei Li & Justin Johnson & Serena Yeung Lecture 11 - 31 Find image regions that are lik..."
+        "display_source": "lecture4.pdf",
+        "location": "page 31",
+        "section": "Region Proposals Fei-Fei Li & Justin Johnson & Serena Yeung Lecture 11 - 31 Find image regions that are lik...",
+        "unit_type": "page",
+        "unit_index": 31
       }
     ],
     "image_path": null,
@@ -1675,15 +1810,19 @@
     "review_refs": [
       {
         "source": "Week5\\lecture5-1 (5).pptx",
-        "display_source": "lecture5-1 (5).pptx",
-        "location": "slide 34",
-        "section": "Other Versions of The Harris operator  min is a variant of the \"Harris operator\" for feature detection"
+        "display_source": "lecture5-1.pdf",
+        "location": "page 34",
+        "section": "Other Versions of The Harris operator lambda min is a variant of the \"Harris operator\" for feature detection",
+        "unit_type": "page",
+        "unit_index": 34
       },
       {
         "source": "Week5\\lecture5-1 (5).pptx",
-        "display_source": "lecture5-1 (5).pptx",
-        "location": "slide 1",
-        "section": "Harris corner detection"
+        "display_source": "lecture5-1.pdf",
+        "location": "page 1",
+        "section": "Harris corner detection",
+        "unit_type": "page",
+        "unit_index": 1
       }
     ],
     "image_path": null,
@@ -1721,15 +1860,19 @@
     "review_refs": [
       {
         "source": "Week5\\lecture5-1 (5).pptx",
-        "display_source": "lecture5-1 (5).pptx",
-        "location": "slide 33",
-        "section": "Interpreting the eigenvalues  1  2 \"Corner\"  1 and  2 are large,  1 ~  2 ; E increases in all directi..."
-      },
-      {
-        "source": "Week5\\lecture5-1.pdf",
         "display_source": "lecture5-1.pdf",
         "location": "page 33",
-        "section": "Interpreting the eigenvalues"
+        "section": "Interpreting the eigenvalues lambda 1 lambda 2 \"Corner\" lambda 1 and lambda 2 are large, lambda 1 ~ lambda ...",
+        "unit_type": "page",
+        "unit_index": 33
+      },
+      {
+        "source": "Week5\\lecture5-1 (5).pptx",
+        "display_source": "lecture5-1.pdf",
+        "location": "page 35",
+        "section": "Corner detection summary Here's what you do Compute the gradient at each point in the image Create the H ma...",
+        "unit_type": "page",
+        "unit_index": 35
       }
     ],
     "image_path": null,
@@ -1767,15 +1910,19 @@
     "review_refs": [
       {
         "source": "Week5\\lecture5-1 (5).pptx",
-        "display_source": "lecture5-1 (5).pptx",
-        "location": "slide 22",
-        "section": "Local measure of feature uniqueness \"flat\" region: no change in all directions \"edge\" : no change along the..."
+        "display_source": "lecture5-1.pdf",
+        "location": "page 22",
+        "section": "Local measure of feature uniqueness \"flat\" region: no change in all directions \"edge\" : no change along the...",
+        "unit_type": "page",
+        "unit_index": 22
       },
       {
         "source": "Week5\\lecture5-1.pdf",
         "display_source": "lecture5-1.pdf",
-        "location": "page 22",
-        "section": "Local measure of feature uniqueness"
+        "location": "page 33",
+        "section": "Interpreting the eigenvalues",
+        "unit_type": "page",
+        "unit_index": 33
       }
     ],
     "image_path": null,
@@ -1813,15 +1960,19 @@
     "review_refs": [
       {
         "source": "Week5\\lecture5-2 (1) (2).pptx",
-        "display_source": "lecture5-2 (1) (2).pptx",
-        "location": "slide 5",
-        "section": "Harris Detector: Invariance Properties Scaling All points will be classified as edges Corner Not invariant to scaling"
+        "display_source": "lecture5-2.pdf",
+        "location": "page 5",
+        "section": "Harris Detector: Invariance Properties Scaling All points will be classified as edges Corner Not invariant to scaling",
+        "unit_type": "page",
+        "unit_index": 5
       },
       {
         "source": "Week5\\lecture5-1 (5).pptx",
-        "display_source": "lecture5-1 (5).pptx",
-        "location": "slide 1",
-        "section": "Harris corner detection"
+        "display_source": "lecture5-1.pdf",
+        "location": "page 1",
+        "section": "Harris corner detection",
+        "unit_type": "page",
+        "unit_index": 1
       }
     ],
     "image_path": null,
@@ -1858,20 +2009,24 @@
     ],
     "review_refs": [
       {
-        "source": "Week5\\lecture5-1 (5).pptx",
-        "display_source": "lecture5-1 (5).pptx",
-        "location": "slide 25",
-        "section": "Corner detection: the math Consider shifting the window W by ( u,v ) define an SSD \"error\" E( u,v ) : W ( u,v )"
+        "source": "Week5\\lecture5-1.pdf",
+        "display_source": "lecture5-1.pdf",
+        "location": "page 25",
+        "section": "Corner detection: the mathConsider shifting the window Wby (u,v)-define an SSD \"error\" E(u,v)",
+        "unit_type": "page",
+        "unit_index": 25
       },
       {
         "source": "Week5\\lecture5-1 (5).pptx",
-        "display_source": "lecture5-1 (5).pptx",
-        "location": "slide 26",
-        "section": "Corner detection: the math Consider shifting the window W by ( u,v ) define an SSD \"error\" E( u,v ) : W ( u,v )"
+        "display_source": "lecture5-1.pdf",
+        "location": "page 26",
+        "section": "Corner detection: the math Consider shifting the window W by ( u,v ) define an SSD \"error\" E( u,v ) : W ( u,v )",
+        "unit_type": "page",
+        "unit_index": 26
       }
     ],
     "image_path": "images/week5-lecture5-1-5/slide-025-a48befb87f0e.png",
-    "image_caption": "Lecture figure from Week5/lecture5-1 (5).pptx slide 25"
+    "image_caption": "Lecture figure from lecture5-1.pdf page 25"
   },
   {
     "question_id": "kp-sift-and-scale-invariant-features-q1",
@@ -1893,13 +2048,12 @@
       "chunk-f4d5c7ec2d2d",
       "chunk-8dbe9e48de6d",
       "chunk-9e704538558f",
-      "chunk-36743dad3bc9",
       "chunk-523922f47edf",
-      "chunk-7e6f94d18d8d",
-      "chunk-4b4c92926fa1"
+      "chunk-4b4c92926fa1",
+      "chunk-089ce4e78346",
+      "chunk-8352d89c46cd"
     ],
     "source_files": [
-      "Week12\\Revision.pdf",
       "Week5\\lecture5-2 (1) (2).pptx",
       "Week5\\lecture5-2.pdf",
       "Week6\\lecture6-1.pdf",
@@ -1908,15 +2062,19 @@
     "review_refs": [
       {
         "source": "Week6\\lecture6-1.pptx",
-        "display_source": "lecture6-1.pptx",
-        "location": "slide 4",
-        "section": "Building the Scale Space Adapted from IJCV 2004 by David Lowe"
+        "display_source": "lecture6-1.pdf",
+        "location": "page 4",
+        "section": "Building the Scale Space Adapted from IJCV 2004 by David Lowe",
+        "unit_type": "page",
+        "unit_index": 4
       },
       {
         "source": "Week6\\lecture6-1.pdf",
         "display_source": "lecture6-1.pdf",
         "location": "page 3",
-        "section": "Building the Scale Space"
+        "section": "Building the Scale Space",
+        "unit_type": "page",
+        "unit_index": 3
       }
     ],
     "image_path": null,
@@ -1942,13 +2100,12 @@
       "chunk-f4d5c7ec2d2d",
       "chunk-8dbe9e48de6d",
       "chunk-9e704538558f",
-      "chunk-36743dad3bc9",
       "chunk-523922f47edf",
-      "chunk-7e6f94d18d8d",
-      "chunk-4b4c92926fa1"
+      "chunk-4b4c92926fa1",
+      "chunk-089ce4e78346",
+      "chunk-8352d89c46cd"
     ],
     "source_files": [
-      "Week12\\Revision.pdf",
       "Week5\\lecture5-2 (1) (2).pptx",
       "Week5\\lecture5-2.pdf",
       "Week6\\lecture6-1.pdf",
@@ -1957,15 +2114,19 @@
     "review_refs": [
       {
         "source": "Week6\\lecture6-1.pptx",
-        "display_source": "lecture6-1.pptx",
-        "location": "slide 8",
-        "section": "SIFT descriptor Full version Divide the 16x16 window into a 4x4 grid of cells (2x2 case shown below) Comput..."
+        "display_source": "lecture6-1.pdf",
+        "location": "page 8",
+        "section": "SIFT descriptor Full version Divide the 16x16 window into a 4x4 grid of cells (2x2 case shown below) Comput...",
+        "unit_type": "page",
+        "unit_index": 8
       },
       {
         "source": "Week6\\lecture6-1.pdf",
         "display_source": "lecture6-1.pdf",
         "location": "page 7",
-        "section": "SIFT descriptor"
+        "section": "SIFT descriptor",
+        "unit_type": "page",
+        "unit_index": 7
       }
     ],
     "image_path": null,
@@ -1991,13 +2152,12 @@
       "chunk-f4d5c7ec2d2d",
       "chunk-8dbe9e48de6d",
       "chunk-9e704538558f",
-      "chunk-36743dad3bc9",
       "chunk-523922f47edf",
-      "chunk-7e6f94d18d8d",
-      "chunk-4b4c92926fa1"
+      "chunk-4b4c92926fa1",
+      "chunk-089ce4e78346",
+      "chunk-8352d89c46cd"
     ],
     "source_files": [
-      "Week12\\Revision.pdf",
       "Week5\\lecture5-2 (1) (2).pptx",
       "Week5\\lecture5-2.pdf",
       "Week6\\lecture6-1.pdf",
@@ -2006,15 +2166,19 @@
     "review_refs": [
       {
         "source": "Week6\\lecture6-1.pptx",
-        "display_source": "lecture6-1.pptx",
-        "location": "slide 9",
-        "section": "Properties of SIFT Robust matching technique Can handle changes in viewpoint Can handle significant changes..."
+        "display_source": "lecture6-1.pdf",
+        "location": "page 9",
+        "section": "Properties of SIFT Robust matching technique Can handle changes in viewpoint Can handle significant changes...",
+        "unit_type": "page",
+        "unit_index": 9
       },
       {
         "source": "Week6\\lecture6-1.pdf",
         "display_source": "lecture6-1.pdf",
-        "location": "page 8",
-        "section": "Properties of SIFT"
+        "location": "page 7",
+        "section": "SIFT descriptor",
+        "unit_type": "page",
+        "unit_index": 7
       }
     ],
     "image_path": null,
@@ -2040,13 +2204,12 @@
       "chunk-f4d5c7ec2d2d",
       "chunk-8dbe9e48de6d",
       "chunk-9e704538558f",
-      "chunk-36743dad3bc9",
       "chunk-523922f47edf",
-      "chunk-7e6f94d18d8d",
-      "chunk-4b4c92926fa1"
+      "chunk-4b4c92926fa1",
+      "chunk-089ce4e78346",
+      "chunk-8352d89c46cd"
     ],
     "source_files": [
-      "Week12\\Revision.pdf",
       "Week5\\lecture5-2 (1) (2).pptx",
       "Week5\\lecture5-2.pdf",
       "Week6\\lecture6-1.pdf",
@@ -2057,13 +2220,17 @@
         "source": "Week6\\lecture6-1.pdf",
         "display_source": "lecture6-1.pdf",
         "location": "page 5",
-        "section": "Assignment of the Orientation"
+        "section": "Assignment of the Orientation",
+        "unit_type": "page",
+        "unit_index": 5
       },
       {
         "source": "Week6\\lecture6-1.pptx",
-        "display_source": "lecture6-1.pptx",
-        "location": "slide 6",
-        "section": "Assignment of the Orientation Adapted from IJCV 2004 by David Lowe For the rotation invariance, compute the..."
+        "display_source": "lecture6-1.pdf",
+        "location": "page 6",
+        "section": "Assignment of the Orientation Adapted from IJCV 2004 by David Lowe For the rotation invariance, compute the...",
+        "unit_type": "page",
+        "unit_index": 6
       }
     ],
     "image_path": null,
@@ -2089,13 +2256,12 @@
       "chunk-f4d5c7ec2d2d",
       "chunk-8dbe9e48de6d",
       "chunk-9e704538558f",
-      "chunk-36743dad3bc9",
       "chunk-523922f47edf",
-      "chunk-7e6f94d18d8d",
-      "chunk-4b4c92926fa1"
+      "chunk-4b4c92926fa1",
+      "chunk-089ce4e78346",
+      "chunk-8352d89c46cd"
     ],
     "source_files": [
-      "Week12\\Revision.pdf",
       "Week5\\lecture5-2 (1) (2).pptx",
       "Week5\\lecture5-2.pdf",
       "Week6\\lecture6-1.pdf",
@@ -2104,15 +2270,19 @@
     "review_refs": [
       {
         "source": "Week6\\lecture6-1.pptx",
-        "display_source": "lecture6-1.pptx",
-        "location": "slide 3",
-        "section": "S cale I nvariant F eature T ransform Scale space peak selection Potential locations for finding features K..."
+        "display_source": "lecture6-1.pdf",
+        "location": "page 3",
+        "section": "S cale I nvariant F eature T ransform Scale space peak selection Potential locations for finding features K...",
+        "unit_type": "page",
+        "unit_index": 3
       },
       {
         "source": "Week6\\lecture6-1.pdf",
         "display_source": "lecture6-1.pdf",
         "location": "page 2",
-        "section": "Scale Invariant Feature Transform"
+        "section": "Scale Invariant Feature Transform",
+        "unit_type": "page",
+        "unit_index": 2
       }
     ],
     "image_path": null,
@@ -2138,27 +2308,32 @@
       "chunk-70fe148113f3",
       "chunk-a0eaa70e819e",
       "chunk-343d0d575e52",
-      "chunk-724382c02e8d",
-      "chunk-d8675396be35",
       "chunk-d844665788c6",
-      "chunk-51cef86daef2"
+      "chunk-51cef86daef2",
+      "chunk-2e93daba7f59",
+      "chunk-b40ccf3d79ec"
     ],
     "source_files": [
-      "Week6\\lecture6-2.pdf",
-      "Week6\\lecture6-2.ppt"
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week6\\lecture6-2.pdf"
     ],
     "review_refs": [
-      {
-        "source": "Week6\\lecture6-2.ppt",
-        "display_source": "lecture6-2.ppt",
-        "location": "slide 12",
-        "section": "Images as histograms of visual words"
-      },
       {
         "source": "Week6\\lecture6-2.pdf",
         "display_source": "lecture6-2.pdf",
         "location": "page 12",
-        "section": "Images as histograms of visual words"
+        "section": "Images as histograms of visual words",
+        "unit_type": "page",
+        "unit_index": 12
+      },
+      {
+        "source": "Week6\\lecture6-2.pdf",
+        "display_source": "lecture6-2.pdf",
+        "location": "page 17",
+        "section": "Bag of features: outline",
+        "unit_type": "page",
+        "unit_index": 17
       }
     ],
     "image_path": null,
@@ -2184,27 +2359,32 @@
       "chunk-70fe148113f3",
       "chunk-a0eaa70e819e",
       "chunk-343d0d575e52",
-      "chunk-724382c02e8d",
-      "chunk-d8675396be35",
       "chunk-d844665788c6",
-      "chunk-51cef86daef2"
+      "chunk-51cef86daef2",
+      "chunk-2e93daba7f59",
+      "chunk-b40ccf3d79ec"
     ],
     "source_files": [
-      "Week6\\lecture6-2.pdf",
-      "Week6\\lecture6-2.ppt"
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week6\\lecture6-2.pdf"
     ],
     "review_refs": [
       {
-        "source": "Week6\\lecture6-2.ppt",
-        "display_source": "lecture6-2.ppt",
-        "location": "slide 25",
-        "section": "From clustering to vector quantization"
+        "source": "Week6\\lecture6-2.pdf",
+        "display_source": "lecture6-2.pdf",
+        "location": "page 25",
+        "section": "From clustering to vector quantization",
+        "unit_type": "page",
+        "unit_index": 25
       },
       {
-        "source": "Week6\\lecture6-2.ppt",
-        "display_source": "lecture6-2.ppt",
-        "location": "slide 17",
-        "section": "Bag of features: outline"
+        "source": "Week6\\lecture6-2.pdf",
+        "display_source": "lecture6-2.pdf",
+        "location": "page 17",
+        "section": "Bag of features: outline",
+        "unit_type": "page",
+        "unit_index": 17
       }
     ],
     "image_path": null,
@@ -2230,27 +2410,32 @@
       "chunk-70fe148113f3",
       "chunk-a0eaa70e819e",
       "chunk-343d0d575e52",
-      "chunk-724382c02e8d",
-      "chunk-d8675396be35",
       "chunk-d844665788c6",
-      "chunk-51cef86daef2"
+      "chunk-51cef86daef2",
+      "chunk-2e93daba7f59",
+      "chunk-b40ccf3d79ec"
     ],
     "source_files": [
-      "Week6\\lecture6-2.pdf",
-      "Week6\\lecture6-2.ppt"
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week6\\lecture6-2.pdf"
     ],
     "review_refs": [
-      {
-        "source": "Week6\\lecture6-2.ppt",
-        "display_source": "lecture6-2.ppt",
-        "location": "slide 12",
-        "section": "Images as histograms of visual words"
-      },
       {
         "source": "Week6\\lecture6-2.pdf",
         "display_source": "lecture6-2.pdf",
         "location": "page 12",
-        "section": "Images as histograms of visual words"
+        "section": "Images as histograms of visual words",
+        "unit_type": "page",
+        "unit_index": 12
+      },
+      {
+        "source": "Week6\\lecture6-2.pdf",
+        "display_source": "lecture6-2.pdf",
+        "location": "page 29",
+        "section": "Large-scale image matching",
+        "unit_type": "page",
+        "unit_index": 29
       }
     ],
     "image_path": null,
@@ -2276,27 +2461,32 @@
       "chunk-70fe148113f3",
       "chunk-a0eaa70e819e",
       "chunk-343d0d575e52",
-      "chunk-724382c02e8d",
-      "chunk-d8675396be35",
       "chunk-d844665788c6",
-      "chunk-51cef86daef2"
+      "chunk-51cef86daef2",
+      "chunk-2e93daba7f59",
+      "chunk-b40ccf3d79ec"
     ],
     "source_files": [
-      "Week6\\lecture6-2.pdf",
-      "Week6\\lecture6-2.ppt"
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week6\\lecture6-2.pdf"
     ],
     "review_refs": [
-      {
-        "source": "Week6\\lecture6-2.ppt",
-        "display_source": "lecture6-2.ppt",
-        "location": "slide 36",
-        "section": "Spatial pyramid: BoW disregards all information about the spatial layout of the features"
-      },
       {
         "source": "Week6\\lecture6-2.pdf",
         "display_source": "lecture6-2.pdf",
         "location": "page 36",
-        "section": "Spatial pyramid: BoW disregards all information"
+        "section": "Spatial pyramid: BoW disregards all information",
+        "unit_type": "page",
+        "unit_index": 36
+      },
+      {
+        "source": "Week6\\lecture6-2.pdf",
+        "display_source": "lecture6-2.pdf",
+        "location": "page 27",
+        "section": "Image patch examples of visual words",
+        "unit_type": "page",
+        "unit_index": 27
       }
     ],
     "image_path": null,
@@ -2322,27 +2512,32 @@
       "chunk-70fe148113f3",
       "chunk-a0eaa70e819e",
       "chunk-343d0d575e52",
-      "chunk-724382c02e8d",
-      "chunk-d8675396be35",
       "chunk-d844665788c6",
-      "chunk-51cef86daef2"
+      "chunk-51cef86daef2",
+      "chunk-2e93daba7f59",
+      "chunk-b40ccf3d79ec"
     ],
     "source_files": [
-      "Week6\\lecture6-2.pdf",
-      "Week6\\lecture6-2.ppt"
+      "Week5\\lecture5-1 (5).pptx",
+      "Week5\\lecture5-1.pdf",
+      "Week6\\lecture6-2.pdf"
     ],
     "review_refs": [
-      {
-        "source": "Week6\\lecture6-2.ppt",
-        "display_source": "lecture6-2.ppt",
-        "location": "slide 25",
-        "section": "From clustering to vector quantization"
-      },
       {
         "source": "Week6\\lecture6-2.pdf",
         "display_source": "lecture6-2.pdf",
         "location": "page 25",
-        "section": "From clustering to vector quantization"
+        "section": "From clustering to vector quantization",
+        "unit_type": "page",
+        "unit_index": 25
+      },
+      {
+        "source": "Week6\\lecture6-2.pdf",
+        "display_source": "lecture6-2.pdf",
+        "location": "page 22",
+        "section": "2. Learning the visual vocabulary",
+        "unit_type": "page",
+        "unit_index": 22
       }
     ],
     "image_path": null,
@@ -2384,13 +2579,17 @@
         "source": "Week7\\Lecture7-1.pdf",
         "display_source": "Lecture7-1.pdf",
         "location": "page 13",
-        "section": "Homogeneous coordinates"
+        "section": "Homogeneous coordinates",
+        "unit_type": "page",
+        "unit_index": 13
       },
       {
         "source": "Week7\\Lecture7-1.pptx",
-        "display_source": "Lecture7-1.pptx",
-        "location": "slide 14",
-        "section": "Quiz Which one is true about the homogeneous coordinate? The points (2,3,1) and (2,3,2) refer to the same p..."
+        "display_source": "Lecture7-1.pdf",
+        "location": "page 14",
+        "section": "Quiz Which one is true about the homogeneous coordinate? The points (2,3,1) and (2,3,2) refer to the same p...",
+        "unit_type": "page",
+        "unit_index": 14
       }
     ],
     "image_path": null,
@@ -2430,15 +2629,19 @@
     "review_refs": [
       {
         "source": "Week7\\Lecture7-1.pptx",
-        "display_source": "Lecture7-1.pptx",
-        "location": "slide 16",
-        "section": "Affine transformations any transformation with last row [ 0 0 1 ] we call an affine transformation"
-      },
-      {
-        "source": "Week7\\Lecture7-1.pdf",
         "display_source": "Lecture7-1.pdf",
         "location": "page 16",
-        "section": "Affine transformations"
+        "section": "Affine transformations any transformation with last row [ 0 0 1 ] we call an affine transformation",
+        "unit_type": "page",
+        "unit_index": 16
+      },
+      {
+        "source": "Week7\\Lecture7-1.pptx",
+        "display_source": "Lecture7-1.pdf",
+        "location": "page 17",
+        "section": "Affine Transformations Affine transformations are combinations of … Linear transformations, and Translation...",
+        "unit_type": "page",
+        "unit_index": 17
       }
     ],
     "image_path": null,
@@ -2478,15 +2681,19 @@
     "review_refs": [
       {
         "source": "Week7\\Lecture7-1.pptx",
-        "display_source": "Lecture7-1.pptx",
-        "location": "slide 11",
-        "section": "What types of transformations can be represented with a 2x2 matrix? 2D Translation? NO! 2x2 Matrices"
+        "display_source": "Lecture7-1.pdf",
+        "location": "page 11",
+        "section": "What types of transformations can be represented with a 2x2 matrix? 2D Translation? NO! 2x2 Matrices",
+        "unit_type": "page",
+        "unit_index": 11
       },
       {
         "source": "Week7\\Lecture7-1.pptx",
-        "display_source": "Lecture7-1.pptx",
-        "location": "slide 15",
-        "section": "Translation Solution: homogeneous coordinates to the rescue"
+        "display_source": "Lecture7-1.pdf",
+        "location": "page 15",
+        "section": "Translation Solution: homogeneous coordinates to the rescue",
+        "unit_type": "page",
+        "unit_index": 15
       }
     ],
     "image_path": null,
@@ -2526,15 +2733,19 @@
     "review_refs": [
       {
         "source": "Week7\\Lecture7-1.pptx",
-        "display_source": "Lecture7-1.pptx",
-        "location": "slide 15",
-        "section": "Translation Solution: homogeneous coordinates to the rescue"
+        "display_source": "Lecture7-1.pdf",
+        "location": "page 15",
+        "section": "Translation Solution: homogeneous coordinates to the rescue",
+        "unit_type": "page",
+        "unit_index": 15
       },
       {
         "source": "Week5\\lecture5-1 (5).pptx",
-        "display_source": "lecture5-1 (5).pptx",
-        "location": "slide 11",
-        "section": "NASA Mars Rover images with SIFT feature matches Answer below (look for tiny colored squares…)"
+        "display_source": "lecture5-1.pdf",
+        "location": "page 11",
+        "section": "NASA Mars Rover images with SIFT feature matches Answer below (look for tiny colored squares…)",
+        "unit_type": "page",
+        "unit_index": 11
       }
     ],
     "image_path": null,
@@ -2574,15 +2785,19 @@
     "review_refs": [
       {
         "source": "Week7\\Lecture7-1.pptx",
-        "display_source": "Lecture7-1.pptx",
-        "location": "slide 16",
-        "section": "Affine transformations any transformation with last row [ 0 0 1 ] we call an affine transformation"
+        "display_source": "Lecture7-1.pdf",
+        "location": "page 16",
+        "section": "Affine transformations any transformation with last row [ 0 0 1 ] we call an affine transformation",
+        "unit_type": "page",
+        "unit_index": 16
       },
       {
         "source": "Week7\\Lecture7-1.pdf",
         "display_source": "Lecture7-1.pdf",
-        "location": "page 16",
-        "section": "Affine transformations"
+        "location": "page 8",
+        "section": "Parametric (global) warping",
+        "unit_type": "page",
+        "unit_index": 8
       }
     ],
     "image_path": null,
@@ -2606,35 +2821,40 @@
     "source_chunk_ids": [
       "chunk-3e20fa2cfc45",
       "chunk-f5428633b49c",
+      "chunk-03c671324f78",
       "chunk-ae006354717d",
       "chunk-382ce6802a08",
       "chunk-1d141ffaa6dd",
       "chunk-d8abfdb33155",
-      "chunk-b46ed0313093",
-      "chunk-7cdf884aa451"
+      "chunk-04237ac477aa"
     ],
     "source_files": [
       "Week5\\lecture5-1 (5).pptx",
       "Week5\\lecture5-1.pdf",
+      "Week8\\Lecture7-2 (2).pdf",
       "Week8\\Lecture7-2 (2).pptx",
       "Week8\\Lecture8-1.pdf"
     ],
     "review_refs": [
       {
-        "source": "Week8\\Lecture8-1.pdf",
-        "display_source": "Lecture8-1.pdf",
-        "location": "page 9",
-        "section": "Image Alignment Algorithm"
+        "source": "Week8\\Lecture7-2 (2).pdf",
+        "display_source": "Lecture7-2.pdf",
+        "location": "page 2",
+        "section": "Computing transformations",
+        "unit_type": "page",
+        "unit_index": 2
       },
       {
-        "source": "Week8\\Lecture7-2 (2).pptx",
-        "display_source": "Lecture7-2 (2).pptx",
-        "location": "slide 2",
-        "section": "Computing transformations Given a set of matches between images A and B How can we compute the transform T ..."
+        "source": "Week8\\Lecture7-2 (2).pdf",
+        "display_source": "Lecture7-2.pdf",
+        "location": "page 9",
+        "section": "Image Alignment Algorithm",
+        "unit_type": "page",
+        "unit_index": 9
       }
     ],
     "image_path": "images/week8-lecture7-2-2/slide-002-37b7c9fbe4ce.png",
-    "image_caption": "Lecture figure from Week8/Lecture7-2 (2).pptx slide 2"
+    "image_caption": "Lecture figure from Lecture7-2.pdf page 2"
   },
   {
     "question_id": "kp-image-alignment-q2",
@@ -2654,31 +2874,28 @@
     "source_chunk_ids": [
       "chunk-3e20fa2cfc45",
       "chunk-f5428633b49c",
+      "chunk-03c671324f78",
       "chunk-ae006354717d",
       "chunk-382ce6802a08",
       "chunk-1d141ffaa6dd",
       "chunk-d8abfdb33155",
-      "chunk-b46ed0313093",
-      "chunk-7cdf884aa451"
+      "chunk-04237ac477aa"
     ],
     "source_files": [
       "Week5\\lecture5-1 (5).pptx",
       "Week5\\lecture5-1.pdf",
+      "Week8\\Lecture7-2 (2).pdf",
       "Week8\\Lecture7-2 (2).pptx",
       "Week8\\Lecture8-1.pdf"
     ],
     "review_refs": [
       {
-        "source": "Week8\\Lecture8-1.pdf",
-        "display_source": "Lecture8-1.pdf",
+        "source": "Week8\\Lecture7-2 (2).pdf",
+        "display_source": "Lecture7-2.pdf",
         "location": "page 9",
-        "section": "Image Alignment Algorithm"
-      },
-      {
-        "source": "Week8\\Lecture7-2 (2).pptx",
-        "display_source": "Lecture7-2 (2).pptx",
-        "location": "slide 9",
-        "section": "Image Alignment Algorithm Given images A and B Compute image features for A and B Match features between A ..."
+        "section": "Image Alignment Algorithm",
+        "unit_type": "page",
+        "unit_index": 9
       }
     ],
     "image_path": null,
@@ -2702,31 +2919,28 @@
     "source_chunk_ids": [
       "chunk-3e20fa2cfc45",
       "chunk-f5428633b49c",
+      "chunk-03c671324f78",
       "chunk-ae006354717d",
       "chunk-382ce6802a08",
       "chunk-1d141ffaa6dd",
       "chunk-d8abfdb33155",
-      "chunk-b46ed0313093",
-      "chunk-7cdf884aa451"
+      "chunk-04237ac477aa"
     ],
     "source_files": [
       "Week5\\lecture5-1 (5).pptx",
       "Week5\\lecture5-1.pdf",
+      "Week8\\Lecture7-2 (2).pdf",
       "Week8\\Lecture7-2 (2).pptx",
       "Week8\\Lecture8-1.pdf"
     ],
     "review_refs": [
       {
-        "source": "Week8\\Lecture7-2 (2).pptx",
-        "display_source": "Lecture7-2 (2).pptx",
-        "location": "slide 2",
-        "section": "Computing transformations Given a set of matches between images A and B How can we compute the transform T ..."
-      },
-      {
-        "source": "Week8\\Lecture7-2 (2).pptx",
-        "display_source": "Lecture7-2 (2).pptx",
-        "location": "slide 28",
-        "section": "Final step: least squares fit Find average translation vector over all inliers"
+        "source": "Week8\\Lecture7-2 (2).pdf",
+        "display_source": "Lecture7-2.pdf",
+        "location": "page 22",
+        "section": "RAndom SAmple Consensus",
+        "unit_type": "page",
+        "unit_index": 22
       }
     ],
     "image_path": null,
@@ -2750,31 +2964,28 @@
     "source_chunk_ids": [
       "chunk-3e20fa2cfc45",
       "chunk-f5428633b49c",
+      "chunk-03c671324f78",
       "chunk-ae006354717d",
       "chunk-382ce6802a08",
       "chunk-1d141ffaa6dd",
       "chunk-d8abfdb33155",
-      "chunk-b46ed0313093",
-      "chunk-7cdf884aa451"
+      "chunk-04237ac477aa"
     ],
     "source_files": [
       "Week5\\lecture5-1 (5).pptx",
       "Week5\\lecture5-1.pdf",
+      "Week8\\Lecture7-2 (2).pdf",
       "Week8\\Lecture7-2 (2).pptx",
       "Week8\\Lecture8-1.pdf"
     ],
     "review_refs": [
       {
-        "source": "Week5\\lecture5-1.pdf",
-        "display_source": "lecture5-1.pdf",
-        "location": "page 23",
-        "section": "-We are happy if this error is high-Slow to compute exactly for each pixel and each offset (u,v)"
-      },
-      {
-        "source": "Week5\\lecture5-1 (5).pptx",
-        "display_source": "lecture5-1 (5).pptx",
-        "location": "slide 23",
-        "section": "Consider shifting the window W by ( u,v ) how do the pixels in W change? compare each pixel before and afte..."
+        "source": "Week7\\Lecture7-1.pdf",
+        "display_source": "Lecture7-1.pdf",
+        "location": "page 7",
+        "section": "Inverse Warping",
+        "unit_type": "page",
+        "unit_index": 7
       }
     ],
     "image_path": null,
@@ -2798,31 +3009,28 @@
     "source_chunk_ids": [
       "chunk-3e20fa2cfc45",
       "chunk-f5428633b49c",
+      "chunk-03c671324f78",
       "chunk-ae006354717d",
       "chunk-382ce6802a08",
       "chunk-1d141ffaa6dd",
       "chunk-d8abfdb33155",
-      "chunk-b46ed0313093",
-      "chunk-7cdf884aa451"
+      "chunk-04237ac477aa"
     ],
     "source_files": [
       "Week5\\lecture5-1 (5).pptx",
       "Week5\\lecture5-1.pdf",
+      "Week8\\Lecture7-2 (2).pdf",
       "Week8\\Lecture7-2 (2).pptx",
       "Week8\\Lecture8-1.pdf"
     ],
     "review_refs": [
       {
-        "source": "Week5\\lecture5-1 (5).pptx",
-        "display_source": "lecture5-1 (5).pptx",
-        "location": "slide 5",
-        "section": "Why extract features? Motivation: panorama stitching We have two images - how do we combine them?"
-      },
-      {
         "source": "Week5\\lecture5-1.pdf",
         "display_source": "lecture5-1.pdf",
-        "location": "page 5",
-        "section": "Why extract features?-Motivation: panorama stitching-We have two images -how do we combine them?"
+        "location": "page 7",
+        "section": "Why extract features?-Motivation: panorama stitching-We have two images -how do we combine them?",
+        "unit_type": "page",
+        "unit_index": 7
       }
     ],
     "image_path": null,
@@ -2846,31 +3054,35 @@
     "source_chunk_ids": [
       "chunk-7bc833a421f8",
       "chunk-ac365367ad16",
+      "chunk-41de662e0d93",
       "chunk-b17bf3ee7d5b",
       "chunk-ff2d0ff9d33a",
-      "chunk-04e13ad962cb",
-      "chunk-c2e26e9db0cd",
-      "chunk-2a499fab0ef8",
-      "chunk-8f1c4b90aec4"
+      "chunk-b845b5689f6f",
+      "chunk-3d674fb228a9",
+      "chunk-04e13ad962cb"
     ],
     "source_files": [
       "Week10\\Question.docx",
-      "Week12\\Revision.pdf",
       "Week8\\Lecture8-2.pdf",
+      "Week8\\cameras.pdf",
       "Week8\\cameras.pptx"
     ],
     "review_refs": [
       {
-        "source": "Week8\\cameras.pptx",
-        "display_source": "cameras.pptx",
-        "location": "slide 19",
-        "section": "19 A pinhole camera has focal length 5mm. Each pixel is 0.02mm 0.02mm and the image principle point is at p..."
+        "source": "Week8\\cameras.pdf",
+        "display_source": "cameras.pdf",
+        "location": "page 19",
+        "section": "A pinhole camera has focal length 5mm. Each pixel is 0.02mmx0.02mm",
+        "unit_type": "page",
+        "unit_index": 19
       },
       {
         "source": "Week8\\Lecture8-2.pdf",
         "display_source": "Lecture8-2.pdf",
         "location": "page 19",
-        "section": "19 A pinhole camera has focal length 5mm. Each pixel is 0.02mm×0.02mm and the image principlepoint is at pi..."
+        "section": "19 A pinhole camera has focal length 5mm. Each pixel is 0.02mmx0.02mm and the image principlepoint is at pi...",
+        "unit_type": "page",
+        "unit_index": 19
       }
     ],
     "image_path": null,
@@ -2894,31 +3106,35 @@
     "source_chunk_ids": [
       "chunk-7bc833a421f8",
       "chunk-ac365367ad16",
+      "chunk-41de662e0d93",
       "chunk-b17bf3ee7d5b",
       "chunk-ff2d0ff9d33a",
-      "chunk-04e13ad962cb",
-      "chunk-c2e26e9db0cd",
-      "chunk-2a499fab0ef8",
-      "chunk-8f1c4b90aec4"
+      "chunk-b845b5689f6f",
+      "chunk-3d674fb228a9",
+      "chunk-04e13ad962cb"
     ],
     "source_files": [
       "Week10\\Question.docx",
-      "Week12\\Revision.pdf",
       "Week8\\Lecture8-2.pdf",
+      "Week8\\cameras.pdf",
       "Week8\\cameras.pptx"
     ],
     "review_refs": [
       {
-        "source": "Week8\\cameras.pptx",
-        "display_source": "cameras.pptx",
-        "location": "slide 19",
-        "section": "19 A pinhole camera has focal length 5mm. Each pixel is 0.02mm 0.02mm and the image principle point is at p..."
+        "source": "Week8\\cameras.pdf",
+        "display_source": "cameras.pdf",
+        "location": "page 19",
+        "section": "A pinhole camera has focal length 5mm. Each pixel is 0.02mmx0.02mm",
+        "unit_type": "page",
+        "unit_index": 19
       },
       {
         "source": "Week8\\Lecture8-2.pdf",
         "display_source": "Lecture8-2.pdf",
         "location": "page 19",
-        "section": "19 A pinhole camera has focal length 5mm. Each pixel is 0.02mm×0.02mm and the image principlepoint is at pi..."
+        "section": "19 A pinhole camera has focal length 5mm. Each pixel is 0.02mmx0.02mm and the image principlepoint is at pi...",
+        "unit_type": "page",
+        "unit_index": 19
       }
     ],
     "image_path": null,
@@ -2942,31 +3158,35 @@
     "source_chunk_ids": [
       "chunk-7bc833a421f8",
       "chunk-ac365367ad16",
+      "chunk-41de662e0d93",
       "chunk-b17bf3ee7d5b",
       "chunk-ff2d0ff9d33a",
-      "chunk-04e13ad962cb",
-      "chunk-c2e26e9db0cd",
-      "chunk-2a499fab0ef8",
-      "chunk-8f1c4b90aec4"
+      "chunk-b845b5689f6f",
+      "chunk-3d674fb228a9",
+      "chunk-04e13ad962cb"
     ],
     "source_files": [
       "Week10\\Question.docx",
-      "Week12\\Revision.pdf",
       "Week8\\Lecture8-2.pdf",
+      "Week8\\cameras.pdf",
       "Week8\\cameras.pptx"
     ],
     "review_refs": [
       {
-        "source": "Week8\\cameras.pptx",
-        "display_source": "cameras.pptx",
-        "location": "slide 7",
-        "section": "Pinhole camera model Figure from Forsyth f f = Focal length c = Optical center of the camera c Real object"
+        "source": "Week8\\cameras.pdf",
+        "display_source": "cameras.pdf",
+        "location": "page 19",
+        "section": "A pinhole camera has focal length 5mm. Each pixel is 0.02mmx0.02mm",
+        "unit_type": "page",
+        "unit_index": 19
       },
       {
         "source": "Week8\\cameras.pptx",
-        "display_source": "cameras.pptx",
-        "location": "slide 19",
-        "section": "19 A pinhole camera has focal length 5mm. Each pixel is 0.02mm 0.02mm and the image principle point is at p..."
+        "display_source": "cameras.pdf",
+        "location": "page 7",
+        "section": "Pinhole camera model Figure from Forsyth f f = Focal length c = Optical center of the camera c Real object",
+        "unit_type": "page",
+        "unit_index": 7
       }
     ],
     "image_path": null,
@@ -2990,31 +3210,35 @@
     "source_chunk_ids": [
       "chunk-7bc833a421f8",
       "chunk-ac365367ad16",
+      "chunk-41de662e0d93",
       "chunk-b17bf3ee7d5b",
       "chunk-ff2d0ff9d33a",
-      "chunk-04e13ad962cb",
-      "chunk-c2e26e9db0cd",
-      "chunk-2a499fab0ef8",
-      "chunk-8f1c4b90aec4"
+      "chunk-b845b5689f6f",
+      "chunk-3d674fb228a9",
+      "chunk-04e13ad962cb"
     ],
     "source_files": [
       "Week10\\Question.docx",
-      "Week12\\Revision.pdf",
       "Week8\\Lecture8-2.pdf",
+      "Week8\\cameras.pdf",
       "Week8\\cameras.pptx"
     ],
     "review_refs": [
       {
         "source": "Week8\\cameras.pptx",
-        "display_source": "cameras.pptx",
-        "location": "slide 9",
-        "section": "Pinhole camera model 3D point projects to 2D image point By symmetric and i.e., Simplest form of perspective projection"
+        "display_source": "cameras.pdf",
+        "location": "page 9",
+        "section": "Pinhole camera model 3D point projects to 2D image point By symmetric and i.e., Simplest form of perspective projection",
+        "unit_type": "page",
+        "unit_index": 9
       },
       {
-        "source": "Week8\\cameras.pptx",
-        "display_source": "cameras.pptx",
-        "location": "slide 6",
-        "section": "Pinhole and the Perspective Projection (x,y) screen scene image plane effective focal length, f' optical ax..."
+        "source": "Week8\\cameras.pdf",
+        "display_source": "cameras.pdf",
+        "location": "page 6",
+        "section": "Pinhole and the Perspective Projection",
+        "unit_type": "page",
+        "unit_index": 6
       }
     ],
     "image_path": null,
@@ -3038,35 +3262,39 @@
     "source_chunk_ids": [
       "chunk-7bc833a421f8",
       "chunk-ac365367ad16",
+      "chunk-41de662e0d93",
       "chunk-b17bf3ee7d5b",
       "chunk-ff2d0ff9d33a",
-      "chunk-04e13ad962cb",
-      "chunk-c2e26e9db0cd",
-      "chunk-2a499fab0ef8",
-      "chunk-8f1c4b90aec4"
+      "chunk-b845b5689f6f",
+      "chunk-3d674fb228a9",
+      "chunk-04e13ad962cb"
     ],
     "source_files": [
       "Week10\\Question.docx",
-      "Week12\\Revision.pdf",
       "Week8\\Lecture8-2.pdf",
+      "Week8\\cameras.pdf",
       "Week8\\cameras.pptx"
     ],
     "review_refs": [
       {
-        "source": "Week8\\Lecture8-2.pdf",
-        "display_source": "Lecture8-2.pdf",
-        "location": "page 4",
-        "section": "Pinhole camera"
+        "source": "Week8\\cameras.pdf",
+        "display_source": "cameras.pdf",
+        "location": "page 7",
+        "section": "Pinhole camera model",
+        "unit_type": "page",
+        "unit_index": 7
       },
       {
-        "source": "Week8\\cameras.pptx",
-        "display_source": "cameras.pptx",
-        "location": "slide 4",
-        "section": "Pinhole camera Add a barrier to block off most of the rays This reduces blurring The opening known as the a..."
+        "source": "Week8\\cameras.pdf",
+        "display_source": "cameras.pdf",
+        "location": "page 4",
+        "section": "Pinhole camera",
+        "unit_type": "page",
+        "unit_index": 4
       }
     ],
     "image_path": "images/week8-cameras/slide-007-8545a6b628b0.png",
-    "image_caption": "Lecture figure from Week8/cameras.pptx slide 7"
+    "image_caption": "Lecture figure from cameras.pdf page 7"
   },
   {
     "question_id": "kp-stereo-vision-and-depth-q1",
@@ -3089,29 +3317,34 @@
       "chunk-db3ef361a258",
       "chunk-e92d0a0f4627",
       "chunk-dfb3af915d02",
+      "chunk-0a02a3bbc4a6",
       "chunk-b8beaa6a4b00",
-      "chunk-d541fa49c5e6",
-      "chunk-a0ee412dcc7a"
+      "chunk-d541fa49c5e6"
     ],
     "source_files": [
       "Week10\\lecture10-1 (4).pptx",
       "Week10\\lecture10-2 (3).pptx",
+      "Week9\\lecture10 (1) (7).pdf",
       "Week9\\lecture10 (1) (7).pptx",
       "Week9\\lecture9 (1) (5).pptx",
       "Week9\\lecture9-2.pdf"
     ],
     "review_refs": [
       {
-        "source": "Week9\\lecture10 (1) (7).pptx",
-        "display_source": "lecture10 (1) (7).pptx",
-        "location": "slide 6",
-        "section": "3D from Stereo Images For stereo cameras with parallel optical axes, focal length f, baseline b, correspond..."
+        "source": "Week9\\lecture10 (1) (7).pdf",
+        "display_source": "lecture10.pdf",
+        "location": "page 6",
+        "section": "3D from Stereo Images",
+        "unit_type": "page",
+        "unit_index": 6
       },
       {
         "source": "Week9\\lecture10 (1) (7).pptx",
-        "display_source": "lecture10 (1) (7).pptx",
-        "location": "slide 3",
-        "section": "Amount of horizontal movement is … …inversely proportional to the distance from the camera 3"
+        "display_source": "lecture10.pdf",
+        "location": "page 3",
+        "section": "Amount of horizontal movement is … …inversely proportional to the distance from the camera 3",
+        "unit_type": "page",
+        "unit_index": 3
       }
     ],
     "image_path": null,
@@ -3138,13 +3371,14 @@
       "chunk-db3ef361a258",
       "chunk-e92d0a0f4627",
       "chunk-dfb3af915d02",
+      "chunk-0a02a3bbc4a6",
       "chunk-b8beaa6a4b00",
-      "chunk-d541fa49c5e6",
-      "chunk-a0ee412dcc7a"
+      "chunk-d541fa49c5e6"
     ],
     "source_files": [
       "Week10\\lecture10-1 (4).pptx",
       "Week10\\lecture10-2 (3).pptx",
+      "Week9\\lecture10 (1) (7).pdf",
       "Week9\\lecture10 (1) (7).pptx",
       "Week9\\lecture9 (1) (5).pptx",
       "Week9\\lecture9-2.pdf"
@@ -3154,13 +3388,17 @@
         "source": "Week10\\lecture10-1.pdf",
         "display_source": "lecture10-1.pdf",
         "location": "page 10",
-        "section": "Basic stereo matching algorithm"
+        "section": "Basic stereo matching algorithm",
+        "unit_type": "page",
+        "unit_index": 10
       },
       {
-        "source": "Week10\\lecture10-1 (4).pptx",
-        "display_source": "lecture10-1 (4).pptx",
-        "location": "slide 10",
-        "section": "Basic stereo matching algorithm If necessary, rectify the two stereo images to transform epipolar lines int..."
+        "source": "Week9\\lecture10 (1) (7).pdf",
+        "display_source": "lecture10.pdf",
+        "location": "page 15",
+        "section": "Basic stereo matching algorithm",
+        "unit_type": "page",
+        "unit_index": 15
       }
     ],
     "image_path": null,
@@ -3187,13 +3425,14 @@
       "chunk-db3ef361a258",
       "chunk-e92d0a0f4627",
       "chunk-dfb3af915d02",
+      "chunk-0a02a3bbc4a6",
       "chunk-b8beaa6a4b00",
-      "chunk-d541fa49c5e6",
-      "chunk-a0ee412dcc7a"
+      "chunk-d541fa49c5e6"
     ],
     "source_files": [
       "Week10\\lecture10-1 (4).pptx",
       "Week10\\lecture10-2 (3).pptx",
+      "Week9\\lecture10 (1) (7).pdf",
       "Week9\\lecture10 (1) (7).pptx",
       "Week9\\lecture9 (1) (5).pptx",
       "Week9\\lecture9-2.pdf"
@@ -3201,15 +3440,19 @@
     "review_refs": [
       {
         "source": "Week9\\lecture9 (1) (5).pptx",
-        "display_source": "lecture9 (1) (5).pptx",
-        "location": "slide 1",
-        "section": "Q uiz 1 A ssume: 1) the optical axes of 2 cameras are parallel; 2) the intrinsic parameters of both cameras..."
+        "display_source": "lecture9.pdf",
+        "location": "page 1",
+        "section": "Q uiz 1 A ssume: 1) the optical axes of 2 cameras are parallel; 2) the intrinsic parameters of both cameras...",
+        "unit_type": "page",
+        "unit_index": 1
       },
       {
         "source": "Week9\\lecture9-2.pdf",
         "display_source": "lecture9-2.pdf",
         "location": "page 14",
-        "section": "Moving on to stereo…Fuse a calibrated binocular stereo pair to produce a depth imageimage 1image 2"
+        "section": "Moving on to stereo…Fuse a calibrated binocular stereo pair to produce a depth imageimage 1image 2",
+        "unit_type": "page",
+        "unit_index": 14
       }
     ],
     "image_path": null,
@@ -3236,29 +3479,34 @@
       "chunk-db3ef361a258",
       "chunk-e92d0a0f4627",
       "chunk-dfb3af915d02",
+      "chunk-0a02a3bbc4a6",
       "chunk-b8beaa6a4b00",
-      "chunk-d541fa49c5e6",
-      "chunk-a0ee412dcc7a"
+      "chunk-d541fa49c5e6"
     ],
     "source_files": [
       "Week10\\lecture10-1 (4).pptx",
       "Week10\\lecture10-2 (3).pptx",
+      "Week9\\lecture10 (1) (7).pdf",
       "Week9\\lecture10 (1) (7).pptx",
       "Week9\\lecture9 (1) (5).pptx",
       "Week9\\lecture9-2.pdf"
     ],
     "review_refs": [
       {
-        "source": "Week9\\lecture9-2.pdf",
-        "display_source": "lecture9-2.pdf",
-        "location": "page 15",
-        "section": "Basic stereo matching algorithm"
-      },
-      {
         "source": "Week10\\lecture10-1.pdf",
         "display_source": "lecture10-1.pdf",
         "location": "page 10",
-        "section": "Basic stereo matching algorithm"
+        "section": "Basic stereo matching algorithm",
+        "unit_type": "page",
+        "unit_index": 10
+      },
+      {
+        "source": "Week9\\lecture10 (1) (7).pdf",
+        "display_source": "lecture10.pdf",
+        "location": "page 15",
+        "section": "Basic stereo matching algorithm",
+        "unit_type": "page",
+        "unit_index": 15
       }
     ],
     "image_path": null,
@@ -3285,13 +3533,14 @@
       "chunk-db3ef361a258",
       "chunk-e92d0a0f4627",
       "chunk-dfb3af915d02",
+      "chunk-0a02a3bbc4a6",
       "chunk-b8beaa6a4b00",
-      "chunk-d541fa49c5e6",
-      "chunk-a0ee412dcc7a"
+      "chunk-d541fa49c5e6"
     ],
     "source_files": [
       "Week10\\lecture10-1 (4).pptx",
       "Week10\\lecture10-2 (3).pptx",
+      "Week9\\lecture10 (1) (7).pdf",
       "Week9\\lecture10 (1) (7).pptx",
       "Week9\\lecture9 (1) (5).pptx",
       "Week9\\lecture9-2.pdf"
@@ -3301,13 +3550,17 @@
         "source": "Week9\\lecture9-2.pdf",
         "display_source": "lecture9-2.pdf",
         "location": "page 14",
-        "section": "Moving on to stereo…Fuse a calibrated binocular stereo pair to produce a depth imageimage 1image 2"
+        "section": "Moving on to stereo…Fuse a calibrated binocular stereo pair to produce a depth imageimage 1image 2",
+        "unit_type": "page",
+        "unit_index": 14
       },
       {
-        "source": "Week9\\lecture10 (1) (7).pptx",
-        "display_source": "lecture10 (1) (7).pptx",
-        "location": "slide 6",
-        "section": "3D from Stereo Images For stereo cameras with parallel optical axes, focal length f, baseline b, correspond..."
+        "source": "Week9\\lecture10 (1) (7).pdf",
+        "display_source": "lecture10.pdf",
+        "location": "page 6",
+        "section": "3D from Stereo Images",
+        "unit_type": "page",
+        "unit_index": 6
       }
     ],
     "image_path": null,
@@ -3329,34 +3582,39 @@
     ],
     "correct_option": "D",
     "source_chunk_ids": [
+      "chunk-5825a7ad924d",
       "chunk-9da02991c407",
-      "chunk-ddc83b11d06f",
       "chunk-1e39284e2939",
+      "chunk-a6c3213eaca1",
       "chunk-a71ec0cfa6aa",
       "chunk-fd2ce2a5984e",
       "chunk-78baa3b29ad9",
-      "chunk-df78969275fc",
-      "chunk-b86d54f37226"
+      "chunk-df78969275fc"
     ],
     "source_files": [
       "Week10\\lecture10-1 (4).pptx",
       "Week10\\lecture10-1.pdf",
       "Week10\\lecture10-2 (3).pptx",
-      "Week12\\Revision.pdf",
+      "Week9\\lecture10 (1) (7).pdf",
+      "Week9\\lecture9 (1) (5).pdf",
       "Week9\\lecture9 (1) (5).pptx"
     ],
     "review_refs": [
       {
-        "source": "Week10\\lecture10-1 (4).pptx",
-        "display_source": "lecture10-1 (4).pptx",
-        "location": "slide 8",
-        "section": "Essential Matrix E ( Longuet -Higgins, 1981) Epipolar constraint: Calibrated case X x x' The vectors R , t ..."
+        "source": "Week9\\lecture10 (1) (7).pdf",
+        "display_source": "lecture10.pdf",
+        "location": "page 9",
+        "section": "Potential matches for x have to lie on the corresponding line l'.",
+        "unit_type": "page",
+        "unit_index": 9
       },
       {
-        "source": "Week9\\lecture9 (1) (5).pptx",
-        "display_source": "lecture9 (1) (5).pptx",
-        "location": "slide 9",
-        "section": "Essential Matrix E ( Longuet -Higgins, 1981) Epipolar constraint: Calibrated case X x x' The vectors R , t ..."
+        "source": "Week9\\lecture10 (1) (7).pdf",
+        "display_source": "lecture10.pdf",
+        "location": "page 13",
+        "section": "Potential matches for x have to lie on the corresponding",
+        "unit_type": "page",
+        "unit_index": 13
       }
     ],
     "image_path": null,
@@ -3378,38 +3636,43 @@
     ],
     "correct_option": "C",
     "source_chunk_ids": [
+      "chunk-5825a7ad924d",
       "chunk-9da02991c407",
-      "chunk-ddc83b11d06f",
       "chunk-1e39284e2939",
+      "chunk-a6c3213eaca1",
       "chunk-a71ec0cfa6aa",
       "chunk-fd2ce2a5984e",
       "chunk-78baa3b29ad9",
-      "chunk-df78969275fc",
-      "chunk-b86d54f37226"
+      "chunk-df78969275fc"
     ],
     "source_files": [
       "Week10\\lecture10-1 (4).pptx",
       "Week10\\lecture10-1.pdf",
       "Week10\\lecture10-2 (3).pptx",
-      "Week12\\Revision.pdf",
+      "Week9\\lecture10 (1) (7).pdf",
+      "Week9\\lecture9 (1) (5).pdf",
       "Week9\\lecture9 (1) (5).pptx"
     ],
     "review_refs": [
       {
-        "source": "Week10\\lecture10-1 (4).pptx",
-        "display_source": "lecture10-1 (4).pptx",
-        "location": "slide 8",
-        "section": "Essential Matrix E ( Longuet -Higgins, 1981) Epipolar constraint: Calibrated case X x x' The vectors R , t ..."
+        "source": "Week10\\lecture10-1.pdf",
+        "display_source": "lecture10-1.pdf",
+        "location": "page 8",
+        "section": "Essential Matrix E",
+        "unit_type": "page",
+        "unit_index": 8
       },
       {
-        "source": "Week9\\lecture9 (1) (5).pptx",
-        "display_source": "lecture9 (1) (5).pptx",
-        "location": "slide 9",
-        "section": "Essential Matrix E ( Longuet -Higgins, 1981) Epipolar constraint: Calibrated case X x x' The vectors R , t ..."
+        "source": "Week9\\lecture10 (1) (7).pdf",
+        "display_source": "lecture10.pdf",
+        "location": "page 9",
+        "section": "Potential matches for x have to lie on the corresponding line l'.",
+        "unit_type": "page",
+        "unit_index": 9
       }
     ],
     "image_path": "images/week10-lecture10-1-4/slide-008-ee715e3737c9.png",
-    "image_caption": "Lecture figure from Week10/lecture10-1 (4).pptx slide 8"
+    "image_caption": "Lecture figure from lecture10-1.pdf page 8"
   },
   {
     "question_id": "kp-epipolar-geometry-q3",
@@ -3427,28 +3690,31 @@
     ],
     "correct_option": "B",
     "source_chunk_ids": [
+      "chunk-5825a7ad924d",
       "chunk-9da02991c407",
-      "chunk-ddc83b11d06f",
       "chunk-1e39284e2939",
+      "chunk-a6c3213eaca1",
       "chunk-a71ec0cfa6aa",
       "chunk-fd2ce2a5984e",
       "chunk-78baa3b29ad9",
-      "chunk-df78969275fc",
-      "chunk-b86d54f37226"
+      "chunk-df78969275fc"
     ],
     "source_files": [
       "Week10\\lecture10-1 (4).pptx",
       "Week10\\lecture10-1.pdf",
       "Week10\\lecture10-2 (3).pptx",
-      "Week12\\Revision.pdf",
+      "Week9\\lecture10 (1) (7).pdf",
+      "Week9\\lecture9 (1) (5).pdf",
       "Week9\\lecture9 (1) (5).pptx"
     ],
     "review_refs": [
       {
         "source": "Week10\\lecture10-2 (3).pptx",
-        "display_source": "lecture10-2 (3).pptx",
-        "location": "slide 16",
-        "section": "Feature matching Estimate fundamental matrix between each pair (with RANSAC)"
+        "display_source": "lecture10-2.pdf",
+        "location": "page 16",
+        "section": "Feature matching Estimate fundamental matrix between each pair (with RANSAC)",
+        "unit_type": "page",
+        "unit_index": 16
       }
     ],
     "image_path": null,
@@ -3470,34 +3736,39 @@
     ],
     "correct_option": "D",
     "source_chunk_ids": [
+      "chunk-5825a7ad924d",
       "chunk-9da02991c407",
-      "chunk-ddc83b11d06f",
       "chunk-1e39284e2939",
+      "chunk-a6c3213eaca1",
       "chunk-a71ec0cfa6aa",
       "chunk-fd2ce2a5984e",
       "chunk-78baa3b29ad9",
-      "chunk-df78969275fc",
-      "chunk-b86d54f37226"
+      "chunk-df78969275fc"
     ],
     "source_files": [
       "Week10\\lecture10-1 (4).pptx",
       "Week10\\lecture10-1.pdf",
       "Week10\\lecture10-2 (3).pptx",
-      "Week12\\Revision.pdf",
+      "Week9\\lecture10 (1) (7).pdf",
+      "Week9\\lecture9 (1) (5).pdf",
       "Week9\\lecture9 (1) (5).pptx"
     ],
     "review_refs": [
       {
-        "source": "Week10\\lecture10-1 (4).pptx",
-        "display_source": "lecture10-1 (4).pptx",
-        "location": "slide 13",
-        "section": "Stereo image rectification Reproject image planes onto a common plane parallel to the line between camera c..."
+        "source": "Week9\\lecture10 (1) (7).pdf",
+        "display_source": "lecture10.pdf",
+        "location": "page 11",
+        "section": "Epipolar Lines - intersections of epipolar plane with image",
+        "unit_type": "page",
+        "unit_index": 11
       },
       {
-        "source": "Week9\\lecture9 (1) (5).pptx",
-        "display_source": "lecture9 (1) (5).pptx",
-        "location": "slide 14",
-        "section": "Stereo image rectification Reproject image planes onto a common plane parallel to the line between camera c..."
+        "source": "Week9\\lecture10 (1) (7).pdf",
+        "display_source": "lecture10.pdf",
+        "location": "page 10",
+        "section": "Epipolar Plane - plane containing baseline (1D family)",
+        "unit_type": "page",
+        "unit_index": 10
       }
     ],
     "image_path": null,
@@ -3519,34 +3790,39 @@
     ],
     "correct_option": "D",
     "source_chunk_ids": [
+      "chunk-5825a7ad924d",
       "chunk-9da02991c407",
-      "chunk-ddc83b11d06f",
       "chunk-1e39284e2939",
+      "chunk-a6c3213eaca1",
       "chunk-a71ec0cfa6aa",
       "chunk-fd2ce2a5984e",
       "chunk-78baa3b29ad9",
-      "chunk-df78969275fc",
-      "chunk-b86d54f37226"
+      "chunk-df78969275fc"
     ],
     "source_files": [
       "Week10\\lecture10-1 (4).pptx",
       "Week10\\lecture10-1.pdf",
       "Week10\\lecture10-2 (3).pptx",
-      "Week12\\Revision.pdf",
+      "Week9\\lecture10 (1) (7).pdf",
+      "Week9\\lecture9 (1) (5).pdf",
       "Week9\\lecture9 (1) (5).pptx"
     ],
     "review_refs": [
       {
-        "source": "Week10\\lecture10-1 (4).pptx",
-        "display_source": "lecture10-1 (4).pptx",
-        "location": "slide 10",
-        "section": "Basic stereo matching algorithm If necessary, rectify the two stereo images to transform epipolar lines int..."
+        "source": "Week9\\lecture10 (1) (7).pdf",
+        "display_source": "lecture10.pdf",
+        "location": "page 10",
+        "section": "Epipolar Plane - plane containing baseline (1D family)",
+        "unit_type": "page",
+        "unit_index": 10
       },
       {
-        "source": "Week9\\lecture9 (1) (5).pptx",
-        "display_source": "lecture9 (1) (5).pptx",
-        "location": "slide 11",
-        "section": "Basic stereo matching algorithm If necessary, rectify the two stereo images to transform epipolar lines int..."
+        "source": "Week9\\lecture10 (1) (7).pdf",
+        "display_source": "lecture10.pdf",
+        "location": "page 11",
+        "section": "Epipolar Lines - intersections of epipolar plane with image",
+        "unit_type": "page",
+        "unit_index": 11
       }
     ],
     "image_path": null,
@@ -3584,15 +3860,19 @@
     "review_refs": [
       {
         "source": "Week10\\lecture10-2 (3).pptx",
-        "display_source": "lecture10-2 (3).pptx",
-        "location": "slide 10",
-        "section": "Structure from motion SfM solves both of these problems at once A kind of chicken-and-egg problem (but solvable)"
+        "display_source": "lecture10-2.pdf",
+        "location": "page 10",
+        "section": "Structure from motion SfM solves both of these problems at once A kind of chicken-and-egg problem (but solvable)",
+        "unit_type": "page",
+        "unit_index": 10
       },
       {
         "source": "Week10\\lecture10-2.pdf",
         "display_source": "lecture10-2.pdf",
         "location": "page 5",
-        "section": "Structure from motion"
+        "section": "Structure from motion",
+        "unit_type": "page",
+        "unit_index": 5
       }
     ],
     "image_path": null,
@@ -3630,15 +3910,19 @@
     "review_refs": [
       {
         "source": "Week10\\lecture10-2 (3).pptx",
-        "display_source": "lecture10-2 (3).pptx",
-        "location": "slide 10",
-        "section": "Structure from motion SfM solves both of these problems at once A kind of chicken-and-egg problem (but solvable)"
+        "display_source": "lecture10-2.pdf",
+        "location": "page 10",
+        "section": "Structure from motion SfM solves both of these problems at once A kind of chicken-and-egg problem (but solvable)",
+        "unit_type": "page",
+        "unit_index": 10
       },
       {
         "source": "Week10\\lecture10-2.pdf",
         "display_source": "lecture10-2.pdf",
         "location": "page 9",
-        "section": "Camera calibration & triangulation"
+        "section": "Camera calibration & triangulation",
+        "unit_type": "page",
+        "unit_index": 9
       }
     ],
     "image_path": null,
@@ -3676,15 +3960,19 @@
     "review_refs": [
       {
         "source": "Week10\\lecture10-2 (3).pptx",
-        "display_source": "lecture10-2 (3).pptx",
-        "location": "slide 16",
-        "section": "Feature matching Estimate fundamental matrix between each pair (with RANSAC)"
+        "display_source": "lecture10-2.pdf",
+        "location": "page 16",
+        "section": "Feature matching Estimate fundamental matrix between each pair (with RANSAC)",
+        "unit_type": "page",
+        "unit_index": 16
       },
       {
         "source": "Week10\\lecture10-2 (3).pptx",
-        "display_source": "lecture10-2 (3).pptx",
-        "location": "slide 12",
-        "section": "First step: how to get correspondence? Feature detection and matching"
+        "display_source": "lecture10-2.pdf",
+        "location": "page 12",
+        "section": "First step: how to get correspondence? Feature detection and matching",
+        "unit_type": "page",
+        "unit_index": 12
       }
     ],
     "image_path": null,
@@ -3722,15 +4010,19 @@
     "review_refs": [
       {
         "source": "Week10\\lecture10-2 (3).pptx",
-        "display_source": "lecture10-2 (3).pptx",
-        "location": "slide 7",
-        "section": "Structure from motion Input: images with points in correspondence p i , j = ( u i , j , v i , j ) Output st..."
+        "display_source": "lecture10-2.pdf",
+        "location": "page 7",
+        "section": "Structure from motion Input: images with points in correspondence p i , j = ( u i , j , v i , j ) Output st...",
+        "unit_type": "page",
+        "unit_index": 7
       },
       {
         "source": "Week10\\lecture10-2.pdf",
         "display_source": "lecture10-2.pdf",
         "location": "page 2",
-        "section": "What is Point Cloud"
+        "section": "What is Point Cloud",
+        "unit_type": "page",
+        "unit_index": 2
       }
     ],
     "image_path": null,
@@ -3768,15 +4060,19 @@
     "review_refs": [
       {
         "source": "Week10\\lecture10-2 (3).pptx",
-        "display_source": "lecture10-2 (3).pptx",
-        "location": "slide 10",
-        "section": "Structure from motion SfM solves both of these problems at once A kind of chicken-and-egg problem (but solvable)"
+        "display_source": "lecture10-2.pdf",
+        "location": "page 10",
+        "section": "Structure from motion SfM solves both of these problems at once A kind of chicken-and-egg problem (but solvable)",
+        "unit_type": "page",
+        "unit_index": 10
       },
       {
         "source": "Week10\\lecture10-2.pdf",
         "display_source": "lecture10-2.pdf",
         "location": "page 7",
-        "section": "Structure from motion"
+        "section": "Structure from motion",
+        "unit_type": "page",
+        "unit_index": 7
       }
     ],
     "image_path": null,
@@ -3798,31 +4094,36 @@
     ],
     "correct_option": "B",
     "source_chunk_ids": [
-      "chunk-d794fc211e2d",
+      "chunk-a4e6ed31745d",
       "chunk-8f2925e40e2d",
+      "chunk-d794fc211e2d",
       "chunk-e95ff2f7c0de",
       "chunk-af4d3b373f64",
       "chunk-ed079ab8f230",
       "chunk-4606c92a8c5f",
-      "chunk-64e64c251e7a",
-      "chunk-56d7cf3e06fc"
+      "chunk-64e64c251e7a"
     ],
     "source_files": [
+      "Week11\\Lecture-opticalflow1.pdf",
       "Week11\\Lecture-opticalflow1.pptx",
       "Week11\\Lecture11.pdf"
     ],
     "review_refs": [
       {
-        "source": "Week11\\Lecture11.pdf",
-        "display_source": "Lecture11.pdf",
+        "source": "Week11\\Lecture-opticalflow1.pdf",
+        "display_source": "Lecture-opticalflow1.pdf",
         "location": "page 16",
-        "section": "Optical Flow"
+        "section": "Optical Flow",
+        "unit_type": "page",
+        "unit_index": 16
       },
       {
-        "source": "Week11\\Lecture11.pdf",
-        "display_source": "Lecture11.pdf",
+        "source": "Week11\\Lecture-opticalflow1.pdf",
+        "display_source": "Lecture-opticalflow1.pdf",
         "location": "page 18",
-        "section": "The brightness constancy constraint"
+        "section": "The brightness constancy constraint",
+        "unit_type": "page",
+        "unit_index": 18
       }
     ],
     "image_path": null,
@@ -3844,31 +4145,36 @@
     ],
     "correct_option": "D",
     "source_chunk_ids": [
-      "chunk-d794fc211e2d",
+      "chunk-a4e6ed31745d",
       "chunk-8f2925e40e2d",
+      "chunk-d794fc211e2d",
       "chunk-e95ff2f7c0de",
       "chunk-af4d3b373f64",
       "chunk-ed079ab8f230",
       "chunk-4606c92a8c5f",
-      "chunk-64e64c251e7a",
-      "chunk-56d7cf3e06fc"
+      "chunk-64e64c251e7a"
     ],
     "source_files": [
+      "Week11\\Lecture-opticalflow1.pdf",
       "Week11\\Lecture-opticalflow1.pptx",
       "Week11\\Lecture11.pdf"
     ],
     "review_refs": [
       {
         "source": "Week11\\Lecture-opticalflow1.pptx",
-        "display_source": "Lecture-opticalflow1.pptx",
-        "location": "slide 21",
-        "section": "Aperture Problem Exposed Motion along just an edge is ambiguous"
+        "display_source": "Lecture-opticalflow1.pdf",
+        "location": "page 21",
+        "section": "Aperture Problem Exposed Motion along just an edge is ambiguous",
+        "unit_type": "page",
+        "unit_index": 21
       },
       {
         "source": "Week11\\Lecture11.pdf",
         "display_source": "Lecture11.pdf",
         "location": "page 21",
-        "section": "Aperture Problem Exposed"
+        "section": "Aperture Problem Exposed",
+        "unit_type": "page",
+        "unit_index": 21
       }
     ],
     "image_path": null,
@@ -3890,31 +4196,36 @@
     ],
     "correct_option": "D",
     "source_chunk_ids": [
-      "chunk-d794fc211e2d",
+      "chunk-a4e6ed31745d",
       "chunk-8f2925e40e2d",
+      "chunk-d794fc211e2d",
       "chunk-e95ff2f7c0de",
       "chunk-af4d3b373f64",
       "chunk-ed079ab8f230",
       "chunk-4606c92a8c5f",
-      "chunk-64e64c251e7a",
-      "chunk-56d7cf3e06fc"
+      "chunk-64e64c251e7a"
     ],
     "source_files": [
+      "Week11\\Lecture-opticalflow1.pdf",
       "Week11\\Lecture-opticalflow1.pptx",
       "Week11\\Lecture11.pdf"
     ],
     "review_refs": [
       {
         "source": "Week11\\Lecture-opticalflow1.pptx",
-        "display_source": "Lecture-opticalflow1.pptx",
-        "location": "slide 18",
-        "section": "The brightness constancy constraint How many equations and unknowns per pixel? One equation, two unknowns (..."
+        "display_source": "Lecture-opticalflow1.pdf",
+        "location": "page 18",
+        "section": "The brightness constancy constraint How many equations and unknowns per pixel? One equation, two unknowns (...",
+        "unit_type": "page",
+        "unit_index": 18
       },
       {
         "source": "Week11\\Lecture11.pdf",
         "display_source": "Lecture11.pdf",
-        "location": "page 35",
-        "section": "Revisiting the small motion assumption"
+        "location": "page 18",
+        "section": "The brightness constancy constraint",
+        "unit_type": "page",
+        "unit_index": 18
       }
     ],
     "image_path": null,
@@ -3936,16 +4247,17 @@
     ],
     "correct_option": "D",
     "source_chunk_ids": [
-      "chunk-d794fc211e2d",
+      "chunk-a4e6ed31745d",
       "chunk-8f2925e40e2d",
+      "chunk-d794fc211e2d",
       "chunk-e95ff2f7c0de",
       "chunk-af4d3b373f64",
       "chunk-ed079ab8f230",
       "chunk-4606c92a8c5f",
-      "chunk-64e64c251e7a",
-      "chunk-56d7cf3e06fc"
+      "chunk-64e64c251e7a"
     ],
     "source_files": [
+      "Week11\\Lecture-opticalflow1.pdf",
       "Week11\\Lecture-opticalflow1.pptx",
       "Week11\\Lecture11.pdf"
     ],
@@ -3954,13 +4266,17 @@
         "source": "Week11\\Lecture11.pdf",
         "display_source": "Lecture11.pdf",
         "location": "page 37",
-        "section": "image Iimage JGaussian pyramid of image 1 (t)Gaussian pyramid of image 2 (t+1)image 2image 1"
+        "section": "image Iimage JGaussian pyramid of image 1 (t)Gaussian pyramid of image 2 (t+1)image 2image 1",
+        "unit_type": "page",
+        "unit_index": 37
       },
       {
         "source": "Week11\\Lecture11.pdf",
         "display_source": "Lecture11.pdf",
         "location": "page 39",
-        "section": "image Iimage HGaussian pyramid of image 1Gaussian pyramid of image 2image 2image 1u=10 pixels"
+        "section": "image Iimage HGaussian pyramid of image 1Gaussian pyramid of image 2image 2image 1u=10 pixels",
+        "unit_type": "page",
+        "unit_index": 39
       }
     ],
     "image_path": null,
@@ -3982,31 +4298,36 @@
     ],
     "correct_option": "A",
     "source_chunk_ids": [
-      "chunk-d794fc211e2d",
+      "chunk-a4e6ed31745d",
       "chunk-8f2925e40e2d",
+      "chunk-d794fc211e2d",
       "chunk-e95ff2f7c0de",
       "chunk-af4d3b373f64",
       "chunk-ed079ab8f230",
       "chunk-4606c92a8c5f",
-      "chunk-64e64c251e7a",
-      "chunk-56d7cf3e06fc"
+      "chunk-64e64c251e7a"
     ],
     "source_files": [
+      "Week11\\Lecture-opticalflow1.pdf",
       "Week11\\Lecture-opticalflow1.pptx",
       "Week11\\Lecture11.pdf"
     ],
     "review_refs": [
       {
         "source": "Week11\\Lecture-opticalflow1.pptx",
-        "display_source": "Lecture-opticalflow1.pptx",
-        "location": "slide 14",
-        "section": "What is Optical Flow? Optical Flow Velocity vectors Optical flow is the pattern of apparent motion of objec..."
+        "display_source": "Lecture-opticalflow1.pdf",
+        "location": "page 14",
+        "section": "What is Optical Flow? Optical Flow Velocity vectors Optical flow is the pattern of apparent motion of objec...",
+        "unit_type": "page",
+        "unit_index": 14
       },
       {
         "source": "Week11\\Lecture11.pdf",
         "display_source": "Lecture11.pdf",
         "location": "page 9",
-        "section": "-Optical flow-Recover image motion at each pixel from spatio-temporal image brightness variations (optical flow)"
+        "section": "Optical flow-Recover image motion at each pixel from spatio-temporal image brightness variations (optical flow)",
+        "unit_type": "page",
+        "unit_index": 9
       }
     ],
     "image_path": null,
