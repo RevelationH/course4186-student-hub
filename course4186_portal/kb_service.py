@@ -27,6 +27,17 @@ except Exception:
     HuggingFaceEmbeddings = None
     FAISS = None
 
+from env_loader import load_project_env
+from course4186_portal.answer_consistency import (
+    extract_used_source_ids,
+    normalize_answer_body_sources,
+    rebuild_answer_with_citations,
+    strip_course_source_line,
+    strip_source_id_list_suffix,
+)
+
+load_project_env()
+
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 ARTIFACT_CANDIDATES: List[Path] = []
@@ -57,10 +68,43 @@ QUERY_NOISE_TOKENS = STOPWORDS | {
     "who", "are", "you", "hello", "hi", "hey", "thanks", "thank", "please", "me",
     "my", "our", "ours", "yourself", "introduce", "today", "tell",
 }
+QUERY_INTENT_TOKENS = {
+    "what", "who", "why", "how", "when", "where", "which", "tell", "show",
+    "give", "explain", "describe", "define", "introduce", "overview",
+    "about", "example", "examples", "sample", "samples", "code",
+}
 COURSE_CONTEXT_HINTS = {
     "week", "weeks", "lecture", "lectures", "tutorial", "tutorials", "revision",
     "slide", "slides", "quiz", "report", "reports", "practice", "knowledge",
     "point", "points", "topic", "topics", "material", "materials", "notes",
+}
+CV_DOMAIN_PHRASES = {
+    "computer vision",
+    "object detection",
+    "object recognition",
+    "image classification",
+    "image segmentation",
+    "semantic segmentation",
+    "instance segmentation",
+    "optical flow",
+    "structure from motion",
+    "camera calibration",
+    "epipolar geometry",
+    "feature matching",
+    "stereo vision",
+    "3d reconstruction",
+    "multi-view geometry",
+}
+CV_DOMAIN_TOKENS = {
+    "image", "images", "video", "videos", "pixel", "pixels", "camera", "cameras",
+    "convolution", "filter", "filters", "filtering", "kernel", "edge", "edges",
+    "corner", "corners", "keypoint", "keypoints", "feature", "features", "descriptor",
+    "descriptors", "matching", "correspondence", "segmentation", "object", "objects",
+    "detection", "recognition", "tracking", "reconstruction", "geometry", "epipolar",
+    "stereo", "disparity", "depth", "motion", "flow", "optical", "homography",
+    "pose", "calibration", "triangulation", "projection", "pinhole", "intrinsic",
+    "intrinsics", "extrinsic", "extrinsics", "sfm", "sift", "harris", "cnn",
+    "yolo", "bbox", "bounding", "box", "boxes",
 }
 GREETING_RE = re.compile(r"^\s*(hi|hello|hey|good morning|good afternoon|good evening)\s*[!.?]*\s*$", re.IGNORECASE)
 IDENTITY_RE = re.compile(r"\b(who are you|what are you|introduce yourself)\b", re.IGNORECASE)
@@ -75,6 +119,11 @@ CODE_REQUEST_RE = re.compile(
     r"program|script|conv1d|conv2d|torch\.nn|torch\.nn\.functional"
     r")\b",
     re.IGNORECASE,
+)
+COURSE_QUERY_ALIAS_RULES = (
+    (re.compile(r"\bsfm\b", re.IGNORECASE), "structure from motion"),
+    (re.compile(r"\bstructure[- ]from[- ]motion\b", re.IGNORECASE), "structure from motion"),
+    (re.compile(r"\bcv\b", re.IGNORECASE), "computer vision"),
 )
 DISPLAY_REPLACEMENTS = {
     "\u2022": "-",
@@ -137,6 +186,22 @@ CORE_COURSE_TOPICS = {
     "cnn",
     "segmentation",
     "structure from motion",
+    "sfm",
+    "cross product",
+    "dot product",
+    "camera calibration",
+    "calibration",
+    "triangulation",
+    "bundle adjustment",
+    "reprojection error",
+    "reprojection",
+    "intrinsic parameters",
+    "extrinsic parameters",
+    "intrinsics",
+    "extrinsics",
+    "pose estimation",
+    "3d reconstruction",
+    "multi-view geometry",
 }
 WEAK_COURSE_QUERY_TOKENS = {
     "new", "database", "normalization", "model", "models", "matching", "match",
@@ -150,7 +215,9 @@ STRONG_SINGLE_TERM_ANCHORS = {
     "sift", "harris", "homography", "segmentation", "resampling", "aliasing",
     "stereo", "disparity", "rectification", "optical", "gaussian", "kernel",
     "lucas", "kanade", "occlusion", "pinhole", "texture", "corners",
-    "descriptor", "descriptors", "convolutional", "cnn",
+    "descriptor", "descriptors", "convolutional", "cnn", "sfm",
+    "triangulation", "calibration", "reprojection", "intrinsic",
+    "intrinsics", "extrinsic", "extrinsics", "pose", "bundle",
 }
 DEFINITION_TITLE_HINTS = {
     "goal", "overview", "introduction", "what is", "why study", "motivation",
@@ -451,6 +518,13 @@ def parse_options(options: Sequence[str]) -> List[Dict[str, str]]:
     return parsed
 
 
+COURSE_SOURCE_TOKEN_RE = re.compile(r"@@COURSE_SOURCE_\d+@@")
+USED_SOURCES_RE = re.compile(r"(?is)(?:^|\n)\s*[\"']?used_sources[\"']?\s*:\s*\[[^\]]*\].*$")
+TRANSPORT_JSON_RE = re.compile(r"(?is)^\s*\{[\s\S]*?[\"']answer[\"']\s*:")
+TRANSPORT_JSON_CODEBLOCK_RE = re.compile(r"(?is)\n```json\b[\s\S]*$")
+TRANSPORT_JSON_SUFFIX_RE = re.compile(r"(?is)(?:\n|^)\s*\{\s*[\"']?answer[\"']?\s*:[\s\S]*$")
+
+
 def parse_json_response(raw_text: str) -> Any:
     text = str(raw_text or "").strip()
     if not text:
@@ -482,6 +556,52 @@ def parse_json_response(raw_text: str) -> Any:
     raise ValueError("No JSON object found in model response.")
 
 
+def sanitize_transport_answer_text(raw_text: str) -> str:
+    text = str(raw_text or "").strip()
+    if not text:
+        return ""
+
+    if re.match(r"^```json\b", text, flags=re.IGNORECASE):
+        text = re.sub(r"^```json\s*", "", text, flags=re.IGNORECASE).strip()
+        text = re.sub(r"\s*```$", "", text).strip()
+
+    text = COURSE_SOURCE_TOKEN_RE.sub("", text)
+    text = re.sub(r"(?is),?\s*[\"']?used_sources[\"']?\s*:\s*\[[^\]]*\]\s*\}?$", "", text).strip()
+    text = USED_SOURCES_RE.sub("", text).strip()
+    text = re.sub(r"(?is)^\s*\{\s*[\"']?answer[\"']?\s*:\s*", "", text).strip()
+    text = re.sub(r"(?is)\}\s*$", "", text).strip()
+
+    cut_points: List[int] = []
+    for pattern in (TRANSPORT_JSON_CODEBLOCK_RE, TRANSPORT_JSON_SUFFIX_RE):
+        match = pattern.search(text)
+        if match:
+            prefix = text[: match.start()].strip()
+            if prefix and re.search(r"[A-Za-z0-9\u4e00-\u9fff]", prefix):
+                cut_points.append(match.start())
+    if cut_points:
+        text = text[: min(cut_points)].rstrip()
+
+    text = strip_source_id_list_suffix(text)
+    text = text.strip().strip(",").strip().strip("\"'")
+    text = re.sub(r"\n{3,}", "\n\n", text).strip()
+    return clean_markdown_text(text)
+
+
+def contains_transport_artifacts(text: str) -> bool:
+    candidate = str(text or "")
+    if not candidate:
+        return False
+    return bool(
+        COURSE_SOURCE_TOKEN_RE.search(candidate)
+        or USED_SOURCES_RE.search(candidate)
+        or re.search(r"(?is)^\s*\{\s*[\"']?answer[\"']?\s*:", candidate)
+        or TRANSPORT_JSON_CODEBLOCK_RE.search(candidate)
+        or (TRANSPORT_JSON_SUFFIX_RE.search(candidate) and not re.match(r"(?is)^\s*\{\s*[\"']?answer[\"']?\s*:", candidate))
+        or re.search(r"(?is)[\"']?used_sources[\"']?\s*:", candidate)
+        or bool(extract_used_source_ids(candidate))
+    )
+
+
 def extract_student_answer_text(raw_text: str) -> str:
     text = str(raw_text or "").strip()
     if not text:
@@ -490,7 +610,7 @@ def extract_student_answer_text(raw_text: str) -> str:
     try:
         parsed = parse_json_response(text)
         if isinstance(parsed, dict):
-            answer_text = clean_markdown_text(parsed.get("answer", ""))
+            answer_text = sanitize_transport_answer_text(parsed.get("answer", ""))
             if answer_text:
                 return answer_text
     except Exception:
@@ -503,9 +623,9 @@ def extract_student_answer_text(raw_text: str) -> str:
     json_answer_match = re.search(r'(?is)"answer"\s*:\s*"((?:\\.|[^"])*)"', text)
     if json_answer_match:
         try:
-            return clean_markdown_text(json.loads(f"\"{json_answer_match.group(1)}\""))
+            return sanitize_transport_answer_text(json.loads(f"\"{json_answer_match.group(1)}\""))
         except Exception:
-            return clean_markdown_text(json_answer_match.group(1))
+            return sanitize_transport_answer_text(json_answer_match.group(1))
 
     labeled_answer_match = re.search(
         r"(?is)\banswer\s*:\s*(.+?)(?:\n\s*[\"']?used_sources[\"']?\s*:|\Z)",
@@ -514,14 +634,10 @@ def extract_student_answer_text(raw_text: str) -> str:
     if labeled_answer_match:
         candidate = labeled_answer_match.group(1).strip().strip(",")
         candidate = candidate.strip().strip("{}").strip().strip("\"'")
-        return clean_markdown_text(candidate)
+        return sanitize_transport_answer_text(candidate)
 
-    cleaned = re.sub(r"(?is)(?:^|\n)\s*[\"']?used_sources[\"']?\s*:\s*\[[^\]]*\].*$", "", text).strip()
-    cleaned = re.sub(r"(?is),?\s*[\"']?used_sources[\"']?\s*:\s*\[[^\]]*\]\s*\}?$", "", cleaned).strip()
-    cleaned = re.sub(r"(?is)^\{\s*[\"']?answer[\"']?\s*:\s*", "", cleaned).strip()
-    cleaned = re.sub(r"(?is)(?:\n|\r|\s)*Course source:.*$", "", cleaned).strip()
-    cleaned = cleaned.strip().strip("{}").strip().strip("\"'")
-    return clean_markdown_text(cleaned)
+    cleaned = re.sub(r"(?is)(?:\n|\r|\s)*Course source:.*$", "", text).strip()
+    return sanitize_transport_answer_text(cleaned)
 
 
 def strip_citation_markers(text: str) -> str:
@@ -713,11 +829,179 @@ class Course4186KnowledgeBase:
                 tokens.add(token)
         return tokens
 
+    def _expand_course_aliases(self, text: str) -> str:
+        expanded = clean_display_text(text).lower()
+        for pattern, canonical in COURSE_QUERY_ALIAS_RULES:
+            def repl(match: re.Match) -> str:
+                matched = clean_display_text(match.group(0)).lower().strip()
+                if canonical in matched:
+                    return matched
+                return f"{matched} {canonical}".strip()
+
+            expanded = pattern.sub(repl, expanded)
+        return re.sub(r"\s+", " ", expanded).strip()
+
     def _content_tokens(self, query: str) -> List[str]:
         return [
-            token for token in tokenize(query)
+            token for token in tokenize(self._expand_course_aliases(query))
             if len(token) > 1 and token not in QUERY_NOISE_TOKENS
         ]
+
+    def _query_focus_tokens(self, query: str) -> List[str]:
+        return [
+            token for token in self._content_tokens(query)
+            if token not in QUERY_INTENT_TOKENS
+        ]
+
+    def _query_focus_phrases(self, query: str) -> set[str]:
+        phrases: set[str] = set()
+        for text in (clean_display_text(query).lower(), self._expand_course_aliases(query)):
+            if not text:
+                continue
+            tokens = [
+                token
+                for token in tokenize(text)
+                if len(token) > 1 and token not in QUERY_NOISE_TOKENS and token not in QUERY_INTENT_TOKENS
+            ]
+            if not tokens:
+                continue
+            joined = " ".join(tokens)
+            if len(joined) >= 4:
+                phrases.add(joined)
+            max_ngram = min(4, len(tokens))
+            for n in range(2, max_ngram + 1):
+                for index in range(len(tokens) - n + 1):
+                    phrase = " ".join(tokens[index : index + n])
+                    if len(phrase) >= 4:
+                        phrases.add(phrase)
+        return phrases
+
+    def _queries_are_similar(self, left: str, right: str) -> bool:
+        left_clean = clean_display_text(left).lower()
+        right_clean = clean_display_text(right).lower()
+        if not left_clean or not right_clean:
+            return False
+        if left_clean == right_clean:
+            return True
+
+        left_expanded = self._expand_course_aliases(left)
+        right_expanded = self._expand_course_aliases(right)
+        if left_expanded == right_expanded:
+            return True
+
+        left_phrases = self._query_focus_phrases(left)
+        right_phrases = self._query_focus_phrases(right)
+        shared_phrases = left_phrases & right_phrases
+        if shared_phrases and max(len(phrase) for phrase in shared_phrases) >= 6:
+            return True
+
+        left_tokens = set(self._query_focus_tokens(left) or self._content_tokens(left))
+        right_tokens = set(self._query_focus_tokens(right) or self._content_tokens(right))
+        if not left_tokens or not right_tokens:
+            return False
+
+        overlap = left_tokens & right_tokens
+        if not overlap:
+            return False
+
+        overlap_ratio = len(overlap) / max(min(len(left_tokens), len(right_tokens)), 1)
+        jaccard = len(overlap) / max(len(left_tokens | right_tokens), 1)
+        if overlap_ratio >= 0.85:
+            return True
+        if len(overlap) >= 2 and jaccard >= 0.6:
+            return True
+        return False
+
+    def _recent_answers_for_similar_queries(
+        self,
+        query: str,
+        history: Sequence[Dict[str, str]],
+        *,
+        limit: int = 3,
+    ) -> List[str]:
+        replies: List[str] = []
+        turns = list(history or [])
+        for index, turn in enumerate(turns):
+            if str(turn.get("role") or "").lower() != "user":
+                continue
+            previous_query = clean_display_text(turn.get("content", ""))
+            if not previous_query or not self._queries_are_similar(query, previous_query):
+                continue
+
+            assistant_reply = ""
+            for follow_turn in turns[index + 1 :]:
+                follow_role = str(follow_turn.get("role") or "").lower()
+                if follow_role == "assistant":
+                    assistant_reply = clean_markdown_text(
+                        extract_student_answer_text(str(follow_turn.get("content") or ""))
+                    )
+                    break
+                if follow_role == "user":
+                    break
+            if assistant_reply:
+                replies.append(assistant_reply)
+        return replies[-limit:]
+
+    def _answer_opening(self, text: str) -> str:
+        sentences = split_sentences(extract_student_answer_text(text))
+        if sentences:
+            return sentences[0]
+        return safe_snippet(extract_student_answer_text(text), 140)
+
+    def _answer_similarity_signature(self, text: str) -> str:
+        candidate = extract_student_answer_text(text)
+        candidate = strip_citation_markers(candidate)
+        candidate = re.sub(r"(?im)^Course source:.*$", " ", candidate).strip()
+        candidate = re.sub(r"```[\s\S]*?```", " [code] ", candidate)
+        candidate = clean_markdown_text(candidate)
+        candidate = re.sub(r"\s+", " ", candidate).strip().lower()
+        return candidate
+
+    def _answer_too_similar_to_recent(self, answer: str, recent_answers: Sequence[str]) -> bool:
+        candidate_signature = self._answer_similarity_signature(answer)
+        if not candidate_signature:
+            return False
+        candidate_opening = clean_display_text(self._answer_opening(answer)).lower()
+        candidate_tokens = {
+            token for token in tokenize(candidate_signature)
+            if token not in STOPWORDS and len(token) > 2
+        }
+        for previous in recent_answers:
+            previous_signature = self._answer_similarity_signature(previous)
+            if not previous_signature:
+                continue
+            if candidate_signature == previous_signature:
+                return True
+            if len(candidate_signature) >= 80 and candidate_signature[:160] == previous_signature[:160]:
+                return True
+
+            previous_opening = clean_display_text(self._answer_opening(previous)).lower()
+            previous_tokens = {
+                token for token in tokenize(previous_signature)
+                if token not in STOPWORDS and len(token) > 2
+            }
+            overlap = candidate_tokens & previous_tokens
+            overlap_ratio = len(overlap) / max(min(len(candidate_tokens), len(previous_tokens)), 1)
+            if candidate_opening and candidate_opening == previous_opening and overlap_ratio >= 0.72:
+                return True
+        return False
+
+    def _repeat_answer_context(self, query: str, history: Sequence[Dict[str, str]]) -> Dict[str, Any]:
+        recent_answers = self._recent_answers_for_similar_queries(query, history, limit=3)
+        repeat_count = len(recent_answers)
+        recent_openings = [opening for opening in (self._answer_opening(item) for item in recent_answers) if opening]
+        variation_styles = [
+            "Start with the clean definition, then add the key property or implication the student should remember.",
+            "Start from intuition or geometry first, then give the formal name or definition.",
+            "Start from how the concept is computed, used, or interpreted in practice, then summarize the main idea.",
+            "Write it like quick revision for a quiz: state the idea, then the one exam-relevant point most worth remembering.",
+        ]
+        return {
+            "repeat_count": repeat_count,
+            "recent_answers": recent_answers,
+            "recent_openings": recent_openings,
+            "style_instruction": variation_styles[repeat_count % len(variation_styles)],
+        }
 
     def _ranking_query(self, query: str) -> str:
         tokens = self._content_tokens(query)
@@ -732,12 +1016,104 @@ class Course4186KnowledgeBase:
         return bool(DEFINITION_RE.search(clean_display_text(query).lower()))
 
     def _query_anchor_details(self, query: str) -> Dict[str, set[str]]:
-        lowered = clean_display_text(query).lower()
+        lowered = self._expand_course_aliases(query)
         tokens = self._content_tokens(query)
         return {
             "tokens": {token for token in tokens if token in self.course_anchor_tokens},
             "phrases": {phrase for phrase in self.course_anchor_phrases if phrase in lowered},
         }
+
+    def _focus_overlap_with_item(self, item: Dict[str, Any], focus_tokens: Sequence[str]) -> int:
+        chunk_id = item.get("chunk_id")
+        chunk_terms = self.chunk_term_sets.get(chunk_id, set()) if chunk_id else set()
+        title_terms = self.chunk_title_term_sets.get(chunk_id, set()) if chunk_id else set()
+        return len(set(focus_tokens) & (chunk_terms | title_terms))
+
+    def _focus_phrase_overlap_with_item(self, item: Dict[str, Any], focus_phrases: Sequence[str]) -> bool:
+        chunk_id = item.get("chunk_id")
+        blob = self.chunk_search_blobs.get(chunk_id, "") if chunk_id else ""
+        return any(phrase in blob for phrase in focus_phrases)
+
+    def _looks_cv_request(self, query: str) -> bool:
+        lowered = self._expand_course_aliases(query)
+        if any(phrase in lowered for phrase in CV_DOMAIN_PHRASES):
+            return True
+        focus_tokens = self._query_focus_tokens(query)
+        if not focus_tokens:
+            return False
+        domain_hits = {token for token in focus_tokens if token in CV_DOMAIN_TOKENS or token in self.course_terms}
+        strong_hits = domain_hits & (STRONG_SINGLE_TERM_ANCHORS | {"camera", "image", "video", "object", "geometry"})
+        if len(domain_hits) >= 2:
+            return True
+        if strong_hits and len(focus_tokens) <= 3:
+            return True
+        return False
+
+    def _course_coverage_level(self, query: str, chunk_hits: Sequence[Dict[str, Any]]) -> str:
+        focus_tokens = self._query_focus_tokens(query)
+        focus_token_set = set(focus_tokens)
+        focus_phrases = self._query_focus_phrases(query)
+        if not focus_token_set and not focus_phrases:
+            return "none"
+
+        related = False
+        for hit in chunk_hits[:4]:
+            item = hit["item"]
+            if self._is_low_priority_source(item):
+                continue
+            score = float(hit.get("score", 0.0))
+            title_text = clean_display_text(item.get("title", "")).lower()
+            phrase_hit = self._focus_phrase_overlap_with_item(item, focus_phrases)
+            title_phrase_hit = any(phrase in title_text for phrase in focus_phrases)
+            overlap = self._focus_overlap_with_item(item, focus_tokens)
+            if phrase_hit and (title_phrase_hit or score >= 6.0):
+                return "direct"
+            if len(focus_token_set) >= 2 and overlap >= 2:
+                return "direct"
+            if phrase_hit or overlap >= 1:
+                related = True
+        return "related" if related else "none"
+
+    def _retrieval_supports_course_answer(
+        self,
+        query: str,
+        kp_hits: Sequence[Dict[str, Any]],
+        chunk_hits: Sequence[Dict[str, Any]],
+    ) -> bool:
+        focus_tokens = self._query_focus_tokens(query)
+        focus_token_set = set(focus_tokens)
+        focus_phrases = self._query_focus_phrases(query)
+        if not focus_token_set and not focus_phrases:
+            return False
+
+        preferred_hits = self._preferred_chunk_hits(query, chunk_hits, limit=3, kp_context=kp_hits)
+        for hit in preferred_hits:
+            item = hit["item"]
+            if self._is_low_priority_source(item):
+                continue
+            score = float(hit.get("score", 0.0))
+            if self._focus_phrase_overlap_with_item(item, focus_phrases) and score >= 5.0:
+                return True
+            overlap = self._focus_overlap_with_item(item, focus_tokens)
+            if overlap >= 2:
+                return True
+            if len(focus_token_set) == 1 and overlap == 1 and score >= 8.0:
+                return True
+
+        for hit in kp_hits[:2]:
+            item = hit["item"]
+            kp_blob = clean_display_text(
+                "\n".join([item.get("name", ""), item.get("description", ""), " ".join(item.get("keywords", []))])
+            ).lower()
+            if any(phrase in kp_blob for phrase in focus_phrases):
+                return True
+            kp_terms = self.kp_term_sets.get(item.get("kp_id", ""), set())
+            overlap = len(focus_token_set & kp_terms)
+            if overlap >= 2:
+                return True
+            if len(focus_token_set) == 1 and overlap == 1 and float(hit.get("score", 0.0)) >= 7.0:
+                return True
+        return False
 
     def _kp_query_match_profile(
         self,
@@ -813,6 +1189,9 @@ class Course4186KnowledgeBase:
         anchor_details = self._query_anchor_details(query)
         strong_query_tokens = anchor_details["tokens"] & STRONG_SINGLE_TERM_ANCHORS
         definition_request = self._definition_request(query)
+        focus_tokens = self._query_focus_tokens(query)
+        focus_token_set = set(focus_tokens)
+        focus_phrases = self._query_focus_phrases(query)
         support_chunk_ids: set[str] = set()
         support_source_files: set[str] = set()
         for hit in (kp_context or [])[:2]:
@@ -829,6 +1208,7 @@ class Course4186KnowledgeBase:
             score = float(hit.get("score", 0.0))
             chunk_id = str(item.get("chunk_id") or "")
             relative_path_key = normalized_path_key(item.get("relative_path", ""))
+            title_text = clean_display_text(item.get("title", "")).lower()
             chunk_terms = self.chunk_term_sets.get(chunk_id, set())
             if not self._is_low_priority_source(item):
                 score += 5.0
@@ -849,6 +1229,20 @@ class Course4186KnowledgeBase:
             score += self._anchor_overlap_with_item(item, anchor_details) * 1.6
             if self._phrase_overlap_with_item(item, anchor_details):
                 score += 2.5
+            focus_phrase_hit = self._focus_phrase_overlap_with_item(item, focus_phrases)
+            focus_title_phrase_hit = any(phrase in title_text for phrase in focus_phrases)
+            focus_overlap = self._focus_overlap_with_item(item, focus_tokens)
+            if focus_phrase_hit:
+                score += 13.5
+            if focus_title_phrase_hit:
+                score += 5.0
+            if len(focus_token_set) >= 2:
+                if focus_overlap >= 2:
+                    score += focus_overlap * 5.2
+                elif focus_overlap == 1 and not focus_phrase_hit:
+                    score -= 7.0
+            elif len(focus_token_set) == 1 and focus_overlap == 1:
+                score += 2.6
             scored.append((score, index, hit))
         scored.sort(key=lambda row: (-row[0], row[1]))
         ranked_hits = [row[2] for row in scored]
@@ -930,10 +1324,10 @@ class Course4186KnowledgeBase:
         chunk_hits: Sequence[Dict[str, Any]],
     ) -> bool:
         anchor_details = self._query_anchor_details(query)
-        if not anchor_details["tokens"] and not anchor_details["phrases"]:
-            return False
-
         preferred_hits = self._preferred_chunk_hits(query, chunk_hits, limit=3, kp_context=kp_hits)
+        if not anchor_details["tokens"] and not anchor_details["phrases"]:
+            return self._retrieval_supports_course_answer(query, kp_hits, preferred_hits or chunk_hits)
+
         for hit in preferred_hits:
             item = hit["item"]
             if self._is_low_priority_source(item):
@@ -953,7 +1347,7 @@ class Course4186KnowledgeBase:
             ).lower()
             if any(phrase in kp_blob for phrase in anchor_details["phrases"]):
                 return True
-        return False
+        return self._retrieval_supports_course_answer(query, kp_hits, preferred_hits or chunk_hits)
 
     def _source_quality_bonus(self, item: Dict[str, Any], ranking_query: str, definition_request: bool) -> float:
         relative_path = normalized_path_key(item.get("relative_path", ""))
@@ -1545,11 +1939,13 @@ class Course4186KnowledgeBase:
         return None
 
     def _looks_course_request(self, query: str) -> bool:
-        lowered = clean_display_text(query).lower()
+        lowered = self._expand_course_aliases(query)
         tokens = self._content_tokens(query)
         if not tokens:
             return False
         if re.search(r"\b(week|lecture|tutorial|revision|slide|quiz|report|practice)\s*\d*\b", lowered):
+            return True
+        if self._looks_cv_request(query):
             return True
         anchor_details = self._query_anchor_details(query)
         if any(topic in lowered for topic in CORE_COURSE_TOPICS):
@@ -1560,22 +1956,24 @@ class Course4186KnowledgeBase:
             return True
         if len(anchor_details["tokens"]) >= 2:
             return True
-        kp_hits = self.search_knowledge_points(query, top_k=1)
+        kp_hits = self.search_knowledge_points(query, top_k=2)
         if kp_hits:
             top_kp = kp_hits[0]["item"]
             kp_overlap = anchor_details["tokens"] & self.kp_term_sets.get(top_kp["kp_id"], set())
             if float(kp_hits[0]["score"]) >= 7.0 and (kp_overlap or anchor_details["phrases"]):
                 return True
+        chunk_hits = self.search_chunks(query, top_k=4, kp_context=kp_hits)
+        if self._retrieval_supports_course_answer(query, kp_hits, chunk_hits):
+            return True
         if not anchor_details["tokens"] and not anchor_details["phrases"]:
             return False
-        chunk_hits = self.search_chunks(query, top_k=3, kp_context=kp_hits)
         return self._is_grounded_answer_ready(query, kp_hits, chunk_hits)
 
     def _contextual_query(self, query: str, history: Sequence[Dict[str, str]]) -> str:
         current = clean_display_text(query)
         if not current or not history:
             return current
-        lowered = current.lower()
+        lowered = self._expand_course_aliases(current)
         anchor_details = self._query_anchor_details(current)
         has_explicit_anchor = bool(
             anchor_details["phrases"]
@@ -1593,7 +1991,7 @@ class Course4186KnowledgeBase:
             previous = clean_display_text(turn.get("content", ""))
             if not previous or previous == current:
                 continue
-            previous_lower = previous.lower()
+            previous_lower = self._expand_course_aliases(previous)
             previous_anchor = self._query_anchor_details(previous)
             if previous_anchor["phrases"] or (previous_anchor["tokens"] & STRONG_SINGLE_TERM_ANCHORS) or any(topic in previous_lower for topic in CORE_COURSE_TOPICS):
                 return f"{previous}\nFollow-up question: {current}"
@@ -2155,6 +2553,7 @@ class Course4186KnowledgeBase:
         citation_candidates = focused_hits if len(focused_hits) >= 2 else chunk_hits
         citation_hits = self._preferred_chunk_hits(retrieval_query, citation_candidates, limit=4, kp_context=kp_hits)
         citations = self._build_citations(citation_hits, limit=4)
+        coverage_level = self._course_coverage_level(retrieval_query, citation_hits)
         related = [
             {
                 "kp_id": hit["item"]["kp_id"],
@@ -2165,6 +2564,18 @@ class Course4186KnowledgeBase:
         ]
 
         if not citations:
+            if self._looks_cv_request(query) and self._llm_client is not None and self._llm_model:
+                try:
+                    llm_payload = self._llm_answer(query, history or [], related, [], [], coverage_level="none")
+                    answer_body = self._strip_uncited_course_connection(llm_payload.get("answer", ""))
+                    return {
+                        "answer": self._answer_with_source_line(answer_body, []),
+                        "citations": [],
+                        "related_kps": related,
+                        "mode": "llm",
+                    }
+                except Exception as exc:
+                    print(f"[Course4186KnowledgeBase] CV general answer fallback: {exc}")
             return {
                 "answer": (
                     "I could not find a clear answer for that in the current Course 4186 materials. "
@@ -2176,6 +2587,22 @@ class Course4186KnowledgeBase:
             }
 
         if not self._is_grounded_answer_ready(retrieval_query, kp_hits, citation_hits):
+            if self._looks_cv_request(query) and self._llm_client is not None and self._llm_model:
+                try:
+                    llm_payload = self._llm_answer(query, history or [], related, citation_hits[:4], citations, coverage_level=coverage_level)
+                    used_sources = llm_payload.get("used_sources", [])
+                    final_citations = self._select_final_citations(citations, used_sources, max_count=3) if used_sources else []
+                    answer_body = llm_payload.get("answer", "")
+                    if not final_citations:
+                        answer_body = self._strip_uncited_course_connection(answer_body)
+                    return {
+                        "answer": self._answer_with_source_line(answer_body, final_citations),
+                        "citations": final_citations,
+                        "related_kps": related,
+                        "mode": "llm",
+                    }
+                except Exception as exc:
+                    print(f"[Course4186KnowledgeBase] Partial CV answer fallback: {exc}")
             return {
                 "answer": self._insufficient_evidence_response(query, related),
                 "citations": [],
@@ -2196,9 +2623,18 @@ class Course4186KnowledgeBase:
 
         if self._llm_client is not None and self._llm_model and citations:
             try:
-                llm_payload = self._llm_answer(query, history or [], related, citation_hits[:4], citations)
-                final_citations = self._select_final_citations(citations, llm_payload.get("used_sources", []), max_count=3)
-                answer = self._answer_with_source_line(llm_payload.get("answer", ""), final_citations)
+                llm_payload = self._llm_answer(query, history or [], related, citation_hits[:4], citations, coverage_level=coverage_level)
+                used_sources = llm_payload.get("used_sources", [])
+                if used_sources:
+                    final_citations = self._select_final_citations(citations, used_sources, max_count=3)
+                elif coverage_level == "direct":
+                    final_citations = citations[:2]
+                else:
+                    final_citations = []
+                answer_body = llm_payload.get("answer", "")
+                if not final_citations:
+                    answer_body = self._strip_uncited_course_connection(answer_body)
+                answer = self._answer_with_source_line(answer_body, final_citations)
                 return {
                     "answer": answer,
                     "citations": final_citations,
@@ -2388,16 +2824,38 @@ class Course4186KnowledgeBase:
         return "Course source: " + "; ".join(refs) + "."
 
     def _answer_with_source_line(self, body: str, citations: Sequence[Dict[str, Any]]) -> str:
-        cleaned = extract_student_answer_text(body)
-        cleaned = re.sub(r"(?:\n|\r|\s)*Course source:.*$", "", cleaned, flags=re.IGNORECASE | re.DOTALL).strip()
+        cleaned = sanitize_transport_answer_text(extract_student_answer_text(body))
+        cleaned = strip_course_source_line(cleaned)
         cleaned = re.sub(r"(?:\n|\r|\s)*used_sources\s*:.*$", "", cleaned, flags=re.IGNORECASE | re.DOTALL).strip()
         cleaned = strip_citation_markers(cleaned)
-        source_line = self._course_source_line(citations)
-        if not cleaned:
-            return source_line
-        if not source_line:
+        cleaned = normalize_answer_body_sources(cleaned)
+        return rebuild_answer_with_citations(cleaned, citations)
+
+    def _strip_uncited_course_connection(self, text: str) -> str:
+        cleaned = normalize_answer_body_sources(extract_student_answer_text(text))
+        if "```" in cleaned:
             return cleaned
-        return f"{cleaned}\n\n{source_line}"
+        sentences = re.split(r"(?<=[.!?])\s+", cleaned.strip())
+        if not sentences:
+            return cleaned
+        stripped: List[str] = []
+        course_openers = (
+            "in this course", "in our course", "in the course", "in the context of this course",
+            "in the context of our course", "in our lectures", "in the lectures",
+            "in lecture", "in week", "our course", "the course",
+        )
+        course_markers = (
+            "lecture materials", "the lectures", "our lectures", "this course", "our course",
+            ".pdf", "page ",
+        )
+        for sentence in sentences:
+            lowered = sentence.strip().lower()
+            if any(lowered.startswith(prefix) for prefix in course_openers):
+                continue
+            if any(marker in lowered for marker in course_markers):
+                continue
+            stripped.append(sentence.strip())
+        return " ".join(part for part in stripped if part).strip() or cleaned.strip()
 
     def _llm_answer(
         self,
@@ -2406,8 +2864,13 @@ class Course4186KnowledgeBase:
         related: List[Dict[str, Any]],
         chunk_hits: Sequence[Dict[str, Any]],
         citations: List[Dict[str, Any]],
+        coverage_level: str = "direct",
     ) -> Dict[str, Any]:
         code_request = self._query_requests_code(query)
+        repeat_context = self._repeat_answer_context(query, history)
+        repeat_count = int(repeat_context.get("repeat_count", 0) or 0)
+        recent_similar_answers = list(repeat_context.get("recent_answers", []))
+        recent_openings = list(repeat_context.get("recent_openings", []))
         history_text = "\n".join(
             f"{turn.get('role', 'user')}: {turn.get('content', '').strip()}"
             for turn in history[-6:]
@@ -2423,40 +2886,71 @@ class Course4186KnowledgeBase:
             for hit, citation in zip(chunk_hits, citations)
         )
         kp_text = "\n".join(f"- {item['name']}" for item in related) or "- None"
+        recent_answer_block = "\n".join(
+            f"- {safe_snippet(answer, 220)}"
+            for answer in recent_similar_answers
+        ) or "- None"
+        recent_opening_block = "\n".join(
+            f"- {safe_snippet(opening, 140)}"
+            for opening in recent_openings
+        ) or "- None"
+        repeat_guidance = (
+            f"This question, or a nearly identical one, already appeared {repeat_count} time(s) earlier in this conversation. "
+            "Keep the facts consistent, but do not reuse the same opening sentence, explanation order, or sentence rhythm from the recent similar answers. "
+            f"Use this variation angle for the new answer: {repeat_context.get('style_instruction', '')}"
+            if repeat_count > 0
+            else "Use the clearest teaching-assistant explanation for a first answer to this question."
+        )
         prompt = textwrap.dedent(
             f"""
             You are the Course 4186 student learning assistant for a computer vision course.
             Answer naturally, in the same language as the student's question.
-            Stay strictly within the provided knowledge points and evidence.
-            Do not answer from general world knowledge when the evidence is weak or unrelated.
-            If the evidence does not directly define the student's term, say that clearly instead of substituting a different textbook definition.
-            Do not turn a loosely related lecture mention into a full answer for a different concept.
+            The student may ask a standard computer vision question even when the exact term is not explicitly defined in the course slides.
+            In that case, you may answer from reliable computer vision knowledge first, then connect it to the course only if the supplied evidence is genuinely relevant.
+            Never invent course coverage, and never turn a loosely related lecture mention into a claimed lecture definition.
+            Do not open with defensive phrases such as "the term is not directly covered in the materials" or "the provided lecture materials do not define it".
+            If the course evidence is partial, give the concept explanation first, then add one brief sentence about the closest lecture connection.
+            If the course evidence is weak or unrelated, answer the concept normally and leave course sources unused.
             Do not paste raw chunk labels or say generic phrases like "I found grounded material".
-            If the evidence is partial, answer only the part supported by the lectures and state the remaining limit briefly.
-            Never fill missing details with textbook knowledge, common knowledge, or phrases like "well-known property".
-            For definition questions, prefer the lecture's own framing over an encyclopedia-style introduction.
-            For direct "What is X?" questions, paraphrase the lecture evidence as a short revision answer, not as a general encyclopedia entry.
-            When the question is broad, start from the wording supported by the lecture evidence and then connect it to this course.
-            Use the lecture evidence to explain the concept in a student-facing way instead of quoting slide fragments.
+            For direct lecture-covered topics, prefer the lecture's framing over an encyclopedia-style introduction.
+            For broader CV questions, start with a clean student-facing definition, then briefly mention the lecture angle if available.
+            Use the lecture evidence to connect the concept to this course instead of quoting slide fragments.
             Write like a teaching assistant helping a student revise this lecture before a quiz.
             Keep the answer concise, natural, and specific to the cited lecture material.
             Use 2 or 3 sentences unless the student explicitly asks for a longer derivation or comparison.
             Avoid filler phrases, repeated restatement, and broad background context that is not visible in the evidence.
+            If this question, or a very similar one, appeared earlier in the same conversation, you must answer it in clearly different wording and structure while preserving the facts.
+            Never reuse the same first sentence as a recent similar answer.
             Avoid stock textbook phrases such as "fundamental concept", "various tasks", or "in the field of computer vision" unless the lecture evidence itself uses that framing.
             Avoid generic openings such as "X is a field of study", "X focuses on", "X involves techniques", or "X is a popular method" unless those exact ideas are directly supported by the evidence.
-            Do not introduce extra causes, applications, or mechanisms unless they are explicitly stated in the evidence.
-            If the evidence states only the core idea or constraint, stop there instead of expanding into a fuller textbook explanation.
+            Do not introduce course-specific claims, causes, applications, or mechanisms unless they are explicitly supported by the evidence.
+            If the evidence states only the core idea or one example, keep the lecture connection at that level and do not over-expand it.
             Do not mention lecture file names, page numbers, slide numbers, or source ids in the answer body.
             Do not include evidence labels such as [S1], [S2], or any source-id notation in the answer body.
             Do not include a source list line inside the answer body.
+            Course coverage level for this question: {coverage_level}.
+            If coverage level is "direct", make the lecture connection central.
+            If coverage level is "related", make the concept explanation central and the lecture connection secondary.
+            If coverage level is "none", do not claim the lectures covered the concept.
+            If you include any explicit sentence about this course or its lectures, you must select at least one matching source id in used_sources.
+            If no trustworthy source fits, omit the course-connection sentence completely.
+            Variation requirement:
+            {repeat_guidance}
             {"If the student asks for code, include one short explanatory sentence before the code block and one short practical note after it. Include the code as a fenced Markdown code block with its own lines and the correct language label such as ```python. Never place multi-line code inside single backticks, and do not return code only." if code_request else ""}
-            Every factual point in the answer must be supported by the selected evidence ids.
+            Any course-specific factual point in the answer must be supported by the selected evidence ids.
+            When no trustworthy course source is needed, return an empty used_sources array.
             Return strict JSON with:
             - answer: the student-facing explanation only
-            - used_sources: an array of 1 to 3 ids chosen only from the evidence labels such as ["S1", "S2"]
+            - used_sources: an array of 0 to 3 ids chosen only from the evidence labels such as ["S1", "S2"]
 
             Conversation:
             {history_text or 'None'}
+
+            Recent similar-answer openings to avoid reusing:
+            {recent_opening_block}
+
+            Recent answers to similar questions:
+            {recent_answer_block}
 
             User question:
             {query}
@@ -2465,53 +2959,94 @@ class Course4186KnowledgeBase:
             {kp_text}
 
             Evidence:
-            {evidence}
+            {evidence or 'None'}
             """
         ).strip()
-        response = self._llm_client.chat.completions.create(
-            model=self._llm_model,
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You answer only from the supplied course evidence, and you should sound like a precise teaching assistant rather than a textbook or encyclopedia.",
-                },
-                {"role": "user", "content": prompt},
-            ],
-            temperature=0.05,
-            max_tokens=420 if code_request else 220,
-        )
-        raw_content = (response.choices[0].message.content or "").strip()
-        try:
-            parsed = parse_json_response(raw_content)
-            if isinstance(parsed, dict):
-                answer_text = str(parsed.get("answer") or "").strip()
-                used_sources_raw = parsed.get("used_sources", [])
-                used_sources = [
-                    clean_display_text(item).upper()
-                    for item in used_sources_raw
-                    if clean_display_text(item)
-                ] if isinstance(used_sources_raw, list) else []
-                if answer_text:
-                    answer_text = (
-                        self._ensure_code_answer_explanation(answer_text, query, related, chunk_hits)
-                        if code_request
-                        else clean_markdown_text(answer_text)
-                    )
-                    return {
-                        "answer": extract_student_answer_text(answer_text),
-                        "used_sources": used_sources,
-                    }
-        except Exception:
-            pass
-        fallback_answer = extract_student_answer_text(raw_content)
-        if not fallback_answer:
-            raise ValueError("LLM answer did not contain a usable student-facing answer.")
-        if code_request:
-            fallback_answer = self._ensure_code_answer_explanation(fallback_answer, query, related, chunk_hits)
-        return {
-            "answer": fallback_answer,
-            "used_sources": [],
-        }
+        temperature = 0.18 if repeat_count <= 0 else min(0.42, 0.18 + 0.07 * repeat_count)
+
+        def request_raw_content(*, extra_instruction: str = "", temperature_override: Optional[float] = None) -> str:
+            prompt_body = prompt
+            if extra_instruction.strip():
+                prompt_body = (
+                    f"{prompt}\n\nAdditional requirement for this attempt:\n"
+                    f"{extra_instruction.strip()}"
+                )
+            response = self._llm_client.chat.completions.create(
+                model=self._llm_model,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": (
+                            "You are a precise teaching assistant for a computer vision course. "
+                            "Use supplied course evidence when it genuinely applies, but you may answer standard computer vision questions from reliable domain knowledge. "
+                            "Never invent lecture coverage or fake citations. "
+                            "When the student repeats a question in the same chat, keep the facts stable but vary the phrasing and structure."
+                        ),
+                    },
+                    {"role": "user", "content": prompt_body},
+                ],
+                temperature=temperature if temperature_override is None else temperature_override,
+                max_tokens=420 if code_request else 220,
+            )
+            return (response.choices[0].message.content or "").strip()
+
+        def parse_answer_payload(raw_content: str) -> Dict[str, Any]:
+            raw_used_sources = extract_used_source_ids(raw_content)
+            try:
+                parsed = parse_json_response(raw_content)
+                if isinstance(parsed, dict):
+                    answer_text = str(parsed.get("answer") or "").strip()
+                    used_sources_raw = parsed.get("used_sources", [])
+                    used_sources = [
+                        clean_display_text(item).upper()
+                        for item in used_sources_raw
+                        if clean_display_text(item)
+                    ] if isinstance(used_sources_raw, list) else []
+                    if not used_sources:
+                        used_sources = raw_used_sources
+                    if answer_text:
+                        answer_text = (
+                            self._ensure_code_answer_explanation(answer_text, query, related, chunk_hits)
+                            if code_request
+                            else sanitize_transport_answer_text(answer_text)
+                        )
+                        if contains_transport_artifacts(answer_text):
+                            raise ValueError("LLM answer still contained transport artifacts after JSON parse.")
+                        return {
+                            "answer": extract_student_answer_text(answer_text),
+                            "used_sources": used_sources,
+                        }
+            except Exception:
+                pass
+
+            fallback_answer = sanitize_transport_answer_text(extract_student_answer_text(raw_content))
+            if not fallback_answer:
+                raise ValueError("LLM answer did not contain a usable student-facing answer.")
+            if code_request:
+                fallback_answer = self._ensure_code_answer_explanation(fallback_answer, query, related, chunk_hits)
+            if contains_transport_artifacts(fallback_answer):
+                raise ValueError("LLM answer fallback still contained transport artifacts.")
+            return {
+                "answer": fallback_answer,
+                "used_sources": raw_used_sources,
+            }
+
+        payload = parse_answer_payload(request_raw_content())
+        if repeat_count > 0 and self._answer_too_similar_to_recent(payload.get("answer", ""), recent_similar_answers):
+            retry_instruction = (
+                "You are answering a repeated question in the same chat. "
+                "Rewrite the explanation with a clearly different opening sentence and a different explanation path from every recent similar answer above. "
+                "Do not start with any of the listed recent openings. "
+                "If the recent answer defined the term first, switch to intuition, geometry, computation, or exam-revision framing instead."
+            )
+            retry_payload = parse_answer_payload(
+                request_raw_content(
+                    extra_instruction=retry_instruction,
+                    temperature_override=min(0.48, temperature + 0.12),
+                )
+            )
+            payload = retry_payload
+        return payload
 
     def _llm_assistant_response(self, query: str, intent: str, history: Sequence[Dict[str, str]]) -> str:
         intent_guidance = {
