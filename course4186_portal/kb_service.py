@@ -113,6 +113,27 @@ THANKS_RE = re.compile(r"\b(thanks|thank you|appreciate it)\b", re.IGNORECASE)
 REPORT_RE = re.compile(r"\b(show|open|view|check).*(learning report|study summary)\b", re.IGNORECASE)
 QUIZ_RE = re.compile(r"\b(open|show|start|go to).*(quiz|practice)\b", re.IGNORECASE)
 DEFINITION_RE = re.compile(r"\b(what is|what are|define|definition|overview|introduce)\b", re.IGNORECASE)
+COMPARISON_RE = re.compile(
+    r"\b("
+    r"compare|comparison|different|difference|distinguish|contrast|versus|vs\.?|"
+    r"similarities? between|differences? between|compared with|compared to|as opposed to|rather than"
+    r")\b",
+    re.IGNORECASE,
+)
+RELATION_RE = re.compile(
+    r"\b("
+    r"relation|relationship|relate|related|connection|connected|link between|fit together|work together"
+    r")\b",
+    re.IGNORECASE,
+)
+WHY_HOW_RE = re.compile(r"^\s*(why|how)\b", re.IGNORECASE)
+APPLICATION_RE = re.compile(
+    r"\b("
+    r"used for|use for|application|applications|example|examples|when do we use|when should we use|"
+    r"use case|use cases"
+    r")\b",
+    re.IGNORECASE,
+)
 CODE_REQUEST_RE = re.compile(
     r"\b("
     r"code|python|pytorch|snippet|sample code|example code|implementation|implement|write code|show code|demo code|"
@@ -1023,6 +1044,260 @@ class Course4186KnowledgeBase:
             "phrases": {phrase for phrase in self.course_anchor_phrases if phrase in lowered},
         }
 
+    def _kp_reference_terms(self, item: Dict[str, Any]) -> Dict[str, set[str]]:
+        phrases: set[str] = set()
+        tokens: set[str] = set()
+        name = clean_display_text(item.get("name", "")).lower()
+        if name:
+            phrases.add(name)
+            if "structure from motion" in name:
+                phrases.add("sfm")
+            if "image filtering and convolution" in name:
+                phrases.add("convolution")
+                phrases.add("image filtering")
+            if "motion and optical flow" in name:
+                phrases.add("optical flow")
+            tokens.update(
+                token
+                for token in tokenize(self._expand_course_aliases(name))
+                if len(token) > 2 and token not in STOPWORDS
+            )
+        for keyword in item.get("keywords", []):
+            cleaned = clean_display_text(keyword).lower()
+            if not cleaned:
+                continue
+            if len(cleaned) >= 4:
+                phrases.add(cleaned)
+            tokens.update(
+                token
+                for token in tokenize(self._expand_course_aliases(cleaned))
+                if len(token) > 2 and token not in STOPWORDS
+            )
+        kp_terms = self.kp_term_sets.get(item.get("kp_id", ""), set())
+        tokens.update(token for token in kp_terms & STRONG_SINGLE_TERM_ANCHORS if len(token) > 2)
+        return {"phrases": {phrase for phrase in phrases if phrase}, "tokens": tokens}
+
+    def _kp_query_position(self, query: str, item: Dict[str, Any]) -> int:
+        lowered = self._expand_course_aliases(query)
+        candidates = list(self._kp_reference_terms(item)["phrases"])
+        positions = [lowered.find(candidate) for candidate in candidates if candidate and lowered.find(candidate) >= 0]
+        return min(positions) if positions else 10 ** 6
+
+    def _task_relevant_kp_hits(
+        self,
+        query: str,
+        kp_context: Optional[Sequence[Dict[str, Any]]],
+        *,
+        task_profile: Optional[Dict[str, Any]] = None,
+        limit: int = 3,
+    ) -> List[Dict[str, Any]]:
+        hits = list(kp_context or [])
+        if not hits:
+            return []
+        task_profile = task_profile or self._query_task_profile(query, hits)
+        explicit_hits = list(task_profile.get("explicit_kp_hits") or [])
+        selected: List[Dict[str, Any]] = []
+        seen_ids: set[str] = set()
+
+        if explicit_hits:
+            explicit_hits.sort(
+                key=lambda hit: (
+                    self._kp_query_position(query, hit["item"]),
+                    -float(hit.get("score", 0.0)),
+                )
+            )
+            for hit in explicit_hits:
+                kp_id = hit["item"]["kp_id"]
+                if kp_id in seen_ids:
+                    continue
+                seen_ids.add(kp_id)
+                selected.append(hit)
+                if len(selected) >= limit:
+                    return selected[:limit]
+
+        top_score = float(hits[0].get("score", 0.0))
+        needs_multi = bool(task_profile.get("needs_multi_concept_coverage"))
+        for hit in hits:
+            kp_id = hit["item"]["kp_id"]
+            if kp_id in seen_ids:
+                continue
+            profile = self._kp_query_match_profile(query, hit["item"])
+            score = float(hit.get("score", 0.0))
+            if needs_multi:
+                if (
+                    profile["exact_name"]
+                    or profile["exact_keyword_hits"]
+                    or profile["strong_token_hits"]
+                    or score >= max(5.0, top_score * 0.28)
+                ):
+                    selected.append(hit)
+                    seen_ids.add(kp_id)
+            else:
+                selected.append(hit)
+                seen_ids.add(kp_id)
+            if len(selected) >= (2 if needs_multi else 1):
+                break
+
+        return selected[:limit]
+
+    def _query_task_profile(
+        self,
+        query: str,
+        kp_context: Optional[Sequence[Dict[str, Any]]] = None,
+    ) -> Dict[str, Any]:
+        cleaned = clean_display_text(query)
+        lowered = self._expand_course_aliases(query)
+        focus_tokens = self._query_focus_tokens(query)
+        kp_hits = list(kp_context or [])
+        explicit_hits: List[Dict[str, Any]] = []
+        for hit in kp_hits[:3]:
+            profile = self._kp_query_match_profile(query, hit["item"])
+            if profile["exact_name"] or profile["exact_keyword_hits"] or profile["strong_token_hits"]:
+                explicit_hits.append(hit)
+
+        is_comparison = bool(COMPARISON_RE.search(lowered))
+        is_relation = bool(RELATION_RE.search(lowered)) and not is_comparison
+        is_why_how = bool(WHY_HOW_RE.match(cleaned))
+        is_application = bool(APPLICATION_RE.search(lowered))
+        is_definition = self._definition_request(query)
+        is_code_request = self._query_requests_code(query)
+
+        top_score = float(kp_hits[0].get("score", 0.0)) if kp_hits else 0.0
+        second_score = float(kp_hits[1].get("score", 0.0)) if len(kp_hits) > 1 else 0.0
+        balanced_top_two = bool(
+            len(kp_hits) > 1
+            and second_score >= max(5.0, top_score * 0.28)
+            and len(focus_tokens) >= 2
+        )
+
+        explicit_concept_count = len({hit["item"]["kp_id"] for hit in explicit_hits})
+        needs_multi_concept_coverage = bool(
+            is_comparison
+            or is_relation
+            or explicit_concept_count >= 2
+            or balanced_top_two
+        )
+        is_simple_definition = bool(
+            is_definition
+            and not is_code_request
+            and not is_comparison
+            and not is_relation
+            and not is_why_how
+            and not is_application
+            and not needs_multi_concept_coverage
+            and len(focus_tokens) <= 6
+        )
+        answer_style = (
+            "comparison"
+            if is_comparison
+            else "relation"
+            if is_relation
+            else "definition"
+            if is_simple_definition
+            else "explanation"
+        )
+        relevant_kp_hits = self._task_relevant_kp_hits(
+            query,
+            kp_hits,
+            task_profile={
+                "explicit_kp_hits": explicit_hits,
+                "needs_multi_concept_coverage": needs_multi_concept_coverage,
+            },
+            limit=3,
+        )
+        return {
+            "is_definition": is_definition,
+            "is_simple_definition": is_simple_definition,
+            "is_comparison": is_comparison,
+            "is_relation": is_relation,
+            "is_why_how": is_why_how,
+            "is_application": is_application,
+            "is_code_request": is_code_request,
+            "needs_multi_concept_coverage": needs_multi_concept_coverage,
+            "explicit_kp_hits": explicit_hits,
+            "relevant_kp_hits": relevant_kp_hits,
+            "answer_style": answer_style,
+        }
+
+    def _task_prompt_guidance(self, task_profile: Dict[str, Any]) -> str:
+        if task_profile.get("is_comparison"):
+            return (
+                "This is a comparison question. Explicitly explain both concepts and state at least one concrete difference "
+                "in purpose, input/output, or role in the vision pipeline. Do not answer only one side."
+            )
+        if task_profile.get("is_relation"):
+            return (
+                "This is a relationship question. Explain how the named concepts connect, and make sure each concept is addressed explicitly."
+            )
+        if task_profile.get("is_why_how"):
+            return "This is a how/why question. Explain the mechanism or reason, not just the definition."
+        if task_profile.get("is_application"):
+            return "This is an application question. Explain what the concept is used for and why."
+        if task_profile.get("is_simple_definition"):
+            return "This is a single-concept definition question. A concise revision-style answer is appropriate."
+        return "Answer the student's question directly and make sure all named concepts are covered."
+
+    def _answer_mentions_concept(self, answer: str, item: Dict[str, Any]) -> bool:
+        body = self._expand_course_aliases(answer)
+        terms = self._kp_reference_terms(item)
+        if any(phrase in body for phrase in terms["phrases"] if len(phrase) >= 3):
+            return True
+        answer_tokens = set(self._content_tokens(answer))
+        return bool(answer_tokens & terms["tokens"])
+
+    def _answer_satisfies_task(
+        self,
+        answer: str,
+        query: str,
+        task_profile: Dict[str, Any],
+    ) -> bool:
+        body = normalize_answer_body_sources(extract_student_answer_text(answer))
+        if not body:
+            return False
+
+        relevant_hits = list(task_profile.get("relevant_kp_hits") or [])
+        if task_profile.get("needs_multi_concept_coverage") and len(relevant_hits) >= 2:
+            covered = sum(1 for hit in relevant_hits[:2] if self._answer_mentions_concept(body, hit["item"]))
+            if covered < 2:
+                return False
+
+        if task_profile.get("is_comparison"):
+            lowered = clean_display_text(body).lower()
+            contrast_markers = (
+                "while ", "whereas", "in contrast", "by contrast", "unlike", "different",
+                "difference", "compared with", "compared to", "rather than", "on the other hand", "both",
+            )
+            if not any(marker in lowered for marker in contrast_markers):
+                return False
+        return True
+
+    def _trim_optional_course_tail(self, answer: str, task_profile: Dict[str, Any]) -> str:
+        if not task_profile.get("needs_multi_concept_coverage"):
+            return extract_student_answer_text(answer)
+        body = extract_student_answer_text(answer)
+        if not body or "```" in body:
+            return body
+        parts = [part.strip() for part in re.split(r"\n{2,}", body) if part and part.strip()]
+        if len(parts) <= 1:
+            return body
+        course_openers = (
+            "in the context of our course",
+            "in the context of this course",
+            "in this course",
+            "in our course",
+            "in terms of the course",
+            "in terms of our course",
+            "in the lectures",
+            "in our lectures",
+        )
+        kept: List[str] = []
+        for index, part in enumerate(parts):
+            lowered = part.lower()
+            if index > 0 and any(lowered.startswith(prefix) for prefix in course_openers):
+                continue
+            kept.append(part)
+        return "\n\n".join(kept) if kept else parts[0]
+
     def _focus_overlap_with_item(self, item: Dict[str, Any], focus_tokens: Sequence[str]) -> int:
         chunk_id = item.get("chunk_id")
         chunk_terms = self.chunk_term_sets.get(chunk_id, set()) if chunk_id else set()
@@ -1121,7 +1396,7 @@ class Course4186KnowledgeBase:
         item: Dict[str, Any],
         anchor_details: Optional[Dict[str, set[str]]] = None,
     ) -> Dict[str, Any]:
-        lowered = clean_display_text(query).lower()
+        lowered = self._expand_course_aliases(query)
         anchor_details = anchor_details or self._query_anchor_details(query)
         kp_name = clean_display_text(item.get("name", "")).lower()
         keyword_phrases = [
@@ -1129,10 +1404,21 @@ class Course4186KnowledgeBase:
             for keyword in item.get("keywords", [])
             if clean_display_text(keyword)
         ]
+        def specific_keyword(phrase: str) -> bool:
+            tokens = [
+                token
+                for token in tokenize(self._expand_course_aliases(phrase))
+                if len(token) > 2 and token not in STOPWORDS
+            ]
+            if not tokens:
+                return False
+            if len(tokens) >= 2:
+                return True
+            return tokens[0] in (STRONG_SINGLE_TERM_ANCHORS | {"sfm", "sift", "homography", "epipolar", "convolution"})
         kp_terms = self.kp_term_sets.get(item.get("kp_id", ""), set())
         strong_query_tokens = anchor_details["tokens"] & STRONG_SINGLE_TERM_ANCHORS
         exact_name = bool(kp_name and kp_name in lowered)
-        exact_keyword_hits = [phrase for phrase in keyword_phrases if phrase and phrase in lowered]
+        exact_keyword_hits = [phrase for phrase in keyword_phrases if phrase and specific_keyword(phrase) and phrase in lowered]
         strong_token_hits = sorted(strong_query_tokens & kp_terms)
         return {
             "exact_name": exact_name,
@@ -1504,16 +1790,13 @@ class Course4186KnowledgeBase:
                     return rows
         return rows
 
-    def _focused_kp_support_hits(
+    def _support_rows_for_kp_hit(
         self,
         query: str,
-        kp_context: Optional[Sequence[Dict[str, Any]]],
+        kp_hit: Dict[str, Any],
         limit: int,
     ) -> List[Dict[str, Any]]:
-        if not kp_context:
-            return []
-        top_hit = kp_context[0]
-        top_kp = top_hit["item"]
+        top_kp = kp_hit["item"]
         match_profile = self._kp_query_match_profile(query, top_kp)
         query_lower = clean_display_text(query).lower()
         kp_name = clean_display_text(top_kp.get("name", "")).lower()
@@ -1525,10 +1808,10 @@ class Course4186KnowledgeBase:
             or bool(match_profile["exact_keyword_hits"])
             or bool(match_profile["strong_token_hits"])
         )
-        if not matched and float(top_hit.get("score", 0.0)) < 11.0:
+        if not matched and float(kp_hit.get("score", 0.0)) < 11.0:
             return []
 
-        support_rows = self._support_candidate_rows([top_hit], limit=max(limit, 8))
+        support_rows = self._support_candidate_rows([kp_hit], limit=max(limit, 8))
         seen_chunk_ids: set[str] = {
             str(row["item"].get("chunk_id") or "")
             for row in support_rows
@@ -1549,7 +1832,7 @@ class Course4186KnowledgeBase:
                 if normalized_path_key(source)
             }
             supplemental_rows: List[Dict[str, Any]] = []
-            base_score = float(top_hit.get("score", 0.0)) + 17.0
+            base_score = float(kp_hit.get("score", 0.0)) + 17.0
             for chunk in self.chunks:
                 chunk_id = str(chunk.get("chunk_id") or "")
                 if not chunk_id or chunk_id in seen_chunk_ids:
@@ -1568,7 +1851,7 @@ class Course4186KnowledgeBase:
                     }
                 )
             if supplemental_rows:
-                supplemental_rows = self._rerank_chunk_hits(query, supplemental_rows, [top_hit], top_k=max(limit, 8))
+                supplemental_rows = self._rerank_chunk_hits(query, supplemental_rows, [kp_hit], top_k=max(limit, 8))
                 for row in supplemental_rows:
                     chunk_id = str(row["item"].get("chunk_id") or "")
                     if not chunk_id or chunk_id in seen_chunk_ids:
@@ -1591,6 +1874,85 @@ class Course4186KnowledgeBase:
         if match_profile["exact_name"] or match_profile["exact_keyword_hits"] or match_profile["strong_token_hits"]:
             return support_rows[:limit]
         return support_rows[:limit] if matched else []
+
+    def _focused_kp_support_hits(
+        self,
+        query: str,
+        kp_context: Optional[Sequence[Dict[str, Any]]],
+        limit: int,
+        task_profile: Optional[Dict[str, Any]] = None,
+    ) -> List[Dict[str, Any]]:
+        if not kp_context:
+            return []
+        task_profile = task_profile or self._query_task_profile(query, kp_context)
+        selected_kp_hits = self._task_relevant_kp_hits(query, kp_context, task_profile=task_profile, limit=3)
+        if not selected_kp_hits:
+            selected_kp_hits = [kp_context[0]]
+
+        max_kps = 2 if task_profile.get("needs_multi_concept_coverage") else 1
+        combined_rows: List[Dict[str, Any]] = []
+        seen_chunk_ids: set[str] = set()
+        for kp_hit in selected_kp_hits[:max_kps]:
+            rows = self._support_rows_for_kp_hit(query, kp_hit, limit=max(limit, 6))
+            for row in rows:
+                chunk_id = str(row["item"].get("chunk_id") or "")
+                if not chunk_id or chunk_id in seen_chunk_ids:
+                    continue
+                seen_chunk_ids.add(chunk_id)
+                combined_rows.append(row)
+        if not combined_rows:
+            return []
+        return self._preferred_chunk_hits(query, combined_rows, limit=limit, kp_context=selected_kp_hits)
+
+    def _multi_concept_chunk_hits(
+        self,
+        query: str,
+        chunk_hits: Sequence[Dict[str, Any]],
+        *,
+        limit: int,
+        ) -> List[Dict[str, Any]]:
+        if not chunk_hits:
+            return []
+        anchor_details = self._query_anchor_details(query)
+        focus_tokens = [
+            token
+            for token in self._query_focus_tokens(query)
+            if token in anchor_details["tokens"] and token in STRONG_SINGLE_TERM_ANCHORS
+        ]
+        prioritized_tokens: List[str] = []
+        seen_tokens: set[str] = set()
+        for token in focus_tokens:
+            if token in seen_tokens:
+                continue
+            seen_tokens.add(token)
+            prioritized_tokens.append(token)
+
+        selected: List[Dict[str, Any]] = []
+        seen_chunk_ids: set[str] = set()
+        for token in prioritized_tokens[:4]:
+            for hit in chunk_hits:
+                item = hit["item"]
+                chunk_id = str(item.get("chunk_id") or "")
+                if not chunk_id or chunk_id in seen_chunk_ids:
+                    continue
+                chunk_terms = self.chunk_term_sets.get(chunk_id, set())
+                title_terms = self.chunk_title_term_sets.get(chunk_id, set())
+                if token not in chunk_terms and token not in title_terms:
+                    continue
+                selected.append(hit)
+                seen_chunk_ids.add(chunk_id)
+                break
+
+        for hit in chunk_hits:
+            item = hit["item"]
+            chunk_id = str(item.get("chunk_id") or "")
+            if not chunk_id or chunk_id in seen_chunk_ids:
+                continue
+            selected.append(hit)
+            seen_chunk_ids.add(chunk_id)
+            if len(selected) >= max(limit, 4):
+                break
+        return self._preferred_chunk_hits(query, selected, limit=limit, kp_context=None)
 
     def _rerank_kp_hits(self, query: str, hits: Sequence[Dict[str, Any]], top_k: int) -> List[Dict[str, Any]]:
         query_terms = set(self._content_tokens(query))
@@ -2121,14 +2483,22 @@ class Course4186KnowledgeBase:
             "Try asking with the exact method, formula, or lecture topic name."
         )
 
-    def _looks_brief_concept_request(self, query: str) -> bool:
-        lowered = clean_display_text(query).lower()
-        return bool(
-            re.match(
-                r"^\s*(what is|what are|define|definition of|introduce|explain|briefly explain|can you explain)\b",
-                lowered,
-            )
-        )
+    def _looks_brief_concept_request(
+        self,
+        query: str,
+        *,
+        task_profile: Optional[Dict[str, Any]] = None,
+        kp_hits: Optional[Sequence[Dict[str, Any]]] = None,
+    ) -> bool:
+        profile = task_profile or self._query_task_profile(query, kp_hits)
+        if not profile.get("is_simple_definition"):
+            return False
+        hits = list(kp_hits or [])
+        if not hits:
+            return len(self._query_focus_tokens(query)) <= 5
+        top_score = float(hits[0].get("score", 0.0))
+        second_score = float(hits[1].get("score", 0.0)) if len(hits) > 1 else 0.0
+        return top_score >= max(7.0, second_score + 4.5)
 
     def _query_requests_code(self, query: str) -> bool:
         return bool(CODE_REQUEST_RE.search(clean_display_text(query)))
@@ -2548,10 +2918,22 @@ class Course4186KnowledgeBase:
 
         retrieval_query = self._contextual_query(query, history or [])
         kp_hits = self.search_knowledge_points(retrieval_query, top_k=3)
-        chunk_hits = self.search_chunks(retrieval_query, top_k=top_k, kp_context=kp_hits)
-        focused_hits = self._focused_kp_support_hits(retrieval_query, kp_hits, limit=6)
-        citation_candidates = focused_hits if len(focused_hits) >= 2 else chunk_hits
-        citation_hits = self._preferred_chunk_hits(retrieval_query, citation_candidates, limit=4, kp_context=kp_hits)
+        task_profile = self._query_task_profile(retrieval_query, kp_hits)
+        chunk_search_k = max(top_k, 8) if task_profile.get("needs_multi_concept_coverage") else top_k
+        chunk_hits = self.search_chunks(retrieval_query, top_k=chunk_search_k, kp_context=kp_hits)
+        focused_hits = self._focused_kp_support_hits(retrieval_query, kp_hits, limit=6, task_profile=task_profile)
+        if task_profile.get("needs_multi_concept_coverage"):
+            multi_concept_hits = self._multi_concept_chunk_hits(retrieval_query, chunk_hits, limit=4)
+        else:
+            multi_concept_hits = []
+        if multi_concept_hits:
+            citation_hits = multi_concept_hits
+        elif task_profile.get("needs_multi_concept_coverage") and len(task_profile.get("relevant_kp_hits") or []) < 2:
+            citation_candidates = chunk_hits
+            citation_hits = self._preferred_chunk_hits(retrieval_query, citation_candidates, limit=4, kp_context=None)
+        else:
+            citation_candidates = focused_hits if len(focused_hits) >= 2 else chunk_hits
+            citation_hits = self._preferred_chunk_hits(retrieval_query, citation_candidates, limit=4, kp_context=kp_hits)
         citations = self._build_citations(citation_hits, limit=4)
         coverage_level = self._course_coverage_level(retrieval_query, citation_hits)
         related = [
@@ -2566,7 +2948,7 @@ class Course4186KnowledgeBase:
         if not citations:
             if self._looks_cv_request(query) and self._llm_client is not None and self._llm_model:
                 try:
-                    llm_payload = self._llm_answer(query, history or [], related, [], [], coverage_level="none")
+                    llm_payload = self._llm_answer(query, history or [], related, [], [], coverage_level="none", task_profile=task_profile)
                     answer_body = self._strip_uncited_course_connection(llm_payload.get("answer", ""))
                     return {
                         "answer": self._answer_with_source_line(answer_body, []),
@@ -2589,9 +2971,22 @@ class Course4186KnowledgeBase:
         if not self._is_grounded_answer_ready(retrieval_query, kp_hits, citation_hits):
             if self._looks_cv_request(query) and self._llm_client is not None and self._llm_model:
                 try:
-                    llm_payload = self._llm_answer(query, history or [], related, citation_hits[:4], citations, coverage_level=coverage_level)
+                    llm_payload = self._llm_answer(
+                        query,
+                        history or [],
+                        related,
+                        citation_hits[:4],
+                        citations,
+                        coverage_level=coverage_level,
+                        task_profile=task_profile,
+                    )
                     used_sources = llm_payload.get("used_sources", [])
-                    final_citations = self._select_final_citations(citations, used_sources, max_count=3) if used_sources else []
+                    if used_sources:
+                        final_citations = self._select_final_citations(citations, used_sources, max_count=3)
+                    elif task_profile.get("needs_multi_concept_coverage"):
+                        final_citations = citations[:3]
+                    else:
+                        final_citations = []
                     answer_body = llm_payload.get("answer", "")
                     if not final_citations:
                         answer_body = self._strip_uncited_course_connection(answer_body)
@@ -2610,7 +3005,7 @@ class Course4186KnowledgeBase:
                 "mode": "assistant",
             }
 
-        if self._looks_brief_concept_request(query):
+        if self._looks_brief_concept_request(query, task_profile=task_profile, kp_hits=kp_hits):
             short_answer = self._grounded_short_answer(query, citation_hits[:3], citations[:3])
             if short_answer:
                 final_citations = citations[:2]
@@ -2623,10 +3018,20 @@ class Course4186KnowledgeBase:
 
         if self._llm_client is not None and self._llm_model and citations:
             try:
-                llm_payload = self._llm_answer(query, history or [], related, citation_hits[:4], citations, coverage_level=coverage_level)
+                llm_payload = self._llm_answer(
+                    query,
+                    history or [],
+                    related,
+                    citation_hits[:4],
+                    citations,
+                    coverage_level=coverage_level,
+                    task_profile=task_profile,
+                )
                 used_sources = llm_payload.get("used_sources", [])
                 if used_sources:
                     final_citations = self._select_final_citations(citations, used_sources, max_count=3)
+                elif task_profile.get("needs_multi_concept_coverage"):
+                    final_citations = citations[:3]
                 elif coverage_level == "direct":
                     final_citations = citations[:2]
                 else:
@@ -2646,7 +3051,7 @@ class Course4186KnowledgeBase:
                 pass
 
         return {
-            "answer": self._fallback_answer(query, related, citation_hits[:4], citations),
+            "answer": self._fallback_answer(query, related, citation_hits[:4], citations, task_profile=task_profile),
             "citations": citations,
             "related_kps": related,
             "mode": "extractive",
@@ -2865,8 +3270,10 @@ class Course4186KnowledgeBase:
         chunk_hits: Sequence[Dict[str, Any]],
         citations: List[Dict[str, Any]],
         coverage_level: str = "direct",
+        task_profile: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         code_request = self._query_requests_code(query)
+        task_profile = task_profile or self._query_task_profile(query)
         repeat_context = self._repeat_answer_context(query, history)
         repeat_count = int(repeat_context.get("repeat_count", 0) or 0)
         recent_similar_answers = list(repeat_context.get("recent_answers", []))
@@ -2894,6 +3301,11 @@ class Course4186KnowledgeBase:
             f"- {safe_snippet(opening, 140)}"
             for opening in recent_openings
         ) or "- None"
+        relevant_topics = "\n".join(
+            f"- {clean_display_text(hit['item'].get('name', ''))}"
+            for hit in (task_profile.get("relevant_kp_hits") or [])
+            if clean_display_text(hit["item"].get("name", ""))
+        ) or "- None"
         repeat_guidance = (
             f"This question, or a nearly identical one, already appeared {repeat_count} time(s) earlier in this conversation. "
             "Keep the facts consistent, but do not reuse the same opening sentence, explanation order, or sentence rhythm from the recent similar answers. "
@@ -2901,6 +3313,7 @@ class Course4186KnowledgeBase:
             if repeat_count > 0
             else "Use the clearest teaching-assistant explanation for a first answer to this question."
         )
+        task_guidance = self._task_prompt_guidance(task_profile)
         prompt = textwrap.dedent(
             f"""
             You are the Course 4186 student learning assistant for a computer vision course.
@@ -2934,6 +3347,8 @@ class Course4186KnowledgeBase:
             If coverage level is "none", do not claim the lectures covered the concept.
             If you include any explicit sentence about this course or its lectures, you must select at least one matching source id in used_sources.
             If no trustworthy source fits, omit the course-connection sentence completely.
+            Task guidance:
+            {task_guidance}
             Variation requirement:
             {repeat_guidance}
             {"If the student asks for code, include one short explanatory sentence before the code block and one short practical note after it. Include the code as a fenced Markdown code block with its own lines and the correct language label such as ```python. Never place multi-line code inside single backticks, and do not return code only." if code_request else ""}
@@ -2954,6 +3369,9 @@ class Course4186KnowledgeBase:
 
             User question:
             {query}
+
+            Relevant course topics inferred from the question:
+            {relevant_topics}
 
             Matched knowledge points:
             {kp_text}
@@ -3012,8 +3430,9 @@ class Course4186KnowledgeBase:
                         )
                         if contains_transport_artifacts(answer_text):
                             raise ValueError("LLM answer still contained transport artifacts after JSON parse.")
+                        final_answer = self._trim_optional_course_tail(answer_text, task_profile)
                         return {
-                            "answer": extract_student_answer_text(answer_text),
+                            "answer": extract_student_answer_text(final_answer),
                             "used_sources": used_sources,
                         }
             except Exception:
@@ -3025,13 +3444,38 @@ class Course4186KnowledgeBase:
             if code_request:
                 fallback_answer = self._ensure_code_answer_explanation(fallback_answer, query, related, chunk_hits)
             if contains_transport_artifacts(fallback_answer):
-                raise ValueError("LLM answer fallback still contained transport artifacts.")
+                repaired = sanitize_transport_answer_text(
+                    normalize_answer_body_sources(
+                        strip_course_source_line(
+                            strip_source_id_list_suffix(fallback_answer)
+                        )
+                    )
+                )
+                if repaired:
+                    fallback_answer = repaired
+            if contains_transport_artifacts(fallback_answer):
+                fallback_answer = sanitize_transport_answer_text(strip_source_id_list_suffix(raw_content))
+            if not fallback_answer:
+                raise ValueError("LLM answer fallback could not be repaired.")
+            fallback_answer = self._trim_optional_course_tail(fallback_answer, task_profile)
             return {
                 "answer": fallback_answer,
                 "used_sources": raw_used_sources,
             }
 
         payload = parse_answer_payload(request_raw_content())
+        if not self._answer_satisfies_task(payload.get("answer", ""), query, task_profile):
+            retry_instruction = (
+                "The current draft does not fully satisfy the task. "
+                f"{task_guidance} "
+                "Make sure every named concept in the question is addressed explicitly before you finish."
+            )
+            payload = parse_answer_payload(
+                request_raw_content(
+                    extra_instruction=retry_instruction,
+                    temperature_override=min(0.46, temperature + 0.08),
+                )
+            )
         if repeat_count > 0 and self._answer_too_similar_to_recent(payload.get("answer", ""), recent_similar_answers):
             retry_instruction = (
                 "You are answering a repeated question in the same chat. "
@@ -3046,6 +3490,8 @@ class Course4186KnowledgeBase:
                 )
             )
             payload = retry_payload
+        if not self._answer_satisfies_task(payload.get("answer", ""), query, task_profile):
+            raise ValueError("LLM answer did not satisfy the task requirements.")
         return payload
 
     def _llm_assistant_response(self, query: str, intent: str, history: Sequence[Dict[str, str]]) -> str:
@@ -3107,12 +3553,68 @@ class Course4186KnowledgeBase:
         related: List[Dict[str, Any]],
         chunk_hits: Sequence[Dict[str, Any]],
         citations: List[Dict[str, Any]],
+        task_profile: Optional[Dict[str, Any]] = None,
     ) -> str:
+        profile = task_profile or self._query_task_profile(query)
         if not citations:
             return (
                 "I could not find a clear answer for that question in the current Course 4186 materials. "
                 "Try using a more specific topic such as edge detection, SIFT, stereo vision, epipolar geometry, or optical flow."
             )
+
+        if profile.get("is_comparison") and len(related) >= 2:
+            def display_label(item: Dict[str, Any]) -> str:
+                name = clean_display_text(item.get("name", ""))
+                lowered = name.lower()
+                if "structure from motion" in lowered:
+                    return "Structure from motion"
+                if "convolution" in lowered:
+                    return "Convolution"
+                if "epipolar geometry" in lowered:
+                    return "Epipolar geometry"
+                if "homography" in lowered:
+                    return "Homography"
+                return name or "This topic"
+
+            relevant_hits = list(profile.get("relevant_kp_hits") or [])
+            ordered_related = [
+                {
+                    "kp_id": hit["item"]["kp_id"],
+                    "name": hit["item"]["name"],
+                    "description": hit["item"]["description"],
+                }
+                for hit in relevant_hits[:2]
+            ]
+            seen_related_ids = {item["kp_id"] for item in ordered_related}
+            for item in related:
+                if item["kp_id"] in seen_related_ids:
+                    continue
+                ordered_related.append(item)
+                seen_related_ids.add(item["kp_id"])
+                if len(ordered_related) >= 2:
+                    break
+            if len(ordered_related) < 2:
+                return (
+                    "I found one of the two topics clearly in the current lecture materials, but I could not recover a reliable second course topic for a clean comparison. "
+                    "Please try naming the second method more specifically."
+                )
+            first = ordered_related[0]
+            second = ordered_related[1]
+            first_desc = first["description"].rstrip(".")
+            second_desc = second["description"].rstrip(".")
+            parts = [
+                f"{display_label(first)} is about {first_desc.lower()}, whereas {display_label(second)} is about {second_desc.lower()}.",
+                "So one is a vision problem or reconstruction task, while the other is a local filtering operation applied to image neighborhoods."
+                if (
+                    "structure from motion" in first["name"].lower()
+                    or "structure from motion" in second["name"].lower()
+                    or "convolution" in first["name"].lower()
+                    or "convolution" in second["name"].lower()
+                )
+                else "So they play different roles in the course rather than describing the same kind of method.",
+                "Course source: " + "; ".join(student_facing_source_reference(item) for item in citations[:3]) + ".",
+            ]
+            return " ".join(part.strip() for part in parts if part.strip())
 
         top_kp = related[0] if related else None
         top_hit = chunk_hits[0]["item"] if chunk_hits else {}
