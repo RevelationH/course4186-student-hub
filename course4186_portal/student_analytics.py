@@ -800,10 +800,18 @@ def _related_kp_ids(kb: Any, kp_id: str) -> List[str]:
     kp = kb.kp_by_id.get(kp_id)
     if not kp:
         return []
+    visible_kp_ids = {item["kp_id"] for item in kb.list_knowledge_points()}
+    if kp_id not in visible_kp_ids:
+        return []
 
     related_ids: List[str] = []
     for candidate_id in RELATED_KP_HINTS.get(kp_id, []):
-        if candidate_id in kb.kp_by_id and candidate_id != kp_id and candidate_id not in related_ids:
+        if (
+            candidate_id in kb.kp_by_id
+            and candidate_id in visible_kp_ids
+            and candidate_id != kp_id
+            and candidate_id not in related_ids
+        ):
             related_ids.append(candidate_id)
 
     if len(related_ids) >= 4:
@@ -814,7 +822,12 @@ def _related_kp_ids(kb: Any, kp_id: str) -> List[str]:
     source_week = _first_week_number(kp.get("weeks", []))
     for candidate in kb.kps:
         candidate_id = str(candidate.get("kp_id") or "")
-        if not candidate_id or candidate_id == kp_id or candidate_id in related_ids:
+        if (
+            not candidate_id
+            or candidate_id not in visible_kp_ids
+            or candidate_id == kp_id
+            or candidate_id in related_ids
+        ):
             continue
         candidate_tokens = _kp_tokens(candidate)
         overlap = len(source_tokens & candidate_tokens)

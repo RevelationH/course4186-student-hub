@@ -21,7 +21,12 @@ ROOT_DIR = APP_DIR.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
+from env_loader import load_project_env
+
+load_project_env()
+
 from course4186_portal.kb_service import Course4186KnowledgeBase, STOPWORDS
+from course4186_portal.chat_pipeline_v3 import Course4186ChatPipeline
 from course4186_portal.chat_session_store import ChatSessionStore
 from course4186_portal.progress_store import ProgressStore
 from course4186_portal.student_analytics import build_dashboard_context, build_learning_report_context
@@ -230,13 +235,18 @@ def canonical_material_display_name(filename: str) -> str:
     cleaned = str(filename or "").replace("\\", "/").strip()
     if not cleaned:
         return "Course material"
-    canonical_pdf = locate_canonical_pdf_for_source_name(cleaned)
-    if canonical_pdf:
-        return canonical_pdf.name
     source_name = Path(cleaned).name or cleaned
+    source_suffix = Path(source_name).suffix.lower()
+    exact_source = locate_course_material(cleaned)
+    if exact_source and exact_source.suffix.lower() == ".pdf":
+        return exact_source.name
+    if source_suffix in OFFICE_CONVERTIBLE_SUFFIXES:
+        canonical_pdf = locate_canonical_pdf_for_source_name(cleaned)
+        if canonical_pdf:
+            return canonical_pdf.name
     stem = re.sub(r"(?:\s*\(\d+\))+$", "", Path(source_name).stem).strip()
-    suffix = Path(source_name).suffix.lower()
-    if suffix in OFFICE_CONVERTIBLE_SUFFIXES:
+    suffix = source_suffix
+    if source_suffix in OFFICE_CONVERTIBLE_SUFFIXES:
         suffix = ".pdf"
     return f"{stem}{suffix}" if stem and suffix else (stem or source_name)
 
@@ -248,8 +258,22 @@ def enrich_material_reference(item: Dict[str, Any]) -> Dict[str, Any]:
         enriched["display_source"] = canonical_material_display_name(source)
         enriched["material_url"] = build_material_open_url(enriched)
         enriched["reference_url"] = build_material_reference_url(enriched)
-        if locate_course_material(source):
-            enriched["raw_material_url"] = url_for("course4186_material_asset", filename=source)
+        resolved_source = locate_course_material(source)
+        source_suffix = Path(source).suffix.lower()
+        canonical_pdf = None
+        if resolved_source and resolved_source.suffix.lower() == ".pdf":
+            canonical_pdf = resolved_source
+        elif source_suffix in OFFICE_CONVERTIBLE_SUFFIXES:
+            canonical_pdf = locate_canonical_pdf_for_source_name(source)
+        if canonical_pdf:
+            try:
+                for root in course_material_root_candidates():
+                    if root.exists():
+                        relative_path = canonical_pdf.relative_to(root)
+                        enriched["raw_material_url"] = url_for("course4186_material_asset", filename=relative_path.as_posix())
+                        break
+            except Exception:
+                pass
     return enriched
 
 
@@ -390,7 +414,7 @@ def resolve_material_open_target(
                 label = "Open Converted PDF"
                 converted = True
             else:
-                label = "Open Original File"
+                return None
 
     fragment = _pdf_fragment(unit_type, unit_index, preferred)
     if converted:
@@ -422,10 +446,12 @@ def create_app() -> Flask:
     app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 
     kb = Course4186KnowledgeBase()
+    chat_pipeline = Course4186ChatPipeline(kb)
     store = ProgressStore(data_path=APP_DIR / "data" / "progress.json")
     chat_store = ChatSessionStore()
 
     app.config["kb"] = kb
+    app.config["chat_pipeline"] = chat_pipeline
     app.config["store"] = store
     app.config["chat_store"] = chat_store
 
@@ -461,7 +487,7 @@ def create_app() -> Flask:
             return None
 
         if not is_portal_authenticated():
-            if request.path.startswith("/api/4186/"):
+            if request.path.startswith("/api/"):
                 return jsonify(
                     {
                         "ok": False,
@@ -656,10 +682,11 @@ def create_app() -> Flask:
 
     @app.get("/healthz")
     def healthz() -> Any:
+        visible_kp_count = len(kb.list_knowledge_points())
         return jsonify(
             {
                 "ok": True,
-                "knowledge_points": len(kb.kps),
+                "knowledge_points": visible_kp_count,
                 "questions": len(kb.questions),
             }
         )
@@ -687,6 +714,8 @@ def create_app() -> Flask:
     def course4186_material_asset(filename: str) -> Any:
         resolved = locate_course_material(filename)
         if not resolved:
+            abort(404)
+        if resolved.suffix.lower() != ".pdf":
             abort(404)
         return send_file(resolved, conditional=True)
 
@@ -761,47 +790,69 @@ def create_app() -> Flask:
 
     @app.post("/api/4186/chat")
     def api_chat_4186() -> Any:
-        payload = request.get_json(silent=True) or {}
-        message = (payload.get("message") or "").strip()
-        requested_history = payload.get("history") or []
-        session_id = str(payload.get("session_id") or "").strip()
-        if not message:
-            return jsonify({"ok": False, "error": "Please enter a question before sending."}), 400
+        try:
+            payload = request.get_json(silent=True) or {}
+            message = (payload.get("message") or "").strip()
+            requested_history = payload.get("history") or []
+            session_id = str(payload.get("session_id") or "").strip()
+            if not message:
+                return jsonify({"ok": False, "error": "Please enter a question before sending."}), 400
 
-        user_id = session["course4186_user_id"]
-        if session_id:
-            history = chat_store.recent_history_for_model(user_id, session_id, limit=8)
-        else:
-            history = requested_history[-8:] if isinstance(requested_history, list) else []
+            user_id = session["course4186_user_id"]
+            existing_session = chat_store.get_session(user_id, session_id) if session_id else None
+            if session_id:
+                history = chat_store.recent_history_for_model(user_id, session_id, limit=8)
+            else:
+                history = requested_history[-8:] if isinstance(requested_history, list) else []
 
-        answer = kb.answer(message, history=history, top_k=5)
-        citations = []
-        for item in answer["citations"]:
-            citations.append(enrich_material_reference(item))
-        session_data = chat_store.get_or_create_session(user_id, session_id=session_id)
-        generated_title = kb.suggest_session_title(message, answer["answer"])
-        session_data = chat_store.append_exchange(
-            user_id=user_id,
-            session_id=session_data["session_id"],
-            user_message=message,
-            assistant_message=answer["answer"],
-            citations=citations,
-            mode=answer["mode"],
-            session_title=generated_title,
-        )
-        return jsonify(
-            {
-                "ok": True,
-                "answer": answer["answer"],
-                "citations": citations,
-                "related_kps": answer["related_kps"],
-                "mode": answer["mode"],
-                "actions": {
-                    "quiz_url": url_for("quiz_dashboard_4186"),
-                },
-                "session": session_data,
-            }
-        )
+            answer = chat_pipeline.answer(
+                message,
+                history=history,
+                top_k=5,
+                session_memory=existing_session or {},
+            )
+            citations = []
+            for item in answer["citations"]:
+                citations.append(enrich_material_reference(item))
+            session_data = chat_store.get_or_create_session(user_id, session_id=session_id)
+            generated_title = kb.suggest_session_title(message, answer["answer"])
+            session_data = chat_store.append_exchange(
+                user_id=user_id,
+                session_id=session_data["session_id"],
+                user_message=message,
+                assistant_message=answer["answer"],
+                citations=citations,
+                mode=answer["mode"],
+                session_title=generated_title,
+                session_summary=str((answer.get("session_memory") or {}).get("session_summary") or ""),
+                active_topic=str((answer.get("session_memory") or {}).get("active_topic") or ""),
+            )
+            return jsonify(
+                {
+                    "ok": True,
+                    "answer": answer["answer"],
+                    "citations": citations,
+                    "related_kps": answer["related_kps"],
+                    "mode": answer["mode"],
+                    "actions": {
+                        "quiz_url": url_for("quiz_dashboard_4186"),
+                    },
+                    "session": session_data,
+                }
+            )
+        except Exception as exc:
+            app.logger.exception("Chat API failed.")
+            return jsonify(
+                {
+                    "ok": False,
+                    "error": "The reply could not be generated due to a server error. Please try again.",
+                    "details": clean_display_text(str(exc))[:220],
+                }
+            ), 500
+
+    @app.post("/api/chat_4186")
+    def api_chat_4186_legacy() -> Any:
+        return api_chat_4186()
 
     @app.get("/api/4186/chat/sessions")
     def api_chat_sessions_4186() -> Any:
@@ -816,8 +867,22 @@ def create_app() -> Flask:
             ):
                 continue
             messages = chat_store.get_messages(user_id, item["session_id"])
-            user_message = next((row.get("content", "") for row in messages if row.get("role") == "user" and row.get("content")), "")
-            assistant_message = next((row.get("content", "") for row in messages if row.get("role") == "assistant" and row.get("content")), "")
+            user_message = next(
+                (
+                    row.get("content", "")
+                    for row in reversed(messages)
+                    if row.get("role") == "user" and row.get("content")
+                ),
+                "",
+            )
+            assistant_message = next(
+                (
+                    row.get("content", "")
+                    for row in reversed(messages)
+                    if row.get("role") == "assistant" and row.get("content")
+                ),
+                "",
+            )
             if not user_message:
                 continue
             suggested = kb.suggest_session_title(user_message, assistant_message)

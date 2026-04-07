@@ -759,7 +759,7 @@ function createMessageRow(role) {
 function appendMessage(role, text, citations = []) {
     const resolvedRole = normalizeMessageRole(role);
     const row = createMessageRow(resolvedRole);
-    renderBubbleContent(row.querySelector('.bubble'), resolvedRole, text);
+    renderBubbleContent(row.querySelector('.bubble'), resolvedRole, text, citations);
     renderInlineSources(row, resolvedRole === 'assistant' ? citations : []);
     return row;
 }
@@ -789,9 +789,9 @@ function appendThinkingMessage() {
     return row;
 }
 
-function typeWriter(element, text) {
+function typeWriter(element, text, citations = []) {
     return new Promise(resolve => {
-        const content = String(text || '');
+        const content = sanitizeAssistantTransportText(String(text || ''));
         const step = content.length > 900 ? 5 : content.length > 480 ? 4 : content.length > 220 ? 3 : 2;
         let index = 0;
         element.textContent = '';
@@ -807,7 +807,7 @@ function typeWriter(element, text) {
             }
             element.classList.remove('typing');
             element.classList.remove('plain-text');
-            renderBubbleContent(element, 'assistant', content);
+            renderBubbleContent(element, 'assistant', content, citations);
             resolve();
         }
 
@@ -1019,7 +1019,70 @@ function buildCourseSourceCardHtml(sourceText) {
     `;
 }
 
-function extractCourseSourceBlocks(text) {
+function decodeJsonAnswerLiteral(value) {
+    try {
+        return JSON.parse(`"${String(value || '')}"`);
+    } catch (_error) {
+        return String(value || '')
+            .replace(/\\n/g, '\n')
+            .replace(/\\"/g, '"')
+            .replace(/\\\\/g, '\\');
+    }
+}
+
+function sanitizeAssistantTransportText(text) {
+    let candidate = String(text || '').trim();
+    if (!candidate) return '';
+
+    if (/^```json\b/i.test(candidate)) {
+        candidate = candidate.replace(/^```json\s*/i, '').replace(/\s*```$/, '').trim();
+    }
+
+    try {
+        const parsed = JSON.parse(candidate);
+        if (parsed && typeof parsed === 'object' && typeof parsed.answer === 'string') {
+            candidate = parsed.answer;
+        }
+    } catch (_error) {
+        const jsonish = candidate.match(/"answer"\s*:\s*"((?:\\.|[^"])*)"/is);
+        if (jsonish) {
+            candidate = decodeJsonAnswerLiteral(jsonish[1]);
+        }
+    }
+
+    candidate = candidate.replace(/(?:^|\n)\s*["']?used_sources["']?\s*:\s*\[[^\]]*\].*$/gim, '');
+    candidate = candidate.replace(/,\s*["']?used_sources["']?\s*:\s*\[[\s\S]*$/i, '');
+    candidate = candidate.replace(/@@COURSE_SOURCE_\d+@@/g, '');
+    candidate = candidate.replace(/^\s*\{\s*["']?answer["']?\s*:\s*/is, '');
+    candidate = candidate.replace(/\s*\}\s*$/is, '');
+    const cutPatterns = [
+        /\n```json\b[\s\S]*$/i,
+        /(?:\n|^)\s*\{\s*["']?answer["']?\s*:[\s\S]*$/i
+    ];
+    const cutPoints = [];
+    cutPatterns.forEach(pattern => {
+        const match = candidate.match(pattern);
+        if (!match || typeof match.index !== 'number') return;
+        const prefix = candidate.slice(0, match.index).trim();
+        if (prefix && /[A-Za-z0-9\u4e00-\u9fff]/.test(prefix)) {
+            cutPoints.push(match.index);
+        }
+    });
+    if (cutPoints.length) {
+        candidate = candidate.slice(0, Math.min(...cutPoints)).trimEnd();
+    }
+    candidate = candidate.trim().replace(/\n{3,}/g, '\n\n').trim();
+    candidate = candidate.replace(/^"(.*)"$/s, '$1').trim();
+    return candidate;
+}
+
+function extractCourseSourceBlocks(text, enabled = true) {
+    if (!enabled) {
+        return {
+            markdown: String(text || ''),
+            placeholders: [],
+        };
+    }
     const segments = String(text || '').split(/\n{2,}/);
     const placeholders = [];
     const rebuilt = segments.map(segment => {
@@ -1046,12 +1109,61 @@ function upgradeRenderedMarkdown(html, placeholders) {
         link.setAttribute('rel', 'noreferrer');
     });
 
-    wrapper.querySelectorAll('p').forEach(node => {
-        const tokenMatch = (node.textContent || '').trim().match(/^@@COURSE_SOURCE_(\d+)@@$/);
-        if (!tokenMatch) return;
-        const replacement = document.createElement('div');
-        replacement.innerHTML = placeholders[Number(tokenMatch[1])] || '';
-        node.replaceWith(...replacement.childNodes);
+    const walker = document.createTreeWalker(wrapper, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    while (walker.nextNode()) {
+        textNodes.push(walker.currentNode);
+    }
+    textNodes.forEach(node => {
+        if (!node.parentElement || node.parentElement.closest('pre, code')) return;
+        const text = node.textContent || '';
+        const matches = [...text.matchAll(/@@COURSE_SOURCE_(\d+)@@/g)];
+        if (!matches.length) return;
+
+        const fragment = document.createDocumentFragment();
+        let cursor = 0;
+        matches.forEach(match => {
+            const start = match.index ?? 0;
+            const end = start + match[0].length;
+            const before = text.slice(cursor, start);
+            if (before) {
+                fragment.appendChild(document.createTextNode(before));
+            }
+            const replacement = document.createElement('div');
+            replacement.innerHTML = placeholders[Number(match[1])] || '';
+            while (replacement.firstChild) {
+                fragment.appendChild(replacement.firstChild);
+            }
+            cursor = end;
+        });
+        const after = text.slice(cursor);
+        if (after) {
+            fragment.appendChild(document.createTextNode(after));
+        }
+        node.parentNode.replaceChild(fragment, node);
+    });
+
+    wrapper.querySelectorAll('pre > code').forEach(codeNode => {
+        const text = codeNode.textContent || '';
+        const matches = [...text.matchAll(/@@COURSE_SOURCE_(\d+)@@/g)];
+        if (!matches.length) return;
+
+        const seen = new Set();
+        codeNode.textContent = text.replace(/@@COURSE_SOURCE_\d+@@/g, '').replace(/\n{3,}/g, '\n\n').trimEnd();
+        const pre = codeNode.parentElement;
+        if (!pre) return;
+        const fragment = document.createDocumentFragment();
+        matches.forEach(match => {
+            const index = Number(match[1]);
+            if (seen.has(index)) return;
+            seen.add(index);
+            const replacement = document.createElement('div');
+            replacement.innerHTML = placeholders[index] || '';
+            while (replacement.firstChild) {
+                fragment.appendChild(replacement.firstChild);
+            }
+        });
+        pre.after(fragment);
     });
 
     wrapper.querySelectorAll('pre > code').forEach(codeNode => {
@@ -1082,11 +1194,39 @@ function upgradeRenderedMarkdown(html, placeholders) {
         pre.replaceWith(block);
     });
 
+    wrapper.innerHTML = wrapper.innerHTML.replace(/@@COURSE_SOURCE_\d+@@/g, '');
+
     return wrapper.innerHTML;
 }
 
+function normalizeAssistantMathOperatorsForMarkdown(text) {
+    const candidate = String(text || '');
+    if (!candidate) return '';
+    const parts = candidate.split(/(```[\s\S]*?```|`[^`\n]+`)/g);
+    return parts.map(part => {
+        if (!part) return '';
+        if (part.startsWith('```') || /^`[^`\n]+`$/.test(part)) {
+            return part;
+        }
+        let segment = part.replace(/(?<=[0-9A-Za-z\)\]])\s*\*\s*(?=[0-9A-Za-z\(\[])/g, ' x ');
+        segment = segment.replace(/[ \t]{2,}/g, ' ');
+        return segment;
+    }).join('');
+}
+
+function normalizeCodeFenceBoundariesForMarkdown(text) {
+    let candidate = String(text || '').replace(/\r\n/g, '\n');
+    if (!candidate || !candidate.includes('```')) return candidate;
+    candidate = candidate.replace(/([^\n])(```[A-Za-z0-9_-]*\n)/g, '$1\n\n$2');
+    candidate = candidate.replace(/(```[A-Za-z0-9_-]*\n[\s\S]*?```)(?=[^\n])/g, '$1\n\n');
+    candidate = candidate.replace(/\n{3,}/g, '\n\n');
+    return candidate.trim();
+}
+
 function renderInlineMarkdown(text) {
-    return humanizeCourseReferences(String(text || ''))
+    return normalizeAssistantMathOperatorsForMarkdown(
+        humanizeCourseReferences(String(text || ''))
+    )
         .split(/(`[^`\n]+`)/g)
         .map(part => {
             if (/^`[^`\n]+`$/.test(part)) {
@@ -1134,10 +1274,19 @@ function renderMarkdownTable(lines) {
     return `<table><thead>${headerHtml}</thead><tbody>${bodyHtml}</tbody></table>`;
 }
 
-function renderMarkdown(text) {
+function renderMarkdown(text, options = {}) {
     if (!text) return '';
-    const normalized = normalizeLooseCodeBlocks(normalizeListFormatting(humanizeCourseReferences(String(text || ''))));
-    const extracted = extractCourseSourceBlocks(normalized);
+    const allowLegacyCourseSource = options.allowLegacyCourseSource !== false;
+    const normalized = normalizeCodeFenceBoundariesForMarkdown(
+        normalizeLooseCodeBlocks(
+            normalizeListFormatting(
+                normalizeAssistantMathOperatorsForMarkdown(
+                    humanizeCourseReferences(sanitizeAssistantTransportText(String(text || '')))
+                )
+            )
+        )
+    );
+    const extracted = extractCourseSourceBlocks(normalized, allowLegacyCourseSource);
     const rawHtml = window.marked
         ? window.marked.parse(extracted.markdown, { gfm: true, breaks: true })
         : `<p>${escapeHtml(extracted.markdown).replace(/\n/g, '<br>')}</p>`;
@@ -1147,22 +1296,60 @@ function renderMarkdown(text) {
     return upgradeRenderedMarkdown(safeHtml, extracted.placeholders);
 }
 
-function renderBubbleContent(element, role, text) {
+function renderBubbleContent(element, role, text, citations = []) {
     const resolvedRole = normalizeMessageRole(role);
-    const content = String(text || '');
+    const content = resolvedRole === 'assistant'
+        ? sanitizeAssistantTransportText(String(text || ''))
+        : String(text || '');
     element.classList.remove('user-plain', 'assistant-markdown');
     if (resolvedRole === 'assistant') {
         element.classList.add('assistant-markdown');
-        element.innerHTML = renderMarkdown(content);
+        element.innerHTML = renderMarkdown(content, {
+            allowLegacyCourseSource: !(citations || []).length
+        });
         return;
     }
     element.classList.add('plain-text', 'user-plain');
     element.replaceChildren(document.createTextNode(content));
 }
 
+async function parseApiJsonResponse(response) {
+    const rawText = await response.text();
+    const contentType = String(response.headers.get('content-type') || '').toLowerCase();
+    const trimmed = String(rawText || '').trim();
+
+    if (contentType.includes('application/json')) {
+        try {
+            return JSON.parse(rawText || '{}');
+        } catch (_error) {
+            throw new Error('The server returned invalid JSON.');
+        }
+    }
+
+    try {
+        return JSON.parse(rawText || '{}');
+    } catch (_error) {
+        // Fall through to richer HTML/text diagnostics below.
+    }
+
+    if (trimmed.startsWith('<')) {
+        const looksLikeLogin = /login_4186|sign in|register/i.test(response.url || '') || /<form[\s\S]*password|sign in to continue/i.test(trimmed);
+        if (looksLikeLogin) {
+            throw new Error('Your session has expired. Please sign in again.');
+        }
+        throw new Error('The server returned an HTML error page instead of JSON.');
+    }
+
+    if (!response.ok) {
+        throw new Error(trimmed || `Request failed with status ${response.status}.`);
+    }
+
+    throw new Error('The server did not return JSON.');
+}
+
 async function refreshSessions() {
     const response = await fetch('{{ url_for("api_chat_sessions_4186") }}');
-    const payload = await response.json();
+    const payload = await parseApiJsonResponse(response);
     if (!payload.ok) throw new Error(payload.error || 'Conversation history could not be loaded.');
     sessionListState = payload.sessions || [];
     renderHistoryList();
@@ -1172,7 +1359,12 @@ function syncHistoryStateFromMessages(messages) {
     historyState.length = 0;
     (messages || []).forEach(item => {
         if (item.role && item.content) {
-            historyState.push({ role: item.role, content: item.content });
+            historyState.push({
+                role: item.role,
+                content: item.role === 'assistant'
+                    ? sanitizeAssistantTransportText(item.content)
+                    : item.content
+            });
         }
     });
 }
@@ -1199,7 +1391,7 @@ async function openConversation(sessionId) {
         return;
     }
     const response = await fetch(`{{ url_for("api_chat_sessions_4186") }}/${encodeURIComponent(sessionId)}`);
-    const payload = await response.json();
+    const payload = await parseApiJsonResponse(response);
     if (!payload.ok) throw new Error(payload.error || 'Conversation could not be opened.');
     currentSessionId = sessionId;
     syncHistoryStateFromMessages(payload.messages || []);
@@ -1219,7 +1411,7 @@ async function deleteConversation(sessionId) {
     if (!sessionId) return;
     if (!confirm('Delete this saved conversation?')) return;
     const response = await fetch(`{{ url_for("api_chat_sessions_4186") }}/${encodeURIComponent(sessionId)}`, { method: 'DELETE' });
-    const payload = await response.json();
+    const payload = await parseApiJsonResponse(response);
     if (!payload.ok) {
         alert(payload.error || 'Conversation could not be deleted.');
         return;
@@ -1277,14 +1469,15 @@ async function sendMessage() {
                 session_id: currentSessionId
             })
         });
-        const payload = await response.json();
+        const payload = await parseApiJsonResponse(response);
         if (!payload.ok) throw new Error(payload.error || 'The reply could not be generated.');
         thinkingRow.remove();
         const assistantRow = appendMessage('assistant', '', []);
         const assistantBubble = assistantRow.querySelector('.bubble');
-        await typeWriter(assistantBubble, payload.answer);
+        const assistantText = sanitizeAssistantTransportText(payload.answer);
+        await typeWriter(assistantBubble, assistantText, payload.citations || []);
         renderInlineSources(assistantRow, payload.citations || []);
-        historyState.push({ role: 'assistant', content: payload.answer });
+        historyState.push({ role: 'assistant', content: assistantText });
 
         if (payload.session && payload.session.session_id) {
             currentSessionId = payload.session.session_id;

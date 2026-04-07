@@ -1,6 +1,6 @@
 # Course 4186 RAG Pipeline
 
-This folder contains the standalone knowledge pipeline that supports the Course 4186 student learning system. It analyzes the lecture materials in `D:\digital_human\4186\4186`, stores extracted knowledge points in a retrievable form, and generates exercises from the retrieved evidence.
+This folder contains the standalone knowledge pipeline that supports the Course 4186 student learning system. In the bundled deployment, the active portal uses the packaged lecture PDFs under `course4186_materials` together with the packaged full-course artifacts under `artifacts_full_course`.
 
 The original project code under `D:\digital_human` is not modified. All new code and artifacts stay in this folder.
 
@@ -20,7 +20,7 @@ Because of those issues, this folder uses a separate pipeline designed around th
 
 The main script is `pipeline.py`. It performs the following steps:
 
-1. Recursively read lecture and tutorial files from `D:\digital_human\4186\4186`.
+1. Read the course materials from the configured course root.
 2. Extract text from:
    - `pdf` via `pypdf`
    - `pptx` via Open XML parsing
@@ -104,3 +104,7 @@ It also falls back to these names if they already exist in the current machine c
 - `KIMI_MODEL`
 
 If no valid LLM configuration is found, the script still works in deterministic fallback mode.
+
+## Deployment note
+
+For the current bundled web deployment, you do not need to rebuild the RAG data. The repository already includes the active `artifacts_full_course` bundle used by the latest portal.

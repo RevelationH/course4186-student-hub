@@ -16,6 +16,7 @@ from course4186_portal.answer_consistency import (
     strip_course_source_line,
     strip_source_id_list_suffix,
 )
+from course4186_portal.kb_service import clean_display_text
 
 
 SESSION_COLLECTION = "course4186_chat_sessions"
@@ -66,6 +67,75 @@ def _preview_text(text: str, limit: int = 120) -> str:
     if len(compact) <= limit:
         return compact
     return compact[: limit - 3] + "..."
+
+
+def _clean_session_summary(text: str, limit: int = 560) -> str:
+    compact = " ".join(str(text or "").strip().split())
+    if not compact:
+        return ""
+    return compact[:limit].strip()
+
+
+def _clean_active_topic(text: str, limit: int = 120) -> str:
+    compact = " ".join(str(text or "").strip().split())
+    if not compact:
+        return ""
+    return compact[:limit].strip(" -|:;,.")
+
+
+TITLE_TOKEN_RE = re.compile(r"[A-Za-z][A-Za-z0-9_+-]*")
+TITLE_CONTEXT_STOPWORDS = {
+    "course",
+    "chat",
+    "learning",
+    "assistant",
+    "student",
+    "students",
+    "discussion",
+    "understanding",
+    "using",
+    "report",
+    "hub",
+    "new",
+}
+
+
+def _title_signature(*parts: str) -> set[str]:
+    tokens: set[str] = set()
+    for part in parts:
+        compact = clean_display_text(part).lower()
+        if not compact:
+            continue
+        tokens.update(
+            token
+            for token in TITLE_TOKEN_RE.findall(compact)
+            if len(token) > 2 and token not in TITLE_CONTEXT_STOPWORDS
+        )
+    return tokens
+
+
+def _topic_drift_requires_title_refresh(
+    current_title: str,
+    current_active_topic: str,
+    new_title: str,
+    new_active_topic: str,
+) -> bool:
+    new_signature = _title_signature(new_active_topic, new_title)
+    if not new_signature:
+        return False
+
+    current_topic_signature = _title_signature(current_active_topic)
+    if current_topic_signature:
+        if current_topic_signature.issubset(new_signature) or new_signature.issubset(current_topic_signature):
+            return False
+        overlap = len(current_topic_signature & new_signature) / max(len(current_topic_signature), len(new_signature))
+        return overlap < 0.5
+
+    current_title_signature = _title_signature(current_title)
+    if not current_title_signature:
+        return True
+    overlap = len(current_title_signature & new_signature) / max(len(current_title_signature), len(new_signature))
+    return overlap < 0.45
 
 
 def _parse_jsonish(text: str) -> Any:
@@ -221,6 +291,9 @@ class ChatSessionStore:
             "last_message_preview": "",
             "message_count": 0,
             "course": "4186",
+            "session_summary": "",
+            "active_topic": "",
+            "summary_updated_at": now,
         }
         ref.set(payload)
         return self._serialize_session(ref.id, payload)
@@ -279,6 +352,8 @@ class ChatSessionStore:
         citations: List[Dict[str, Any]],
         mode: str,
         session_title: Optional[str] = None,
+        session_summary: Optional[str] = None,
+        active_topic: Optional[str] = None,
     ) -> Dict[str, Any]:
         session_ref = self._session_ref(user_id, session_id)
         session_doc = session_ref.get()
@@ -293,6 +368,9 @@ class ChatSessionStore:
                 "last_message_preview": "",
                 "message_count": 0,
                 "course": "4186",
+                "session_summary": "",
+                "active_topic": "",
+                "summary_updated_at": _now(),
             }
             session_ref.set(session_payload)
 
@@ -300,7 +378,19 @@ class ChatSessionStore:
         now = _now()
         base_title = _clean_title(str(session_payload.get("title") or ""), fallback="New chat")
         title_generated = bool(session_payload.get("title_generated"))
-        if session_title and (message_count == 0 or base_title == "New chat" or not title_generated):
+        current_active_topic = _clean_active_topic(str(session_payload.get("active_topic") or ""))
+        next_active_topic = _clean_active_topic(active_topic) if active_topic is not None else current_active_topic
+        if session_title and (
+            message_count == 0
+            or base_title == "New chat"
+            or not title_generated
+            or _topic_drift_requires_title_refresh(
+                base_title,
+                current_active_topic,
+                session_title,
+                next_active_topic,
+            )
+        ):
             base_title = _clean_title(session_title, fallback="New chat")
             title_generated = True
 
@@ -333,6 +423,12 @@ class ChatSessionStore:
                 "message_count": message_count + 2,
             }
         )
+        if session_summary is not None:
+            session_payload["session_summary"] = _clean_session_summary(session_summary)
+            session_payload["summary_updated_at"] = now
+        if active_topic is not None:
+            session_payload["active_topic"] = next_active_topic
+            session_payload["summary_updated_at"] = now
         session_ref.set(session_payload, merge=True)
         return self._serialize_session(session_id, session_payload)
 
@@ -417,4 +513,7 @@ class ChatSessionStore:
             "last_message_preview": str(payload.get("last_message_preview") or ""),
             "message_count": int(payload.get("message_count") or 0),
             "course": str(payload.get("course") or "4186"),
+            "session_summary": _clean_session_summary(str(payload.get("session_summary") or "")),
+            "active_topic": _clean_active_topic(str(payload.get("active_topic") or "")),
+            "summary_updated_at": _iso(payload.get("summary_updated_at")),
         }

@@ -28,6 +28,10 @@ PUBLIC_URL_PATTERN = re.compile(r"https://[-a-z0-9]+\.trycloudflare\.com", re.IG
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
+from env_loader import load_project_env
+
+load_project_env()
+
 try:
     from kimi_utils import KIMI_API_BASE, KIMI_API_KEY, KIMI_MODEL
 except Exception:

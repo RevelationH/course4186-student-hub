@@ -28,7 +28,7 @@ Optional compatibility variables:
 - `KIMI_API_BASE`
 - `KIMI_MODEL`
 - `COURSE4186_ARTIFACT_DIR`
-- `COURSE4186_COURSE_ROOT`
+- `COURSE4186_MATERIAL_ROOT`
 - `CLOUDFLARED_PATH`
 
 ## Firebase Setup
@@ -83,6 +83,7 @@ python .\course4186_portal\run_public_4186_portal.py
 
 - The active bundled RAG data is the `Week 1` to `Week 12` full-course version under `course4186_rag/artifacts_full_course`.
 - Lecture source buttons are designed to open browser-friendly files. The bundle therefore includes canonical lecture PDFs in `course4186_materials/`.
+- The bundled lecture set matches the current cleaned PDF-only deployment bundle, not the older revision/tutorial mix.
 - If a citation source in the artifacts points to a `pptx`, the portal will still resolve it to the matching PDF when possible.
 - The portal stores local study progress in `course4186_portal/data/progress.json`.
 - Runtime logs are written to `course4186_portal/logs/`.

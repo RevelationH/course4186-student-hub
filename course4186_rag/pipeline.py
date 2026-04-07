@@ -21,6 +21,12 @@ from pathlib import Path, PurePosixPath
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 import xml.etree.ElementTree as ET
 
+# Keep the local RAG pipeline on the PyTorch path so it does not pick up
+# unrelated TensorFlow/Keras packages installed in the base environment.
+os.environ.setdefault("USE_TF", "0")
+os.environ.setdefault("TRANSFORMERS_NO_TF", "1")
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+
 from pypdf import PdfReader
 try:
     from question_blueprints import QUESTION_BLUEPRINTS
@@ -48,12 +54,16 @@ except Exception:
     HuggingFaceEmbeddings = None
     FAISS = None
 
+from env_loader import load_project_env
+
+load_project_env()
+
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 DEFAULT_COURSE_ROOT = Path(r"D:\digital_human\4186\4186")
 DEFAULT_ARTIFACT_DIR = SCRIPT_DIR / "artifacts"
 DEFAULT_EMBED_MODEL = os.getenv("COURSE_EMBED_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
-SUPPORTED_EXTENSIONS = {".pdf", ".pptx", ".docx", ".ppt"}
+SUPPORTED_EXTENSIONS = {".pdf"}
 WORD_RE = re.compile(r"[A-Za-z][A-Za-z0-9_+-]*")
 WS_RE = re.compile(r"\s+")
 WEEK_LABEL_RE = re.compile(r"^Week\s*(\d+)$", re.IGNORECASE)
@@ -74,7 +84,7 @@ CHUNK_OVERLAP = 120
 BROWSER_IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp"}
 MIN_SLIDE_IMAGE_BYTES = 4096
 MIN_QUESTION_COUNT = 5
-SOURCE_TYPE_PRIORITY = {"pptx": 0, "ppt": 0, "pdf": 1, "docx": 2}
+SOURCE_TYPE_PRIORITY = {"pdf": 0, "pptx": 1, "ppt": 1, "docx": 2}
 REVIEW_STOPWORDS = {
     "the", "and", "for", "with", "from", "that", "this", "what", "which", "when",
     "where", "how", "why", "into", "onto", "about", "under", "over", "their", "there",
@@ -274,7 +284,7 @@ def within_max_week(relative_path: Path, max_week: Optional[int]) -> bool:
 def iter_course_files(course_root: Path, max_week: Optional[int] = None) -> List[Path]:
     files = [
         path for path in course_root.rglob("*")
-        if path.is_file() and path.name != ".DS_Store"
+        if path.is_file() and path.name != ".DS_Store" and path.suffix.lower() in SUPPORTED_EXTENSIONS
     ]
     if max_week is not None:
         files = [path for path in files if within_max_week(path.relative_to(course_root), max_week)]
@@ -329,6 +339,28 @@ def canonical_display_source_name(relative_path: str) -> str:
     if suffix in {".ppt", ".pptx", ".doc", ".docx"}:
         suffix = ".pdf"
     return f"{stem}{suffix}" if stem and suffix else (stem or name)
+
+
+def material_stem_key(name: str) -> str:
+    cleaned = strip_trailing_copy_markers(name).lower()
+    cleaned = re.sub(r"[^a-z0-9]+", " ", cleaned)
+    return " ".join(cleaned.split())
+
+
+def find_pptx_companion(course_root: Path, relative_path: Path) -> Optional[Path]:
+    candidate_dir = course_root / relative_path.parent
+    if not candidate_dir.exists() or not candidate_dir.is_dir():
+        return None
+    source_key = material_stem_key(relative_path.stem)
+    if not source_key:
+        return None
+    exact = candidate_dir / f"{relative_path.stem}.pptx"
+    if exact.exists():
+        return exact.relative_to(course_root)
+    for candidate in sorted(candidate_dir.glob("*.pptx")):
+        if material_stem_key(candidate.stem) == source_key:
+            return candidate.relative_to(course_root)
+    return None
 
 
 def display_unit_type(display_source: str, unit_type: str) -> str:
@@ -587,13 +619,18 @@ def extract_slide_images_for_docs(
     for doc in raw_documents:
         if doc.source_type == "pptx" and doc.unit_type == "slide":
             docs_by_file[doc.relative_path][doc.unit_index] = doc
+            continue
+        if doc.source_type == "pdf" and doc.unit_type == "page":
+            companion = find_pptx_companion(course_root, Path(doc.relative_path))
+            if companion is not None:
+                docs_by_file[str(companion)][doc.unit_index] = doc
 
     records: List[SlideImageRecord] = []
     issues: List[Dict[str, str]] = []
-    for relative_path_str, slides in sorted(docs_by_file.items()):
-        file_path = course_root / Path(relative_path_str)
+    for image_source_relative_path, slides in sorted(docs_by_file.items()):
+        file_path = course_root / Path(image_source_relative_path)
         if not file_path.exists():
-            issues.append({"relative_path": relative_path_str, "issue": "PPTX file not found during image extraction"})
+            issues.append({"relative_path": image_source_relative_path, "issue": "PPTX file not found during image extraction"})
             continue
         try:
             with zipfile.ZipFile(file_path) as archive:
@@ -628,27 +665,28 @@ def extract_slide_images_for_docs(
 
                     candidates.sort(key=lambda item: (-item[0], item[1]))
                     size_bytes, image_name, blob = candidates[0]
-                    deck_slug = slugify(str(Path(relative_path_str).with_suffix("")))
+                    deck_slug = slugify(str(Path(doc.relative_path).with_suffix("")))
                     extension = Path(image_name).suffix.lower()
-                    output_name = f"slide-{slide_index:03d}-{short_hash(f'{relative_path_str}|{slide_index}|{image_name}|{size_bytes}')}{extension}"
+                    output_name = f"slide-{slide_index:03d}-{short_hash(f'{doc.relative_path}|{slide_index}|{image_name}|{size_bytes}')}{extension}"
                     relative_image_path = Path("images") / deck_slug / output_name
                     absolute_image_path = artifact_dir / relative_image_path
                     ensure_dir(absolute_image_path.parent)
                     absolute_image_path.write_bytes(blob)
 
+                    location_label = "page" if str(doc.source_type).lower() == "pdf" else "slide"
                     records.append(
                         SlideImageRecord(
                             doc_id=doc.doc_id,
-                            relative_path=relative_path_str,
-                            slide_index=slide_index,
+                            relative_path=doc.relative_path,
+                            slide_index=int(doc.unit_index or slide_index),
                             image_path=relative_image_path.as_posix(),
-                            image_caption=f"Lecture figure from {Path(relative_path_str).as_posix()} slide {slide_index}",
+                            image_caption=f"Lecture figure from {Path(doc.relative_path).as_posix()} {location_label} {int(doc.unit_index or slide_index)}",
                             image_name=image_name,
                             size_bytes=size_bytes,
                         )
                     )
         except Exception as exc:
-            issues.append({"relative_path": relative_path_str, "issue": f"{type(exc).__name__}: {exc}"})
+            issues.append({"relative_path": image_source_relative_path, "issue": f"{type(exc).__name__}: {exc}"})
 
     return records, issues
 
@@ -1683,6 +1721,15 @@ def select_question_image(
     ] or ranked_chunks
     top_score, top_chunk = preferred_ranked[0]
 
+    if str(top_chunk.source_type).lower() == "pdf" and str(top_chunk.unit_type).lower() == "page":
+        candidates = [
+            item for item in slide_images_by_doc_id.get(top_chunk.doc_id, [])
+            if int(item.slide_index or 0) == int(top_chunk.unit_index or 0)
+        ]
+        if candidates:
+            candidates.sort(key=lambda item: (-item.size_bytes, item.relative_path, item.slide_index))
+            return candidates[0]
+
     if str(top_chunk.source_type).lower() in {"pptx", "ppt"} and str(top_chunk.unit_type).lower() == "slide":
         candidates = list(slide_images_by_doc_id.get(top_chunk.doc_id, []))
         if candidates:
@@ -1720,7 +1767,30 @@ def select_overridden_question_image(
         normalized_slide_index = int(slide_index)
     except (TypeError, ValueError):
         return None
-    return slide_images_by_source.get((normalized_relative_path(str(source_path)), normalized_slide_index))
+    normalized_source = normalized_relative_path(str(source_path))
+    direct = slide_images_by_source.get((normalized_source, normalized_slide_index))
+    if direct is not None:
+        return direct
+
+    source_posix = clean_display_text(str(source_path)).replace("\\", "/")
+    source_pure = PurePosixPath(source_posix)
+    if source_pure.suffix.lower() in {".ppt", ".pptx", ".doc", ".docx"}:
+        pdf_source = source_pure.with_suffix(".pdf").as_posix().lower()
+        direct_pdf = slide_images_by_source.get((pdf_source, normalized_slide_index))
+        if direct_pdf is not None:
+            return direct_pdf
+
+    source_parent = str(source_pure.parent).lower()
+    source_key = material_stem_key(source_pure.stem)
+    for (candidate_path, candidate_index), image in slide_images_by_source.items():
+        if int(candidate_index) != normalized_slide_index:
+            continue
+        candidate_pure = PurePosixPath(candidate_path)
+        if str(candidate_pure.parent).lower() != source_parent:
+            continue
+        if material_stem_key(candidate_pure.stem) == source_key:
+            return image
+    return None
 
 
 def fallback_questions_for_kp(
@@ -1836,10 +1906,10 @@ def fallback_questions_for_kp(
             "explanation": f"The correct statement is the knowledge-point summary for {kp.name}.",
         },
         {
-            "prompt": f"Which revision note most likely belongs under {kp.name}?",
+            "prompt": f"Which study note most likely belongs under {kp.name}?",
             "correct": question_study_note(kp),
             "distractors": note_distractors,
-            "explanation": f"The correct revision note combines the summary and cue words for {kp.name}.",
+            "explanation": f"The correct study note combines the summary and cue words for {kp.name}.",
         },
         {
             "prompt": f"Which use case is the best fit for {kp.name}?",

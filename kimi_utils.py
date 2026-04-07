@@ -4,6 +4,10 @@ import re
 import openai
 import json
 
+from env_loader import load_project_env
+
+load_project_env()
+
 
 KIMI_API_KEY = os.getenv("KIMI_API_KEY", "sk-7REwDBd0NekJccYmaDIJQ6xa7zgd3ftB1FZKdFqTPCox4YrW")  
 KIMI_API_BASE = os.getenv("KIMI_API_BASE", "https://api.moonshot.cn/v1")

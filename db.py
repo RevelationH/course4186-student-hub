@@ -5,6 +5,10 @@ from pathlib import Path
 import firebase_admin
 from firebase_admin import credentials, firestore
 
+from env_loader import load_project_env
+
+load_project_env()
+
 
 ROOT_DIR = Path(__file__).resolve().parent
 DEFAULT_CERT_NAMES = (

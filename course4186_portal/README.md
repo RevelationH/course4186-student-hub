@@ -9,18 +9,16 @@ It does not modify or replace the original files under:
 - `D:\digital_human\quiz_app.py`
 - `D:\digital_human\app.py`
 
-Instead, it reads the bundled knowledge-base artifacts and lecture materials:
+Instead, it reads the new knowledge-base artifacts built in:
 
-- `course4186_rag\artifacts_full_course`
-- `course4186_materials`
+- `D:\digital_human\course4186_rag\artifacts`
+- `D:\digital_human\course4186_rag\artifacts_dense`
 
 ## Main files
 
 - `app.py`: standalone Flask app for the student hub
 - `kb_service.py`: retrieval, course-grounded answer assembly, question loading
 - `progress_store.py`: local practice-progress storage
-- `tools\convert_course_materials_to_pdf.py`: batch convert local PPT/PPTX lecture files to PDF
-- `tools\sync_course_materials_to_bundle.py`: copy canonical lecture PDFs into the GitHub upload bundle
 
 ## Main routes
 

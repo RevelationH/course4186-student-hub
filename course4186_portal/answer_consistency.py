@@ -21,27 +21,27 @@ COURSE_SOURCE_LINE_RE = re.compile(r"(?is)(?:\n|\r|\s)*Course source:.*$")
 CODE_BLOCK_RE = re.compile(r"(```[\s\S]*?```)")
 
 LECTURE_VERB_RE = re.compile(
-    r"\blecture\s+[0-9A-Za-z]+(?:-[0-9A-Za-z]+)?\s+"
+    r"\blecture\s+[0-9]+(?:[A-Za-z-]*[0-9A-Za-z-]*)?\s+"
     r"(shows|show|explains|explain|covers|cover|introduces|introduce|describes|describe|details|detail|presents|present)\b",
     re.IGNORECASE,
 )
 SLIDES_FROM_LECTURES_RE = re.compile(
     r"\b(?:the\s+)?slides?\s+from\s+lectures?\s+"
-    r"[0-9A-Za-z][0-9A-Za-z,\-\sandor]*",
+    r"[0-9][0-9A-Za-z,\-\sandor]*",
     re.IGNORECASE,
 )
 FROM_LECTURES_RE = re.compile(
-    r"\bfrom\s+lectures?\s+[0-9A-Za-z][0-9A-Za-z,\-\sandor]*",
+    r"\bfrom\s+lectures?\s+[0-9][0-9A-Za-z,\-\sandor]*",
     re.IGNORECASE,
 )
 IN_LECTURES_RE = re.compile(
-    r"\bin\s+lectures?\s+[0-9A-Za-z][0-9A-Za-z,\-\sandor]*",
+    r"\bin\s+lectures?\s+[0-9][0-9A-Za-z,\-\sandor]*",
     re.IGNORECASE,
 )
 LECTURE_LIST_RE = re.compile(
-    r"\blectures?\s+[0-9A-Za-z]+(?:-[0-9A-Za-z]+)?"
-    r"(?:\s*,\s*[0-9A-Za-z]+(?:-[0-9A-Za-z]+)?)*"
-    r"(?:\s*,?\s*(?:and|or)\s+[0-9A-Za-z]+(?:-[0-9A-Za-z]+)?)?",
+    r"\blectures?\s+[0-9]+(?:-[0-9A-Za-z]+)?"
+    r"(?:\s*,\s*[0-9]+(?:-[0-9A-Za-z]+)?)*"
+    r"(?:\s*,?\s*(?:and|or)\s+[0-9]+(?:-[0-9A-Za-z]+)?)?",
     re.IGNORECASE,
 )
 FILE_REFERENCE_RE = re.compile(
@@ -153,11 +153,19 @@ def normalize_answer_body_sources(text: str) -> str:
             continue
         normalized_parts.append(_normalize_non_code_segment(part))
 
-    rebuilt = "".join(
-        part if part.startswith("```") else part
-        for part in normalized_parts
-        if part
-    )
+    rebuilt_parts: List[str] = []
+    for part in normalized_parts:
+        if not part:
+            continue
+        piece = part if part.startswith("```") else part
+        if rebuilt_parts:
+            previous = rebuilt_parts[-1]
+            if piece.startswith("```") and not previous.endswith("\n"):
+                rebuilt_parts[-1] = previous.rstrip() + "\n\n"
+            elif previous.rstrip().endswith("```") and not piece.startswith("\n"):
+                rebuilt_parts[-1] = previous.rstrip() + "\n\n"
+        rebuilt_parts.append(piece)
+    rebuilt = "".join(rebuilt_parts)
     rebuilt = re.sub(r"\n{3,}", "\n\n", rebuilt).strip()
     return rebuilt
 
@@ -178,9 +186,4 @@ def citation_course_source_line(citations: Sequence[Dict[str, Any]]) -> str:
 def rebuild_answer_with_citations(text: str, citations: Sequence[Dict[str, Any]]) -> str:
     body = strip_course_source_line(strip_source_id_list_suffix(str(text or ""))).strip()
     body = normalize_answer_body_sources(body)
-    source_line = citation_course_source_line(citations)
-    if body and source_line:
-        return f"{body}\n\n{source_line}"
-    if source_line:
-        return source_line
     return body
